@@ -23,6 +23,8 @@
         <br />
         <br />
         <asp:LinkButton ID="lnk" runat="server">New Customer</asp:LinkButton>
-    </div>
+        <br />
+        <br />
+        Hi this is new</div>
 </asp:Content>
 
