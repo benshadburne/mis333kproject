@@ -87,6 +87,27 @@
         <br />
         <asp:Button ID="Button1" runat="server" Text="Button" />
 
+        <br />
+        <br />
+        <asp:GridView ID="GridView1" runat="server" AutoGenerateColumns="False" DataSourceID="SqlDataSource1" AllowPaging="True" AllowSorting="True">
+            <Columns>
+                <asp:CommandField ShowSelectButton="True" />
+                <asp:BoundField DataField="RecordID" HeaderText="RecordID" InsertVisible="False" ReadOnly="True" SortExpression="RecordID" />
+                <asp:BoundField DataField="UserName" HeaderText="UserName" SortExpression="UserName" />
+                <asp:BoundField DataField="Password" HeaderText="Password" SortExpression="Password" />
+                <asp:BoundField DataField="LastName" HeaderText="LastName" SortExpression="LastName" />
+                <asp:BoundField DataField="FirstName" HeaderText="FirstName" SortExpression="FirstName" />
+                <asp:BoundField DataField="MI" HeaderText="MI" SortExpression="MI" />
+                <asp:BoundField DataField="Address" HeaderText="Address" SortExpression="Address" />
+                <asp:BoundField DataField="City" HeaderText="City" SortExpression="City" />
+                <asp:BoundField DataField="State" HeaderText="State" SortExpression="State" />
+                <asp:BoundField DataField="ZipCode" HeaderText="ZipCode" SortExpression="ZipCode" />
+                <asp:BoundField DataField="Phone" HeaderText="Phone" SortExpression="Phone" />
+                <asp:BoundField DataField="EmailAddr" HeaderText="EmailAddr" SortExpression="EmailAddr" />
+            </Columns>
+        </asp:GridView>
+        <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:MIS333K_msbcd323ConnectionString %>" SelectCommand="SELECT * FROM [tblCustomers]"></asp:SqlDataSource>
+
     </div>
 </asp:Content>
 
