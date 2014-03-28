@@ -9,7 +9,7 @@ Imports Microsoft.VisualBasic
 
 Public Class ClassValidate
 
-    Dim DB As New CustomerDB
+
     Dim mstrPhone As String
 
     Public Function CheckIntegerWithSubstring(ByVal strIn As String) As Boolean
