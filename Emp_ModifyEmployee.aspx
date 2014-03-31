@@ -3,11 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-        <link href="StyleSheetforASP2.css" rel="stylesheet" />
-    <link href="bootstrap-3.1.1-dist/css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
-<link href="bootstrap-3.1.1-dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
-<link href="bootstrap-3.1.1-dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
-<link href="bootstrap-3.1.1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+
 
     <div id ="left">
         <div class ="label-primary">
