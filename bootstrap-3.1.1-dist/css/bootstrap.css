@@ -1650,6 +1650,7 @@ label {
   display: inline-block;
   margin-bottom: 5px;
   font-weight: bold;
+  color:black;
 }
 input[type="search"] {
   -webkit-box-sizing: border-box;
@@ -5806,7 +5807,7 @@ button.close {
     position: relative;
     float: left;
     width: 13%;
-    height: 500px;
+    height: 1000px;
     text-align: right;
     line-height: 26px
 }

@@ -36,7 +36,7 @@
         <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
         <br />
         <br />
-        <asp:Button ID="btnModify" runat="server" Text="Modify" />
+        <asp:Button ID="btnAdd" runat="server" Text="Add" />
         <br /> 
         </div>
 
