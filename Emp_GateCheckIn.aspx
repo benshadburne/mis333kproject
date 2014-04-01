@@ -14,5 +14,19 @@
     <br />
     <br />
     <asp:Button ID="btnConfirm" runat="server" text="confirm"> </asp:Button>
+
+    <asp:panel id="manifest" runat="server" Visible ="false">
+        <asp:DropDownList ID="DropDownList2" runat="server" padding ="3px"></asp:DropDownList>
+     <br />
+     <asp:GridView ID="GridView1" runat="server">
+         <Columns>
+             <asp:CheckBoxField />
+         </Columns>
+    </asp:GridView>
+
+    <br />
+    <br />
+    <asp:Button ID="btnDeparted" runat="server" text="Departed"> </asp:Button>
+    </asp:panel>
 </asp:Content>
 

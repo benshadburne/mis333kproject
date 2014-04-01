@@ -3,8 +3,10 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-     <link href="bootstrap-3.1.1-dist/css/bootstrap.css" rel="stylesheet" />
-    <div class ="label-default">
+     <div id="header">
+       Modify City
+   </div>
+    <div class ="label-default" id="middle">
 
         <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
         <br />
@@ -24,7 +26,7 @@
 
         </div>
 
-    <div class ="input-group-lg">
+    <div class ="input-group-lg" id="right">
         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
         <br /> 
         <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
