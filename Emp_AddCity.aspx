@@ -9,9 +9,9 @@
    </div>
    <div class ="label-default" id="middle">
 
-        <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+        <asp:Label ID="Label1" runat="server" Text="City name:"></asp:Label>
         <br />
-        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+        <asp:Label ID="Label2" runat="server" Text="Airport Code:"></asp:Label>
         <br />
         <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
         <br />
@@ -28,9 +28,11 @@
         </div>
 
     <div class ="input-group-lg"id="right">
-        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtCity" runat="server"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="rfvCity" runat="server" ErrorMessage="The city name is a required field." Text="*" ControlToValidate="txtCity"></asp:RequiredFieldValidator>
         <br /> 
-        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtAirport" runat="server"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="rfvAirport" runat="server" ErrorMessage="The airport code must be 3 letters." Text="*" ControlToValidate="txtAirport"></asp:RequiredFieldValidator>
         <br /> 
         <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
         <br /> 
