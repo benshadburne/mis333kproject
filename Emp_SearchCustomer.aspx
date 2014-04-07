@@ -20,14 +20,11 @@
     <br />
 
         </div>
-    <asp:GridView ID="gvCustomers" runat="server" AllowSorting="True" DataSourceID="tblCustomerClone">
-        <Columns>
-            <asp:CommandField ShowSelectButton="True" />
-        </Columns>
+    <asp:GridView ID="gvCustomers" runat="server" AllowSorting="True" AutoGenerateColumns="False">
     </asp:GridView>
 
 
-    <asp:SqlDataSource ID="tblCustomerClone" runat="server"></asp:SqlDataSource>
+    <asp:SqlDataSource ID="CustomersDataSource" runat="server" ConnectionString="<%$ ConnectionStrings:MIS333K_20142_Team06ConnectionString %>" SelectCommand="SELECT * FROM [tblCustomersClone]"></asp:SqlDataSource>
 
 
 </asp:Content>
