@@ -71,9 +71,17 @@
 
     <br />
    
-    <div class="center-block" style="width:79%">
-    <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search" />
-    </div>
+    <div class="center-block" style="width:79%;">
+       <div class="pull-left" style="width: 15%"> <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search" />
+
+       </div>
+          
+           <div class="left" style="width: 15%; margin-left: 15px">
+                 <asp:Button class="btn" ID="btnShowAll" runat="server" Text="Show All" />
+                  
+        </div>
+         </div>
+                    
 
 </asp:Content>
 
