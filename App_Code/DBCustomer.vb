@@ -15,23 +15,42 @@ Option Strict On
 Imports Microsoft.VisualBasic
 Imports System.Data
 Imports System.Data.SqlClient
-Public Class DBxxxxx
+Public Class DBCustomersClone
     'setting up db, dim connection, adapter, query, dataset
     Dim mMyView As New DataView
     Dim mdbConn As New SqlConnection
     Dim mstrConnection As String = "workstation id=COMPUTER;packet size=4096;data source=MISSQL.mccombs.utexas.edu;integrated security=False;initial catalog=mis333k_20142_Team06;user id=msbcf819;password=Databasepassword5"
     Dim mdbDataAdapter As New SqlDataAdapter
-    Dim mdatasetxxxxx As New DataSet
+    Dim mdatasetCustomersClone As New DataSet
     Dim mQueryString As String
 
-    Public Sub GetALLxxxxxUsingSP()
+    Public Sub GetAllCustomersCloneUsingSP()
         'Author: Ben Shadburne
-        'Purpose: runs xxxxx procedure
+        'Purpose: runs CustomersClone procedure
         'Arguments: na
         'Return: na
         'Date: 03/18/2014
 
-        RunProcedure("usp_xxxxx_get_all")
+        RunProcedure("usp_CustomersClone_get_all")
+    End Sub
+
+    Public Sub SortCustomersClone(intSort As Integer)
+        'Author: Ben Shadburne
+        'Purpose: sorts data to be placed in a gridview
+        'Arguments: integer -- preferrably from a radio button list
+        'Return: none, but sorts data in the dataview
+        'Date: 4/8/2014
+
+
+        If intSort = 0 Then
+            'sort = lastname, sort the data
+            MyView.Sort = "lastname"
+        Else
+            'sort by advantage number is selected
+                MyView.Sort = "AdvantageNumber"
+
+        End If
+
     End Sub
 
     'define a public read only property
@@ -39,7 +58,7 @@ Public Class DBxxxxx
         'Author: Ben Shadburne
         'Purpose: returns read only dataview
         'Arguments: na
-        'Return: xxxxx dataview
+        'Return: CustomersClone dataview
         'Date: 03/18/2014
 
         Get
@@ -62,11 +81,11 @@ Public Class DBxxxxx
             'sets the command type to "stored procedure"
             mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
             'clear dataset
-            Me.mdatasetxxxxx.Clear()
+            Me.mdatasetCustomersClone.Clear()
             'open conneciton and fill dataset
-            mdbDataAdapter.Fill(mdatasetxxxxx, "yyyyyy")
+            mdbDataAdapter.Fill(mdatasetCustomersClone, "tblCustomersClone")
             'copy dataset to dataview
-            mMyView.Table = mdatasetxxxxx.Tables("yyyyyy")
+            mMyView.Table = mdatasetCustomersClone.Tables("tblCustomersClone")
         Catch ex As Exception
             Throw New Exception("stored procedure is " & strName.ToString & " error is " & ex.Message)
         End Try
@@ -132,7 +151,7 @@ Public Class DBxxxxx
         'Author: Ben Shadburne
         'Purpose: return lblcount
         'Arguments:  none
-        'Return: count of xxxxx
+        'Return: count of CustomersClone
         'Date: 03/07/2014
 
         Get

@@ -15,23 +15,23 @@ Option Strict On
 Imports Microsoft.VisualBasic
 Imports System.Data
 Imports System.Data.SqlClient
-Public Class DBxxxxx
+Public Class DBjourneyclone
     'setting up db, dim connection, adapter, query, dataset
     Dim mMyView As New DataView
     Dim mdbConn As New SqlConnection
     Dim mstrConnection As String = "workstation id=COMPUTER;packet size=4096;data source=MISSQL.mccombs.utexas.edu;integrated security=False;initial catalog=mis333k_20142_Team06;user id=msbcf819;password=Databasepassword5"
     Dim mdbDataAdapter As New SqlDataAdapter
-    Dim mdatasetxxxxx As New DataSet
+    Dim mdatasetjourneyclone As New DataSet
     Dim mQueryString As String
 
-    Public Sub GetALLxxxxxUsingSP()
+    Public Sub GetALLjourneycloneUsingSP()
         'Author: Ben Shadburne
-        'Purpose: runs xxxxx procedure
+        'Purpose: runs journeyclone procedure
         'Arguments: na
         'Return: na
         'Date: 03/18/2014
 
-        RunProcedure("usp_xxxxx_get_all")
+        RunProcedure("usp_journeyclone_get_all")
     End Sub
 
     'define a public read only property
@@ -39,7 +39,7 @@ Public Class DBxxxxx
         'Author: Ben Shadburne
         'Purpose: returns read only dataview
         'Arguments: na
-        'Return: xxxxx dataview
+        'Return: journeyclone dataview
         'Date: 03/18/2014
 
         Get
@@ -62,11 +62,11 @@ Public Class DBxxxxx
             'sets the command type to "stored procedure"
             mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
             'clear dataset
-            Me.mdatasetxxxxx.Clear()
+            Me.mdatasetjourneyclone.Clear()
             'open conneciton and fill dataset
-            mdbDataAdapter.Fill(mdatasetxxxxx, "yyyyyy")
+            mdbDataAdapter.Fill(mdatasetjourneyclone, "tblJourneyClone")
             'copy dataset to dataview
-            mMyView.Table = mdatasetxxxxx.Tables("yyyyyy")
+            mMyView.Table = mdatasetjourneyclone.Tables("tblJourneyClone")
         Catch ex As Exception
             Throw New Exception("stored procedure is " & strName.ToString & " error is " & ex.Message)
         End Try
@@ -132,7 +132,7 @@ Public Class DBxxxxx
         'Author: Ben Shadburne
         'Purpose: return lblcount
         'Arguments:  none
-        'Return: count of xxxxx
+        'Return: count of journeyclone
         'Date: 03/07/2014
 
         Get
@@ -142,4 +142,3 @@ Public Class DBxxxxx
     End Property
 
 End Class
-
