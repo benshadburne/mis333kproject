@@ -101,11 +101,11 @@
 
             </div>
             
-
+    <br/> 
         
    
-    <div class="center-block" style="width:79%;">
-       
+    <div class="center-block" style="width:79%; min-height:100px;">
+        <asp:GridView class="table" ID="gvFlightSearch" runat="server"></asp:GridView>
          </div>
                     
 
