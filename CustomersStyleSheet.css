@@ -67,3 +67,7 @@
     float: left;
     text-align: right;
 }
+
+#seats {
+    width:98%;
+}
