@@ -1,0 +1,47 @@
+﻿body {
+    font-family: Arial;
+    background: #0094ff;
+}
+
+#banner {
+    width: 100%;
+    position: relative;
+    text-align: center
+}
+
+#sidebar {
+    width: 18%;
+    float: left;
+    text-align: center;
+}
+
+#content {
+    width: 81%;
+    float: left;
+}
+
+#content-labels {
+    width: 15%;
+    text-align: right;
+    float: left;
+    line-height: 200%;
+}
+
+#content-textboxes {
+    width: 30%;
+    text-align: left;
+    float: left;
+    line-height: 160%;
+}
+
+#content-image {
+    width: 50%;
+    text-align: left;
+    float:left;
+}
+
+#footer {
+    width: 99%;
+    text-align: center;
+    float: left;
+}
