@@ -109,7 +109,7 @@
         <br />
         <asp:Label CssClass="label" ID="Label6" runat="server" Text="Direct Flights"></asp:Label>
         <div class="pull-right">
-            <asp:Label CssClass="label" ID="Label7" runat="server" Text="Count:   "></asp:Label></div>
+            <asp:Label CssClass="label" ID="Label7" runat="server" Text="Count:"></asp:Label></div>
          <br />
          <asp:GridView class="table" ID="gvDirectFlights" runat="server"></asp:GridView>
        
@@ -120,7 +120,7 @@
     
      <asp:Label CssClass="label" ID="Label8" runat="server" Text="Indirect Flights"></asp:Label>
         <div class="pull-right">
-            <asp:Label CssClass="label" ID="Label9" runat="server" Text="Count:   "></asp:Label></div>
+            <asp:Label CssClass="label" ID="Label9" runat="server" Text="Count:"></asp:Label></div>
          <br />
          <asp:GridView class="table" ID="gvIndirectFlights" runat="server"></asp:GridView>
        
