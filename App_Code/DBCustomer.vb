@@ -160,5 +160,14 @@ Public Class DBCustomersClone
         End Get
     End Property
 
+    'Add new customer using a stored procedure
+    Public Sub AddNewCustomer(strLName As String, strFName As String, strMI As String, strUsername As String, strPassword As String, strAddress As String, strCity As String, strState As String, strZip As String, strEmail As String, strPhone As String)
+
+        'Run the stored procedure here
+        'RunProcedure("usp_Customers_Add_New")
+
+    End Sub
+
+    'End Sub
 End Class
 
