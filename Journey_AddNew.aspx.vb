@@ -33,7 +33,7 @@ Partial Class Journey_AddNew
         DBFlights.CheckFlightsNeededForSpecificDate("usp_FlightsClone_Need_Journeys", "@DayOfWeek", calDate.SelectedDate)
 
         'this fills the DB Journey Dataset and DB Journey Dataview with journeys that have already been created for the specific day
-        DBJourney.GetJourneysByDate("usp_JourneyClone_Choose_Active_By_Day", "mdatasetjourneyclone", "MyView", "tblJourneyClone", strDay, calDate.SelectedDate)
+        DBJourney.GetJourneysByDate("usp_JourneyClone_Choose_Active_By_Day", "tblJourneyClone", strDay, calDate.SelectedDate)
 
         ''NEED TO RUN SOME CODE HERE TO COMPARE THE TWO DATASET/DATAVIEWS to make sure we don't add duplicate journeys. SHOULDN't BE TOO HARD
 

@@ -47,6 +47,18 @@ Public Class DBjourneyclone
         End Get
     End Property
 
+    Public ReadOnly Property MyDataSet() As DataSet
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: journeyclone dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mdatasetjourneyclone
+        End Get
+    End Property
+
     Public Sub RunProcedure(ByVal strName As String)
         'Author: Ben Shadburne
         'Purpose: runs procedure
@@ -176,10 +188,46 @@ Public Class DBjourneyclone
         UseSPforInsertOrUpdateQuery(strUSPName, aryParamNames, aryParamValues)
     End Sub
 
-    Public Sub GetJourneysByDate(ByVal strUSPName As String, ByVal strDatasetName As DataSet, ByVal strViewName As DataView, ByVal strTableName As String, ByVal strDayOfWeek As String, ByVal datSelectedDate As Date)
+    Public Sub GetJourneysByDate(ByVal strUSPName As String, ByVal strTableName As String, ByVal strDayOfWeek As String, ByVal datSelectedDate As Date)
+
+        'defines array to put parameter names into
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+
+        'add parameter names to names array list
+        aryParamNames.Add("@DayOfWeek")
+        aryParamNames.Add("@DATE")
 
 
-        'UseSPToRetrieveRecords(strUSPName, strDatasetName, strViewName, strTableName, aryParamNames, aryParamValues)
+        'add values to parameter values array list
+        aryParamValues.Add(strDayOfWeek)
+        aryParamValues.Add(datSelectedDate)
+
+        UseSPToRetrieveRecords(strUSPName, MyDataSet, MyView, strTableName, aryParamNames, aryParamValues)
+    End Sub
+
+    Public Sub CheckWhichJourneysToAdd(FlightsAdded As DataSet, FlightsNeeded As DataSet, intFlightNumber As Integer)
+        'define a counter variable
+        Dim i As Integer
+        'define a boolean to see if we should add a journey
+        Dim bolAddJourney As Boolean = True
+
+        For intFlightNumber = FlightsAdded.Tables("table
+
+            i = FlightsNeeded.Tables("tblFlightsClone").Rows.Count - 1
+
+            For i = 0 To i
+                If intFlightNumber <> CInt(FlightsNeeded.Tables("tblFlightClone").Rows(i).Item("FlightNumber")) Then
+                    'that flight number is not in the database yet. we may want to add it to the database 
+                Else
+                    bolAddJourney = False
+                End If
+            Next
+
+            If bolAddJourney = True Then
+                AddNewJourney(intFlightNumber, )
+            End If
+
     End Sub
 
 
