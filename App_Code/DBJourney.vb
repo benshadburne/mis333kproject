@@ -113,10 +113,74 @@ Public Class DBjourneyclone
         End Try
     End Sub
 
+    Protected Sub UseSPToRetrieveRecords(ByVal strUSPName As String, ByVal strDatasetName As DataSet, ByVal strViewName As DataView, ByVal strTableName As String, ByVal aryParamNames As ArrayList, ByVal aryParamValues As ArrayList)
+        'Purpose: Run any stored procedure with any number of parameters
+        'Arguments: Stored procedure name, tblName, dataset name, dataview name, arraylist of parameter names, and arraylist of parameter values
+        'Returns: Nothing
+        'Author: Rick Byars
+        'Date: 4/16/10
+        'Creates instances of the connection and command object
+        Dim objConnection As New SqlConnection(mstrConnection)
+        'Tell SQL server the name of the stored procedure
+        Dim objCommand As New SqlDataAdapter(strUSPName, objConnection)
+        Try
+            'Sets the command type to stored procedure
+            objCommand.SelectCommand.CommandType = CommandType.StoredProcedure
 
-    Public Sub AddNewJourney(strUSPName As String, aryParamNames As ArrayList, aryParamValues As ArrayList)
+            'Add parameters to stored procedure
+            Dim index As Integer = 0
+            For Each paramName As String In aryParamNames
+                objCommand.SelectCommand.Parameters.Add(New SqlParameter(CStr(aryParamNames(index)), CStr(aryParamValues(index))))
+                index = index + 1
+            Next
+
+            'Clear dataset
+            strDatasetName.Clear()
+
+            'Open the connection and fill dataset
+            objCommand.Fill(strDatasetName, strTableName)
+            ' fill view
+            strViewName.Table = strDatasetName.Tables(strTableName)
+
+            'Print out each element of our arraylists if error occured
+        Catch ex As Exception
+            Dim strError As String = ""
+            Dim index As Integer = 0
+            For Each paramName As String In aryParamNames
+                strError = strError & "ParamName: " & CStr(aryParamNames(index))
+                strError = strError & " ParamValue: " & CStr(aryParamValues(index))
+                index = index + 1
+            Next
+            Throw New Exception(strError & " error message is " & ex.Message)
+        End Try
+    End Sub
+
+
+    Public Sub AddNewJourney(strUSPName As String, intFlightNumber As Integer, datSelectedDate As Date, intDepartureTime As Integer)
+        'defines array to put parameter names into
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+
+        'add parameter names to names array list
+        aryParamNames.Add("@FlightNumber")
+        aryParamNames.Add("@FlightDate")
+        aryParamNames.Add("@DepartureTime")
+
+
+        'add values to parameter values array list
+        aryParamValues.Add(intFlightNumber)
+        aryParamValues.Add(datSelectedDate)
+        aryParamValues.Add(intDepartureTime)
+
+        'run the sp to add a journey
         UseSPforInsertOrUpdateQuery(strUSPName, aryParamNames, aryParamValues)
     End Sub
 
-    
+    Public Sub GetJourneysByDate(ByVal strUSPName As String, ByVal strDatasetName As DataSet, ByVal strViewName As DataView, ByVal strTableName As String, ByVal strDayOfWeek As String, ByVal datSelectedDate As Date)
+
+
+        UseSPToRetrieveRecords(strUSPName, strDatasetName, strViewName, strTableName, aryParamNames, aryParamValues)
+    End Sub
+
+
 End Class

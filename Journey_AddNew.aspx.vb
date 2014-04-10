@@ -17,28 +17,30 @@ Partial Class Journey_AddNew
 
 
     Protected Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        'define variables
         Dim intRow As Integer
+        Dim strDay As String
 
+        'intRow keeps track of selected value of ddl
         intRow = ddlFlights.SelectedIndex
 
-        Dim aryParamNames As New ArrayList
+        'put the name of the day of the week into strDay
+        strDay = WeekdayName(Weekday(calDate.SelectedDate))
+        'the textbox shows the day in strDay -- I just did this to double check that it was working properly
+        TextBox1.Text = strDay
 
-        aryParamNames.Add("@FlightNumber")
-        aryParamNames.Add("@FlightDate")
-        aryParamNames.Add("@DepartureTime")
+        'This fills the DBFlights.MyDataSet and DBFlights.MyView with the Flights the Journey table should have in it for the given date
+        DBFlights.CheckFlightsNeededForSpecificDate("usp_FlightsClone_Need_Journeys", "@DayOfWeek", calDate.SelectedDate)
 
-        DBFlights.GetALLFlightsCloneUsingSP()
+        'this fills the DB Journey Dataset and DB Journey Dataview with journeys that have already been created for the specific day
+        DBJourney.GetJourneysByDate("usp_JourneyClone_Choose_Active_By_Day", "mdatasetjourneyclone", "MyView", "tblJourneyClone", strDay, calDate.SelectedDate)
 
+        ''NEED TO RUN SOME CODE HERE TO COMPARE THE TWO DATASET/DATAVIEWS to make sure we don't add duplicate journeys. SHOULDN't BE TOO HARD
 
-        Dim aryParamValues As New ArrayList
-
-        aryParamValues.Add(CInt(DBFlights.MyDataSet.Tables("tblFlightClone").Rows(intRow).Item("FlightNumber")))
-        aryParamValues.Add(calDate.SelectedDate)
-        aryParamValues.Add(CInt(DBFlights.MyDataSet.Tables("tblFlightClone").Rows(intRow).Item("DepartureTime")))
+        DBJourney.AddNewJourney("usp_JourneyClone_Add_New", CInt(DBFlights.MyDataSet.Tables("tblFlightClone").Rows(intRow).Item("FlightNumber")), calDate.SelectedDate, CInt(DBFlights.MyDataSet.Tables("tblFlightClone").Rows(intRow).Item("DepartureTime")))
 
 
 
-        DBJourney.AddNewJourney("usp_JourneyClone_Add_New", aryParamNames, aryParamValues)
 
     End Sub
 
@@ -47,4 +49,6 @@ Partial Class Journey_AddNew
             LoadDDL()
         End If
     End Sub
+
+   
 End Class

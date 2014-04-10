@@ -85,21 +85,79 @@ Public Class DBFlightsClone
         End Try
     End Sub
 
-    Public Sub DoSort(ByVal intIndex As Integer)
-        'Author: Ben Shadburne
-        'Purpose: sorts data
-        'Arguments: index of rad button
-        'Return: sorted dataview
-        'Date: 03/18/2014
+    Protected Sub UseSPforInsertOrUpdateQuery(ByVal strUSPName As String, ByVal aryParamNames As ArrayList, ByVal aryParamValues As ArrayList)
+        'Purpose: Sort the dataview by the argument (general sub)
+        'Arguments: Stored procedure name, Arraylist of parameter names, and  arraylist of parameter values
+        'Returns: Nothing
+        'Author: Rick Byars
+        'Date: 4/03/12
 
-        'sort using radio buttons
-        If intIndex = 0 Then
-            'sort by name
-            mMyView.Sort = "lastname, firstname"
-        Else
-            mMyView.Sort = "username"
-        End If
+        'Creates instances of the connection and command object
+        Dim objConnection As New SqlConnection(mstrConnection)
+        'Tell SQL server the name of the stored procedure
+        Dim objCommand As New SqlDataAdapter(strUSPName, objConnection)
+        Try
+            'Sets the command type to stored procedure
+            objCommand.SelectCommand.CommandType = CommandType.StoredProcedure
+
+            'Add parameters to stored procedure
+            Dim index As Integer = 0
+            For Each paramName As String In aryParamNames
+                objCommand.SelectCommand.Parameters.Add(New SqlParameter(CStr(aryParamNames(index)), CStr(aryParamValues(index))))
+                index = index + 1
+            Next
+
+            ' OPEN CONNECTION AND RUN INSERT/UPDATE QUERY
+            objCommand.SelectCommand.Connection = objConnection
+            objConnection.Open()
+            objCommand.SelectCommand.ExecuteNonQuery()
+            objConnection.Close()
+
+            'Print out each element of our arraylists if error occured
+        Catch ex As Exception
+            Dim strError As String = ""
+            Dim index As Integer = 0
+            For Each paramName As String In aryParamNames
+                strError = strError & "ParamName: " & CStr(aryParamNames(index))
+                strError = strError & " ParamValue: " & CStr(aryParamValues(index))
+                index = index + 1
+            Next
+            Throw New Exception(strError & " error message is " & ex.Message)
+        End Try
     End Sub
 
-   
+    Public Sub RunSPwithOneParam(ByVal strSPName As String, ByVal strParamName As String, ByVal strParamValue As String)
+        ' purpose to run a stored procedure with one parameter
+        ' inputs:  stored procedure name, parameter name, parameter value
+        ' returns: dataset filled with correct records
+
+        ' CREATES INSTANCES OF THE CONNECTION AND COMMAND OBJECT
+        Dim objConnection As New SqlConnection(mstrConnection)
+        ' Tell SQL server the name of the stored procedure you will be executing
+        Dim mdbDataAdapter As New SqlDataAdapter(strSPName, objConnection)
+        Try
+            ' SETS THE COMMAND TYPE TO "STORED PROCEDURE"
+            mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
+
+            ' ADD PARAMETER(S) TO SPROC
+            mdbDataAdapter.SelectCommand.Parameters.Add(New SqlParameter(strParamName, strParamValue))
+            ' clear dataset
+            Me.MyDataSet.Clear()
+
+            ' OPEN CONNECTION AND FILL DATASET
+            mdbDataAdapter.Fill(MyDataSet, "tblFlightClone")
+
+            ' copy dataset to dataview
+            mMyView.Table = MyDataSet.Tables("tblFlightClone")
+
+        Catch ex As Exception
+            Throw New Exception("params are " & strSPName.ToString & " " & strParamName.ToString & " " & strParamValue.ToString & " error is " & ex.Message)
+        End Try
+    End Sub
+
+
+    Public Sub CheckFlightsNeededForSpecificDate(strSPname As String, strParamName As String, datParam As Date)
+        
+        RunSPwithOneParam(strSPname, strParamName, datParam.ToString)
+    End Sub
 End Class
