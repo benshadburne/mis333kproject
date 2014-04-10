@@ -212,21 +212,21 @@ Public Class DBjourneyclone
         'define a boolean to see if we should add a journey
         Dim bolAddJourney As Boolean = True
 
-        For intFlightNumber = FlightsAdded.Tables("table
+        'For intFlightNumber = FlightsAdded.Tables("table
 
-            i = FlightsNeeded.Tables("tblFlightsClone").Rows.Count - 1
+        i = FlightsNeeded.Tables("tblFlightsClone").Rows.Count - 1
 
-            For i = 0 To i
-                If intFlightNumber <> CInt(FlightsNeeded.Tables("tblFlightClone").Rows(i).Item("FlightNumber")) Then
-                    'that flight number is not in the database yet. we may want to add it to the database 
-                Else
-                    bolAddJourney = False
-                End If
-            Next
-
-            If bolAddJourney = True Then
-                AddNewJourney(intFlightNumber, )
+        For i = 0 To i
+            If intFlightNumber <> CInt(FlightsNeeded.Tables("tblFlightClone").Rows(i).Item("FlightNumber")) Then
+                'that flight number is not in the database yet. we may want to add it to the database 
+            Else
+                bolAddJourney = False
             End If
+        Next
+
+        If bolAddJourney = True Then
+            'AddNewJourney(intFlightNumber, )
+        End If
 
     End Sub
 
