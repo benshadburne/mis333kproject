@@ -3,12 +3,11 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <link href="CustomersStyleSheet.css" rel="stylesheet" />
-    <div id ="sidebar">
+     <div id ="sidebar">
             <br />
             <br />
             <br />
-            <asp:Button ID="btnCreateReservation" runat="server" Text="Create Reservation" style="height: 26px" />
+            <asp:Button CssClass="btn" ID="btnCreateReservation" runat="server" Text="Create Reservation" style="height: 26px" />
             <br />
             <br />
             <br />
@@ -30,7 +29,7 @@
                 <asp:Label ID="lblPeopleCount" runat="server" Text="# of People?:"></asp:Label>
             </div>
             <div id ="content-textboxes">
-                <asp:TextBox ID="txtPeopleCount" runat="server"></asp:TextBox>
+                <asp:TextBox CssClass="text-left" ID="txtPeopleCount" runat="server"></asp:TextBox>
                 
             </div>
 
