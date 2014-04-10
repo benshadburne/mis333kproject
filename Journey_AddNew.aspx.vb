@@ -30,14 +30,15 @@ Partial Class Journey_AddNew
         TextBox1.Text = strDay
 
         'This fills the DBFlights.MyDataSet and DBFlights.MyView with the Flights the Journey table should have in it for the given date
-        DBFlights.CheckFlightsNeededForSpecificDate("usp_FlightsClone_Need_Journeys", "@DayOfWeek", calDate.SelectedDate)
+        DBFlights.CheckFlightsNeededForSpecificDate("usp_FlightClone_Need_Journeys", "@DayOfWeek", strDay)
 
         'this fills the DB Journey Dataset and DB Journey Dataview with journeys that have already been created for the specific day
         DBJourney.GetJourneysByDate("usp_JourneyClone_Choose_Active_By_Day", "tblJourneyClone", strDay, calDate.SelectedDate)
 
         ''NEED TO RUN SOME CODE HERE TO COMPARE THE TWO DATASET/DATAVIEWS to make sure we don't add duplicate journeys. SHOULDN't BE TOO HARD
+        DBJourney.CheckWhichJourneysToAdd(DBJourney.MyDataSet, DBFlights.MyDataSet, calDate.SelectedDate)
 
-        DBJourney.AddNewJourney("usp_JourneyClone_Add_New", CInt(DBFlights.MyDataSet.Tables("tblFlightClone").Rows(intRow).Item("FlightNumber")), calDate.SelectedDate, CInt(DBFlights.MyDataSet.Tables("tblFlightClone").Rows(intRow).Item("DepartureTime")))
+        'DBJourney.AddNewJourney("usp_JourneyClone_Add_New", CInt(DBFlights.MyDataSet.Tables("tblFlightClone").Rows(intRow).Item("FlightNumber")), calDate.SelectedDate, CInt(DBFlights.MyDataSet.Tables("tblFlightClone").Rows(intRow).Item("DepartureTime")))
 
 
 

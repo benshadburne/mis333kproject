@@ -156,8 +156,8 @@ Public Class DBFlightsClone
     End Sub
 
 
-    Public Sub CheckFlightsNeededForSpecificDate(strSPname As String, strParamName As String, datParam As Date)
-        
-        RunSPwithOneParam(strSPname, strParamName, datParam.ToString)
+    Public Sub CheckFlightsNeededForSpecificDate(strSPname As String, strParamName As String, strDay As String)
+
+        RunSPwithOneParam(strSPname, strParamName, strDay)
     End Sub
 End Class

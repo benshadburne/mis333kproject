@@ -206,27 +206,44 @@ Public Class DBjourneyclone
         UseSPToRetrieveRecords(strUSPName, MyDataSet, MyView, strTableName, aryParamNames, aryParamValues)
     End Sub
 
-    Public Sub CheckWhichJourneysToAdd(FlightsAdded As DataSet, FlightsNeeded As DataSet, intFlightNumber As Integer)
-        'define a counter variable
+    Public Sub CheckWhichJourneysToAdd(FlightsAdded As DataSet, FlightsNeeded As DataSet, datSelectedDate As Date)
+        'define counter variables
         Dim i As Integer
+        Dim j As Integer
         'define a boolean to see if we should add a journey
         Dim bolAddJourney As Boolean = True
+        'define a variable to hold the flight number we are running through a loop
+        Dim intFlightNumber As Integer
 
-        'For intFlightNumber = FlightsAdded.Tables("table
+        'J stores the number of times we need to loop through the flights that must be added. 
+        j = FlightsNeeded.Tables("tblFlightClone").Rows.Count - 1
 
-        i = FlightsNeeded.Tables("tblFlightsClone").Rows.Count - 1
+        'i stores the number of times we need to loop through the flights that are already added
+        i = FlightsAdded.Tables("tblJourneyClone").Rows.Count - 1
 
-        For i = 0 To i
-            If intFlightNumber <> CInt(FlightsNeeded.Tables("tblFlightClone").Rows(i).Item("FlightNumber")) Then
-                'that flight number is not in the database yet. we may want to add it to the database 
-            Else
-                bolAddJourney = False
+        'l is the counter variable for this loop
+        For l = 0 To j
+            'Remember the flight number we are considering adding
+            intFlightNumber = CInt(FlightsNeeded.Tables("tblFlightClone").Rows(l).Item("FlightNumber"))
+
+            'make the boolean true. If it stays true through the next loop, we will add a record
+            bolAddJourney = True
+
+            'this loop compares the flight we are trying to add to the flights already in the DB for that day. 
+            For k = 0 To i
+                If intFlightNumber <> CInt(FlightsAdded.Tables("tblJourneyClone").Rows(i).Item("FlightNumber")) Then
+                    'that flight number is not in the database yet. we may want to add it to the database. Begin loop again to check next flight number
+                Else
+                    'this flight is already in the database. We will not want to add it to the database. 
+                    bolAddJourney = False
+                End If
+            Next
+
+            If bolAddJourney = True Then
+                AddNewJourney("usp_JourneyClone_Add_New", intFlightNumber, datSelectedDate, CInt(FlightsNeeded.Tables("tblFlightClone").Rows(l).Item("DepartureTime")))
             End If
-        Next
 
-        If bolAddJourney = True Then
-            'AddNewJourney(intFlightNumber, )
-        End If
+        Next
 
     End Sub
 
