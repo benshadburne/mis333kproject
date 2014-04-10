@@ -3,12 +3,12 @@ Partial Class _Default
     Inherits System.Web.UI.Page
 
 
-    Dim DB As New asdfasdf
+    Dim DB As New DBFlightSearch
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
 
-        DB.GetALLCustomersUsingSP()
+        ' DB.GetALLCustomersUsingSP()
 
         SortandBind()
     End Sub
@@ -21,12 +21,16 @@ Partial Class _Default
         'Date: 03/18/2014
 
         'sort using radio
-        DB.DoSort(radSort.SelectedIndex)
+        'DB.DoSort(radSort.SelectedIndex)
 
-        gvCustomers.DataSource = DB.MyView
-        gvCustomers.DataBind()
+        'gvCustomers.DataSource = DB.MyView
+        'gvCustomers.DataBind()
 
         ' show record count
-        lblCount.Text = CStr(DB.lblCount)
+        'lblCount.Text = CStr(DB.lblCount)
+    End Sub
+
+    Protected Sub Calendar1_SelectionChanged(sender As Object, e As EventArgs) Handles Calendar1.SelectionChanged
+
     End Sub
 End Class

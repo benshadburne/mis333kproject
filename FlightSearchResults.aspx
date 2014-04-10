@@ -5,7 +5,7 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     
 
-    <div class="center-block" style="width: 79%; padding-top: 20px;">
+    <div class="center-block" style="width: 90%; padding-top: 20px;">
         
         <asp:Panel ID="Panel1" runat="server" width="100%">
         <div class="pull-left" style="width: 90px"> <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search" />
@@ -21,22 +21,23 @@
 
     <br />
     <br />
-    <div class="center-block" style="width: 79%; padding-top: 20px; height:100px; min-width: 600px">
+    <div class="center-block" style="width: 90%; padding-top: 20px; height:240px; min-width: 600px">
 
      
-         <div class="pull-left" style="width: 20%; min-width:40px">
-        <asp:Label class="label" ID="Label3" runat="server" Text="Day of Week" ForeColor="Black" Font-Size="Small"></asp:Label>
+         <div class="pull-left" style="width: 37%; min-width:40px">
+        <asp:Label class="label" ID="Label3" runat="server" Text="Date" ForeColor="Black" Font-Size="Small"></asp:Label>
             <br/> 
               <br/> 
-             <asp:DropDownList class="dropdown" ID="DropDownList1" runat="server">
-                 <asp:ListItem Selected="True">Monday</asp:ListItem>
-                 <asp:ListItem>Tuesday</asp:ListItem>
-                 <asp:ListItem>Wednesday</asp:ListItem>
-                 <asp:ListItem>Thursday</asp:ListItem>
-                 <asp:ListItem>Friday</asp:ListItem>
-                 <asp:ListItem>Saturday</asp:ListItem>
-                 <asp:ListItem>Sunday</asp:ListItem>
-             </asp:DropDownList>
+             <asp:Calendar ID="Calendar1" runat="server" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399" Height="200px" Width="220px">
+                 <DayHeaderStyle BackColor="#99CCCC" ForeColor="#336666" Height="1px" />
+                 <NextPrevStyle Font-Size="8pt" ForeColor="#CCCCFF" />
+                 <OtherMonthDayStyle ForeColor="#999999" />
+                 <SelectedDayStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
+                 <SelectorStyle BackColor="#99CCCC" ForeColor="#336666" />
+                 <TitleStyle BackColor="#003399" BorderColor="#3366CC" BorderWidth="1px" Font-Bold="True" Font-Size="10pt" ForeColor="#CCCCFF" Height="25px" />
+                 <TodayDayStyle BackColor="#99CCCC" ForeColor="White" />
+                 <WeekendDayStyle BackColor="#CCCCFF" />
+             </asp:Calendar>
         </div>
            
         <div class="pull-left" style="width: 20%; min-width:40px; height: 67px;">
@@ -75,7 +76,7 @@
                     </asp:DropDownList>
 
             </div>
-   <div class="pull-left" style="width: 12%; min-width:40px; min-height: 67px; margin-top:30px;">
+   <div class="pull-left" style="width: 30%; min-width:40px; height: 67px; margin-top:30px;">
         <asp:RadioButtonList class="radio-inline" ID="RadioButtonList1" runat="server">
             <asp:ListItem Selected="True">AM</asp:ListItem>
             <asp:ListItem>PM</asp:ListItem>
@@ -83,7 +84,7 @@
        </div>
  
 
-        <div class="pull-left" style="width: 20%; min-width:40px; height: 67px;">
+        <div class="pull-left" style="width: 30%; min-width:40px; height: 67px;">
              <asp:Label class="label" ID="Label4" runat="server" Text="Departing City" ForeColor="Black" Font-Size="Small"></asp:Label>
             <br/> 
               <br/> 
@@ -91,7 +92,7 @@
              <asp:SqlDataSource ID="AirportCode" runat="server" ConnectionString="<%$ ConnectionStrings:MIS333K_20142_Team06ConnectionString2 %>" SelectCommand="SELECT [AirportCode] FROM [tblAirport]"></asp:SqlDataSource>
         </div>
 
-        <div class="pull-left" style="width: 20%; min-width:40px; height: 67px;">
+        <div class="pull-left" style="width: 30%; min-width:40px; height: 67px;">
              <asp:Label class="label" ID="Label5" runat="server" Text="Arrival City" ForeColor="Black" Font-Size="Small"></asp:Label>
             <br/> 
               <br/> 
@@ -104,10 +105,26 @@
     <br/> 
         
    
-    <div class="center-block" style="width:79%; min-height:100px;">
-        <asp:GridView class="table" ID="gvFlightSearch" runat="server"></asp:GridView>
-         </div>
-                    
-
+    <div class="center-block" style="width:90%; min-height:100px;">
+        <br />
+        <asp:Label CssClass="label" ID="Label6" runat="server" Text="Direct Flights"></asp:Label>
+        <div class="pull-right">
+            <asp:Label CssClass="label" ID="Label7" runat="server" Text="Count:   "></asp:Label></div>
+         <br />
+         <asp:GridView class="table" ID="gvDirectFlights" runat="server"></asp:GridView>
+       
+        
+              
+    <br />
+    <br />
+    
+     <asp:Label CssClass="label" ID="Label8" runat="server" Text="Indirect Flights"></asp:Label>
+        <div class="pull-right">
+            <asp:Label CssClass="label" ID="Label9" runat="server" Text="Count:   "></asp:Label></div>
+         <br />
+         <asp:GridView class="table" ID="gvIndirectFlights" runat="server"></asp:GridView>
+       
+         </div>      
+     
 </asp:Content>
 
