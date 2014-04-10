@@ -1,0 +1,116 @@
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="Cust_CreateReservationAndSelectFlight.aspx.vb" Inherits="Cust_CreateReservationAndSelectFlight" %>
+
+<asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <link href="CustomersStyleSheet.css" rel="stylesheet" />
+    <div id ="sidebar">
+            <br />
+            <br />
+            <br />
+            <asp:Button ID="btnCreateReservation" runat="server" Text="Create Reservation" style="height: 26px" />
+            <br />
+            <br />
+            <br />
+            <asp:Button ID="btnAddJourney" runat="server" Text="Add another leg" />
+            <br />
+            <br />
+            <br />
+            <asp:Button ID="btnClear" runat="server" Text="Clear" CausesValidation="False" />
+            <br />
+            <br />
+            <asp:LinkButton ID="lnkHome" runat="server" PostBackUrl="~/index.aspx" CausesValidation="False">Home</asp:LinkButton>
+            <br />
+            <br />
+            <asp:LinkButton ID="lnkShowAll" runat="server" PostBackUrl="~/ShowAll.aspx" CausesValidation="False">Show All Customers</asp:LinkButton>
+        </div>
+   
+        <div id ="content">
+            <div id ="content-labels">
+                <asp:Label ID="lblPeopleCount" runat="server" Text="# of People?:"></asp:Label>
+            </div>
+            <div id ="content-textboxes">
+                <asp:TextBox ID="txtPeopleCount" runat="server"></asp:TextBox>
+                
+            </div>
+
+            <br />
+            <br />
+
+            <div id="ddl">
+            <div id="ddl-left">
+                <asp:DropDownList ID="ddlDepartureCity" runat="server"></asp:DropDownList>
+            </div>
+            <div id="ddl-middle">
+                <asp:Label ID="lblDivider" runat="server" Text="To"></asp:Label>
+            </div>
+            <div id="ddl-right">
+                <asp:DropDownList ID="ddlArrivalCity" runat="server"></asp:DropDownList>
+            </div>
+            <br />
+            <br />
+                
+
+            </div>
+
+            <asp:Panel ID="Panel1" runat="server">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
+            <div id="ddl">
+            <div id="ddl-left">
+                <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+            </div>
+            <div id="ddl-middle">
+                <asp:Label ID="Label1" runat="server" Text="To"></asp:Label>
+            </div>
+            <div id="ddl-right">
+                <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
+            </div>
+            </asp:Panel>
+
+            <asp:Panel ID="Panel2" runat="server">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
+            <div id="ddl">
+            <div id="ddl-left">
+                <asp:DropDownList ID="DropDownList3" runat="server"></asp:DropDownList>
+            </div>
+            <div id="ddl-middle">
+                <asp:Label ID="Label2" runat="server" Text="To"></asp:Label>
+            </div>
+            <div id="ddl-right">
+                <asp:DropDownList ID="DropDownList4" runat="server"></asp:DropDownList>
+            </div>
+            </asp:Panel>
+
+            <asp:Panel ID="Panel3" runat="server">
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+
+            <div id="ddl">
+            <div id="ddl-left">
+                <asp:DropDownList ID="DropDownList5" runat="server"></asp:DropDownList>
+            </div>
+            <div id="ddl-middle">
+                <asp:Label ID="Label3" runat="server" Text="To"></asp:Label>
+            </div>
+            <div id="ddl-right">
+                <asp:DropDownList ID="DropDownList6" runat="server"></asp:DropDownList>
+            </div>
+            </asp:Panel>
+
+        </div>
+        
+</asp:Content>
+

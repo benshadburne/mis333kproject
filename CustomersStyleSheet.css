@@ -45,3 +45,25 @@
     text-align: center;
     float: left;
 }
+
+#ddl {
+    width: 98%;
+    float: left;
+}
+
+#ddl-left {
+    width:10%;
+    float: left;
+    text-align: right;
+}
+
+#ddl-middle {
+    width: 10%;
+    float: left;
+    text-align: right;
+}
+#ddl-right {
+    width: 10%;
+    float: left;
+    text-align: right;
+}

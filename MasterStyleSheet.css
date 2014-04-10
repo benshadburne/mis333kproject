@@ -1,0 +1,54 @@
+﻿body {
+    background-color: #88d18e;
+    font-family: Arial;
+}
+
+#header {
+    border-style: double;
+    background-color: #dbbb62;
+    width: 98%;
+    text-align: center;
+}
+
+#sidebar {
+    border-style: double;
+    background-color: #4cff00;
+    width: 20%;
+    float: left;
+    text-align: center;
+}
+
+#content {
+    border-style: double;
+    background-color: #00ff90;
+    width: 98%;
+    float: left;
+}
+
+#content-labels {
+    width: 15%;
+    text-align: right;
+    float: left;
+    line-height: 165%;
+}
+
+#content-textboxes {
+    width: 20%;
+    text-align: left;
+    float: left;
+    line-height: 150%;
+}
+
+#content-image {
+    width: 45%;
+    text-align: center;
+    float: left;
+}
+
+#footer {
+    border-style: double;
+    background-color: #0ff;
+    width: 98%;
+    float: left;
+    text-align: center;
+}
