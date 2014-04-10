@@ -179,7 +179,7 @@ Public Class DBjourneyclone
     Public Sub GetJourneysByDate(ByVal strUSPName As String, ByVal strDatasetName As DataSet, ByVal strViewName As DataView, ByVal strTableName As String, ByVal strDayOfWeek As String, ByVal datSelectedDate As Date)
 
 
-        UseSPToRetrieveRecords(strUSPName, strDatasetName, strViewName, strTableName, aryParamNames, aryParamValues)
+        'UseSPToRetrieveRecords(strUSPName, strDatasetName, strViewName, strTableName, aryParamNames, aryParamValues)
     End Sub
 
 
