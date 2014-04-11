@@ -239,6 +239,7 @@ Public Class DBjourneyclone
                 End If
             Next
 
+            'if the boolean isn't changed, add a new flight to the database
             If bolAddJourney = True Then
                 AddNewJourney("usp_JourneyClone_Add_New", intFlightNumber, datSelectedDate, CInt(FlightsNeeded.Tables("tblFlightClone").Rows(l).Item("DepartureTime")))
             End If

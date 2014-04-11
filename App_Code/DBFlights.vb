@@ -155,7 +155,7 @@ Public Class DBFlightsClone
         End Try
     End Sub
 
-
+    'the sub checks which flights have been added as a journey for a specific day. 
     Public Sub CheckFlightsNeededForSpecificDate(strSPname As String, strParamName As String, strDay As String)
 
         RunSPwithOneParam(strSPname, strParamName, strDay)
