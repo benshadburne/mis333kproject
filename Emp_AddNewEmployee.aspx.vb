@@ -10,7 +10,6 @@ Partial Class Emp_AddNewEmployee
         Dim aryParamNames As New ArrayList
 
         'add parameter names to array list
-        aryParamNames.Add("@EmpID")
         aryParamNames.Add("@LastName")
         aryParamNames.Add("@FirstName")
         aryParamNames.Add("@MI")
@@ -25,7 +24,6 @@ Partial Class Emp_AddNewEmployee
         Dim aryParamValues As New ArrayList
 
         'add parameter values to array list
-        aryParamValues.Add(txtEmpID.Text)
         aryParamValues.Add(txtLastName.Text)
         aryParamValues.Add(txtFirstName.Text)
         aryParamValues.Add(txtMI.Text)
@@ -38,20 +36,22 @@ Partial Class Emp_AddNewEmployee
 
         EObject.AddEmployee("tblEmployeesClone", aryParamNames, aryParamValues)
 
+        Label11.Text = "You have added the record!"
+
     End Sub
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
-        'create variables for biggest empID and new empID
-        Dim intMaxEmpID As Integer
-        Dim intNewEmpID As Integer
+        ''create variables for biggest empID and new empID
+        'Dim intMaxEmpID As Integer
+        'Dim intNewEmpID As Integer
 
-        'find biggest current empid
-        intMaxEmpID = EObject.FindMaxEmpID()
+        ''find biggest current empid
+        'intMaxEmpID = EObject.FindMaxEmpID()
 
-        'set variable to one more than current biggest empID
-        intNewEmpID = intMaxEmpID + 1
+        ''set variable to one more than current biggest empID
+        'intNewEmpID = intMaxEmpID + 1
 
-        'output new empID
-        txtEmpID.Text = intNewEmpID.ToString
+        ''output new empID
+        'txtEmpID.Text = intNewEmpID.ToString
     End Sub
 End Class

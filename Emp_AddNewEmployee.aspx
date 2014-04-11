@@ -20,7 +20,7 @@
     <div id ="middle">
 
         
-            <asp:Label ID="Label1" runat="server" Text="EmpID"></asp:Label><br />
+            <br />
             <asp:Label ID="Label2" runat="server" Text="Last Name"></asp:Label><br />
             <asp:Label ID="Label3" runat="server" Text="First Name"></asp:Label><br />
             <asp:Label ID="Label4" runat="server" Text="MI"></asp:Label><br />
@@ -33,7 +33,7 @@
         </div>
         <div id ="right">
             <div class ="input-group-lg">
-                <asp:TextBox ID="txtEmpID" runat="server" ReadOnly="True"></asp:TextBox><br />
+                <br />
                 <asp:TextBox ID="txtLastName" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvLastName" runat="server" ErrorMessage="Please enter a last name!" ControlToValidate="txtLastName" Text="*"></asp:RequiredFieldValidator><br />
                 <asp:TextBox ID="txtFirstName" runat="server"></asp:TextBox>

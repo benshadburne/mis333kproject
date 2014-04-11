@@ -189,12 +189,12 @@ Public Class DBEmployee
         UseSP("usp_EmployeeClone_Add_New", mdatasetEmployee, mMyView, strTableName, aryParamNames, aryParamValues)
     End Sub
 
-    Public Function FindMaxEmpID() As Integer
-        'run stored procedure to find max emp id
-        RunProcedure("usp_EmployeeClone_Find_Max_EmpID")
+    'Public Function FindMaxEmpID() As Integer
+    '    'run stored procedure to find max emp id
+    '    RunProcedure("usp_EmployeeClone_Find_Max_EmpID")
 
-        Return CInt(mdatasetEmployee.Tables("tblEmployeesClone").Rows(0).Item(0))
-    End Function
+    '    Return CInt(mdatasetEmployee.Tables("tblEmployeesClone").Rows(0).Item(0))
+    'End Function
 
 End Class
 
