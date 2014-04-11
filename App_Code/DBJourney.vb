@@ -168,7 +168,7 @@ Public Class DBjourneyclone
     End Sub
 
 
-    Public Sub AddNewJourney(strUSPName As String, intFlightNumber As Integer, datSelectedDate As Date, intDepartureTime As Integer)
+    Public Sub AddNewJourney(strUSPName As String, intFlightNumber As Integer, datSelectedDate As Date, intDepartureTime As Integer, intArrivalTime As Integer)
         'defines array to put parameter names into
         Dim aryParamNames As New ArrayList
         Dim aryParamValues As New ArrayList
@@ -177,12 +177,15 @@ Public Class DBjourneyclone
         aryParamNames.Add("@FlightNumber")
         aryParamNames.Add("@FlightDate")
         aryParamNames.Add("@DepartureTime")
+        aryParamNames.Add("@ArrivalTime")
 
 
         'add values to parameter values array list
         aryParamValues.Add(intFlightNumber)
         aryParamValues.Add(datSelectedDate)
         aryParamValues.Add(intDepartureTime)
+        aryParamValues.Add(intArrivalTime)
+
 
         'run the sp to add a journey
         UseSPforInsertOrUpdateQuery(strUSPName, aryParamNames, aryParamValues)
@@ -242,7 +245,7 @@ Public Class DBjourneyclone
 
             'if the boolean isn't changed, add a new flight to the database
             If bolAddJourney = True Then
-                AddNewJourney("usp_JourneyClone_Add_New", intFlightNumber, datSelectedDate, CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("DepartureTime")))
+                AddNewJourney("usp_JourneyClone_Add_New", intFlightNumber, datSelectedDate, CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("DepartureTime")), CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("ArrivalTime")))
             End If
 
         Next

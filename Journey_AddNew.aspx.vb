@@ -38,11 +38,6 @@ Partial Class Journey_AddNew
         'Run code to make sure we don't add duplicate journeys. Then add required journeys. 
         DBJourney.CheckWhichJourneysToAdd(DBJourney.MyDataSet, DBFlights.MyDataSet, calDate.SelectedDate)
 
-        'DBJourney.AddNewJourney("usp_JourneyClone_Add_New", CInt(DBFlights.MyDataSet.Tables("tblFlightClone").Rows(intRow).Item("FlightNumber")), calDate.SelectedDate, CInt(DBFlights.MyDataSet.Tables("tblFlightClone").Rows(intRow).Item("DepartureTime")))
-
-
-
-
     End Sub
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load

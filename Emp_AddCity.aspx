@@ -5,7 +5,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div id="header">
-       Add City
+       Add Airport
    </div>
    <div class ="label-default" id="middle">
 
@@ -13,11 +13,7 @@
         <br />
         <asp:Label ID="Label2" runat="server" Text="Airport Code:"></asp:Label>
         <br />
-        <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
-        <br />
-        <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
-        <br />
-        <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label>
+
 <br />
         <br />
 
@@ -34,11 +30,7 @@
         <asp:TextBox ID="txtAirport" runat="server"></asp:TextBox>
         <asp:RequiredFieldValidator ID="rfvAirport" runat="server" ErrorMessage="The airport code must be 3 letters." Text="*" ControlToValidate="txtAirport"></asp:RequiredFieldValidator>
         <br /> 
-        <asp:TextBox ID="TextBox3" runat="server"></asp:TextBox>
         <br /> 
-        <asp:TextBox ID="TextBox4" runat="server"></asp:TextBox>
-        <br /> 
-        <asp:TextBox ID="TextBox5" runat="server"></asp:TextBox>
         <br />
         <br />
         <asp:Button ID="btnAdd" runat="server" Text="Add" />
