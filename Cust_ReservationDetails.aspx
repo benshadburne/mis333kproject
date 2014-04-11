@@ -32,72 +32,62 @@
 </button>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked-party"></span>
+  <span class="glyphicon glyphicon-unchecked-party"></span>
 </button>
             &nbsp;&nbsp;&nbsp;
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked-filled"></span>
+  <span class="glyphicon glyphicon-unchecked-filled"></span>
 </button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
+  <span class="glyphicon glyphicon-unchecked"></span>
 </button>
             <br />
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
+  <span class="glyphicon glyphicon-unchecked"></span>
 </button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
+  <span class="glyphicon glyphicon-unchecked"></span>
 </button>
             &nbsp;&nbsp;&nbsp;
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
+  <span class="glyphicon glyphicon-unchecked"></span>
 </button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
+  <span class="glyphicon glyphicon-unchecked"></span>
 </button>
             <br />
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
+  <span class="glyphicon glyphicon-unchecked"></span>
 </button>
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
+  <span class="glyphicon glyphicon-unchecked"></span>
 </button>
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
-</button>
+<span class="glyphicon glyphicon-unchecked"></span></button>
             &nbsp;&nbsp;
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
-</button>
+<span class="glyphicon glyphicon-unchecked"></span></button>
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
-</button>
+<span class="glyphicon glyphicon-unchecked"></span></button>
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
-</button>
+<span class="glyphicon glyphicon-unchecked"></span></button>
             <br />
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
-</button>
+<span class="glyphicon glyphicon-unchecked"></span></button>
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
-</button>
+<span class="glyphicon glyphicon-unchecked"></span></button>
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
-</button>
+<span class="glyphicon glyphicon-unchecked"></span></button>
             &nbsp;&nbsp;
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
-</button>
+<span class="glyphicon glyphicon-unchecked"></span></button>
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
-</button>
+<span class="glyphicon glyphicon-unchecked"></span></button>
             <button type="button" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked"></span>
-</button>
+<span class="glyphicon glyphicon-unchecked"></span></button>
         </div>
         <br />
         <br />
