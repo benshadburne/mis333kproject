@@ -3,14 +3,14 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div class ="sidebar">
+    <div class ="pull-left" style="width:20%;">
             <br />
             <br />
             <br />
-            <asp:Button ID="btnSave" runat="server" Text="Save" style="height: 26px" />
+            <asp:Button class="btn" ID="btnSave" runat="server" Text="Save" />
             <br />
             <br />
-            <asp:Button ID="btnClear" runat="server" Text="Clear" CausesValidation="False" />
+            <asp:Button class="btn" ID="btnClear" runat="server" Text="Clear" CausesValidation="False" />
             <br />
             <br />
             <asp:Label ID="lblErrorMessage" runat="server" Text=""></asp:Label>
@@ -24,7 +24,7 @@
             <asp:LinkButton ID="lnkShowAll" runat="server" PostBackUrl="~/ShowAll.aspx" CausesValidation="False">Show All Customers</asp:LinkButton>
         </div>
    
-        <div id ="content">
+        <div class ="content">
             <div id ="content-labels">
                 <asp:Label ID="lblLName" runat="server" Text="Last Name:"></asp:Label>
                 <br />
