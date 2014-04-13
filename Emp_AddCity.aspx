@@ -51,7 +51,9 @@
 <br />
         <br />
 
-        <asp:Label ID="Label5" runat="server" Text="Add the mileage and flight time to " ForeColor="Red"></asp:Label>
+        <asp:Label ID="lblAirport" runat="server" Text=""></asp:Label>
+       <br />
+       <asp:Label ID="lblAirportMessage" runat="server" Text="" Forecolor="red"></asp:Label>
         <br />
 
 
@@ -59,16 +61,14 @@
 
     <div class ="input-group-lg"id="Div2">
         <br />
-        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="The city name is a required field." Text="*" ControlToValidate="txtCity"></asp:RequiredFieldValidator>
+        <asp:TextBox ID="txtMileage" runat="server"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="The city name is a required field." Text="*" ControlToValidate="txtMileage"></asp:RequiredFieldValidator>
         <br /> 
-        <asp:TextBox ID="TextBox2" runat="server"></asp:TextBox>
-        <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ErrorMessage="The airport code must be 3 letters." Text="*" ControlToValidate="txtAirport"></asp:RequiredFieldValidator>
         <br /> 
         <br /> 
         <br />
         <br />
-        <asp:Button ID="Button1" runat="server" Text="Add" />
+        <asp:Button ID="btnAddInfo" runat="server" Text="Add Info" />
         <br /> 
         </div>
     </asp:Panel>

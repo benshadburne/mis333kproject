@@ -143,4 +143,25 @@ Public Class DBairportclone
         UseSPforInsertOrUpdateQuery(strSPName, aryParamNames, aryParamValues)
     End Sub
 
+    Public Sub AddMileageAndFlightTime(strSPName As String, strStartAirport As String, strEndAirport As String, intMileage As Integer, intFlightTime As Integer)
+        'defines array to put parameter names into
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+
+        'add parameter names to array list
+        aryParamNames.Add("@StartAirport")
+        aryParamNames.Add("@EndAirport")
+        aryParamNames.Add("@Mileage")
+        aryParamNames.Add("FlightTime")
+
+        'add values to array list
+        aryParamValues.Add(strStartAirport)
+        aryParamValues.Add(strEndAirport)
+        aryParamValues.Add(intMileage)
+        aryParamValues.Add(intFlightTime)
+
+        'add records
+        UseSPforInsertOrUpdateQuery(strSPName, aryParamNames, aryParamValues)
+    End Sub
+
 End Class

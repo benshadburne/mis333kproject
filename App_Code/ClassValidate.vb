@@ -132,6 +132,24 @@ Public Class ClassValidate
         Return True
     End Function
 
+    Public Function CheckCity(ByVal strIn As String) As Boolean
+        'Author: Aaryaman Singhal
+        'Purpose: checks input to see if city
+        'Arguments:  strIn
+        'Return: true/false
+        'Date: 04/13/2014
+
+        'check to see if length is 2 while seeing if it contains only letters
+        Select Case strIn.Substring(0, 1)
+            Case "A" To "Z"
+                Return CheckLetterWithSubstring(strIn)
+            Case Else
+                'failed first letter capital test
+                Return False
+        End Select
+
+    End Function
+
     Public Function CheckState(ByVal strIn As String) As Boolean
         'Author: Ben Shadburne
         'Purpose: checks input to see if state
@@ -141,6 +159,25 @@ Public Class ClassValidate
 
         'check to see if length is 2 while seeing if it contains only letters
         If Len(strIn) = 2 Then
+            'length is true
+            Return CheckLetterWithSubstring(strIn) 'will return true if all are letters, false if not
+
+        End If
+
+        'failed length test
+        Return False
+
+    End Function
+
+    Public Function CheckAirportCode(ByVal strIn As String) As Boolean
+        'Author: Aaryaman Singhal edited Ben Shadburne's check state Function
+        'Purpose: checks input to see if input is valid airport code
+        'Arguments:  strIn
+        'Return: true/false
+        'Date: 02/06/2014
+
+        'check to see if length is 2 while seeing if it contains only letters
+        If Len(strIn) = 3 Then
             'length is true
             Return CheckLetterWithSubstring(strIn) 'will return true if all are letters, false if not
 
