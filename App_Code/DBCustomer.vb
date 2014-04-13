@@ -169,5 +169,53 @@ Public Class DBCustomersClone
     End Sub
 
     'End Sub
+
+    Public Sub UseSPforInsertOrUpdateQuery(ByVal strUSPName As String, ByVal aryParamNames As ArrayList, ByVal aryParamValues As ArrayList)
+        'Purpose: Sort the dataview by the argument (general sub)
+        'Arguments: Stored procedure name, Arraylist of parameter names, and arraylist of parameter values
+        'Returns: Nothing; Runs an Insert or Update Query
+        'Author: Dennis Phelan
+        'Date Created: April 11, 2014
+        'Date Last Modified: April 11, 2014
+
+        'Creates instances of the connection and command object
+        Dim objConnection As New SqlConnection(mstrConnection)
+
+        'Tell SQL Server the name of the stored procedure
+        Dim objCommand As New SqlDataAdapter(strUSPName, objConnection)
+        Try
+            'Sets the command type to stored procedure
+            objCommand.SelectCommand.CommandType = CommandType.StoredProcedure
+
+            'Add parameters to stored procedure
+            Dim index As Integer = 0
+            For Each paramName As String In aryParamNames
+                objCommand.SelectCommand.Parameters.Add(New SqlParameter(CStr(aryParamNames(index)), CStr(aryParamValues(index))))
+
+                index = index + 1
+            Next
+
+            'Open connection and run insert/update query
+            objCommand.SelectCommand.Connection = objConnection
+            objConnection.Open()
+            objCommand.SelectCommand.ExecuteNonQuery()
+            objConnection.Close()
+
+
+        Catch ex As Exception
+
+            'Print out each element of our arraylists if error occured
+            Dim strError As String = ""
+            Dim index As Integer = 0
+            For Each paramName As String In aryParamNames
+                strError = strError & "ParamName: " & CStr(aryParamNames(index))
+                strError = strError & "ParamValue: " & CStr(aryParamValues(index))
+                index = index + 1
+            Next
+
+            Throw New Exception(strError & " error message is " & ex.Message)
+        End Try
+    End Sub
+
 End Class
 
