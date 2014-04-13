@@ -5,7 +5,22 @@ Partial Class Emp_AddNewEmployee
     'create instance of employee database class
     Dim EObject As New DBEmployee
 
+    'create instance of validation class
+    Dim VObject As New ClassValidate
+
     Protected Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
+        'check phone number
+        If VObject.CheckIntegerWithSubstring(txtPhoneNumber.Text) = False Then
+            lblMessage.Text = "Please enter a valid 10 digit phone number with no formatting!"
+            Exit Sub
+        End If
+
+        'check social security number
+        If VObject.CheckIntegerWithSubstring(txtSSN.Text) = False Then
+            lblMessage.Text = "Please enter a valid 9 digit social security number with no formatting!"
+            Exit Sub
+        End If
+
         'create array list for parameter names
         Dim aryParamNames As New ArrayList
 

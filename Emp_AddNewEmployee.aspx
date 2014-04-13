@@ -38,10 +38,10 @@
                 <asp:RequiredFieldValidator ID="rfvLastName" runat="server" ErrorMessage="Please enter a last name!" ControlToValidate="txtLastName" Text="*"></asp:RequiredFieldValidator><br />
                 <asp:TextBox ID="txtFirstName" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvFirstName" runat="server" ErrorMessage="Please enter a first name!" ControlToValidate="txtFirstName" Text="*"></asp:RequiredFieldValidator><br />
-                <asp:TextBox ID="txtMI" runat="server"></asp:TextBox><br />
+                <asp:TextBox ID="txtMI" runat="server" MaxLength="1"></asp:TextBox><br />
                 <asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ErrorMessage="Please enter a password!" ControlToValidate="txtPassword" Text="*"></asp:RequiredFieldValidator><br />
-                <asp:TextBox ID="txtSSN" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtSSN" runat="server" MaxLength="9"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvSSN" runat="server" ErrorMessage="Please enter a Social Security Number!" ControlToValidate="txtLastName" Text="*"></asp:RequiredFieldValidator><br />
                 <asp:TextBox ID="txtEmpType" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvEmpType" runat="server" ErrorMessage="Please enter an employee type!" ControlToValidate="txtEmpType" Text="*"></asp:RequiredFieldValidator><br />
@@ -49,7 +49,7 @@
                 <asp:RequiredFieldValidator ID="rfvAddress" runat="server" ErrorMessage="Please enter an address!" ControlToValidate="txtAddress" Text="*"></asp:RequiredFieldValidator><br />
                 <asp:TextBox ID="txtZip" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvZip" runat="server" ErrorMessage="Please enter a zip code!" ControlToValidate="txtZip" Text="*"></asp:RequiredFieldValidator><br />
-                <asp:TextBox ID="txtPhoneNumber" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtPhoneNumber" runat="server" MaxLength="10"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvPhoneNumber" runat="server" ErrorMessage="Please enter a phone number!" ControlToValidate="txtPhoneNumber" Text="*"></asp:RequiredFieldValidator><br />
             </div>
         </div>
