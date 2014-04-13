@@ -129,5 +129,19 @@ Public Class DBZip
             Return True
         End If
     End Function
+
+    'author: Jace Barton
+    'description: runs SP to see if a matching zip code was found
+    'returns: False if no matching zip code found, true otherwise
+    'inputs: the zip code you want to search for as a string
+    Public Function FindState(strState As String) As Boolean
+        RunSPwithOneParam("usp_ZipsClone_Find_State", "State", strState)
+
+        If mMyView.Count = 0 Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
 End Class
 

@@ -152,8 +152,8 @@ Public Class ClassValidate
     End Function
 
     Public Function CheckState(ByVal strIn As String) As Boolean
-        'Author: Ben Shadburne
-        'Purpose: checks input to see if state
+        'Author: Ben Shadburne, modified by Jace
+        'Purpose: checks input to see if state is 2 letters AND in the database
         'Arguments:  strIn
         'Return: true/false
         'Date: 02/06/2014
@@ -165,7 +165,7 @@ Public Class ClassValidate
 
         End If
 
-        'failed length test
+        'failed length requirement
         Return False
 
     End Function
