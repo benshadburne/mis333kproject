@@ -85,5 +85,49 @@ Public Class DBZip
         End Get
     End Property
 
+
+    Public Sub RunSPwithOneParam(ByVal strSPName As String, ByVal strParamName As String, ByVal strParamValue As String)
+        ' purpose to run a stored procedure with one parameter
+        ' inputs:  stored procedure name, parameter name, parameter value
+        ' returns: dataset filled with correct records
+
+        ' CREATES INSTANCES OF THE CONNECTION AND COMMAND OBJECT
+        Dim objConnection As New SqlConnection(mstrConnection)
+        ' Tell SQL server the name of the stored procedure you will be executing
+        Dim mdbDataAdapter As New SqlDataAdapter(strSPName, objConnection)
+        Try
+            ' SETS THE COMMAND TYPE TO "STORED PROCEDURE"
+            mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
+
+            ' ADD PARAMETER(S) TO SPROC
+            mdbDataAdapter.SelectCommand.Parameters.Add(New SqlParameter(strParamName, strParamValue))
+            ' clear dataset
+            mdatasetzip.Clear()
+
+            ' OPEN CONNECTION AND FILL DATASET
+            mdbDataAdapter.Fill(mdatasetzip, "tblZipClone")
+
+            ' copy dataset to dataview
+            mMyView.Table = mdatasetzip.Tables("tblZipClone")
+
+        Catch ex As Exception
+            Throw New Exception("params are " & strSPName.ToString & " " & strParamName.ToString & " " & strParamValue.ToString & " error is " & ex.Message)
+        End Try
+    End Sub
+
+
+    'author: Jace Barton
+    'description: runs SP to see if a matching zip code was found
+    'returns: False if no matching zip code found, true otherwise
+    'inputs: the zip code you want to search for as a string
+    Public Function FindZip(strZipCode As String) As Boolean
+        RunSPwithOneParam("usp_ZipsClone_Find_Zip", "Zip", strZipCode)
+
+        If mMyView.Count = 0 Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
 End Class
 

@@ -9,6 +9,9 @@ Imports Microsoft.VisualBasic
 
 Public Class ClassValidate
 
+    'create instance of Zip DB
+    Dim ZObject As New DBZip
+
 
     Dim mstrPhone As String
 
@@ -59,20 +62,18 @@ Public Class ClassValidate
     End Function
 
     Public Function CheckZip(ByVal strIn As String) As Boolean
-        'Author: Ben Shadburne
+        'Author: Ben Shadburne, modified by Jace
         'Purpose: validates zip
         'Arguments:  strIn
         'Return: true/false
         'Date: 02/06/2014
 
-        'check if string's length is 10
-        If Len(strIn) = 9 Or Len(strIn) = 5 Then
-            'check digits
-            Return CheckIntegerWithSubstring(strIn)
+        If ZObject.FindZip(strIn) = False Then
+            'zip code not found
+            Return False
+        Else ' zip code found
+            Return True
         End If
-
-        'wasn't 5 or 9 so return false
-        Return False
 
     End Function
     Public Function CheckDigitForLetterNumber(ByVal strIn As String) As Boolean

@@ -8,6 +8,9 @@ Partial Class Emp_AddNewEmployee
     'create instance of validation class
     Dim VObject As New ClassValidate
 
+    'create instance of zip class
+    Dim ZObject As New DBZip
+
     Protected Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
         'check phone number
         If VObject.CheckIntegerWithSubstring(txtPhoneNumber.Text) = False Then
@@ -18,6 +21,13 @@ Partial Class Emp_AddNewEmployee
         'check social security number
         If VObject.CheckIntegerWithSubstring(txtSSN.Text) = False Then
             lblMessage.Text = "Please enter a valid 9 digit social security number with no formatting!"
+            Exit Sub
+        End If
+
+        'check if zip is in the zip table. this calls Validation class. Validation class calls Zip database class. Might be able to consolidate.
+        If VObject.CheckZip(txtZip.Text) = False Then
+            'Zip not found
+            lblMessage.Text = "Please enter a valid US Zip code!"
             Exit Sub
         End If
 
