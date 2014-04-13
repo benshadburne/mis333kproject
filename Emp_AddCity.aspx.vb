@@ -34,8 +34,11 @@ Partial Class Emp_AddCity
             'the record didn't match the one in that row of the database, go to next record
         Next
 
-        'ADD A VALIDATION FOR THE CITY NAME
-
+        'THE CITY NAME CURRENTLY DOES NOT ALLOW CITIES WITH A SPACE IN THEM TO PASS VALIDATION
+        If Validations.CheckCity(txtCity.Text) = False Then
+            lblMessage.Text = "City must begin with a capital letter and only contain letters"
+            Exit Sub
+        End If
 
         'add record
         DBAirport.AddAirport("usp_Airport_Add_New", txtAirport.Text.ToUpper, txtCity.Text)
@@ -54,10 +57,6 @@ Partial Class Emp_AddCity
         'tell the user to add the info for the first airport. 
         lblAirport.Text = "Add the mileage and flight time from " & Session("NewAirport") & " to " & DBAirport.MyDataSet.Tables("tblAirportClone").Rows(0).Item("AirportCode")
 
-        'remove the session variable for the first airport. 
-        'add flight information 
-        'reload the page and go to the next session variable
-
     End Sub
 
     
@@ -73,9 +72,10 @@ Partial Class Emp_AddCity
 
                 'if this is the last airport we need to add information for,
                 If j = i Then
-                    'remove the session variable
+                    'remove both session variables
                     Session.Remove("Airport")
-                    'go to another page
+                    Session.Remove("NewAirport")
+                    'direct the manager to another page
                     'ADD CODE HERE
                     Exit For
                 Else
@@ -105,12 +105,21 @@ Partial Class Emp_AddCity
 
         'NEED TO ADD A DROP DOWN AND USE IT TO FILL FLIGHT TIME
 
+        'add mileage and flight time going to and from the new airport to the old one
         DBAirport.AddMileageAndFlightTime("usp_MilageClone_Add_New", Session("NewAirport"), Session("Airport"), CInt(txtMileage.Text), intFlightTime)
+        DBAirport.AddMileageAndFlightTime("usp_MilageClone_Add_New", Session("Airport"), Session("NewAirport"), CInt(txtMileage.Text), intFlightTime)
 
         'Get the records for the all airports (this is necessary to run the loop for the UpdateSessionVariable sub) 
         DBAirport.GetALLairportcloneUsingSP()
 
+        'add the next airport the session variable
         UpdateSessionVariable(DBAirport.MyDataSet.Tables("tblAirportClone").Rows(0).Item("AirportCode"))
+
+        'clear form
+        lblAirportMessage.Text = ""
+        txtMileage.Text = ""
+
+        'return DDL to normal
 
     End Sub
 End Class
