@@ -7,15 +7,27 @@ Partial Class _Default
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        'checks login session variable 
-        'if empty, neither select nor edit show up
-        'if it's a customer id then select shows up
+        lblMessage.Text = calFlightSearch.SelectedDate.ToString
 
-        'if it's an employee id then select and edit show up
+        'Dim strLogin As String
+        'strLogin = Session("Login").ToString
+        ''checks login session variable 
+        ''if empty, neither select nor edit show up
+        ''if it's a customer id then select shows up
+        'If strLogin = "???????????" Then
+        '    gvDirectFlights.AutoGenerateSelectButton = True
+        '    gvIndirectFlights.AutoGenerateSelectButton = True
+        'End If
+        ''if it's an employee id then select and edit show up
+        'If strLogin = "??????Employee" Then
+        '    gvDirectFlights.AutoGenerateSelectButton = True
+        '    gvDirectFlights.AutoGenerateEditButton = True
+        '    gvIndirectFlights.AutoGenerateSelectButton = True
+        '    gvIndirectFlights.AutoGenerateEditButton = True
+        'End If
 
 
-
-        ' DB.GetALLCustomersUsingSP()
+        DB.GetALLFlightSearchUsingSP()
 
         SortandBind()
     End Sub
@@ -30,16 +42,13 @@ Partial Class _Default
         'sort using radio
         'DB.DoSort(radSort.SelectedIndex)
 
-        'gvCustomers.DataSource = DB.MyView
-        'gvCustomers.DataBind()
+        gvDirectFlights.DataSource = DB.MyView
+        gvDirectFlights.DataBind()
 
         ' show record count
-        'lblCount.Text = CStr(DB.lblCount)
+        lblCountDirect.Text = lblCountDirect.Text & CStr(DB.lblCount)
     End Sub
 
-    Protected Sub Calendar1_SelectionChanged(sender As Object, e As EventArgs) Handles Calendar1.SelectionChanged
-
-    End Sub
 
     Protected Sub gvDirectFlights_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvDirectFlights.SelectedIndexChanged
 

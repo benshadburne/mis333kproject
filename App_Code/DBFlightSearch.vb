@@ -24,6 +24,12 @@ Public Class DBFlightSearch
     Dim mdatasetFlightSearch As New DataSet
     Dim mQueryString As String
 
+    Public Sub ConcatDate(ByVal strTable As String)
+
+        'mMyView.Table.Columns(1).
+
+    End Sub
+
     Public Sub GetALLFlightSearchUsingSP()
         'Author: Ben Shadburne
         'Purpose: runs FlightSearch procedure
@@ -31,7 +37,9 @@ Public Class DBFlightSearch
         'Return: na
         'Date: 03/18/2014
 
-        RunProcedure("usp_flightsearch_get_all")
+
+        'this is in clone version
+        RunProcedure("usp_Flightsearchclone_Get_All")
     End Sub
 
     'define a public read only property

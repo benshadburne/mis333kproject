@@ -28,7 +28,7 @@
         <asp:Label class="label" ID="Label3" runat="server" Text="Date" ForeColor="Black" Font-Size="Small"></asp:Label>
             <br/> 
               <br/> 
-             <asp:Calendar ID="Calendar1" runat="server" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399" Height="200px" Width="220px">
+             <asp:Calendar ID="calFlightSearch" runat="server" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399" Height="200px" Width="220px">
                  <DayHeaderStyle BackColor="#99CCCC" ForeColor="#336666" Height="1px" />
                  <NextPrevStyle Font-Size="8pt" ForeColor="#CCCCFF" />
                  <OtherMonthDayStyle ForeColor="#999999" />
@@ -49,21 +49,33 @@
 
   
         <asp:DropDownList class="dropdown" ID="ddlTimeOfDay" runat="server">
-            <asp:ListItem>12</asp:ListItem>
-            <asp:ListItem>1</asp:ListItem>
-            <asp:ListItem>2</asp:ListItem>
-            <asp:ListItem>3</asp:ListItem>
-            <asp:ListItem>4</asp:ListItem>
-            <asp:ListItem>5</asp:ListItem>
-            <asp:ListItem>6</asp:ListItem>
-            <asp:ListItem>7</asp:ListItem>
-            <asp:ListItem>8</asp:ListItem>
-            <asp:ListItem>9</asp:ListItem>
-            <asp:ListItem>10</asp:ListItem>
-            <asp:ListItem>11</asp:ListItem>
+            <asp:ListItem>200</asp:ListItem>
+            <asp:ListItem>100</asp:ListItem>
+            <asp:ListItem>400</asp:ListItem>
+            <asp:ListItem>300</asp:ListItem>
+            <asp:ListItem>500</asp:ListItem>
+            <asp:ListItem>600</asp:ListItem>
+            <asp:ListItem>700</asp:ListItem>
+            <asp:ListItem>800</asp:ListItem>
+            <asp:ListItem>900</asp:ListItem>
+            <asp:ListItem>1000</asp:ListItem>
+            <asp:ListItem>1100</asp:ListItem>
+            <asp:ListItem>1200</asp:ListItem>
+            <asp:ListItem>1300</asp:ListItem>
+            <asp:ListItem>1400</asp:ListItem>
+            <asp:ListItem>1500</asp:ListItem>
+            <asp:ListItem>1600</asp:ListItem>
+            <asp:ListItem>1700</asp:ListItem>
+            <asp:ListItem>1800</asp:ListItem>
+            <asp:ListItem>1900</asp:ListItem>
+            <asp:ListItem>2000</asp:ListItem>
+            <asp:ListItem>2100</asp:ListItem>
+            <asp:ListItem>2200</asp:ListItem>
+            <asp:ListItem>2300</asp:ListItem>
+            <asp:ListItem>2400</asp:ListItem>
         </asp:DropDownList>
 
-       
+<%--       
         <asp:Label class="label" ID="Label1" runat="server" Text="  :  " ForeColor="Black" ></asp:Label>
        
 
@@ -73,12 +85,12 @@
              <asp:ListItem>15</asp:ListItem>
             <asp:ListItem>30</asp:ListItem>
             <asp:ListItem>45</asp:ListItem>
-                    </asp:DropDownList>
+                    </asp:DropDownList>--%>
 
             </div>
    <div class="pull-left" style="width: 30%; min-width:40px; height: 67px; margin-top:30px;">
         <asp:RadioButtonList class="radio-inline" ID="RadioButtonList1" runat="server">
-            <asp:ListItem Selected="True">AM</asp:ListItem>
+            <asp:ListItem>AM</asp:ListItem>
             <asp:ListItem>PM</asp:ListItem>
         </asp:RadioButtonList>
        </div>
@@ -106,10 +118,11 @@
         
    
     <div class="center-block" style="width:90%; min-height:100px;">
+        <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
         <br />
         <asp:Label CssClass="label" ID="Label6" runat="server" Text="Direct Flights"></asp:Label>
         <div class="pull-right">
-            <asp:Label CssClass="label" ID="Label7" runat="server" Text="Count:"></asp:Label></div>
+            <asp:Label CssClass="label" ID="lblCountDirect" runat="server" Text="Count: "></asp:Label></div>
          <br />
          <asp:GridView class="table" ID="gvDirectFlights" runat="server" EnableSortingAndPagingCallbacks="True"></asp:GridView>
        
@@ -118,11 +131,11 @@
     <br />
     <br />
     
-     <asp:Label CssClass="label" ID="Label8" runat="server" Text="Indirect Flights"></asp:Label>
+     <asp:Label CssClass="label" ID="Label8" runat="server" Text="Indirect Flights" Visible="false"></asp:Label>
         <div class="pull-right">
-            <asp:Label CssClass="label" ID="Label9" runat="server" Text="Count:"></asp:Label></div>
+            <asp:Label CssClass="label" ID="Label9" runat="server" Text="Count:" Visible="false"></asp:Label></div>
          <br />
-         <asp:GridView class="table" ID="gvIndirectFlights" runat="server"></asp:GridView>
+         <asp:GridView class="table" ID="gvIndirectFlights" runat="server" Visible="false"></asp:GridView>
        
          </div>      
      
