@@ -111,7 +111,7 @@
         <div class="pull-right">
             <asp:Label CssClass="label" ID="Label7" runat="server" Text="Count:"></asp:Label></div>
          <br />
-         <asp:GridView class="table" ID="gvDirectFlights" runat="server"></asp:GridView>
+         <asp:GridView class="table" ID="gvDirectFlights" runat="server" EnableSortingAndPagingCallbacks="True"></asp:GridView>
        
         
               

@@ -7,6 +7,13 @@ Partial Class _Default
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        'checks login session variable 
+        'if empty, neither select nor edit show up
+        'if it's a customer id then select shows up
+
+        'if it's an employee id then select and edit show up
+
+
 
         ' DB.GetALLCustomersUsingSP()
 
@@ -31,6 +38,15 @@ Partial Class _Default
     End Sub
 
     Protected Sub Calendar1_SelectionChanged(sender As Object, e As EventArgs) Handles Calendar1.SelectionChanged
+
+    End Sub
+
+    Protected Sub gvDirectFlights_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvDirectFlights.SelectedIndexChanged
+
+        'Session("FlightChoice") = gvDirectFlights
+
+
+
 
     End Sub
 End Class
