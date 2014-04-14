@@ -31,7 +31,7 @@ Public Class DBairportclone
         'Return: na
         'Date: 03/18/2014
 
-        RunProcedure("usp_airportclone_get_all")
+        RunProcedure("usp_AirportClone_get_all")
     End Sub
 
     'define a public read only property
