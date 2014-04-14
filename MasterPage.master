@@ -26,26 +26,28 @@
         
         
     </div>
-      <div style="min-width: 150px">
-      <div class="pull-right">
+      <div style="min-width: 600px">
+      <div class="pull-right" min-width: 40px>
           
           <input type="text" class="form-control" placeholder="Search" aria-flowto="right"/> 
          
                 </div>
 
-      <div class="pull-right" style="padding-right: 10px">
-          <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search" />  
+      <div class="pull-right" style="padding-right: 10px" >
+          <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search" Width="86px" />  
      </div>
 
-      <div class="pull-right" style="width: 15%; padding-right: 10px">
+      <div class="pull-right" style="width: 15%; padding-right: 10px; min-width: 100px">
               <input type="text" class="form-control" id="inpUserName" placeholder="UserName" aria-flowto="right"/> <input type="text" class="form-control" id="inpPassword" placeholder="Password" aria-flowto="right"/>
           </div>
-     <div class="pull-right" style="padding-right: 10px">
-         <asp:Button class="btn" ID="btnLogin" runat="server" Text="Login" /> 
-        
+    <div class="pull-right">
+           <div class="pull-right" style="padding-right: 10px">
+         <asp:Button class="btn" ID="btnLogin" runat="server" Text="Login" width="86px" /> 
+         <br />
+        <asp:Button class="btn" ID="btnLogout" runat="server" Text="Logout" width="86px"/> 
      </div>
       </div>
-
+          </div>
 
       
          <div class="pull-left" style="width: auto; min-width: 50px;">
