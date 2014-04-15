@@ -2,12 +2,19 @@
 Partial Class _Default
     Inherits System.Web.UI.Page
 
+    Dim DBFlights As New DBFlightsClone
+    Dim DBJourney As New DBjourneyclone
+    Dim AddFlightClass As New AddFlightClass
 
-    Dim DB As New DBFlightSearch
+    Dim DBFlightSearch As New DBFlightSearch
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        lblMessage.Text = calFlightSearch.SelectedDate.ToString
+        'lblMessage.Text = calFlightSearch.SelectedDate.ToString
+
+        'make sure a date is selected before they search
+        calFlightSearch.SelectedDate = Now()
+
 
         'Dim strLogin As String
         'strLogin = Session("Login").ToString
@@ -27,7 +34,12 @@ Partial Class _Default
         'End If
 
 
-        DB.GetALLFlightSearchUsingSP()
+        ShowAll()
+
+    End Sub
+
+    Public Sub ShowAll()
+        DBFlightSearch.GetALLFlightSearchUsingSP()
 
         SortandBind()
     End Sub
@@ -42,20 +54,44 @@ Partial Class _Default
         'sort using radio
         'DB.DoSort(radSort.SelectedIndex)
 
-        gvDirectFlights.DataSource = DB.MyView
+        gvDirectFlights.DataSource = DBFlightSearch.MyView
         gvDirectFlights.DataBind()
 
         ' show record count
-        lblCountDirect.Text = lblCountDirect.Text & CStr(DB.lblCount)
+        lblCountDirect.Text = lblCountDirect.Text & CStr(DBFlightSearch.lblCount)
     End Sub
 
 
     Protected Sub gvDirectFlights_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvDirectFlights.SelectedIndexChanged
 
-        'Session("FlightChoice") = gvDirectFlights
+        'sets flight choice session variable to selected index
+        Session("FlightChoice") = DBFlightSearch.MyView.Table().Rows(gvDirectFlights.SelectedIndex)
+
+        lblMessage.Text = DBFlightSearch.MyView.Table().Rows(gvDirectFlights.SelectedIndex).ToString
 
 
 
+    End Sub
 
+    Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+
+
+
+        'define variables
+        Dim strDay As String
+        Dim strDate As String
+        'put the name of the day of the week into strDay
+        strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
+
+        strDate = calFlightSearch.SelectedDate.ToString
+
+        AddFlightClass.AddFlight(strDay, strDate)
+
+
+    End Sub
+
+    Protected Sub btnShowAll_Click(sender As Object, e As EventArgs) Handles btnShowAll.Click
+        'just reloads dataset and binds it
+        ShowAll()
     End Sub
 End Class

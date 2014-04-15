@@ -1,9 +1,11 @@
 ﻿
+Option Strict On
 Partial Class Journey_AddNew
 
     Inherits System.Web.UI.Page
     Dim DBFlights As New DBFlightsClone
     Dim DBJourney As New DBjourneyclone
+    Dim AddFlightClass As New AddFlightClass
 
     Private Sub LoadDDL()
         DBFlights.GetALLFlightsCloneUsingSP()
@@ -18,20 +20,14 @@ Partial Class Journey_AddNew
 
     Protected Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         'define variables
-        Dim intRow As Integer
         Dim strDay As String
-
+        Dim strDate As String
         'put the name of the day of the week into strDay
         strDay = WeekdayName(Weekday(calDate.SelectedDate))
 
-        'This fills the DBFlights.MyDataSet and DBFlights.MyView with the Flights the Journey table should have in it for the given date
-        DBFlights.CheckFlightsNeededForSpecificDate("usp_FlightClone_Need_Journeys", "@DayOfWeek", strDay)
+        strDate = calDate.SelectedDate.ToString
 
-        'this fills the DB Journey Dataset and DB Journey Dataview with journeys that have already been created for the specific day
-        DBJourney.GetJourneysByDate("usp_JourneyClone_Choose_Active_By_Day", "tblJourneyClone", strDay, calDate.SelectedDate)
-
-        'Run code to make sure we don't add duplicate journeys. Then add required journeys. 
-        DBJourney.CheckWhichJourneysToAdd(DBJourney.MyDataSet, DBFlights.MyDataSet, calDate.SelectedDate)
+        AddFlightClass.AddFlight(strDay, strDate)
 
     End Sub
 
