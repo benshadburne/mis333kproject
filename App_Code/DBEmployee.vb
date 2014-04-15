@@ -34,6 +34,11 @@ Public Class DBEmployee
         RunProcedure("usp_EmployeesClone_get_all")
     End Sub
 
+    Public ReadOnly Property dsEmployees() As DataSet
+        Get
+            Return mdatasetEmployee
+        End Get
+    End Property
     'define a public read only property
     Public ReadOnly Property MyView() As DataView
         'Author: Ben Shadburne
@@ -189,12 +194,42 @@ Public Class DBEmployee
         UseSP("usp_EmployeeClone_Add_New", mdatasetEmployee, mMyView, strTableName, aryParamNames, aryParamValues)
     End Sub
 
-    'Public Function FindMaxEmpID() As Integer
-    '    'run stored procedure to find max emp id
-    '    RunProcedure("usp_EmployeeClone_Find_Max_EmpID")
+    Public Sub FindEmpID(strEmpID As String)
+        'run stored procedure to find selected emp id
+        RunSPwithOneParam("usp_EmployeeClone_Find_By_EmpID", "EmpID", strEmpID)
+    End Sub
 
-    '    Return CInt(mdatasetEmployee.Tables("tblEmployeesClone").Rows(0).Item(0))
-    'End Function
+    Public Sub RunSPwithOneParam(ByVal strSPName As String, ByVal strParamName As String, ByVal strParamValue As String)
+        ' purpose to run a stored procedure with one parameter
+        ' inputs:  stored procedure name, parameter name, parameter value
+        ' returns: dataset filled with correct records
+
+        ' CREATES INSTANCES OF THE CONNECTION AND COMMAND OBJECT
+        Dim objConnection As New SqlConnection(mstrConnection)
+        ' Tell SQL server the name of the stored procedure you will be executing
+        Dim mdbDataAdapter As New SqlDataAdapter(strSPName, objConnection)
+        Try
+            ' SETS THE COMMAND TYPE TO "STORED PROCEDURE"
+            mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
+
+            ' ADD PARAMETER(S) TO SPROC
+            mdbDataAdapter.SelectCommand.Parameters.Add(New SqlParameter(strParamName, strParamValue))
+            ' clear dataset
+            Me.mdatasetEmployee.Clear()
+
+            ' OPEN CONNECTION AND FILL DATASET
+            mdbDataAdapter.Fill(mdatasetEmployee, "tblEmployeesClone")
+
+            ' copy dataset to dataview
+            mMyView.Table = mdatasetEmployee.Tables("tblEmployeesClone")
+
+        Catch ex As Exception
+            Throw New Exception("params are " & strSPName.ToString & " " & strParamName.ToString & " " & strParamValue.ToString & " error is " & ex.Message)
+        End Try
+    End Sub
+
+
+
 
 End Class
 
