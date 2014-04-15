@@ -24,12 +24,6 @@ Public Class DBFlightSearch
     Dim mdatasetFlightSearch As New DataSet
     Dim mQueryString As String
 
-    Public Sub ConcatDate(ByVal strTable As String)
-
-        'mMyView.Table.Columns(1).
-
-    End Sub
-
     Public Sub GetALLFlightSearchUsingSP()
         'Author: Ben Shadburne
         'Purpose: runs FlightSearch procedure

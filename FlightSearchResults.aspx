@@ -124,7 +124,11 @@
         <div class="pull-right">
             <asp:Label CssClass="label" ID="lblCountDirect" runat="server" Text="Count: "></asp:Label></div>
          <br />
-         <asp:GridView class="table" ID="gvDirectFlights" runat="server" EnableSortingAndPagingCallbacks="True"></asp:GridView>
+         <asp:GridView class="table" ID="gvDirectFlights" runat="server" EnableSortingAndPagingCallbacks="True">
+             <Columns>
+                 <asp:CommandField CausesValidation="False" InsertVisible="False" ShowCancelButton="False" ShowSelectButton="True" />
+             </Columns>
+        </asp:GridView>
        
         
               
