@@ -75,17 +75,10 @@
             <asp:ListItem>2400</asp:ListItem>
         </asp:DropDownList>
 
-<%--       
-        <asp:Label class="label" ID="Label1" runat="server" Text="  :  " ForeColor="Black" ></asp:Label>
-       
-
- 
-        <asp:DropDownList class="dropdown" ID="ddlFifteenInterval" runat="server">
-            <asp:ListItem>00</asp:ListItem>
-             <asp:ListItem>15</asp:ListItem>
-            <asp:ListItem>30</asp:ListItem>
-            <asp:ListItem>45</asp:ListItem>
-                    </asp:DropDownList>--%>
+<%--<asp:RadioButtonList class="radio-inline" ID="RadioButtonList1" runat="server">
+            <asp:ListItem>AM</asp:ListItem>
+            <asp:ListItem>PM</asp:ListItem>
+        </asp:RadioButtonList>--%>
 
             </div>
    <div class="pull-left" style="width: 30%; min-width:40px; height: 67px; margin-top:30px;">
@@ -100,15 +93,16 @@
              <asp:Label class="label" ID="Label4" runat="server" Text="Departing City" ForeColor="Black" Font-Size="Small"></asp:Label>
             <br/> 
               <br/> 
-              <asp:DropDownList class="dropdown" ID="ddlDepart" runat="server" DataSourceID="AirportCode" DataTextField="AirportCode" DataValueField="AirportCode"></asp:DropDownList>
+              <asp:Label ID="lblDeparture" runat="server"></asp:Label>
              <asp:SqlDataSource ID="AirportCode" runat="server" ConnectionString="<%$ ConnectionStrings:MIS333K_20142_Team06ConnectionString2 %>" SelectCommand="SELECT [AirportCode] FROM [tblAirport]"></asp:SqlDataSource>
         </div>
 
         <div class="pull-left" style="width: 30%; min-width:40px; height: 67px;">
              <asp:Label class="label" ID="Label5" runat="server" Text="Arrival City" ForeColor="Black" Font-Size="Small"></asp:Label>
             <br/> 
+              <br />
+             <asp:Label ID="lblArrival" runat="server"></asp:Label>
               <br/> 
-            <asp:DropDownList class="dropdown" ID="ddlArrival" runat="server" DataSourceID="AirportCode" DataTextField="AirportCode" DataValueField="AirportCode"></asp:DropDownList>
              <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:MIS333K_20142_Team06ConnectionString2 %>" SelectCommand="SELECT [AirportCode] FROM [tblAirport]"></asp:SqlDataSource>
         </div>
 

@@ -90,14 +90,14 @@ Public Class DBFlightSearch
         End If
     End Sub
 
-    Public Sub SearchByState(ByVal strIn As String)
-        'Author: Ben Shadburne
-        'Purpose: search by state
-        'Arguments: search text
-        'Return: filtered dataview by state
-        'Date: 03/18/2014
+    Public Sub SearchByAirports(ByVal strStart As String, ByVal strEnd As String)
+        'Author: Aaryaman Singhal
+        'Purpose: search by start/end airports
+        'Arguments: start and end airport codes
+        'Return: filtered dataview by start and end airport
+        'Date: 04/16/2014
 
-        MyView.RowFilter = "State = '" & strIn & "'"
+        MyView.RowFilter = "[Departure City] = '" & strStart & "' AND [End City] = '" & strEnd & "'"
     End Sub
 
     Public Sub SearchByPartialLastname(ByVal strIn As String)
