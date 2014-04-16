@@ -14,9 +14,17 @@ Partial Class Emp_ModifyEmployee
         'set varaible to session variable
         intEmpID = CInt(Session("RecordID"))
 
+        'if first time loading, check to see if we have a record ID
         If IsPostBack = False Then
-            'get record from last page into dataset
-            EObject.FindEmpID(Session("RecordID").ToString)
+            If Session("RecordID") Is Nothing Then 'we don't have a record ID
+                Response.Redirect("emp_SelectEmployeeToModify.aspx")
+            Else
+                'get record from last page into dataset
+                EObject.FindEmpID(Session("RecordID").ToString)
+                FillTextboxes()
+            End If
+
+            
         End If
     End Sub
 
@@ -29,17 +37,15 @@ Partial Class Emp_ModifyEmployee
         Dim intIndex As Integer = 0
 
         'fill textboxes with the information of the customer currently selected
-        txtLName.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("LastName").ToString
-        txtFName.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("FirstName").ToString
+        txtLastName.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("LastName").ToString
+        txtFirstName.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("FirstName").ToString
         txtMI.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("MI").ToString
-        txtPassword.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("Password").ToString
-        txtUsername.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("Username").ToString
+        txtPassword.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("PSW").ToString
+        txtSSN.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("SSN").ToString
         txtAddress.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("Address").ToString
-        txtCity.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("City").ToString
-        txtState.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("State").ToString
-        txtZip.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("ZipCode").ToString
-        'format the phone number
-        txtPhone.Text = FObject.PhoneNumber(EObject.dsEmployees.Tables("tblCustomersClone").Rows(intIndex).Item("Phone").ToString)
-        txtEmail.Text = EObject.dsEmployees.Tables("tblCustomersClone").Rows(intIndex).Item("EmailAddr").ToString
+        txtEmpType.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("EmpType").ToString
+        txtZip.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("Zip").ToString
+        txtPhoneNumber.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("Phone").ToString
+
     End Sub
 End Class

@@ -14,7 +14,6 @@
             <asp:Button ID="btnSubmit" runat="server" Text="Submit" /><br /><br />
         </div>
 
-        <asp:LinkButton ID="lbHome" runat="server" CausesValidation="False">Return to Employee Dashboard</asp:LinkButton>
     </div>
 
     <div id ="middle">
