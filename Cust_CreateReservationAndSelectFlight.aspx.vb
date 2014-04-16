@@ -42,10 +42,6 @@ Partial Class Cust_CreateReservationAndSelectFlight
     Protected Sub btnAddJourney_Click(sender As Object, e As EventArgs) Handles btnAddJourney.Click
         'redirect the user to the flight search page with session variables for start and end airport.
 
-        ddlDepartureCity.DataValueField = "AirportCode"
-
-        ddlArrivalCity.DataValueField = "AirportCode"
-
 
         Session.Add("StartAiport", ddlDepartureCity.SelectedValue)
         Session.Add("EndAirport", ddlArrivalCity.SelectedValue)
@@ -57,10 +53,26 @@ Partial Class Cust_CreateReservationAndSelectFlight
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-
+        If IsPostBack = False Then
+            LoadDDL()
+        End If
     End Sub
 
-    Private Sub LoadDDLs()
+    Private Sub LoadDDL()
+
+        DBAirport.GetALLairportcloneUsingSP()
+
+        ddlDepartureCity.DataSource = DBAirport.MyDataSet1
+        ddlDepartureCity.DataTextField = "CityName"
+        ddlDepartureCity.DataValueField = "AirportCode"
+        ddlDepartureCity.DataBind()
+
+        ddlArrivalCity.DataSource = DBAirport.MyDataSet2
+        ddlArrivalCity.DataTextField = "CityName"
+        ddlArrivalCity.DataValueField = "AirportCode"
+        ddlArrivalCity.DataBind()
+
+
 
     End Sub
 

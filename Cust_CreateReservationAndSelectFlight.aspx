@@ -38,14 +38,16 @@
 
             <div id="ddl">
             <div id="ddl-left">
-                <asp:DropDownList ID="ddlDepartureCity" runat="server" DataSourceID="AirportCodes" DataTextField="CityName" DataValueField="CityName"></asp:DropDownList>
+                <asp:DropDownList ID="ddlDepartureCity" runat="server"></asp:DropDownList>
                 <asp:SqlDataSource ID="AirportCodes" runat="server" ConnectionString="<%$ ConnectionStrings:MIS333K_20142_Team06ConnectionString %>" SelectCommand="SELECT [CityName], [AirportCode] FROM [tblAirport]"></asp:SqlDataSource>
             </div>
             <div id="ddl-middle">
                 <asp:Label ID="lblDivider" runat="server" Text="To"></asp:Label>
             </div>
             <div id="ddl-right">
-                <asp:DropDownList ID="ddlArrivalCity" runat="server" DataSourceID="AirportCodes" DataTextField="CityName" DataValueField="CityName"></asp:DropDownList>
+                <asp:DropDownList ID="ddlArrivalCity" runat="server"></asp:DropDownList>
+                <asp:SqlDataSource ID="ArrivalDDL" runat="server" ConnectionString="<%$ ConnectionStrings:MIS333K_20142_Team06ConnectionString2 %>" SelectCommand="SELECT [AirportCode], [CityName] FROM [tblAirportClone]"></asp:SqlDataSource>
+                <asp:SqlDataSource ID="SqlDataSource1" runat="server"></asp:SqlDataSource>
             </div>
             <br />
                 <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
