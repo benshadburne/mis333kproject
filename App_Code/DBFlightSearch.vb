@@ -4,13 +4,6 @@
 'Description: handles database based queries and sets up the string and connection
 
 
-
-
-
-'decently blank DB class
-'when making a new db class, just copy this one
-
-
 Option Strict On
 Imports Microsoft.VisualBasic
 Imports System.Data
@@ -32,8 +25,24 @@ Public Class DBFlightSearch
         'Date: 03/18/2014
 
 
-        'this is in clone version
-        RunProcedure("usp_Flightsearchclone_Get_All")
+        'this is in clone version for customers and general
+        RunProcedure("usp_Flightsearchclone_Get_PresentFuture")
+
+
+    End Sub
+
+    Public Sub GetALLFlightSearchUsingSPEmployee()
+        'Author: Ben Shadburne
+        'Purpose: runs FlightSearch procedure
+        'Arguments: na
+        'Return: na
+        'Date: 03/18/2014
+
+
+        'this is in clone version for customers and general
+        RunProcedure("usp_Flightsearchclonse_Get_All_Employee")
+
+
     End Sub
 
     'define a public read only property
@@ -100,24 +109,65 @@ Public Class DBFlightSearch
         MyView.RowFilter = "[Departure City] = '" & strStart & "' AND [End City] = '" & strEnd & "'"
     End Sub
 
-    Public Sub SearchByPartialLastname(ByVal strIn As String)
+    Public Sub SearchStartAirport(ByVal strStart As String)
+        'Author: Aaryaman Singhal
+        'Purpose: search by start/end airports
+        'Arguments: start and end airport codes
+        'Return: filtered dataview by start and end airport
+        'Date: 04/16/2014
+
+        MyView.RowFilter = "[Departure City] = '" & strStart & "'"
+    End Sub
+
+    Public Sub SearchEndAirport(ByVal strEnd As String)
+        'Author: Aaryaman Singhal
+        'Purpose: search by start/end airports
+        'Arguments: start and end airport codes
+        'Return: filtered dataview by start and end airport
+        'Date: 04/16/2014
+
+        MyView.RowFilter = "[End City] = '" & strEnd & "'"
+    End Sub
+
+    Public Sub SearchByDate(ByVal strIn As String)
         'Author: Ben Shadburne
         'Purpose: search by partial lastname
         'Arguments:  search text
         'Return: filtered dataview by partial lastname
         'Date: 03/18/2014
 
-        MyView.RowFilter = "Lastname like '" & strIn & "%'"
+        'need to decypher if days and months are len 2
+        Dim strDay As String
+        Dim strMonth As String
+
+        'makes strday and strmonth into len2 strings of their respective values
+        If strIn.Substring(1, 1) = "/" Then
+            strDay = "0" & strIn.Substring(0, 1)
+            If strIn.Substring(3, 1) = "/" Then
+                strMonth = "0" & strIn.Substring(2, 1)
+            Else
+                strMonth = strIn.Substring(2, 2)
+            End If
+        Else
+            strDay = strIn.Substring(0, 2)
+            If strIn.Substring(4, 1) = "/" Then
+                strMonth = "0" & strIn.Substring(3, 1)
+            Else
+                strMonth = strIn.Substring(3, 2)
+            End If
+        End If
+
+        MyView.RowFilter = "[Flight Date] = '" & strIn.Substring(Len(strIn) - 4, 4) & "-" & strMonth & "-" & strDay & "'"
     End Sub
 
-    Public Sub SearchbyPartialCity(ByVal strIn As String)
+    Public Sub SearchTime(ByVal strIn As String)
         'Author: Ben Shadburne
         'Purpose: search by partial city
         'Arguments:  search text
         'Return: filtered dataview by partial city
         'Date: 03/18/2014
 
-        MyView.RowFilter = "City like '" & strIn & "%'"
+        MyView.RowFilter = "[Departure Time] = '" & strIn & "'"
     End Sub
 
     Public Sub SearchByPartialUserName(ByVal strIn As String)

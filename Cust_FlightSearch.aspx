@@ -94,7 +94,6 @@
             <br/> 
               <br/> 
               <asp:Label ID="lblDeparture" runat="server"></asp:Label>
-             <asp:SqlDataSource ID="AirportCode" runat="server" ConnectionString="<%$ ConnectionStrings:MIS333K_20142_Team06ConnectionString2 %>" SelectCommand="SELECT [AirportCode] FROM [tblAirport]"></asp:SqlDataSource>
         </div>
 
         <div class="pull-left" style="width: 30%; min-width:40px; height: 67px;">
@@ -103,7 +102,6 @@
               <br />
              <asp:Label ID="lblArrival" runat="server"></asp:Label>
               <br/> 
-             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:MIS333K_20142_Team06ConnectionString2 %>" SelectCommand="SELECT [AirportCode] FROM [tblAirport]"></asp:SqlDataSource>
         </div>
 
             </div>

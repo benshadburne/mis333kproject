@@ -58,7 +58,7 @@ Partial Class _Default
         gvDirectFlights.DataBind()
 
         ' show record count
-        lblCountDirect.Text = lblCountDirect.Text & CStr(DBFlightSearch.lblCount)
+        lblCountDirect.Text = "Count: " & CStr(DBFlightSearch.lblCount)
     End Sub
 
 
@@ -85,7 +85,10 @@ Partial Class _Default
 
         strDate = calFlightSearch.SelectedDate.ToString
 
+        'adds flights to the date, ensures we have flights to show
         AddJourneyClass.AddJourney(strDay, strDate)
+
+        'first filter by time
 
 
     End Sub
