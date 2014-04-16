@@ -1,6 +1,6 @@
 ﻿Imports Microsoft.VisualBasic
 
-Public Class AddFlightClass
+Public Class AddJourneyClass
 
     Dim DBFlights As New DBFlightsClone
     Dim DBJourney As New DBjourneyclone

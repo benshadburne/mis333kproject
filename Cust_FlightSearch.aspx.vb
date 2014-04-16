@@ -3,6 +3,7 @@ Partial Class _Default
     Inherits System.Web.UI.Page
 
     Dim DBFlightSearch As New DBFlightSearch
+    Dim DBAddJourney As New AddFlightClass
 
     Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
 
@@ -64,6 +65,6 @@ Partial Class _Default
     End Sub
 
     Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
-
+        DBairportclone.
     End Sub
 End Class
