@@ -3,7 +3,7 @@ Partial Class _Default
     Inherits System.Web.UI.Page
 
     Dim DBFlightSearch As New DBFlightSearch
-    Dim DBAddJourney As New AddFlightClass
+    Dim DBAddJourney As New AddJourneyClass
 
     Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
 
@@ -65,6 +65,14 @@ Partial Class _Default
     End Sub
 
     Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
-        DBairportclone.
+        Dim strDay As String
+        Dim strDate As String
+
+        strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
+
+        strDate = calFlightSearch.SelectedDate.ToString
+
+        DBAddJourney.AddJourney(strDay, strDate)
+
     End Sub
 End Class

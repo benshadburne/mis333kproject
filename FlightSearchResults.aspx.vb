@@ -4,7 +4,7 @@ Partial Class _Default
 
     Dim DBFlights As New DBFlightsClone
     Dim DBJourney As New DBjourneyclone
-    Dim AddFlightClass As New AddFlightClass
+    Dim AddJourneyClass As New AddJourneyClass
 
     Dim DBFlightSearch As New DBFlightSearch
 
@@ -93,5 +93,16 @@ Partial Class _Default
     Protected Sub btnShowAll_Click(sender As Object, e As EventArgs) Handles btnShowAll.Click
         'just reloads dataset and binds it
         ShowAll()
+    End Sub
+
+    Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
+        Dim strDay As String
+        Dim strDate As String
+
+        strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
+
+        strDate = calFlightSearch.SelectedDate.ToString
+
+        DBAddJourney.AddJourney(strDay, strDate)
     End Sub
 End Class
