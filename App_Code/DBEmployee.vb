@@ -93,45 +93,7 @@ Public Class DBEmployee
         End If
     End Sub
 
-    Public Sub SearchByState(ByVal strIn As String)
-        'Author: Ben Shadburne
-        'Purpose: search by state
-        'Arguments: search text
-        'Return: filtered dataview by state
-        'Date: 03/18/2014
-
-        MyView.RowFilter = "State = '" & strIn & "'"
-    End Sub
-
-    Public Sub SearchByPartialLastname(ByVal strIn As String)
-        'Author: Ben Shadburne
-        'Purpose: search by partial lastname
-        'Arguments:  search text
-        'Return: filtered dataview by partial lastname
-        'Date: 03/18/2014
-
-        MyView.RowFilter = "Lastname like '" & strIn & "%'"
-    End Sub
-
-    Public Sub SearchbyPartialCity(ByVal strIn As String)
-        'Author: Ben Shadburne
-        'Purpose: search by partial city
-        'Arguments:  search text
-        'Return: filtered dataview by partial city
-        'Date: 03/18/2014
-
-        MyView.RowFilter = "City like '" & strIn & "%'"
-    End Sub
-
-    Public Sub SearchByPartialUserName(ByVal strIn As String)
-        'Author: Ben Shadburne
-        'Purpose: search by partial username
-        'Arguments:  search text
-        'Return: filtered dataview by partial username
-        'Date: 03/18/2014
-
-        MyView.RowFilter = "UserName like '" & strIn & "%'"
-    End Sub
+   
 
     Public ReadOnly Property lblCount() As Integer
         'Author: Ben Shadburne
@@ -225,6 +187,47 @@ Public Class DBEmployee
 
         Catch ex As Exception
             Throw New Exception("params are " & strSPName.ToString & " " & strParamName.ToString & " " & strParamValue.ToString & " error is " & ex.Message)
+        End Try
+    End Sub
+
+    Protected Sub UseSPforInsertOrUpdateQuery(ByVal strUSPName As String, ByVal aryParamNames As ArrayList, ByVal aryParamValues As ArrayList)
+        'Purpose: Sort the dataview by the argument (general sub)
+        'Arguments: Stored procedure name, Arraylist of parameter names, and  arraylist of parameter values
+        'Returns: Nothing
+        'Author: Rick Byars
+        'Date: 4/03/12
+
+        'Creates instances of the connection and command object
+        Dim objConnection As New SqlConnection(mstrConnection)
+        'Tell SQL server the name of the stored procedure
+        Dim objCommand As New SqlDataAdapter(strUSPName, objConnection)
+        Try
+            'Sets the command type to stored procedure
+            objCommand.SelectCommand.CommandType = CommandType.StoredProcedure
+
+            'Add parameters to stored procedure
+            Dim index As Integer = 0
+            For Each paramName As String In aryParamNames
+                objCommand.SelectCommand.Parameters.Add(New SqlParameter(CStr(aryParamNames(index)), CStr(aryParamValues(index))))
+                index = index + 1
+            Next
+
+            ' OPEN CONNECTION AND RUN INSERT/UPDATE QUERY
+            objCommand.SelectCommand.Connection = objConnection
+            objConnection.Open()
+            objCommand.SelectCommand.ExecuteNonQuery()
+            objConnection.Close()
+
+            'Print out each element of our arraylists if error occured
+        Catch ex As Exception
+            Dim strError As String = ""
+            Dim index As Integer = 0
+            For Each paramName As String In aryParamNames
+                strError = strError & "ParamName: " & CStr(aryParamNames(index))
+                strError = strError & " ParamValue: " & CStr(aryParamValues(index))
+                index = index + 1
+            Next
+            Throw New Exception(strError & " error message is " & ex.Message)
         End Try
     End Sub
 

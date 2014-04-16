@@ -48,4 +48,30 @@ Partial Class Emp_ModifyEmployee
         txtPhoneNumber.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("Phone").ToString
 
     End Sub
+
+    Protected Sub btnModify_Click(sender As Object, e As EventArgs) Handles btnModify.Click
+        'hide modify button
+        btnModify.Visible = False
+
+        'show accept and cancel buttons
+        btnAccept.Visible = True
+        btnCancel.Visible = True
+
+        'make textboxes editable
+        txtLastName.ReadOnly = False
+        txtFirstName.ReadOnly = False
+        txtMI.ReadOnly = False
+        txtPassword.ReadOnly = False
+        txtSSN.ReadOnly = False
+        txtAddress.ReadOnly = False
+        txtEmpType.ReadOnly = False
+        txtZip.ReadOnly = False
+        txtPhoneNumber.ReadOnly = False
+    End Sub
+
+    Protected Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        'get record id that they wanted, and refill the info from the dataset
+        EObject.FindEmpID(Session("RecordID").ToString)
+        FillTextboxes()
+    End Sub
 End Class
