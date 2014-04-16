@@ -5,7 +5,7 @@ Partial Class Journey_AddNew
     Inherits System.Web.UI.Page
     Dim DBFlights As New DBFlightsClone
     Dim DBJourney As New DBjourneyclone
-    Dim AddFlightClass As New AddFlightClass
+    Dim AddJourneyClass As New AddJourneyClass
 
     Private Sub LoadDDL()
         DBFlights.GetALLFlightsCloneUsingSP()
@@ -27,7 +27,7 @@ Partial Class Journey_AddNew
 
         strDate = calDate.SelectedDate.ToString
 
-        AddFlightClass.AddFlight(strDay, strDate)
+        AddJourneyClass.AddJourney(strDay, strDate)
 
     End Sub
 

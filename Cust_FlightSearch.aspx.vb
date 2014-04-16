@@ -88,4 +88,11 @@ Partial Class _Default
         ShowAll()
 
     End Sub
+
+    Protected Sub gvDirectFlights_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvDirectFlights.SelectedIndexChanged
+        'add this flight to the reservation table
+        'direct the user back to the previous page
+        'figure out what session variables I need to pass to the reservation page -- the airport the user ended at, flight date and arrive time, 
+
+    End Sub
 End Class
