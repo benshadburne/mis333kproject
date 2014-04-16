@@ -11,7 +11,7 @@
             <br />
             <br />
             <br />
-            <asp:Button ID="btnAddJourney" runat="server" Text="Add another leg" />
+            <asp:Button ID="btnAddJourney" runat="server" Text="Add this leg" />
             <br />
             <br />
             <br />
@@ -38,15 +38,19 @@
 
             <div id="ddl">
             <div id="ddl-left">
-                <asp:DropDownList ID="ddlDepartureCity" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="ddlDepartureCity" runat="server" DataSourceID="AirportCodes" DataTextField="CityName" DataValueField="CityName"></asp:DropDownList>
+                <asp:SqlDataSource ID="AirportCodes" runat="server" ConnectionString="<%$ ConnectionStrings:MIS333K_20142_Team06ConnectionString %>" SelectCommand="SELECT [CityName], [AirportCode] FROM [tblAirport]"></asp:SqlDataSource>
             </div>
             <div id="ddl-middle">
                 <asp:Label ID="lblDivider" runat="server" Text="To"></asp:Label>
             </div>
             <div id="ddl-right">
-                <asp:DropDownList ID="ddlArrivalCity" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="ddlArrivalCity" runat="server" DataSourceID="AirportCodes" DataTextField="CityName" DataValueField="CityName"></asp:DropDownList>
             </div>
             <br />
+                <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
+                <br />
+                <asp:Label ID="Label5" runat="server" Text="Label"></asp:Label>
             <br />
                 
 
@@ -61,13 +65,13 @@
 
             <div id="ddl">
             <div id="ddl-left">
-                <asp:DropDownList ID="DropDownList1" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="AirportCodes"></asp:DropDownList>
             </div>
             <div id="ddl-middle">
                 <asp:Label ID="Label1" runat="server" Text="To"></asp:Label>
             </div>
             <div id="ddl-right">
-                <asp:DropDownList ID="DropDownList2" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="DropDownList2" runat="server" DataSourceID="AirportCodes"></asp:DropDownList>
             </div>
             </asp:Panel>
 
@@ -80,13 +84,13 @@
 
             <div id="ddl">
             <div id="ddl-left">
-                <asp:DropDownList ID="DropDownList3" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="DropDownList3" runat="server" DataSourceID="AirportCodes"></asp:DropDownList>
             </div>
             <div id="ddl-middle">
                 <asp:Label ID="Label2" runat="server" Text="To"></asp:Label>
             </div>
             <div id="ddl-right">
-                <asp:DropDownList ID="DropDownList4" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="DropDownList4" runat="server" DataSourceID="AirportCodes"></asp:DropDownList>
             </div>
             </asp:Panel>
 
@@ -99,13 +103,13 @@
 
             <div id="ddl">
             <div id="ddl-left">
-                <asp:DropDownList ID="DropDownList5" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="DropDownList5" runat="server" DataSourceID="AirportCodes"></asp:DropDownList>
             </div>
             <div id="ddl-middle">
                 <asp:Label ID="Label3" runat="server" Text="To"></asp:Label>
             </div>
             <div id="ddl-right">
-                <asp:DropDownList ID="DropDownList6" runat="server"></asp:DropDownList>
+                <asp:DropDownList ID="DropDownList6" runat="server" DataSourceID="AirportCodes"></asp:DropDownList>
             </div>
             </asp:Panel>
 
