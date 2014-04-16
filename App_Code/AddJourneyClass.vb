@@ -4,7 +4,7 @@ Public Class AddFlightClass
 
     Dim DBFlights As New DBFlightsClone
     Dim DBJourney As New DBjourneyclone
-    Public Sub AddFlight(ByVal strDay As String, ByVal strDate As String)
+    Public Sub AddJourney(ByVal strDay As String, ByVal strDate As String)
 
 
 

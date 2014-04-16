@@ -62,4 +62,8 @@ Partial Class _Default
         ' show record count
         lblCountDirect.Text = lblCountDirect.Text & CStr(DBFlightSearch.lblCount)
     End Sub
+
+    Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
+
+    End Sub
 End Class

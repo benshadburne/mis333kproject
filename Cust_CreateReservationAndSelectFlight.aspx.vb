@@ -43,11 +43,10 @@ Partial Class Cust_CreateReservationAndSelectFlight
         'redirect the user to the flight search page with session variables for start and end airport.
 
 
-        Session.Add("StartAiport", ddlDepartureCity.SelectedValue)
-        Session.Add("EndAirport", ddlArrivalCity.SelectedValue)
+        Session.Add("StartAiport", ddlDepartureCity.SelectedValue.ToString)
+        Session.Add("EndAirport", ddlArrivalCity.SelectedValue.ToString)
 
-        Label4.Text = Session("StartAirport")
-        Label5.Text = Session("EndAirport")
+        Response.Redirect("Cust_FlightSearch.aspx")
 
     End Sub
 
@@ -60,19 +59,17 @@ Partial Class Cust_CreateReservationAndSelectFlight
 
     Private Sub LoadDDL()
 
-        DBAirport.GetALLairportcloneUsingSP()
+        DBAirport.GetTwoairportcloneUsingSP()
 
-        ddlDepartureCity.DataSource = DBAirport.MyDataSet1
+        ddlDepartureCity.DataSource = DBAirport.MyDataSet
         ddlDepartureCity.DataTextField = "CityName"
         ddlDepartureCity.DataValueField = "AirportCode"
         ddlDepartureCity.DataBind()
 
-        ddlArrivalCity.DataSource = DBAirport.MyDataSet2
+        ddlArrivalCity.DataSource = DBAirport.MyDataSetArrival
         ddlArrivalCity.DataTextField = "CityName"
         ddlArrivalCity.DataValueField = "AirportCode"
         ddlArrivalCity.DataBind()
-
-
 
     End Sub
 

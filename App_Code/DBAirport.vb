@@ -18,10 +18,12 @@ Imports System.Data.SqlClient
 Public Class DBairportclone
     'setting up db, dim connection, adapter, query, dataset
     Dim mMyView As New DataView
+    Dim mMyViewArrival As New DataView
     Dim mdbConn As New SqlConnection
     Dim mstrConnection As String = "workstation id=COMPUTER;packet size=4096;data source=MISSQL.mccombs.utexas.edu;integrated security=False;initial catalog=mis333k_20142_Team06;user id=msbcf819;password=Databasepassword5"
     Dim mdbDataAdapter As New SqlDataAdapter
     Dim mdatasetairportclone As New DataSet
+    Dim mdatasetairportcloneArrival As New DataSet
     Dim mQueryString As String
 
     Public Sub GetALLairportcloneUsingSP()
@@ -31,7 +33,20 @@ Public Class DBairportclone
         'Return: na
         'Date: 03/18/2014
 
-        RunProcedure("usp_AirportClone_get_all")
+        RunProcedureDeparture("usp_AirportClone_get_all")
+
+    End Sub
+
+    Public Sub GetTwoairportcloneUsingSP()
+        'Author: Aaryaman Singhal
+        'Purpose: runs airportclone get all twice -- one for each DDL
+        'Arguments: na
+        'Return: na
+        'Date: 04/162014
+
+        RunProcedureDeparture("usp_AirportClone_get_all")
+        RunProcedureArrival("usp_AirportClone_get_all")
+
     End Sub
 
     'define a public read only property
@@ -59,8 +74,32 @@ Public Class DBairportclone
         End Get
     End Property
 
+    Public ReadOnly Property MyViewarrival() As DataView
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: airportclone dataview
+        'Date: 03/18/2014
 
-    Public Sub RunProcedure(ByVal strName As String)
+        Get
+            Return mMyViewArrival
+        End Get
+    End Property
+
+    Public ReadOnly Property MyDataSetArrival() As DataSet
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: airportclone dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mdatasetairportcloneArrival
+        End Get
+    End Property
+
+
+    Public Sub RunProcedureDeparture(ByVal strName As String)
         'Author: Ben Shadburne
         'Purpose: runs procedure
         'Arguments: procedure name
@@ -80,6 +119,31 @@ Public Class DBairportclone
             mdbDataAdapter.Fill(mdatasetairportclone, "tblAirportClone")
             'copy dataset to dataview
             mMyView.Table = mdatasetairportclone.Tables("tblAirportClone")
+        Catch ex As Exception
+            Throw New Exception("stored procedure is " & strName.ToString & " error is " & ex.Message)
+        End Try
+    End Sub
+
+    Public Sub RunProcedureArrival(ByVal strName As String)
+        'Author: Ben Shadburne
+        'Purpose: runs procedure
+        'Arguments: procedure name
+        'Return: na
+        'Date: na
+
+        'create instances of the conneciton and command object
+        Dim objConnection As New SqlConnection(mstrConnection)
+        'tell sql server the name of the stored procedure you will be executing
+        Dim mdbDataAdapter As New SqlDataAdapter(strName, objConnection)
+        Try
+            'sets the command type to "stored procedure"
+            mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
+            'clear dataset
+            Me.mdatasetairportcloneArrival.Clear()
+            'open conneciton and fill dataset
+            mdbDataAdapter.Fill(mdatasetairportcloneArrival, "tblAirportClone")
+            'copy dataset to dataview
+            mMyView.Table = mdatasetairportcloneArrival.Tables("tblAirportClone")
         Catch ex As Exception
             Throw New Exception("stored procedure is " & strName.ToString & " error is " & ex.Message)
         End Try
