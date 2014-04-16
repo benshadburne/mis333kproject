@@ -6,9 +6,6 @@ Public Class AddJourneyClass
     Dim DBJourney As New DBjourneyclone
     Public Sub AddJourney(ByVal strDay As String, ByVal strDate As String)
 
-
-
-
         'This fills the DBFlights.MyDataSet and DBFlights.MyView with the Flights the Journey table should have in it for the given date
         DBFlights.CheckFlightsNeededForSpecificDate("usp_FlightClone_Need_Journeys", "@DayOfWeek", strDay)
 

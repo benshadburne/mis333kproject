@@ -16,6 +16,7 @@ Public Class DBFlightSearch
     Dim mdbDataAdapter As New SqlDataAdapter
     Dim mdatasetFlightSearch As New DataSet
     Dim mQueryString As String
+    Dim mstrFilterStatement As String
 
     Public Sub GetALLFlightSearchUsingSP()
         'Author: Ben Shadburne
@@ -106,7 +107,8 @@ Public Class DBFlightSearch
         'Return: filtered dataview by start and end airport
         'Date: 04/16/2014
 
-        MyView.RowFilter = "[Departure City] = '" & strStart & "' AND [End City] = '" & strEnd & "'"
+        mstrFilterStatement += "[Departure City] = '" & strStart & "' AND [End City] = '" & strEnd & "' AND "
+
     End Sub
 
     Public Sub SearchStartAirport(ByVal strStart As String)
@@ -137,28 +139,37 @@ Public Class DBFlightSearch
         'Date: 03/18/2014
 
         'need to decypher if days and months are len 2
-        Dim strDay As String
         Dim strMonth As String
+        Dim strDay As String
 
         'makes strday and strmonth into len2 strings of their respective values
         If strIn.Substring(1, 1) = "/" Then
-            strDay = "0" & strIn.Substring(0, 1)
+            strMonth = "0" & strIn.Substring(0, 1)
             If strIn.Substring(3, 1) = "/" Then
-                strMonth = "0" & strIn.Substring(2, 1)
+                strDay = "0" & strIn.Substring(2, 1)
             Else
-                strMonth = strIn.Substring(2, 2)
+                strDay = strIn.Substring(2, 2)
             End If
         Else
-            strDay = strIn.Substring(0, 2)
+            strMonth = strIn.Substring(0, 2)
             If strIn.Substring(4, 1) = "/" Then
-                strMonth = "0" & strIn.Substring(3, 1)
+                strDay = "0" & strIn.Substring(3, 1)
             Else
-                strMonth = strIn.Substring(3, 2)
+                strDay = strIn.Substring(3, 2)
             End If
         End If
 
-        MyView.RowFilter = "[Flight Date] = '" & strIn.Substring(Len(strIn) - 4, 4) & "-" & strMonth & "-" & strDay & "'"
+        mstrFilterStatement += "[Flight Date] = '" & strIn.Substring(Len(strIn) - 4, 4) & "-" & strMonth & "-" & strDay & "'"
+
     End Sub
+
+    Public Function FilterAll(strStart As String, strEnd As String, strDate As String) As String
+
+        SearchByAirports(strStart, strEnd)
+        SearchByDate(strDate)
+        Return mstrFilterStatement
+        mstrFilterStatement = ""
+    End Function
 
     Public Sub SearchTime(ByVal strIn As String)
         'Author: Ben Shadburne
@@ -167,7 +178,8 @@ Public Class DBFlightSearch
         'Return: filtered dataview by partial city
         'Date: 03/18/2014
 
-        MyView.RowFilter = "[Departure Time] = '" & strIn & "'"
+        mstrFilterStatement += "[Departure Time] >= '" & strIn & "'"
+
     End Sub
 
     Public Sub SearchByPartialUserName(ByVal strIn As String)

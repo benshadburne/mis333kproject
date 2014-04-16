@@ -17,19 +17,12 @@ Partial Class _Default
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         ' lblMessage.Text = ddlTimeOfDay.SelectedValue
 
-        'make sure a date is selected before they search
-        If IsPostBack = False Then
-            calFlightSearch.SelectedDate = Now()
-        End If
-
-
         'make sure there is an arrival, departure ciy
         If Session("StartAirport") Is Nothing Then
             Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
             Exit Sub
         Else
             lblDeparture.Text = Session("StartAirport").ToString
-
         End If
 
         If Session("EndAirport") Is Nothing Then
@@ -40,7 +33,14 @@ Partial Class _Default
         End If
 
 
-        ShowAll()
+        'make sure a date is selected before they search, fill the dataview
+        If IsPostBack = False Then
+            calFlightSearch.SelectedDate = Now()
+            DBAddJourney.AddJourney(WeekdayName(Weekday(calFlightSearch.SelectedDate)), calFlightSearch.SelectedDate.ToString)
+            ShowAll()
+        End If
+
+
     End Sub
 
     Public Sub ShowAll()
@@ -56,15 +56,18 @@ Partial Class _Default
         'Return: sorted and binded data
         'Date: 03/18/2014
 
+        Dim strFilterStatement As String
 
-
+        'this filters by start airport, end airport, date, and earliest start time
+        strFilterStatement = DBFlightSearch.FilterAll(Session("StartAirport").ToString, Session("EndAirport").ToString, calFlightSearch.SelectedDate.ToShortDateString)
+        DBFlightSearch.MyView.RowFilter = strFilterStatement
         gvDirectFlights.DataSource = DBFlightSearch.MyView
         gvDirectFlights.DataBind()
 
-        'filter using start and end airport -- will need to put this in a class
-        DBFlightSearch.SearchByAirports(Session("StartAirport").ToString, Session("EndAirport").ToString)
         ' show record count
         lblCountDirect.Text = "Count: " & CStr(DBFlightSearch.lblCount)
+        lblFilter.Text = strFilterStatement
+
     End Sub
 
     Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
@@ -81,8 +84,8 @@ Partial Class _Default
 
         'the only criteria we need to search on is date and time
         'converts to only the date calFlightSearch.SelectedDate.ToShortDateString
-        DBFlightSearch.SearchByDate(calFlightSearch.SelectedDate.ToShortDateString)
-        DBFlightSearch.SearchTime(ddlTimeOfDay.SelectedValue)
+
+        ShowAll()
 
     End Sub
 End Class

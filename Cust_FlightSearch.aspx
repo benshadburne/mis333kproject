@@ -28,7 +28,7 @@
         <asp:Label class="label" ID="Label3" runat="server" Text="Date" ForeColor="Black" Font-Size="Small"></asp:Label>
             <br/> 
               <br/> 
-             <asp:Calendar ID="calFlightSearch" runat="server" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399" Height="200px" Width="220px">
+             <asp:Calendar ID="calFlightSearch" runat="server" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399" Height="200px" Width="220px" AutoPostBack ="true">
                  <DayHeaderStyle BackColor="#99CCCC" ForeColor="#336666" Height="1px" />
                  <NextPrevStyle Font-Size="8pt" ForeColor="#CCCCFF" />
                  <OtherMonthDayStyle ForeColor="#999999" />
@@ -38,10 +38,11 @@
                  <TodayDayStyle BackColor="#99CCCC" ForeColor="White" />
                  <WeekendDayStyle BackColor="#CCCCFF" />
              </asp:Calendar>
+             <asp:Label ID="lblFilter" runat="server" Text="lblFilter"></asp:Label>
         </div>
            
         <div class="pull-left" style="width: 20%; min-width:40px; height: 67px;">
-        <asp:Label class="label" ID="Label2" runat="server" Text="Time" ForeColor="Black" Font-Bold="true" Font-Size="small"></asp:Label>
+        <asp:Label class="label" ID="Label2" runat="server" Text="Earliest Departure Time" ForeColor="Black" Font-Bold="True" Font-Size="Small"></asp:Label>
           
         <br />
     <br />
