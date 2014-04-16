@@ -89,10 +89,10 @@
 
             </div>
    <div class="pull-left" style="width: 30%; min-width:40px; height: 67px; margin-top:30px;">
-        <asp:RadioButtonList class="radio-inline" ID="RadioButtonList1" runat="server">
+        <%--<asp:RadioButtonList class="radio-inline" ID="RadioButtonList1" runat="server">
             <asp:ListItem>AM</asp:ListItem>
             <asp:ListItem>PM</asp:ListItem>
-        </asp:RadioButtonList>
+        </asp:RadioButtonList>--%>
        </div>
  
 
@@ -124,10 +124,7 @@
         <div class="pull-right">
             <asp:Label CssClass="label" ID="lblCountDirect" runat="server" Text="Count: "></asp:Label></div>
          <br />
-         <asp:GridView class="table" ID="gvDirectFlights" runat="server" EnableSortingAndPagingCallbacks="True">
-             <Columns>
-                 <asp:CommandField CausesValidation="False" InsertVisible="False" ShowCancelButton="False" ShowSelectButton="True" />
-             </Columns>
+         <asp:GridView class="table" ID="gvDirectFlights" runat="server" AutoGenerateSelectButton="True">
         </asp:GridView>
        
         
