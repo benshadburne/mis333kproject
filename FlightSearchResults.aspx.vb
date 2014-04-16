@@ -85,7 +85,7 @@ Partial Class _Default
 
         strDate = calFlightSearch.SelectedDate.ToString
 
-        AddFlightClass.AddFlight(strDay, strDate)
+        AddJourneyClass.AddJourney(strDay, strDate)
 
 
     End Sub
@@ -95,14 +95,5 @@ Partial Class _Default
         ShowAll()
     End Sub
 
-    Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
-        Dim strDay As String
-        Dim strDate As String
 
-        strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
-
-        strDate = calFlightSearch.SelectedDate.ToString
-
-        DBAddJourney.AddJourney(strDay, strDate)
-    End Sub
 End Class
