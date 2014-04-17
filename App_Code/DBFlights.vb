@@ -160,4 +160,51 @@ Public Class DBFlightsClone
 
         RunSPwithOneParam(strSPname, strParamName, strDay)
     End Sub
+
+    Protected Sub UseSP(ByVal strUSPName As String, ByVal strDatasetName As DataSet, ByVal strViewName As DataView, ByVal strTableName As String, ByVal aryParamNames As ArrayList, ByVal aryParamValues As ArrayList)
+        'Purpose: Run any stored procedure with any number of parameters
+        'Arguments: Stored procedure name, tblName, dataset name, dataview name, arraylist of parameter names, and arraylist of parameter values
+        'Returns: Nothing
+        'Author: Rick Byars
+        'Date: 4/16/10
+        'Creates instances of the connection and command object
+        Dim objConnection As New SqlConnection(mstrConnection)
+        'Tell SQL server the name of the stored procedure
+        Dim objCommand As New SqlDataAdapter(strUSPName, objConnection)
+        Try
+            'Sets the command type to stored procedure
+            objCommand.SelectCommand.CommandType = CommandType.StoredProcedure
+
+            'Add parameters to stored procedure
+            Dim index As Integer = 0
+            For Each paramName As String In aryParamNames
+                objCommand.SelectCommand.Parameters.Add(New SqlParameter(CStr(aryParamNames(index)), CStr(aryParamValues(index))))
+                index = index + 1
+            Next
+
+            'Clear dataset
+            strDatasetName.Clear()
+
+            'Open the connection and fill dataset
+            objCommand.Fill(strDatasetName, strTableName)
+            ' fill view
+            strViewName.Table = strDatasetName.Tables(strTableName)
+
+            'Print out each element of our arraylists if error occured
+        Catch ex As Exception
+            Dim strError As String = ""
+            Dim index As Integer = 0
+            For Each paramName As String In aryParamNames
+                strError = strError & "ParamName: " & CStr(aryParamNames(index))
+                strError = strError & " ParamValue: " & CStr(aryParamValues(index))
+                index = index + 1
+            Next
+            Throw New Exception(strError & " error message is " & ex.Message)
+        End Try
+    End Sub
+
+    Public Sub AddFlight(ByVal aryParamNames As ArrayList, ByVal aryParamValues As ArrayList)
+        'run the use SP sub to add flights using information passed from form
+        UseSP("usp_FlightClone_Add_New", mdatasetFlightsClone, mMyView, "tblFlightClone", aryParamNames, aryParamValues)
+    End Sub
 End Class
