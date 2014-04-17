@@ -32,6 +32,10 @@ Partial Class _Default
             lblArrival.Text = Session("EndAirport").ToString
         End If
 
+        If Session("JourneyNumber") Is Nothing Then
+            Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
+        End If
+
 
         'make sure a date is selected before they search, fill the dataview
         If IsPostBack = False Then
@@ -61,6 +65,7 @@ Partial Class _Default
         'this filters by start airport, end airport, date, and earliest start time
         strFilterStatement = DBFlightSearch.FilterAll(Session("StartAirport").ToString, Session("EndAirport").ToString, calFlightSearch.SelectedDate.ToShortDateString)
         DBFlightSearch.MyView.RowFilter = strFilterStatement
+        DBFlightSearch.DoSort()
         gvDirectFlights.DataSource = DBFlightSearch.MyView
         gvDirectFlights.DataBind()
 
@@ -90,7 +95,14 @@ Partial Class _Default
     End Sub
 
     Protected Sub gvDirectFlights_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvDirectFlights.SelectedIndexChanged
+        Dim intJourneyID As Integer
         'add this flight to the reservation table
+        intJourneyID = CInt(gvDirectFlights.Rows(gvDirectFlights.SelectedIndex).Cells(1).Text())
+        'increases the session variable which keeps track of how many journeys are booked
+        'Session("JourneyNumber") += 1
+
+
+
         'direct the user back to the previous page
         'figure out what session variables I need to pass to the reservation page -- the airport the user ended at, flight date and arrive time, 
 

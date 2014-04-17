@@ -59,6 +59,18 @@ Public Class DBFlightSearch
         End Get
     End Property
 
+    Public ReadOnly Property MyDataSet() As DataSet
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: FlightSearch dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mdatasetFlightSearch
+        End Get
+    End Property
+
     Public Sub RunProcedure(ByVal strName As String)
         'Author: Ben Shadburne
         'Purpose: runs procedure
@@ -84,20 +96,16 @@ Public Class DBFlightSearch
         End Try
     End Sub
 
-    Public Sub DoSort(ByVal intIndex As Integer)
-        'Author: Ben Shadburne
-        'Purpose: sorts data
-        'Arguments: index of rad button
+    Public Sub DoSort()
+        'Author: Aaryaman Singhal
+        'Purpose: sorts data by departure time
+        'Arguments: none
         'Return: sorted dataview
-        'Date: 03/18/2014
+        'Date: 04/17/2014
 
-        'sort using radio buttons
-        If intIndex = 0 Then
-            'sort by name
-            mMyView.Sort = "lastname, firstname"
-        Else
-            mMyView.Sort = "username"
-        End If
+
+        mMyView.Sort = "[Departure Time]"
+
     End Sub
 
     Public Sub SearchByAirports(ByVal strStart As String, ByVal strEnd As String)

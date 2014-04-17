@@ -42,16 +42,17 @@ Partial Class Cust_CreateReservationAndSelectFlight
     Protected Sub btnAddJourney_Click(sender As Object, e As EventArgs) Handles btnAddJourney.Click
         'redirect the user to the flight search page with session variables for start and end airport.
 
-        Session("StartAirport") = ddlDepartureCity.SelectedValue.ToString
-        Session("EndAirport") = ddlArrivalCity.SelectedValue.ToString
+        Session.Add("StartAirport", ddlDepartureCity.SelectedValue.ToString)
+        Session.Add("EndAirport", ddlArrivalCity.SelectedValue.ToString)
+        If Session("JourneyNumber") Is Nothing Then
+            Session.Add("JourneyNumber", integer = 0)
+        End If
 
         Response.Redirect("Cust_FlightSearch.aspx")
 
     End Sub
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Session.Add("StartAirport", "")
-        Session.Add("EndAirport", "")
 
         If IsPostBack = False Then
             LoadDDL()
