@@ -5,12 +5,6 @@
 
 
 
-
-
-'decently blank DB class
-'when making a new db class, just copy this one
-
-
 Option Strict On
 Imports Microsoft.VisualBasic
 Imports System.Data
@@ -18,11 +12,15 @@ Imports System.Data.SqlClient
 Public Class DBjourneyclone
     'setting up db, dim connection, adapter, query, dataset
     Dim mMyView As New DataView
+    Dim mMyViewSeats As New DataView
     Dim mdbConn As New SqlConnection
     Dim mstrConnection As String = "workstation id=COMPUTER;packet size=4096;data source=MISSQL.mccombs.utexas.edu;integrated security=False;initial catalog=mis333k_20142_Team06;user id=msbcf819;password=Databasepassword5"
     Dim mdbDataAdapter As New SqlDataAdapter
     Dim mdatasetjourneyclone As New DataSet
+    Dim mdatasetjourneycloneSeats As New DataSet
     Dim mQueryString As String
+
+    Dim DBJourneySeats As New DBJourneySeats
 
     Public Sub GetALLjourneycloneUsingSP()
         'Author: Ben Shadburne
@@ -213,6 +211,8 @@ Public Class DBjourneyclone
         'define counter variables
         Dim i As Integer
         Dim j As Integer
+        Dim arlSeats As ArrayList
+        arlSeats = CreateSeatsArray()
         'define a boolean to see if we should add a journey
         Dim bolAddJourney As Boolean = True
         'define a variable to hold the flight number we are running through a loop
@@ -246,11 +246,32 @@ Public Class DBjourneyclone
             'if the boolean isn't changed, add a new flight to the database
             If bolAddJourney = True Then
                 AddNewJourney("usp_JourneyClone_Add_New", intFlightNumber, datSelectedDate, CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("DepartureTime")), CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("ArrivalTime")))
+                'also add unfilled seats to the JourneySeat bridge table in that case
+                'need the journeyID of the journey just added first
+
+                DBJourneySeats.AddSeats(intFlightNumber.ToString, datSelectedDate.ToString, arlSeats)
             End If
 
         Next
 
     End Sub
 
+    Public Function CreateSeatsArray() As ArrayList
 
+        Dim arlSeats As New ArrayList
+        Dim i As Integer
+
+        For i = 1 To 5
+
+            arlSeats.Add(i & "A")
+            arlSeats.Add(i & "B")
+            If i > 2 Then
+                arlSeats.Add(i & "C")
+                arlSeats.Add(i & "D")
+            End If
+
+        Next
+
+        Return arlSeats
+    End Function
 End Class

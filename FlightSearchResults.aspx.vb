@@ -10,7 +10,10 @@ Partial Class _Default
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        'lblMessage.Text = calFlightSearch.SelectedDate.ToString
+        Dim arls As New ArrayList
+        arls = CreateSeatsArray()
+
+        lblMessage.Text = arls(1).ToString
 
         'make sure a date is selected before they search
         calFlightSearch.SelectedDate = Now()
@@ -88,6 +91,7 @@ Partial Class _Default
         'adds flights to the date, ensures we have flights to show
         AddJourneyClass.AddJourney(strDay, strDate)
 
+
         'first filter by time
 
 
@@ -98,5 +102,23 @@ Partial Class _Default
         ShowAll()
     End Sub
 
+    Public Function CreateSeatsArray() As ArrayList
+
+        Dim arlSeats As New ArrayList
+        Dim i As Integer
+
+        For i = 1 To 5
+
+            arlSeats.Add(i & "A")
+            arlSeats.Add(i & "B")
+            If i > 2 Then
+                arlSeats.Add(i & "C")
+                arlSeats.Add(i & "D")
+            End If
+
+        Next
+
+        Return arlSeats
+    End Function
 
 End Class
