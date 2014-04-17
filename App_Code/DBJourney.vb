@@ -167,7 +167,7 @@ Public Class DBjourneyclone
     End Sub
 
 
-    Public Sub AddNewJourney(strUSPName As String, intFlightNumber As Integer, datSelectedDate As Date, intDepartureTime As Integer, intArrivalTime As Integer)
+    Public Sub AddNewJourney(strUSPName As String, intFlightNumber As Integer, datSelectedDate As Date, intDepartureTime As Integer, intArrivalTime As Integer, strDay As String)
         'defines array to put parameter names into
         Dim aryParamNames As New ArrayList
         Dim aryParamValues As New ArrayList
@@ -177,6 +177,7 @@ Public Class DBjourneyclone
         aryParamNames.Add("@FlightDate")
         aryParamNames.Add("@DepartureTime")
         aryParamNames.Add("@ArrivalTime")
+        aryParamNames.Add("@NameOfDay")
 
 
         'add values to parameter values array list
@@ -184,6 +185,7 @@ Public Class DBjourneyclone
         aryParamValues.Add(datSelectedDate)
         aryParamValues.Add(intDepartureTime)
         aryParamValues.Add(intArrivalTime)
+        aryParamValues.Add(strDay)
 
 
         'run the sp to add a journey
@@ -208,11 +210,11 @@ Public Class DBjourneyclone
         UseSPToRetrieveRecords(strUSPName, MyDataSet, MyView, strTableName, aryParamNames, aryParamValues)
     End Sub
 
-    Public Sub CheckWhichJourneysToAdd(FlightsAdded As DataSet, FlightsNeeded As DataSet, datSelectedDate As Date)
+    Public Sub CheckWhichJourneysToAdd(FlightsAdded As DataSet, FlightsNeeded As DataSet, datSelectedDate As Date, strDay As String)
         'define counter variables
         Dim i As Integer
         Dim j As Integer
-       
+
         'define a boolean to see if we should add a journey
         Dim bolAddJourney As Boolean = True
         'define a variable to hold the flight number we are running through a loop
@@ -245,7 +247,7 @@ Public Class DBjourneyclone
 
             'if the boolean isn't changed, add a new flight to the database
             If bolAddJourney = True Then
-                AddNewJourney("usp_JourneyClone_Add_New", intFlightNumber, datSelectedDate, CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("DepartureTime")), CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("ArrivalTime")))
+                AddNewJourney("usp_JourneyClone_Add_New", intFlightNumber, datSelectedDate, CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("DepartureTime")), CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("ArrivalTime")), strDay)
 
                 'also add unfilled seats to the JourneySeat bridge table in that case
                 'need the journeyID of the journey just added first

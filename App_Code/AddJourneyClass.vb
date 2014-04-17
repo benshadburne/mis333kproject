@@ -13,7 +13,7 @@ Public Class AddJourneyClass
         DBJourney.GetJourneysByDate("usp_JourneyClone_Choose_Active_By_Day", "tblJourneyClone", strDay, strDate)
 
         'Run code to make sure we don't add duplicate journeys. Then add required journeys. 
-        DBJourney.CheckWhichJourneysToAdd(DBJourney.MyDataSet, DBFlights.MyDataSet, strDate)
+        DBJourney.CheckWhichJourneysToAdd(DBJourney.MyDataSet, DBFlights.MyDataSet, strDate, strDay)
 
     End Sub
 End Class

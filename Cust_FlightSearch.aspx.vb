@@ -33,7 +33,7 @@ Partial Class _Default
         End If
 
         If Session("JourneyNumber") Is Nothing Then
-            Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
+            'Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
         End If
 
 
