@@ -18,8 +18,20 @@ Partial Class Emp_AddNewEmployee
             Exit Sub
         End If
 
+        'check if phone number is 10 digits long
+        If VObject.CheckLength(txtPhoneNumber.Text, 10) = False Then
+            lblMessage.Text = "Please enter a valid 10 digit phone number with no formatting!"
+            Exit Sub
+        End If
+
         'check social security number
         If VObject.CheckIntegerWithSubstring(txtSSN.Text) = False Then
+            lblMessage.Text = "Please enter a valid 9 digit social security number with no formatting!"
+            Exit Sub
+        End If
+
+        'check if SSN is 9 digits long
+        If VObject.CheckLength(txtPhoneNumber.Text, 9) = False Then
             lblMessage.Text = "Please enter a valid 9 digit social security number with no formatting!"
             Exit Sub
         End If

@@ -231,7 +231,10 @@ Public Class DBEmployee
         End Try
     End Sub
 
-
+    'run stored procedure to modify an employee record
+    Public Sub ModifyEmployee(ByVal aryParamNames As ArrayList, ByVal aryParamValues As ArrayList)
+        UseSPforInsertOrUpdateQuery("usp_EmployeeClone_Modify_Employee", aryParamNames, aryParamValues)
+    End Sub
 
 
 End Class

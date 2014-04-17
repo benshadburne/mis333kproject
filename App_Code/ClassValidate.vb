@@ -339,4 +339,15 @@ Public Class ClassValidate
         Return decResult
     End Function
 
+    Public Function CheckLength(strInput As String, intLength As Integer) As Boolean
+        'check the length of an input
+        'Jace Barton
+        'returns false if input does not equal passed in length, true otherwise
+        If strInput.Length <> intLength Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
+
 End Class
