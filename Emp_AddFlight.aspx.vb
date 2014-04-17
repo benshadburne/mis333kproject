@@ -85,8 +85,8 @@ Partial Class Emp_AddFlight
 
         'fill that array
         aryParamValues.Add(txtFlightNumber.Text)
-        aryParamValues.Add(ddlDepartureCity.SelectedItem.Text)
-        aryParamValues.Add(ddlArrivalCity.SelectedItem.Text)
+        aryParamValues.Add(ddlDepartureCity.SelectedValue.ToString)
+        aryParamValues.Add(ddlArrivalCity.SelectedValue.ToString)
         aryParamValues.Add(strDepartureTime)
         aryParamValues.Add(strArrivalTime)
         aryParamValues.Add(txtBaseFare.Text)
