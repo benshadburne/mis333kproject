@@ -116,7 +116,7 @@ Partial Class Emp_ModifyEmployee
         End If
 
         'check if SSN is 9 digits long
-        If VObject.CheckLength(txtPhoneNumber.Text, 9) = False Then
+        If VObject.CheckLength(txtSSN.Text, 9) = False Then
             lblMessage.Text = "Please enter a valid 9 digit social security number with no formatting!"
             Exit Sub
         End If
