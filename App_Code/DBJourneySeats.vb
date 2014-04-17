@@ -26,13 +26,12 @@ Public Class DBJourneySeats
     Private _session As Integer
 
 
-    Public Sub AddSeats(ByVal strFlight As String, ByVal strDate As String, ByVal arlSeats As ArrayList)
+    Public Sub AddSeats(ByVal strFlight As String, ByVal strDate As String)
         Dim aryParamNames As New ArrayList
         Dim aryParamValues As New ArrayList
         Dim arySeatValues As New ArrayList
         Dim intJourneyID As Integer
 
-        GetALLJourneySeatsUsingSP()
         aryParamNames.Add("@FlightNumber")
         aryParamNames.Add("@FlightDate")
         aryParamValues.Add(strFlight)
@@ -48,9 +47,24 @@ Public Class DBJourneySeats
         aryParamNames.Add("@Seat")
         aryParamNames.Add("@Status")
         arySeatValues.Add(intJourneyID)
+        Dim arlSeats As New ArrayList
+        Dim j As Integer
+
+        For j = 1 To 5
+
+            arlSeats.Add(j & "A")
+            arlSeats.Add(j & "B")
+            If j > 2 Then
+                arlSeats.Add(j & "C")
+                arlSeats.Add(j & "D")
+            End If
+
+        Next
+
 
         For i = 0 To 15
             'adds these values to the array list
+
             arySeatValues.Add(arlSeats(i))
             arySeatValues.Add("N")
 
@@ -64,7 +78,7 @@ Public Class DBJourneySeats
 
     End Sub
 
-    
+
 
     Public Sub GetALLJourneySeatsUsingSP()
         'Author: Ben Shadburne

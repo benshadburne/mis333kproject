@@ -5,15 +5,17 @@ Partial Class _Default
     Dim DBFlights As New DBFlightsClone
     Dim DBJourney As New DBjourneyclone
     Dim AddJourneyClass As New AddJourneyClass
+    Dim DBJourneySeats As New DBJourneySeats
 
     Dim DBFlightSearch As New DBFlightSearch
 
+   
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        Dim arls As New ArrayList
-        arls = CreateSeatsArray()
-
-        lblMessage.Text = arls(1).ToString
+        Dim h As String
+        h = calFlightSearch.SelectedDate.ToShortDateString
+        h = DBFlightSearch.AlterDate(h)
+        lblMessage.Text = h
 
         'make sure a date is selected before they search
         calFlightSearch.SelectedDate = Now()

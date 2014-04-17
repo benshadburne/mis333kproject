@@ -131,7 +131,7 @@ Public Class DBFlightSearch
         MyView.RowFilter = "[End City] = '" & strEnd & "'"
     End Sub
 
-    Public Sub SearchByDate(ByVal strIn As String)
+    Public Function AlterDate(ByVal strIn As String) As String
         'Author: Ben Shadburne
         'Purpose: search by partial lastname
         'Arguments:  search text
@@ -159,14 +159,14 @@ Public Class DBFlightSearch
             End If
         End If
 
-        mstrFilterStatement += "[Flight Date] = '" & strIn.Substring(Len(strIn) - 4, 4) & "-" & strMonth & "-" & strDay & "'"
+        Return strIn.Substring(Len(strIn) - 4, 4) & "-" & strMonth & "-" & strDay
 
-    End Sub
+    End Function
 
     Public Function FilterAll(strStart As String, strEnd As String, strDate As String) As String
 
         SearchByAirports(strStart, strEnd)
-        SearchByDate(strDate)
+        mstrFilterStatement += "[Flight Date] = '" & AlterDate(strDate) & "'"
         Return mstrFilterStatement
         mstrFilterStatement = ""
     End Function

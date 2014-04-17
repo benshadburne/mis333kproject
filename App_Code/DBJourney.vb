@@ -21,6 +21,7 @@ Public Class DBjourneyclone
     Dim mQueryString As String
 
     Dim DBJourneySeats As New DBJourneySeats
+    Dim DBFlightSearch As New DBFlightSearch
 
     Public Sub GetALLjourneycloneUsingSP()
         'Author: Ben Shadburne
@@ -211,8 +212,7 @@ Public Class DBjourneyclone
         'define counter variables
         Dim i As Integer
         Dim j As Integer
-        Dim arlSeats As ArrayList
-        arlSeats = CreateSeatsArray()
+       
         'define a boolean to see if we should add a journey
         Dim bolAddJourney As Boolean = True
         'define a variable to hold the flight number we are running through a loop
@@ -246,32 +246,15 @@ Public Class DBjourneyclone
             'if the boolean isn't changed, add a new flight to the database
             If bolAddJourney = True Then
                 AddNewJourney("usp_JourneyClone_Add_New", intFlightNumber, datSelectedDate, CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("DepartureTime")), CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("ArrivalTime")))
+
                 'also add unfilled seats to the JourneySeat bridge table in that case
                 'need the journeyID of the journey just added first
 
-                DBJourneySeats.AddSeats(intFlightNumber.ToString, datSelectedDate.ToString, arlSeats)
+                DBJourneySeats.AddSeats(intFlightNumber.ToString, DBFlightSearch.AlterDate(datSelectedDate.ToShortDateString))
             End If
 
         Next
 
     End Sub
 
-    Public Function CreateSeatsArray() As ArrayList
-
-        Dim arlSeats As New ArrayList
-        Dim i As Integer
-
-        For i = 1 To 5
-
-            arlSeats.Add(i & "A")
-            arlSeats.Add(i & "B")
-            If i > 2 Then
-                arlSeats.Add(i & "C")
-                arlSeats.Add(i & "D")
-            End If
-
-        Next
-
-        Return arlSeats
-    End Function
 End Class
