@@ -8,23 +8,27 @@ Option Strict On
 Imports Microsoft.VisualBasic
 Imports System.Data
 Imports System.Data.SqlClient
-Public Class DBxxxxx
+Public Class DBReservations
     'setting up db, dim connection, adapter, query, dataset
     Dim mMyView As New DataView
     Dim mdbConn As New SqlConnection
     Dim mstrConnection As String = "workstation id=COMPUTER;packet size=4096;data source=MISSQL.mccombs.utexas.edu;integrated security=False;initial catalog=mis333k_20142_Team06;user id=msbcf819;password=Databasepassword5"
     Dim mdbDataAdapter As New SqlDataAdapter
-    Dim mdatasetxxxxx As New DataSet
+    Dim mdatasetReservations As New DataSet
     Dim mQueryString As String
 
-    Public Sub GetALLxxxxxUsingSP()
+    Public Sub GetALLReservationsUsingSP(ByVal strAdvantage As String)
         'Author: Ben Shadburne
         'Purpose: runs xxxxx procedure
         'Arguments: na
         'Return: na
         'Date: 03/18/2014
 
-        RunProcedure("usp_xxxxx_Get_All")
+        'this only gets ones for the customer who's advantage number is sent
+        RunProcedure("usp_Reservations_Get_All")
+
+        'sort for advantage number here
+
     End Sub
 
     'define a public read only property
@@ -55,40 +59,36 @@ Public Class DBxxxxx
             'sets the command type to "stored procedure"
             mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
             'clear dataset
-            Me.mdatasetxxxxx.Clear()
+            Me.mdatasetReservations.Clear()
             'open conneciton and fill dataset
-            mdbDataAdapter.Fill(mdatasetxxxxx, "yyyyyy")
+            mdbDataAdapter.Fill(mdatasetReservations, "tblReservations")
             'copy dataset to dataview
-            mMyView.Table = mdatasetxxxxx.Tables("yyyyyy")
+            mMyView.Table = mdatasetReservations.Tables("tblReservations")
         Catch ex As Exception
             Throw New Exception("stored procedure is " & strName.ToString & " error is " & ex.Message)
         End Try
     End Sub
 
-    Public Sub DoSort(ByVal intIndex As Integer)
+    Public Sub DoSort()
         'Author: Ben Shadburne
         'Purpose: sorts data
         'Arguments: index of rad button
         'Return: sorted dataview
         'Date: 03/18/2014
 
-        'sort using radio buttons
-        If intIndex = 0 Then
-            'sort by name
-            mMyView.Sort = "lastname, firstname"
-        Else
-            mMyView.Sort = "username"
-        End If
+        'only sort should be by reservationID
+        mMyView.Sort = "[ReservationID]"
+
     End Sub
 
-    Public Sub SearchByState(ByVal strIn As String)
+    Public Sub SearchByAdvantageNumber(ByVal strIn As String)
         'Author: Ben Shadburne
         'Purpose: search by state
         'Arguments: search text
         'Return: filtered dataview by state
         'Date: 03/18/2014
 
-        MyView.RowFilter = "State = '" & strIn & "'"
+        MyView.RowFilter = "[Advantage Numbers] = '&" & strIn & "&'"
     End Sub
 
     Public Sub SearchByPartialLastname(ByVal strIn As String)

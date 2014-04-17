@@ -32,6 +32,7 @@ Public Class DBSeats
         'Date: 03/18/2014
 
         RunProcedure("usp_Seats_Get_All")
+
     End Sub
 
     'define a public read only property
