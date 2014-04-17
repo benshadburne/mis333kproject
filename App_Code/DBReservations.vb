@@ -17,7 +17,7 @@ Public Class DBReservations
     Dim mdatasetReservations As New DataSet
     Dim mQueryString As String
 
-    Public Sub GetALLReservationsUsingSP(ByVal strAdvantage As String)
+    Public Sub GetALLReservationsUsingSP()
         'Author: Ben Shadburne
         'Purpose: runs xxxxx procedure
         'Arguments: na
@@ -30,6 +30,8 @@ Public Class DBReservations
         'sort for advantage number here
 
     End Sub
+
+
 
     'define a public read only property
     Public ReadOnly Property MyView() As DataView
@@ -77,7 +79,7 @@ Public Class DBReservations
         'Date: 03/18/2014
 
         'only sort should be by reservationID
-        mMyView.Sort = "[ReservationID]"
+        mMyView.Sort = "[ReservationID] Ascending"
 
     End Sub
 
