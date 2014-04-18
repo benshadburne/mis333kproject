@@ -39,7 +39,12 @@ Public Class DBJourneySeats
 
         'gets the journeyid that was just created, places it in view, should just be one
         UseSPToRetrieveRecords("usp_JourneySeats_Get_ID", mdatasetJourneySeats, mMyViewSeats, "tblJourneySeats", aryParamNames, aryParamValues)
-        intJourneyID = CInt(mdatasetJourneySeats.Tables("tblJourneySeats").Rows(0).Item("JourneyID"))
+        Try
+            intJourneyID = CInt(mdatasetJourneySeats.Tables("tblJourneySeats").Rows(0).Item("JourneyID"))
+        Catch ex As Exception
+            Exit Sub
+        End Try
+
         'loop to add seats, first reassigning values to paramnames array list
         aryParamNames.Remove("@FlightNumber")
         aryParamNames.Remove("@FlightDate")

@@ -12,12 +12,7 @@ Partial Class _Default
    
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        Dim h As String
-        h = calFlightSearch.SelectedDate.ToShortDateString
-        h = DBFlightSearch.AlterDate(h)
-        
         'make sure a date is selected before they search
-        calFlightSearch.SelectedDate = Now()
 
 
         'Dim strLogin As String
@@ -37,9 +32,12 @@ Partial Class _Default
         '    gvIndirectFlights.AutoGenerateEditButton = True
         'End If
 
-
         ShowAll()
+        SortandBind()
 
+        If IsPostBack = False Then
+            calFlightSearch.SelectedDate = Now()
+        End If
 
     End Sub
 
@@ -47,7 +45,6 @@ Partial Class _Default
         DBFlightSearch.GetALLFlightSearchUsingSP()
         DBFlightSearch.GetALLIndirectStartUsingSP()
         DBFlightSearch.GetALLIndirectFinishUsingSP()
-        SortandBind()
     End Sub
 
     Public Sub SortandBind()
@@ -57,8 +54,8 @@ Partial Class _Default
         'Return: sorted and binded data
         'Date: 03/18/2014
 
-        'sort using radio
-        'DB.DoSort(radSort.SelectedIndex)
+        'sort 
+        DBFlightSearch.DoSort()
 
         'bind all data
         gvDirectFlights.DataSource = DBFlightSearch.MyView
@@ -76,11 +73,10 @@ Partial Class _Default
 
     Protected Sub gvDirectFlights_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvDirectFlights.SelectedIndexChanged
 
-        'sets flight choice session variable to selected index
-        Session("FlightChoice") = DBFlightSearch.MyView.Table().Rows(gvDirectFlights.SelectedIndex)
+        ''sets flight choice session variable to selected index
+        'Session("FlightChoice") = DBFlightSearch.MyView.Table().Rows(gvDirectFlights.SelectedIndex)
 
-        lblMessage.Text = DBFlightSearch.MyView.Table().Rows(gvDirectFlights.SelectedIndex).ToString
-
+        'lblMessage.Text = DBFlightSearch.MyView.Table().Rows(gvDirectFlights.SelectedIndex).ToString
 
 
     End Sub
@@ -89,40 +85,37 @@ Partial Class _Default
 
         lblMessage.Text = ""
 
-        
         'define variables
         Dim strDay As String
         Dim strDate As String
         'put the name of the day of the week into strDay
         strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
 
-        strDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
+        strDate = (calFlightSearch.SelectedDate.ToString)
 
         'adds flights to the date, ensures we have flights to show
         AddJourneyClass.AddJourney(strDay, strDate)
 
-        'filter info for regular search A -> B
-        DBFlightSearch.FilterRegular(ddlDepart.SelectedValue, ddlArrival.SelectedValue, strDate)
+        SearchBtn()
 
-
-
-        'make sure regular count isn't 0
-        If DBFlightSearch.lblCount = 0 Then
-            lblMessage.Text = "No Journeys found, please try again with different criteria"
-            Exit Sub
-        End If
-
-        'run info for indirect search A -> C -> B
-        DBFlightSearch.FilterStart(ddlDepart.SelectedValue, ddlArrival.SelectedValue, strDate)
-
-        'sort and bind
         SortandBind()
 
-        'make visible the indirect stuff
-        gvIndirectStart.Visible = True
-        lblIndirect.Visible = True
-        lblCountDirect.Visible = True
+        'also gotta make second leg stuff invisible
+        gvIndirectFinish.Visible = False
+        lblIndirectFinishC.Visible = False
+        lblIndirectFinish.Visible = False
+        lblCountFinish.Visible = False
 
+    End Sub
+
+    Public Sub SearchBtn()
+        DBFlightSearch.SearchDirect(ddlDepart.SelectedValue, ddlArrival.SelectedValue, DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
+        DBFlightSearch.SearchIndirectStart(ddlDepart.SelectedValue, ddlArrival.SelectedValue, DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
+
+        gvIndirectStart.Visible = True
+        lblIndirectStart.Visible = True
+        lblIndirectStartC.Visible = True
+        lblCountIndirect.Visible = True
 
     End Sub
 
@@ -131,41 +124,32 @@ Partial Class _Default
         ShowAll()
     End Sub
 
-    Public Function CreateSeatsArray() As ArrayList
-
-        Dim arlSeats As New ArrayList
-        Dim i As Integer
-
-        For i = 1 To 5
-
-            arlSeats.Add(i & "A")
-            arlSeats.Add(i & "B")
-            If i > 2 Then
-                arlSeats.Add(i & "C")
-                arlSeats.Add(i & "D")
-            End If
-
-        Next
-
-        Return arlSeats
-    End Function
-
     Protected Sub gvIndirectStart_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectStart.SelectedIndexChanged
+        'lblMessage.Text = 
+        'need to do searchbtn b/c otherwise other gv's get reset
+        SearchBtn()
+        DBFlightSearch.SearchIndirectFinish(DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("End City").ToString, ddlArrival.SelectedValue, _
+        DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString), _
+        DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("Arrival Time").ToString)
 
-        'search db for journeys on same day, starting from the ending location of this one, and start after this one finishes
-        DBFlightSearch.FilterFinish(DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("End City").ToString, ddlArrival.SelectedValue, DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToString), ddlTimeOfDay.SelectedValue)
+        SortandBind()
 
-        'make gvIndirectFinish visible
         gvIndirectFinish.Visible = True
+        lblIndirectFinishC.Visible = True
         lblIndirectFinish.Visible = True
-
-        lblMessage.Text = DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("End City").ToString
+        lblCountFinish.Visible = True
 
     End Sub
 
     Protected Sub gvIndirectFinish_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectFinish.SelectedIndexChanged
 
         'on flightsearch this does nothing, on emp and cust it does something
+
+    End Sub
+
+    Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
+
+        Session("SelectedDate") = calFlightSearch.SelectedDate
 
     End Sub
 End Class

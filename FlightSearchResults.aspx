@@ -133,17 +133,25 @@
     <br />
     <br />
     
-     <asp:Label CssClass="label" ID="lblIndirect" runat="server" Text="Indirect Flights: First Leg" Visible="false"></asp:Label>
-        &nbsp;<div class="pull-right">
-            <asp:Label CssClass="label" ID="Label7" runat="server" Text="Count: " Visible="false"></asp:Label>
+     <asp:Label CssClass="label" ID="lblIndirectStart" runat="server" Text="Indirect Flights: First Leg" Visible="false"></asp:Label>
+        &nbsp;<div class="pull-right" id="StartCount">
+            <asp:Label CssClass="label" ID="lblIndirectStartC" runat="server" Text="Count: " Visible="false"></asp:Label>
             <asp:Label CssClass="label" ID="lblCountIndirect" runat="server" Text="" Visible="false"></asp:Label></div>
          <br />
          <asp:GridView class="table" ID="gvIndirectStart" runat="server" Visible="false" AutoGenerateSelectButton="True"></asp:GridView>
-       <br />
-        <asp:Label CssClass="label" ID="lblIndirectFinish" runat="server" Text="Indirect Flights: Second Leg" Visible="false"></asp:Label>
-         <br />
+       <br /><asp:Label CssClass="label" ID="lblIndirectFinish" runat="server" Text="Indirect Flights: Second Leg" Visible="false"></asp:Label>
+        <div class="pull-right">
+
+            <asp:Label CssClass="label" ID="lblIndirectFinishC" runat="server" Text="Count: " Visible="false"></asp:Label>
+
+            <asp:Label CssClass="label" ID="lblCountFinish" runat="server" Text="" Visible="false"> </asp:Label>
+
+        </div>
+        
          <asp:GridView class="table" ID="gvIndirectFinish" runat="server" Visible="false" AutoGenerateSelectButton="True"></asp:GridView>
-       
+    
+        
+            
          </div>      
      
 </asp:Content>

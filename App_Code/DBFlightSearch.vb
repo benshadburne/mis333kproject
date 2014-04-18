@@ -88,51 +88,25 @@ Public Class DBFlightSearch
         'Date: 04/17/2014
 
         'this is for regular
-        mMyView.Sort = "[Departure Time]"
+        MyView.Sort = "[Flight Date]"
 
     End Sub
 
-    Public Sub SearchByAirports(ByVal strStart As String, ByVal strEnd As String, ByVal intType As Integer)
-        'Author: Aaryaman Singhal
-        'Purpose: search by start/end airports
-        'Arguments: start and end airport codes
-        'Return: filtered dataview by start and end airport
-        'Date: 04/16/2014
+    Public Sub SearchDirect(strDeparture As String, strEnd As String, strDate As String)
+        'everything we'll need for this
+        MyView.RowFilter = "[Departure City] = '" & strDeparture & "' AND [End City] = '" & strEnd & "' AND [Flight Date] = '" & strDate & "'"
 
-        If intType = 1 Then
-            mstrFilterStatement += "[Departure City] = '" & strStart & "' AND [End City] = '" & strEnd & "' AND "
-        ElseIf intType = 2 Then
-            mstrFilterStatement += "[Departure City] = '" & strStart & "' AND [End City] != '" & strEnd & "' AND "
-        ElseIf intType = 3 Then
-            mstrFilterStatement += "[Departure City] = '" & strStart & "' AND [End City] = '" & strEnd & "' AND "
-        End If
     End Sub
 
-
-
-    Public Function FilterAll(strStart As String, strEnd As String, strDate As String, ByVal intType As Integer) As String
-        'returns the filter string for start and end city, and date, all based on type
-        SearchByAirports(strStart, strEnd, intType)
-        mstrFilterStatement += "[Flight Date] = '" & AlterDate(strDate) & "'"
-        If intType = 3 Then
-        End If
-        Return mstrFilterStatement
-        mstrFilterStatement = ""
-    End Function
-
-    Public Sub FilterRegular(ByVal strStart As String, strEnd As String, strDate As String)
-        'this is the filter for start
-        mMyViewStart.RowFilter = FilterAll(strStart, strEnd, strDate, 1)
+    Public Sub SearchIndirectStart(strDeparture As String, strEnd As String, strDate As String)
+        'everything we'll need for this
+        MyViewStart.RowFilter = "[Departure City] = '" & strDeparture & "' AND [End City] <> '" & strEnd & "' AND [Flight Date] = '" & strDate & "'"
     End Sub
 
-    Public Sub FilterStart(ByVal strStart As String, strEnd As String, strDate As String)
-        'this is the filter for start
-        mMyViewStart.RowFilter = FilterAll(strStart, strEnd, strDate, 2)
-    End Sub
-
-    Public Sub FilterFinish(ByVal strStart As String, strEnd As String, strDate As String, strArrivalTime As String)
-        'this is the filter for finish
-        mMyViewStart.RowFilter = FilterAll(strStart, strEnd, strDate, 3) & SearchTime(strArrivalTime)
+    Public Sub SearchIndirectFinish(strDeparture As String, strEnd As String, strDate As String, strTime As String)
+        'indirect flights have to happen all in one day, or not at all
+        MyViewFinish.RowFilter = "[Departure City] = '" & strDeparture & "' AND [End City] = '" & strEnd & "' AND [Flight Date] = '" _
+            & strDate & "' AND [Departure Time] > '" & strTime & "'"
     End Sub
 
     Public Function SearchTime(ByVal strIn As String) As String
@@ -142,7 +116,7 @@ Public Class DBFlightSearch
         'Return: filtered dataview by partial city
         'Date: 03/18/2014
 
-        Return "[Departure Time] >= '" & strIn & "'"
+        Return "AND 'Departure Time' >= '" & strIn & "'"
 
     End Function
 
