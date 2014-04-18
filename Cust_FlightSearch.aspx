@@ -42,40 +42,13 @@
         </div>
            
         <div class="pull-left" style="width: 20%; min-width:40px; height: 67px;">
-        <asp:Label class="label" ID="Label2" runat="server" Text="Earliest Departure Time" ForeColor="Black" Font-Bold="True" Font-Size="Small"></asp:Label>
           
         <br />
+             <asp:Label class="label" ID="lblReturn" runat="server" Text="Select Return Ticket" ForeColor="Black" Font-Size="Small" Visible ="false"></asp:Label>
     <br />
    
 
   
-        <asp:DropDownList class="dropdown" ID="ddlTimeOfDay" runat="server">
-            <asp:ListItem>100</asp:ListItem>
-            <asp:ListItem>200</asp:ListItem>
-            <asp:ListItem>300</asp:ListItem>
-            <asp:ListItem>400</asp:ListItem>
-            <asp:ListItem>500</asp:ListItem>
-            <asp:ListItem>600</asp:ListItem>
-            <asp:ListItem>700</asp:ListItem>
-            <asp:ListItem>800</asp:ListItem>
-            <asp:ListItem>900</asp:ListItem>
-            <asp:ListItem>1000</asp:ListItem>
-            <asp:ListItem>1100</asp:ListItem>
-            <asp:ListItem>1200</asp:ListItem>
-            <asp:ListItem>1300</asp:ListItem>
-            <asp:ListItem>1400</asp:ListItem>
-            <asp:ListItem>1500</asp:ListItem>
-            <asp:ListItem>1600</asp:ListItem>
-            <asp:ListItem>1700</asp:ListItem>
-            <asp:ListItem>1800</asp:ListItem>
-            <asp:ListItem>1900</asp:ListItem>
-            <asp:ListItem>2000</asp:ListItem>
-            <asp:ListItem>2100</asp:ListItem>
-            <asp:ListItem>2200</asp:ListItem>
-            <asp:ListItem>2300</asp:ListItem>
-            <asp:ListItem>2400</asp:ListItem>
-        </asp:DropDownList>
-
 <%--<asp:RadioButtonList class="radio-inline" ID="RadioButtonList1" runat="server">
             <asp:ListItem>AM</asp:ListItem>
             <asp:ListItem>PM</asp:ListItem>

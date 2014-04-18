@@ -102,6 +102,7 @@ Partial Class _Default
         Dim intJourneyNumber As Integer
         Dim strJourneyNumber As String
         Dim strDate As String
+        Dim strTempAirport As String
 
         'add this flight to the reservation table
         intJourneyID = CInt(gvDirectFlights.Rows(gvDirectFlights.SelectedIndex).Cells(1).Text())
@@ -129,17 +130,53 @@ Partial Class _Default
             'retrieve the reservationID for the reservation we just added to. Store it in a new session variable
             Session.Add("ReservationID", DBReservations.GetNewestReservationID())
 
+            'if this is a one way ticket, have them go book their seats
+            If Session("TripType").ToString = "One Way" Then
+                'remove session variables
+                RemoveSessionVariablesAndRedirect()
+                Exit Sub
+            End If
+
+            'if this is a round trip, send back the other 
+            If Session("TripType").ToString = "Round Trip" Then
+                'switch begin, end airport
+                strTempAirport = Session("EndAirport").ToString
+                Session("EndAirport") = Session("StartAirport")
+                Session("StartAirport") = strTempAirport
+                'reload the page and exit sub
+                ShowAll()
+                lblReturn.Visible = True
+                Exit Sub
+            End If
+
         Else
             'add a later journey
             DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
 
-            'update this session variable
+            If Session("TripType").ToString = "Round Trip" Then
+                'remove session variables
+                RemoveSessionVariablesAndRedirect()
+                Exit Sub
+            End If
+
+            'update this session variable if this is a multiple city trip
             Session("JourneyNumber") = intJourneyNumber
+
+        End If
+
+        'if the code gets this far, the trip is a multiple city trip
+
+        If Session("IsFinal") Is Nothing Then
+            'dont do anything
+        Else
+            'remove session variables
+            'redirect to customer Reservation page
+            Session.Remove("IsFinal")
+            RemoveSessionVariablesAndRedirect()
         End If
 
         'mark the airport they must now leave from
         Session("StartAirport") = Session("EndAirport")
-
 
         Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
 
@@ -147,5 +184,15 @@ Partial Class _Default
         'direct the user back to the previous page
         'figure out what session variables I need to pass to the reservation page -- the airport the user ended at, flight date and arrive time, 
 
+    End Sub
+
+    Private Sub RemoveSessionVariablesAndRedirect()
+        'remove session variables
+        Session.Remove("StartAirport")
+        Session.Remove("EndAirport")
+        Session.Remove("JourneyNumber")
+        Session.Remove("TripType")
+
+        Response.Redirect("Cust_SelectSeats.aspx")
     End Sub
 End Class

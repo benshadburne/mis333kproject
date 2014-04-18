@@ -3,19 +3,22 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-     <div id ="sidebar">
+     <div id ="middle">
+            <br />
+            <asp:RadioButtonList ID="rblTrip" runat="server">
+                <asp:ListItem Value="One Way">One Way</asp:ListItem>
+                <asp:ListItem Value="Round Trip">Round Trip</asp:ListItem>
+                <asp:ListItem Value="Multiple City">Multiple City</asp:ListItem>
+            </asp:RadioButtonList>
             <br />
             <br />
-            <br />
-            <asp:Button CssClass="btn" ID="btnCreateReservation" runat="server" Text="Create Reservation" style="height: 26px" />
+            <asp:Button CssClass="btn" ID="btnFinalLeg" runat="server" Text="Add as Final Leg" style="height: 26px" visible="false"/>
             <br />
             <br />
             <br />
             <asp:Button ID="btnAddJourney" runat="server" Text="Add this leg" />
             <br />
             <br />
-            <br />
-            <asp:Button ID="btnClear" runat="server" Text="Clear" CausesValidation="False" />
             <br />
             <br />
             <asp:LinkButton ID="lnkHome" runat="server" PostBackUrl="~/index.aspx" CausesValidation="False">Home</asp:LinkButton>
@@ -26,13 +29,87 @@
    
         <div id ="content">
             <div id ="content-labels">
-                <asp:Label ID="lblPeopleCount" runat="server" Text="# of People?:"></asp:Label>
+                <asp:Label ID="lblAdult" runat="server" Text="# of People age 13+"></asp:Label>
             </div>
             <div id ="content-textboxes">
-                <asp:TextBox CssClass="text-left" ID="txtPeopleCount" runat="server"></asp:TextBox>
+                                <asp:DropDownList ID="ddlAdult" runat="server">
+                                    <asp:ListItem>0</asp:ListItem>
+                                    <asp:ListItem>1</asp:ListItem>
+                                    <asp:ListItem>2</asp:ListItem>
+                                    <asp:ListItem>3</asp:ListItem>
+                                    <asp:ListItem>4</asp:ListItem>
+                                    <asp:ListItem>5</asp:ListItem>
+                                    <asp:ListItem>6</asp:ListItem>
+                                    <asp:ListItem>7</asp:ListItem>
+                                    <asp:ListItem>8</asp:ListItem>
+                                    <asp:ListItem>9</asp:ListItem>
+                                    <asp:ListItem>10</asp:ListItem>
+                                    <asp:ListItem>11</asp:ListItem>
+                                    <asp:ListItem>12</asp:ListItem>
+                                    <asp:ListItem>13</asp:ListItem>
+                                    <asp:ListItem>14</asp:ListItem>
+                                    <asp:ListItem>15</asp:ListItem>
+                                    <asp:ListItem>16</asp:ListItem>
+                                </asp:DropDownList>
+                
+                
+            </div>
+            <br />
+             <div id ="Div1">
+            <div id ="Div2">
+                <asp:Label ID="lblChildren" runat="server" Text="# of People age 3-12"></asp:Label>
+            </div>
+            <div id ="Div3">
+                                <asp:DropDownList ID="ddlChildren" runat="server">
+                                    <asp:ListItem>0</asp:ListItem>
+                                    <asp:ListItem>1</asp:ListItem>
+                                    <asp:ListItem>2</asp:ListItem>
+                                    <asp:ListItem>3</asp:ListItem>
+                                    <asp:ListItem>4</asp:ListItem>
+                                    <asp:ListItem>5</asp:ListItem>
+                                    <asp:ListItem>6</asp:ListItem>
+                                    <asp:ListItem>7</asp:ListItem>
+                                    <asp:ListItem>8</asp:ListItem>
+                                    <asp:ListItem>9</asp:ListItem>
+                                    <asp:ListItem>10</asp:ListItem>
+                                    <asp:ListItem>11</asp:ListItem>
+                                    <asp:ListItem>12</asp:ListItem>
+                                    <asp:ListItem>13</asp:ListItem>
+                                    <asp:ListItem>14</asp:ListItem>
+                                    <asp:ListItem>15</asp:ListItem>
+                                    <asp:ListItem>16</asp:ListItem>
+                                </asp:DropDownList>
                 
             </div>
 
+                 <br /> 
+
+                 <div id ="Div4">
+            <div id ="Div5">
+                <asp:Label ID="lblBabies" runat="server" Text="# of People age 2 and under"></asp:Label>
+            </div>
+            <div id ="Div6">
+                                <asp:DropDownList ID="ddlBabies" runat="server">
+                                    <asp:ListItem>0</asp:ListItem>
+                                    <asp:ListItem>1</asp:ListItem>
+                                    <asp:ListItem>2</asp:ListItem>
+                                    <asp:ListItem>3</asp:ListItem>
+                                    <asp:ListItem>4</asp:ListItem>
+                                    <asp:ListItem>5</asp:ListItem>
+                                    <asp:ListItem>6</asp:ListItem>
+                                    <asp:ListItem>7</asp:ListItem>
+                                    <asp:ListItem>8</asp:ListItem>
+                                    <asp:ListItem>9</asp:ListItem>
+                                    <asp:ListItem>10</asp:ListItem>
+                                    <asp:ListItem>11</asp:ListItem>
+                                    <asp:ListItem>12</asp:ListItem>
+                                    <asp:ListItem>13</asp:ListItem>
+                                    <asp:ListItem>14</asp:ListItem>
+                                    <asp:ListItem>15</asp:ListItem>
+                                    <asp:ListItem>16</asp:ListItem>
+                                </asp:DropDownList>
+                
+            </div>
             <br />
             <br />
 
@@ -54,6 +131,7 @@
             <br />
                 
 
+            </div>
             </div>
             </asp:Content>
 

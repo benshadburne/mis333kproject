@@ -35,20 +35,16 @@ Partial Class Cust_CreateReservationAndSelectFlight
     'user will select first leg of journey. A to B. -- should the user have to create their flight at this point? 
     'how will we know which advantage numbers to add to the flight. 
 
-    Protected Sub btnCreateReservation_Click(sender As Object, e As EventArgs) Handles btnCreateReservation.Click
-        'send the user to a page where they can choose the customers on the reservation and add tickets
-    End Sub
-
     Protected Sub btnAddJourney_Click(sender As Object, e As EventArgs) Handles btnAddJourney.Click
         'redirect the user to the flight search page with session variables for start and end airport.
 
-        Session.Add("StartAirport", ddlDepartureCity.SelectedValue.ToString)
-        Session.Add("EndAirport", ddlArrivalCity.SelectedValue.ToString)
+        'if this is the first add journey then do these things
         If Session("JourneyNumber") Is Nothing Then
             Session.Add("JourneyNumber", CInt(0))
+            Session.Add("TripType", rblTrip.SelectedValue.ToString)
         End If
 
-        Response.Redirect("Cust_FlightSearch.aspx")
+        CreateSessionVariablesAndRedirect()
 
     End Sub
 
@@ -65,6 +61,24 @@ Partial Class Cust_CreateReservationAndSelectFlight
             ddlDepartureCity.Items.FindByValue(Session("StartAirport")).Selected = True
             ddlDepartureCity.Enabled = False
         End If
+
+        If Session("TripType").ToString Is Nothing Then
+            'dont do anything
+        Else
+            'hide the radio button list and drop downs for number of customers
+            rblTrip.Visible = False
+            lblAdult.Visible = False
+            lblBabies.Visible = False
+            lblChildren.Visible = False
+            ddlAdult.Visible = False
+            ddlChildren.Visible = False
+            ddlBabies.Visible = False
+
+            'make the add as final leg button visisble
+            btnFinalLeg.Visible = True
+
+        End If
+
 
 
     End Sub
@@ -85,4 +99,20 @@ Partial Class Cust_CreateReservationAndSelectFlight
 
     End Sub
 
+    Protected Sub btnFinalLeg_Click(sender As Object, e As EventArgs) Handles btnFinalLeg.Click
+
+        'create a session variable to let the cust flight search page know that this is the final journey to add
+        Session.Add("IsFinal", "yes")
+
+        'get start and end airport and redirect
+        CreateSessionVariablesAndRedirect()
+
+    End Sub
+
+    Private Sub CreateSessionVariablesAndRedirect()
+        Session.Add("StartAirport", ddlDepartureCity.SelectedValue.ToString)
+        Session.Add("EndAirport", ddlArrivalCity.SelectedValue.ToString)
+
+        Response.Redirect("Cust_FlightSearch.aspx")
+    End Sub
 End Class
