@@ -34,20 +34,26 @@ Public Class DBCustomersClone
         RunProcedure("usp_CustomersClone_get_all")
     End Sub
 
-    Public Sub SortCustomersClone(intSort As Integer)
-        'Author: Ben Shadburne
+    Public Sub SearchCustomerClone(intSearchType As Integer, intSearchBy As Integer, strSearch As String)
+        'Author: Aaryaman
         'Purpose: sorts data to be placed in a gridview
         'Arguments: integer -- preferrably from a radio button list
         'Return: none, but sorts data in the dataview
-        'Date: 4/8/2014
+        'Date: 4/18/2014
 
+        GetAllCustomersCloneUsingSP()
 
-        If intSort = 0 Then
-            'sort = lastname, sort the data
-            MyView.Sort = "lastname"
+        'we are doing a partial search
+        If intSearchBy = 0 Then
+            If intSearchType = 0 Then
+                'search by last name
+                mMyView.RowFilter = "Lastname LIKe '" & strSearch & "%'"
+            Else
+                mMyView.RowFilter = "Lastname like '%" & strSearch & "%'"
+            End If
         Else
-            'sort by advantage number is selected
-                MyView.Sort = "AdvantageNumber"
+
+            mMyView.RowFilter = "AdvantageNumber = " & strSearch
 
         End If
 

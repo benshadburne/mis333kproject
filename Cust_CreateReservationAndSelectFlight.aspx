@@ -131,6 +131,9 @@
             <br />
                 
 
+                <asp:Label ID="lblMessage" runat="server" Text="Label"></asp:Label>
+                
+
             </div>
             </div>
             </asp:Content>

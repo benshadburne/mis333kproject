@@ -1,5 +1,5 @@
 ﻿
-Partial Class Emp_SearchCustomer
+Partial Class Res_SelectCustomer
     Inherits System.Web.UI.Page
 
     Dim CustomerDB As New DBCustomersClone
@@ -31,8 +31,8 @@ Partial Class Emp_SearchCustomer
         'add a session variable to remember the selected customer
         Session.Add("SelectedCustomer", gvCustomers.SelectedRow.Cells(1).Text)
 
-        ''send the user to another page
-        'Response.Redirect()
+        Response.Redirect("Res_AddTicketAndPay.aspx")
+
     End Sub
 
     Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click

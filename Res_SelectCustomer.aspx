@@ -1,10 +1,10 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="Emp_SearchCustomer.aspx.vb" Inherits="Emp_SearchCustomer" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="Res_SelectCustomer.aspx.vb" Inherits="Res_SelectCustomer" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div id="header">
-       Search Customer
+        Select customer to create a ticket
    </div>
     <div id="middle">
     <asp:Label ID="Label1" runat="server" padding="3px" Text="Select a Filter:"></asp:Label>
@@ -37,7 +37,6 @@
             <asp:CommandField ShowSelectButton="True" />
         </Columns>
     </asp:GridView>
-
 
 </asp:Content>
 

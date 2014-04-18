@@ -193,6 +193,12 @@ Partial Class _Default
         Session.Remove("JourneyNumber")
         Session.Remove("TripType")
 
-        Response.Redirect("Cust_SelectSeats.aspx")
+        If CInt(Session("Adult")) + CInt(Session("Child")) + CInt(Session("Babies")) = 1 Then
+            'run code to add a ticket
+            Response.Redirect("Cust_SelectSeats.aspx")
+        Else
+            Response.Redirect("Res_SelectCustomer.aspx")
+
+        End If
     End Sub
 End Class

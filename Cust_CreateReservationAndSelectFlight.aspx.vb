@@ -36,7 +36,21 @@ Partial Class Cust_CreateReservationAndSelectFlight
     'how will we know which advantage numbers to add to the flight. 
 
     Protected Sub btnAddJourney_Click(sender As Object, e As EventArgs) Handles btnAddJourney.Click
-        'redirect the user to the flight search page with session variables for start and end airport.
+
+        'run all the validations
+        'check to make sure children + adults is 16 or less
+        If ddlAdult.SelectedValue + ddlChildren.SelectedValue > 16 Then
+            lblMessage.Text = "You can have a maximum of 16 people over age 2 in your reservation."
+        End If
+
+        'check to make sure adults > babies
+        If ddlBabies.SelectedValue > ddlAdult.SelectedValue Then
+            lblMessage.Text = "You cannot have more babies than adults in your reservation"
+        End If
+
+        Session.Add("Adults", ddlAdult.SelectedValue)
+        Session.Add("Children", ddlChildren.SelectedValue)
+        Session.Add("Babies", ddlBabies.SelectedValue)
 
         'if this is the first add journey then do these things
         If Session("JourneyNumber") Is Nothing Then
