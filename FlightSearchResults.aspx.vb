@@ -122,6 +122,11 @@ Partial Class _Default
     Protected Sub btnShowAll_Click(sender As Object, e As EventArgs) Handles btnShowAll.Click
         'just reloads dataset and binds it
         ShowAll()
+        'also hide indirect flights
+        gvIndirectStart.Visible = False
+        lblIndirectStart.Visible = False
+        lblIndirectStartC.Visible = False
+        lblCountIndirect.Visible = False
     End Sub
 
     Protected Sub gvIndirectStart_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectStart.SelectedIndexChanged

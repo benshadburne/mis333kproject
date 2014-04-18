@@ -17,7 +17,47 @@ Partial Class _Default
         End If
 
         'next, need to load all tickets dataset
+        DBTickets.GetALLTicketsUsingSP()
+        DBTickets.GetALLOthersTicketsUsingSP()
+
+
+        'check seats to initialize them
 
 
     End Sub
+
+
+
+    Public Sub CheckSeats()
+
+    End Sub
+
+    Public Sub ChangeSeat(strSeat As String, strType As String)
+
+    End Sub
+
+
+    Public Sub SortandBind()
+        'Author: Ben Shadburne
+        'Purpose: sort the data and bind it 
+        'Arguments:  na
+        'Return: sorted and binded data
+        'Date: 03/18/2014
+
+        'sort 
+        'DBTickets.DoSort()
+
+        ''bind all data
+        'gvDirectFlights.DataSource = DBFlightSearch.MyView
+        'gvDirectFlights.DataBind()
+        'gvIndirectStart.DataSource = DBFlightSearch.MyViewStart
+        'gvIndirectStart.DataBind()
+        'gvIndirectFinish.DataSource = DBFlightSearch.MyViewFinish
+        'gvIndirectFinish.DataBind()
+
+        '' show record count
+        'lblCountDirect.Text = CStr(DBFlightSearch.lblCount)
+        'lblCountIndirect.Text = CStr(DBFlightSearch.lblCountStart)
+    End Sub
+
 End Class

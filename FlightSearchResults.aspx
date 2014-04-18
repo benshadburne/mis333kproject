@@ -7,6 +7,14 @@
 
     <div class="center-block" style="width: 90%; padding-top: 20px;">
         
+        <div class="center-block" style="text-align:center ">
+            <h1>
+                Flight Search Page
+            </h1>
+        
+        </div>
+
+    <br />
         <asp:Panel ID="Panel1" runat="server" width="100%">
         <div class="pull-left" style="width: 90px"> <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search" />
 
@@ -41,14 +49,14 @@
         </div>
            
         <div class="pull-left" style="width: 20%; min-width:40px; height: 67px;">
-        <asp:Label class="label" ID="Label2" runat="server" Text="Time" ForeColor="Black" Font-Bold="true" Font-Size="small"></asp:Label>
+       <%-- <asp:Label class="label" ID="Label2" runat="server" Text="Time" ForeColor="Black" Font-Bold="true" Font-Size="small"></asp:Label>
           
-        <br />
+        <br />--%>
     <br />
    
 
   
-        <asp:DropDownList class="dropdown" ID="ddlTimeOfDay" runat="server">
+       <%-- <asp:DropDownList class="dropdown" ID="ddlTimeOfDay" runat="server">
             <asp:ListItem>200</asp:ListItem>
             <asp:ListItem>100</asp:ListItem>
             <asp:ListItem>400</asp:ListItem>
@@ -73,7 +81,7 @@
             <asp:ListItem>2200</asp:ListItem>
             <asp:ListItem>2300</asp:ListItem>
             <asp:ListItem>2400</asp:ListItem>
-        </asp:DropDownList>
+        </asp:DropDownList>--%>
 
 <%--       
         <asp:Label class="label" ID="Label1" runat="server" Text="  :  " ForeColor="Black" ></asp:Label>
@@ -125,7 +133,7 @@
              <asp:Label CssClass="label" ID="Label1" runat="server" Text="Count: "></asp:Label>
             <asp:Label CssClass="label" ID="lblCountDirect" runat="server" Text=""></asp:Label></div>
          <br />
-         <asp:GridView class="table" ID="gvDirectFlights" runat="server" AutoGenerateSelectButton="True">
+         <asp:GridView class="table" ID="gvDirectFlights" runat="server">
         </asp:GridView>
        
         
@@ -148,7 +156,7 @@
 
         </div>
         
-         <asp:GridView class="table" ID="gvIndirectFinish" runat="server" Visible="false" AutoGenerateSelectButton="True"></asp:GridView>
+         <asp:GridView class="table" ID="gvIndirectFinish" runat="server" Visible="false"></asp:GridView>
     
         
             

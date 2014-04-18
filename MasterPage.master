@@ -27,18 +27,19 @@
         
     </div>
       <div style="min-width: 600px">
-      <div class="pull-right" min-width: 40px>
+      <%--<div class="pull-right" min-width: 40px>
           
           <input type="text" class="form-control" placeholder="Search" aria-flowto="right"/> 
          
-                </div>
+                </div>--%>
 
-      <div class="pull-right" style="padding-right: 10px" >
-          <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search" Width="86px" />  
-     </div>
+     <%-- <div class="pull-right" style="padding-right: 10px" >
+          <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search Page" Width="116px" />  
+     </div>--%>
 
-      <div class="pull-right" style="width: 15%; padding-right: 10px; min-width: 100px">
-              <input type="text" class="form-control" id="inpUserName" placeholder="UserName" aria-flowto="right"/> <input type="text" class="form-control" id="inpPassword" placeholder="Password" aria-flowto="right"/>
+      <div class="pull-right" style="width: 15%; padding-right: 10px; min-width: 100px; text-align:center; padding-top: 5px; line-height:28px">
+          <asp:TextBox CssClass="text-center" ID="txtUsername" runat="server" width="90%" Height="22px" Wrap="False" BorderStyle="Inset" ForeColor="Gray">Username</asp:TextBox> <br />
+          <asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="22px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray">Password</asp:TextBox>
           </div>
     <div class="pull-right">
            <div class="pull-right" style="padding-right: 10px">
