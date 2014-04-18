@@ -122,7 +122,8 @@
         <br />
         <asp:Label CssClass="label" ID="Label6" runat="server" Text="Direct Flights"></asp:Label>
         <div class="pull-right">
-            <asp:Label CssClass="label" ID="lblCountDirect" runat="server" Text="Count: "></asp:Label></div>
+             <asp:Label CssClass="label" ID="Label1" runat="server" Text="Count: "></asp:Label>
+            <asp:Label CssClass="label" ID="lblCountDirect" runat="server" Text=""></asp:Label></div>
          <br />
          <asp:GridView class="table" ID="gvDirectFlights" runat="server" AutoGenerateSelectButton="True">
         </asp:GridView>
@@ -134,7 +135,8 @@
     
      <asp:Label CssClass="label" ID="lblIndirect" runat="server" Text="Indirect Flights: First Leg" Visible="false"></asp:Label>
         &nbsp;<div class="pull-right">
-            <asp:Label CssClass="label" ID="lblCountIndirect" runat="server" Text="Count:" Visible="false"></asp:Label></div>
+            <asp:Label CssClass="label" ID="Label7" runat="server" Text="Count: " Visible="false"></asp:Label>
+            <asp:Label CssClass="label" ID="lblCountIndirect" runat="server" Text="" Visible="false"></asp:Label></div>
          <br />
          <asp:GridView class="table" ID="gvIndirectStart" runat="server" Visible="false" AutoGenerateSelectButton="True"></asp:GridView>
        <br />

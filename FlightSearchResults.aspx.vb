@@ -15,8 +15,7 @@ Partial Class _Default
         Dim h As String
         h = calFlightSearch.SelectedDate.ToShortDateString
         h = DBFlightSearch.AlterDate(h)
-        lblMessage.Text = h
-
+        
         'make sure a date is selected before they search
         calFlightSearch.SelectedDate = Now()
 
@@ -41,11 +40,13 @@ Partial Class _Default
 
         ShowAll()
 
+
     End Sub
 
     Public Sub ShowAll()
         DBFlightSearch.GetALLFlightSearchUsingSP()
-
+        DBFlightSearch.GetALLIndirectStartUsingSP()
+        DBFlightSearch.GetALLIndirectFinishUsingSP()
         SortandBind()
     End Sub
 
@@ -59,11 +60,17 @@ Partial Class _Default
         'sort using radio
         'DB.DoSort(radSort.SelectedIndex)
 
+        'bind all data
         gvDirectFlights.DataSource = DBFlightSearch.MyView
         gvDirectFlights.DataBind()
+        gvIndirectStart.DataSource = DBFlightSearch.MyViewStart
+        gvIndirectStart.DataBind()
+        gvIndirectFinish.DataSource = DBFlightSearch.MyViewFinish
+        gvIndirectFinish.DataBind()
 
         ' show record count
-        lblCountDirect.Text = "Count: " & CStr(DBFlightSearch.lblCount)
+        lblCountDirect.Text = CStr(DBFlightSearch.lblCount)
+        lblCountIndirect.Text = CStr(DBFlightSearch.lblCountStart)
     End Sub
 
 
@@ -82,13 +89,14 @@ Partial Class _Default
 
         lblMessage.Text = ""
 
+        
         'define variables
         Dim strDay As String
         Dim strDate As String
         'put the name of the day of the week into strDay
         strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
 
-        strDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToString)
+        strDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
 
         'adds flights to the date, ensures we have flights to show
         AddJourneyClass.AddJourney(strDay, strDate)
@@ -96,7 +104,7 @@ Partial Class _Default
         'filter info for regular search A -> B
         DBFlightSearch.FilterRegular(ddlDepart.SelectedValue, ddlArrival.SelectedValue, strDate)
 
-        SortandBind()
+
 
         'make sure regular count isn't 0
         If DBFlightSearch.lblCount = 0 Then
@@ -107,10 +115,14 @@ Partial Class _Default
         'run info for indirect search A -> C -> B
         DBFlightSearch.FilterStart(ddlDepart.SelectedValue, ddlArrival.SelectedValue, strDate)
 
+        'sort and bind
+        SortandBind()
+
         'make visible the indirect stuff
         gvIndirectStart.Visible = True
         lblIndirect.Visible = True
         lblCountDirect.Visible = True
+
 
     End Sub
 
@@ -141,11 +153,14 @@ Partial Class _Default
     Protected Sub gvIndirectStart_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectStart.SelectedIndexChanged
 
         'search db for journeys on same day, starting from the ending location of this one, and start after this one finishes
-        DBFlightSearch.FilterFinish(DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).item("[End City]").value.ToString, ddlArrival.SelectedValue, DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToString)
+        DBFlightSearch.FilterFinish(DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("End City").ToString, ddlArrival.SelectedValue, DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToString), ddlTimeOfDay.SelectedValue)
 
         'make gvIndirectFinish visible
         gvIndirectFinish.Visible = True
         lblIndirectFinish.Visible = True
+
+        lblMessage.Text = DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("End City").ToString
+
     End Sub
 
     Protected Sub gvIndirectFinish_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectFinish.SelectedIndexChanged
