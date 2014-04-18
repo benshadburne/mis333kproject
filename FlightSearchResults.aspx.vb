@@ -141,10 +141,11 @@ Partial Class _Default
     Protected Sub gvIndirectStart_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectStart.SelectedIndexChanged
 
         'search db for journeys on same day, starting from the ending location of this one, and start after this one finishes
+        DBFlightSearch.FilterFinish(DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).item("[End City]").value.ToString, ddlArrival.SelectedValue, DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToString)
 
         'make gvIndirectFinish visible
         gvIndirectFinish.Visible = True
-
+        lblIndirectFinish.Visible = True
     End Sub
 
     Protected Sub gvIndirectFinish_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectFinish.SelectedIndexChanged
