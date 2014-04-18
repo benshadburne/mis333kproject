@@ -29,7 +29,7 @@
         <div style="width: 250px; text-align: center">
             <asp:Label CssClass="label" ID="Label6" runat="server" Text="Front of Plane" ></asp:Label>
         </div>
-       <div class ="center-block" width: 100%">
+       <div class ="center-block" width: 100%;">
             <div class="pull-left" id="left isle" style="width:125px">
                 <button type="button" id="btn1A" class="btn btn-default btn-lg">
   <span class="glyphicon glyphicon glyphicon-unchecked-you"></span>

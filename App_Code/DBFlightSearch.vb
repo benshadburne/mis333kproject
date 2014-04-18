@@ -320,5 +320,18 @@ Public Class DBFlightSearch
         End Get
     End Property
 
+    Public ReadOnly Property lblCountFinish() As Integer
+        'Author: Ben Shadburne
+        'Purpose: return lblcount
+        'Arguments:  none
+        'Return: count of FlightSearch
+        'Date: 03/07/2014
+
+        Get
+            'returns the count to the label
+            Return MyViewFinish.Count
+        End Get
+    End Property
+
 End Class
 

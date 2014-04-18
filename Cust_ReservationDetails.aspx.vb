@@ -9,12 +9,12 @@ Partial Class _Default
 
         'check customer login
 
-        Dim strCheck As String
-        'check session reservationID if it's empty
-        strCheck = Session("ReservationID").ToString
-        If strCheck = "" Then
-            Response.Redirect("HomePage.aspx")
-        End If
+        'Dim strCheck As String
+        ''check session reservationID if it's empty
+        'strCheck = Session("ReservationID").ToString
+        'If strCheck = "" Then
+        '    Response.Redirect("HomePage.aspx")
+        'End If
 
         'next, need to load all tickets dataset
         DBTickets.GetALLTicketsUsingSP()
@@ -48,12 +48,10 @@ Partial Class _Default
         'DBTickets.DoSort()
 
         ''bind all data
-        'gvDirectFlights.DataSource = DBFlightSearch.MyView
-        'gvDirectFlights.DataBind()
-        'gvIndirectStart.DataSource = DBFlightSearch.MyViewStart
-        'gvIndirectStart.DataBind()
-        'gvIndirectFinish.DataSource = DBFlightSearch.MyViewFinish
-        'gvIndirectFinish.DataBind()
+        gvYourReservation.DataSource = DBTickets.MyView
+        gvYourReservation.DataBind()
+        gvOtherReservation.DataSource = DBTickets.MyViewOthers
+        gvYourReservation.DataBind()
 
         '' show record count
         'lblCountDirect.Text = CStr(DBFlightSearch.lblCount)

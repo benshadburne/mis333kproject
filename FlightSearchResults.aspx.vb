@@ -12,6 +12,24 @@ Partial Class _Default
    
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        'makes sure selected date for first time is today
+        If IsPostBack = False Then
+            calFlightSearch.SelectedDate = Now()
+        End If
+        'need to add flights before datasets are loaded
+        'define variables
+        Dim strDay As String
+        Dim strDate As String
+        'put the name of the day of the week into strDay
+        strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
+
+        strDate = (calFlightSearch.SelectedDate.ToString)
+
+        'adds flights to the date, ensures we have flights to show
+        AddJourneyClass.AddJourney(strDay, strDate)
+
+
+
         'make sure a date is selected before they search
 
 
@@ -35,9 +53,7 @@ Partial Class _Default
         ShowAll()
         SortandBind()
 
-        If IsPostBack = False Then
-            calFlightSearch.SelectedDate = Now()
-        End If
+
 
     End Sub
 
@@ -85,17 +101,6 @@ Partial Class _Default
 
         lblMessage.Text = ""
 
-        'define variables
-        Dim strDay As String
-        Dim strDate As String
-        'put the name of the day of the week into strDay
-        strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
-
-        strDate = (calFlightSearch.SelectedDate.ToString)
-
-        'adds flights to the date, ensures we have flights to show
-        AddJourneyClass.AddJourney(strDay, strDate)
-
         SearchBtn()
 
         SortandBind()
@@ -130,19 +135,29 @@ Partial Class _Default
     End Sub
 
     Protected Sub gvIndirectStart_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectStart.SelectedIndexChanged
-        'lblMessage.Text = 
+        lblMessage.Text = ""
         'need to do searchbtn b/c otherwise other gv's get reset
         SearchBtn()
         DBFlightSearch.SearchIndirectFinish(DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("End City").ToString, ddlArrival.SelectedValue, _
         DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString), _
         DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("Arrival Time").ToString)
 
+        'check if there's anything in second gv
+        If CInt(DBFlightSearch.lblCountFinish) = 0 Then
+            lblMessage.Text = "No second leg results"
+            Exit Sub
+        End If
+
         SortandBind()
+
+        'and make the count equal to the count
+        lblCountFinish.Text = DBFlightSearch.lblCountFinish.ToString
 
         gvIndirectFinish.Visible = True
         lblIndirectFinishC.Visible = True
         lblIndirectFinish.Visible = True
         lblCountFinish.Visible = True
+
 
     End Sub
 
@@ -152,9 +167,4 @@ Partial Class _Default
 
     End Sub
 
-    Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
-
-        Session("SelectedDate") = calFlightSearch.SelectedDate
-
-    End Sub
 End Class
