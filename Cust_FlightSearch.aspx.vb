@@ -66,7 +66,7 @@ Partial Class _Default
         Dim strFilterStatement As String
 
         'this filters by start airport, end airport, date, and earliest start time
-        strFilterStatement = DBFlightSearch.FilterAll(Session("StartAirport").ToString, Session("EndAirport").ToString, calFlightSearch.SelectedDate.ToShortDateString)
+        strFilterStatement = DBFlightSearch.FilterAll(Session("StartAirport").ToString, Session("EndAirport").ToString, calFlightSearch.SelectedDate.ToShortDateString, 1)
         DBFlightSearch.MyView.RowFilter = strFilterStatement
         DBFlightSearch.DoSort()
         gvDirectFlights.DataSource = DBFlightSearch.MyView
@@ -101,22 +101,27 @@ Partial Class _Default
         Dim intJourneyID As Integer
         Dim intJourneyNumber As Integer
         Dim strJourneyNumber As String
+        Dim strDate As String
+
         'add this flight to the reservation table
         intJourneyID = CInt(gvDirectFlights.Rows(gvDirectFlights.SelectedIndex).Cells(1).Text())
 
         'use another variable to hold the session variable. Otherwise it gives me option strict on problems
         intJourneyNumber = CInt(Session("JourneyNumber"))
 
-        'if this is the first journey they are adding, use add first Journey Function
-        If intJourneyNumber = 0 Then
+        'add one to the journey number
+        intJourneyNumber += 1
 
-            'add one to the journey number
-            intJourneyNumber += 1
-            'get the right string for the column name in the DB
-            strJourneyNumber = DBReservations.ConvertJourneyNumberToString(intJourneyNumber)
+        'get the right string for the column name in the DB
+        strJourneyNumber = DBReservations.ConvertJourneyNumberToString(intJourneyNumber)
+
+        'if this is the first journey they are adding, use add first Journey Function
+        If intJourneyNumber = 1 Then
+
+            strDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
 
             'add the first record of the reservation
-            DBReservations.AddFirstReservationJourney("usp_ReservationsClone_Add_Journey", strJourneyNumber, intJourneyID)
+            DBReservations.AddFirstReservationJourney("usp_ReservationsClone_Add_Journey", strJourneyNumber, intJourneyID, strDate)
 
             'update the session variable
             Session("JourneyNumber") = intJourneyNumber
@@ -124,9 +129,19 @@ Partial Class _Default
             'retrieve the reservationID for the reservation we just added to. Store it in a new session variable
             Session.Add("ReservationID", DBReservations.GetNewestReservationID())
 
-            lblFilter.Text = Session("ReservationID").ToString
+        Else
+            'add a later journey
+            DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
 
+            'update this session variable
+            Session("JourneyNumber") = intJourneyNumber
         End If
+
+        'mark the airport they must now leave from
+        Session("StartAirport") = Session("EndAirport")
+
+
+        Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
 
 
         'direct the user back to the previous page

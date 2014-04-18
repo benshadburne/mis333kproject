@@ -57,6 +57,16 @@ Partial Class Cust_CreateReservationAndSelectFlight
         If IsPostBack = False Then
             LoadDDL()
         End If
+
+        If Session("StartAirport") Is Nothing Then
+            'don't do anything
+        Else
+            'set that as the start airport
+            ddlDepartureCity.Items.FindByValue(Session("StartAirport")).Selected = True
+            ddlDepartureCity.Enabled = False
+        End If
+
+
     End Sub
 
     Private Sub LoadDDL()

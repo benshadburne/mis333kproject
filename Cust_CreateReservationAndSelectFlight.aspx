@@ -55,65 +55,6 @@
                 
 
             </div>
+            </asp:Content>
 
-            <asp:Panel ID="Panel1" runat="server">
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-
-            <div id="ddl">
-            <div id="ddl-left">
-                <asp:DropDownList ID="DropDownList1" runat="server" DataSourceID="AirportCodes"></asp:DropDownList>
-            </div>
-            <div id="ddl-middle">
-                <asp:Label ID="Label1" runat="server" Text="To"></asp:Label>
-            </div>
-            <div id="ddl-right">
-                <asp:DropDownList ID="DropDownList2" runat="server" DataSourceID="AirportCodes"></asp:DropDownList>
-            </div>
-            </asp:Panel>
-
-            <asp:Panel ID="Panel2" runat="server">
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-
-            <div id="ddl">
-            <div id="ddl-left">
-                <asp:DropDownList ID="DropDownList3" runat="server" DataSourceID="AirportCodes"></asp:DropDownList>
-            </div>
-            <div id="ddl-middle">
-                <asp:Label ID="Label2" runat="server" Text="To"></asp:Label>
-            </div>
-            <div id="ddl-right">
-                <asp:DropDownList ID="DropDownList4" runat="server" DataSourceID="AirportCodes"></asp:DropDownList>
-            </div>
-            </asp:Panel>
-
-            <asp:Panel ID="Panel3" runat="server">
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-
-            <div id="ddl">
-            <div id="ddl-left">
-                <asp:DropDownList ID="DropDownList5" runat="server" DataSourceID="AirportCodes"></asp:DropDownList>
-            </div>
-            <div id="ddl-middle">
-                <asp:Label ID="Label3" runat="server" Text="To"></asp:Label>
-            </div>
-            <div id="ddl-right">
-                <asp:DropDownList ID="DropDownList6" runat="server" DataSourceID="AirportCodes"></asp:DropDownList>
-            </div>
-            </asp:Panel>
-
-        </div>
-        
-</asp:Content>
-
+            

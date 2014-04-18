@@ -112,21 +112,43 @@ Public Class DBReservations
         End Try
     End Sub
 
-    Public Sub AddFirstReservationJourney(strSPName As String, strJourneyNumber As String, intJourneyID As Integer)
+    Public Sub AddFirstReservationJourney(strSPName As String, strJourneyNumber As String, intJourneyID As Integer, strDate As String)
         'defines array to put parameter names into
         Dim aryParamNames As New ArrayList
         Dim aryParamValues As New ArrayList
 
         'add parameter names to names array list
         aryParamNames.Add("@JourneyNumber")
+        aryParamNames.Add("@StartDate")
         aryParamNames.Add("@JourneyID")
 
 
         'add values to parameter values array list
         aryParamValues.Add(strJourneyNumber)
+        aryParamValues.Add(strDate)
         aryParamValues.Add(intJourneyID)
 
         UseSPforInsertOrUpdateQuery(strSPName, aryParamNames, aryParamValues)
+    End Sub
+
+    Public Sub AddLaterReservationJourneys(strSPName As String, strJourneyNumber As String, intJourneyID As Integer, intReservationID As Integer)
+        'defines array to put parameter names into
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+
+        'add parameter names to names array list
+        aryParamNames.Add("@ReservationID")
+        aryParamNames.Add("@JourneyNumber")
+        aryParamNames.Add("@JourneyID")
+
+
+        'add values to parameter values array list
+        aryParamValues.Add(intReservationID)
+        aryParamValues.Add(strJourneyNumber)
+        aryParamValues.Add(intJourneyID)
+
+        UseSPforInsertOrUpdateQuery(strSPName, aryParamNames, aryParamValues)
+
     End Sub
 
     Public Function ConvertJourneyNumberToString(intJourneyNumber As Integer) As String
@@ -186,7 +208,7 @@ Public Class DBReservations
 
     Public Function GetNewestReservationID() As Integer
         Dim intReservationID As Integer
-        RunProcedure("usp_ReservationsClone_Get_Max")
+        RunProcedure("usp_ReservationsClone_Get_Newest")
         intReservationID = CInt(mdatasetReservations.Tables("tblReservationsClone").Rows(0).Item("ReservationID"))
         Return intReservationID
     End Function
