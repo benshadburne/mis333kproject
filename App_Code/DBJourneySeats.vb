@@ -66,13 +66,13 @@ Public Class DBJourneySeats
             'adds these values to the array list
 
             arySeatValues.Add(arlSeats(i))
-            arySeatValues.Add("N")
+            arySeatValues.Add("0")
 
 
             UseSPforInsertOrUpdateQuery("usp_JourneySeats_Insert_Seats", aryParamNames, arySeatValues)
             'removes these values from the array list then loops to next seat
 
-            arySeatValues.Remove("N")
+            arySeatValues.Remove("0")
             arySeatValues.Remove(arlSeats(i))
         Next
 
