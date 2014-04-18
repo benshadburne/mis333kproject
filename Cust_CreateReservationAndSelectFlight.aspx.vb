@@ -45,7 +45,7 @@ Partial Class Cust_CreateReservationAndSelectFlight
         Session.Add("StartAirport", ddlDepartureCity.SelectedValue.ToString)
         Session.Add("EndAirport", ddlArrivalCity.SelectedValue.ToString)
         If Session("JourneyNumber") Is Nothing Then
-            'Session.Add("JourneyNumber", integer = 0)
+            Session.Add("JourneyNumber", CInt(0))
         End If
 
         Response.Redirect("Cust_FlightSearch.aspx")

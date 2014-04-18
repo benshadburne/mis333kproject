@@ -4,6 +4,9 @@ Partial Class _Default
 
     Dim DBFlightSearch As New DBFlightSearch
     Dim DBAddJourney As New AddJourneyClass
+    Dim DBReservations As New DBReservations
+    Dim DBSeats As New DBJourneySeats
+
 
     Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         'show flights available
@@ -33,7 +36,7 @@ Partial Class _Default
         End If
 
         If Session("JourneyNumber") Is Nothing Then
-            'Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
+            Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
         End If
 
 
@@ -96,11 +99,34 @@ Partial Class _Default
 
     Protected Sub gvDirectFlights_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvDirectFlights.SelectedIndexChanged
         Dim intJourneyID As Integer
+        Dim intJourneyNumber As Integer
+        Dim strJourneyNumber As String
         'add this flight to the reservation table
         intJourneyID = CInt(gvDirectFlights.Rows(gvDirectFlights.SelectedIndex).Cells(1).Text())
-        'increases the session variable which keeps track of how many journeys are booked
-        'Session("JourneyNumber") += 1
 
+        'use another variable to hold the session variable. Otherwise it gives me option strict on problems
+        intJourneyNumber = CInt(Session("JourneyNumber"))
+
+        'if this is the first journey they are adding, use add first Journey Function
+        If intJourneyNumber = 0 Then
+
+            'add one to the journey number
+            intJourneyNumber += 1
+            'get the right string for the column name in the DB
+            strJourneyNumber = DBReservations.ConvertJourneyNumberToString(intJourneyNumber)
+
+            'add the first record of the reservation
+            DBReservations.AddFirstReservationJourney("usp_ReservationsClone_Add_Journey", strJourneyNumber, intJourneyID)
+
+            'update the session variable
+            Session("JourneyNumber") = intJourneyNumber
+
+            'retrieve the reservationID for the reservation we just added to. Store it in a new session variable
+            Session.Add("ReservationID", DBReservations.GetNewestReservationID())
+
+            lblFilter.Text = Session("ReservationID").ToString
+
+        End If
 
 
         'direct the user back to the previous page
