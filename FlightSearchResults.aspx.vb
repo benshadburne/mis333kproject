@@ -80,7 +80,7 @@ Partial Class _Default
 
     Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
 
-
+        lblMessage.Text = ""
 
         'define variables
         Dim strDay As String
@@ -88,14 +88,29 @@ Partial Class _Default
         'put the name of the day of the week into strDay
         strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
 
-        strDate = calFlightSearch.SelectedDate.ToString
+        strDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToString)
 
         'adds flights to the date, ensures we have flights to show
         AddJourneyClass.AddJourney(strDay, strDate)
 
+        'filter info for regular search A -> B
+        DBFlightSearch.FilterRegular(ddlDepart.SelectedValue, ddlArrival.SelectedValue, strDate)
 
-        'first filter by time
+        SortandBind()
 
+        'make sure regular count isn't 0
+        If DBFlightSearch.lblCount = 0 Then
+            lblMessage.Text = "No Journeys found, please try again with different criteria"
+            Exit Sub
+        End If
+
+        'run info for indirect search A -> C -> B
+        DBFlightSearch.FilterStart(ddlDepart.SelectedValue, ddlArrival.SelectedValue, strDate)
+
+        'make visible the indirect stuff
+        gvIndirectStart.Visible = True
+        lblIndirect.Visible = True
+        lblCountDirect.Visible = True
 
     End Sub
 
@@ -123,4 +138,18 @@ Partial Class _Default
         Return arlSeats
     End Function
 
+    Protected Sub gvIndirectStart_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectStart.SelectedIndexChanged
+
+        'search db for journeys on same day, starting from the ending location of this one, and start after this one finishes
+
+        'make gvIndirectFinish visible
+        gvIndirectFinish.Visible = True
+
+    End Sub
+
+    Protected Sub gvIndirectFinish_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectFinish.SelectedIndexChanged
+
+        'on flightsearch this does nothing, on emp and cust it does something
+
+    End Sub
 End Class
