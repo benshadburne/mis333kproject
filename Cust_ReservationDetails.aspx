@@ -26,11 +26,12 @@
         <asp:DropDownList CssClass="dropdown" ID="ddlJourneyID" runat="server"></asp:DropDownList>
         <br />
         <br />
-        <div style="width: 250px; text-align: center">
+        <div class="center-block" style="text-align:center ">
+         
             <asp:Label CssClass="label" ID="Label6" runat="server" Text="Front of Plane" ></asp:Label>
-        </div>
-       <div class ="center-block" width: 100%;">
-            <div class="pull-left" id="left isle" style="width:125px">
+     </div>
+       <div class="center-block" style="min-width: 800px; text-align:center">
+            <div class="pull-left" id="left isle" style="width:15%; padding-left:34%; min-width:125px">
                 <button type="button" id="btn1A" class="btn btn-default btn-lg">
   <span class="glyphicon glyphicon glyphicon-unchecked-you"></span>
 </button>
@@ -62,7 +63,7 @@
             </div>
 
 
-            <div class="pull-left" id="right isle" style="width:125px">
+            <div class="pull-left" id="right isle" style="width:15%; padding-right:34%; min-width:125px">
                 <button type="button" id="btn1B" class="btn btn-default btn-lg">
   <span class="glyphicon glyphicon glyphicon-unchecked-you"></span>
 </button>
@@ -93,7 +94,8 @@
 </button>
             </div>
         </div>
-       
+       <div />
+        <div class="center-block">
         <div style="width: 250px; text-align: center" class="pull-left">
             <asp:Label CssClass="label" ID="Label7" runat="server" Text="Rear of Plane" ></asp:Label>
         </div>
@@ -105,6 +107,7 @@
         <ul>
          <li><a href="Cust_ModifyReservation.aspx">Modify Reservation</a></li>
 </ul>
+            </div>
         </div>
        
        
