@@ -19,7 +19,7 @@
         <asp:GridView class="table" ID="gvYourReservation" runat="server"></asp:GridView>
         <br />
          <asp:Label CssClass="h3" ID="Label3" runat="server" Text="Other Tickets:"></asp:Label>
-        <asp:GridView class="table" ID="gvOtherReservation" runat="server" ShowHeader="False"></asp:GridView>
+        <asp:GridView class="table" ID="gvOtherReservation" runat="server"></asp:GridView>
    <br />
         <asp:Label CssClass="label" ID="Label5" runat="server" Text="Choose the JourneyID:"></asp:Label>
         <br />
@@ -32,67 +32,38 @@
      </div>
       
           <div class="pull-left" style="margin-left:25%; text-align:center">
-                <button type="button" id="btn1A" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked-you"></span>
-</button>
+                <asp:Button class="btn-seat" ID="btn1A" runat="server" Text="" />
+              <br />
+              <asp:Button class="btn-seat" ID="btn2A" runat="server" Text="" />
+              <br />
+              <asp:Button class="btn-seat" ID="btn3A" runat="server" Text="" />
+              <asp:Button class="btn-seat" ID="btn3B" runat="server" Text="" />
+              <br />
+              <asp:Button class="btn-seat" ID="btn4A" runat="server" Text="" />
+              <asp:Button class="btn-seat" ID="btn4B" runat="server" Text="" />
+              <br />
+              <asp:Button class="btn-seat" ID="btn5A" runat="server" Text="" />
+              <asp:Button class="btn-seat" ID="btn5B" runat="server" Text="" />
                 <br />
-                 <button type="button" id="btn2A" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
-           <br />
-                <button type="button" id="btn3A" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
-            <button type="button" id="btn3B" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
-                <br />
-                <button type="button" id="btn4A" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
-            <button type="button" id="btn4B" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
-                <br />
-                <button type="button" id="btn5A" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
-            <button type="button" id="btn5B" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
+                 
               </div>
 
 
       <div class="pull-left" style="text-align: center">
                      
-                <button type="button" id="btn1B" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon glyphicon-unchecked-you"></span>
-</button>
+              <asp:Button class="btn-seat" ID="btn1B" runat="server" Text="" />
+              <br />
+              <asp:Button class="btn-seat" ID="btn2B" runat="server" Text="" />
+              <br />
+              <asp:Button class="btn-seat" ID="btn3C" runat="server" Text="" />
+              <asp:Button class="btn-seat" ID="btn3D" runat="server" Text="" />
+              <br />
+              <asp:Button class="btn-seat" ID="btn4C" runat="server" Text="" />
+              <asp:Button class="btn-seat" ID="btn4D" runat="server" Text="" />
+              <br />
+              <asp:Button class="btn-seat" ID="btn5C" runat="server" Text="" />
+              <asp:Button class="btn-seat" ID="btn5D" runat="server" Text="" />
                 <br />
-                 <button type="button" id="btn2B" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
-           <br />
-                <button type="button" id="btn3C" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
-            <button type="button" id="btn3D" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
-                <br />
-                <button type="button" id="btn4C" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
-            <button type="button" id="btn4D" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
-                <br />
-                <button type="button" id="btn5C" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
-            <button type="button" id="btn5D" class="btn btn-default btn-lg">
-  <span class="glyphicon glyphicon-unchecked"></span>
-</button>
           </div>
         </div>
        <div />

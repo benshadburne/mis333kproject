@@ -89,14 +89,14 @@ Public Class DBSeats
         End If
     End Sub
 
-    Public Sub SearchByState(ByVal strIn As String)
+    Public Sub FilterJourneyID(ByVal strIn As String)
         'Author: Ben Shadburne
         'Purpose: search by state
         'Arguments: search text
         'Return: filtered dataview by state
         'Date: 03/18/2014
 
-        MyView.RowFilter = "State = '" & strIn & "'"
+        MyView.RowFilter = "[JourneyID] = '" & strIn & "'"
     End Sub
 
     Public ReadOnly Property lblCount() As Integer

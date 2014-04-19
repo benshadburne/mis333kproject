@@ -88,14 +88,24 @@ Public Class DBTickets
         End If
     End Sub
 
-    Public Sub SearchByState(ByVal strIn As String)
+    Public Sub FilterYou(ByVal strRes As String, strAdvantage As String)
         'Author: Ben Shadburne
         'Purpose: search by state
         'Arguments: search text
         'Return: filtered dataview by state
         'Date: 03/18/2014
 
-        MyView.RowFilter = "State = '" & strIn & "'"
+        MyView.RowFilter = "[ReservationID] = '" & strRes & "' AND [AdvantageNumber] = '" & strAdvantage & "'"
+    End Sub
+
+    Public Sub FilterOthers(ByVal strRes As String, strAdvantage As String)
+        'Author: Ben Shadburne
+        'Purpose: search by state
+        'Arguments: search text
+        'Return: filtered dataview by state
+        'Date: 03/18/2014
+
+        MyViewOthers.RowFilter = "[ReservationID] = '" & strRes & "' AND [AdvantageNumber] <> '" & strAdvantage & "'"
     End Sub
 
     Public ReadOnly Property lblCount() As Integer
@@ -166,7 +176,7 @@ Public Class DBTickets
             'open conneciton and fill dataset
             mdbDataAdapter.Fill(mdatasetTicketsOthers, "tblTicketsOthers")
             'copy dataset to dataview
-            mMyView.Table = mdatasetTicketsOthers.Tables("tblTicketsOthers")
+            mMyViewOthers.Table = mdatasetTicketsOthers.Tables("tblTicketsOthers")
         Catch ex As Exception
             Throw New Exception("stored procedure is " & strName.ToString & " error is " & ex.Message)
         End Try
