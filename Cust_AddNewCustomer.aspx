@@ -3,6 +3,19 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+
+    <div class="center-block" style="text-align: center;">
+
+        <h1>
+            Add New Customer Page
+        </h1>
+
+    </div>
+
+    <br />
+    <br />
+
+    <div class ="center-block">
     <div class ="pull-left" style="width:20%;">
             <br />
             <br />
@@ -24,8 +37,8 @@
             <asp:LinkButton ID="lnkShowAll" CssClass="btn-link" runat="server" PostBackUrl="~/ShowAll.aspx" CausesValidation="False">Show All Customers</asp:LinkButton>
         </div>
    
-        <div class ="content">
-            <div id ="content-labels">
+        <div class ="center-block" style="width: 70%;">
+            <div id ="pull-right" style="width: 15%; float:left; text-align: right; line-height: 200%">
                 <asp:Label ID="lblLName" runat="server" Text="Last Name:"></asp:Label>
                 <br />
                 <asp:Label ID="lblFName" runat="server" Text="First Name:"></asp:Label>
@@ -40,13 +53,13 @@
                 <br />
                 <asp:Label ID="lblEmail" runat="server" Text="Email:"></asp:Label>
                 <br />
-                <asp:Label ID="lblPhone" runat="server" Text="Phone number:"></asp:Label>
+                <asp:Label ID="lblPhone" runat="server" Text="Phone:"></asp:Label>
             </div>
-            <div id ="content-textboxes">
+            <div id ="pull-left" style="width: 70%; float: left; line-height: 160%">
                 <asp:TextBox ID="txtLName" class="text-left" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtLName" ErrorMessage="Last name required." ForeColor="Red">*</asp:RequiredFieldValidator>
                 <br />
-                <asp:TextBox ID="txtFName" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtFName" class="text-left" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtFName" ErrorMessage="First name required." ForeColor="Red">*</asp:RequiredFieldValidator>
                 <br />
                 <asp:TextBox ID="txtMI" runat="server"></asp:TextBox>
@@ -65,4 +78,5 @@
                 <asp:TextBox ID="txtPhone" runat="server"></asp:TextBox>
             </div>
             </div>
+        </div>
 </asp:Content>
