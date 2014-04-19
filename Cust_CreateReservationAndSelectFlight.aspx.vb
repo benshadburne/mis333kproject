@@ -76,7 +76,7 @@ Partial Class Cust_CreateReservationAndSelectFlight
             ddlDepartureCity.Enabled = False
         End If
 
-        If Session("TripType").ToString Is Nothing Then
+        If Session("TripType") Is Nothing Then
             'dont do anything
         Else
             'hide the radio button list and drop downs for number of customers

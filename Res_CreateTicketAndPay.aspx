@@ -3,5 +3,20 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
+    <div id="header">
+        Create Ticket and Pay
+    </div>
+
+    <div id="gridview">
+
+
+        <asp:GridView ID="gvJourney" runat="server">
+            <Columns>
+                <asp:CommandField ShowSelectButton="True" />
+            </Columns>
+        </asp:GridView>
+
+
+    </div>
 </asp:Content>
 

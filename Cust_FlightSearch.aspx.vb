@@ -63,18 +63,14 @@ Partial Class _Default
         'Return: sorted and binded data
         'Date: 03/18/2014
 
-        Dim strFilterStatement As String
-
         'this filters by start airport, end airport, date, and earliest start time
-        strFilterStatement = DBFlightSearch.FilterAll(Session("StartAirport").ToString, Session("EndAirport").ToString, calFlightSearch.SelectedDate.ToShortDateString, 1)
-        DBFlightSearch.MyView.RowFilter = strFilterStatement
+        DBFlightSearch.SearchDirect(Session("StartAirport").ToString, Session("EndAirport").ToString, DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
         DBFlightSearch.DoSort()
         gvDirectFlights.DataSource = DBFlightSearch.MyView
         gvDirectFlights.DataBind()
 
         ' show record count
         lblCountDirect.Text = "Count: " & CStr(DBFlightSearch.lblCount)
-        lblFilter.Text = strFilterStatement
 
     End Sub
 
@@ -198,7 +194,6 @@ Partial Class _Default
             Response.Redirect("Cust_SelectSeats.aspx")
         Else
             Response.Redirect("Res_SelectCustomer.aspx")
-
         End If
     End Sub
 End Class

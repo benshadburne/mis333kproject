@@ -31,7 +31,7 @@ Partial Class Res_SelectCustomer
         'add a session variable to remember the selected customer
         Session.Add("SelectedCustomer", gvCustomers.SelectedRow.Cells(1).Text)
 
-        Response.Redirect("Res_AddTicketAndPay.aspx")
+        Response.Redirect("Res_CreateTicketAndPay.aspx")
 
     End Sub
 

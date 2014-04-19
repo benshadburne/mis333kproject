@@ -58,6 +58,10 @@ Public Class DBjourneyclone
         End Get
     End Property
 
+    Public Sub GetOneJourney(intJourneyID As Integer)
+        RunSPwithOneParam("usp_JourneyClone_Get_One", "@JourneyID", intJourneyID.ToString)
+    End Sub
+
     Public Sub RunProcedure(ByVal strName As String)
         'Author: Ben Shadburne
         'Purpose: runs procedure
@@ -80,6 +84,35 @@ Public Class DBjourneyclone
             mMyView.Table = mdatasetjourneyclone.Tables("tblJourneyClone")
         Catch ex As Exception
             Throw New Exception("stored procedure is " & strName.ToString & " error is " & ex.Message)
+        End Try
+    End Sub
+
+    Public Sub RunSPwithOneParam(ByVal strSPName As String, ByVal strParamName As String, ByVal strParamValue As String)
+        ' purpose to run a stored procedure with one parameter
+        ' inputs:  stored procedure name, parameter name, parameter value
+        ' returns: dataset filled with correct records
+
+        ' CREATES INSTANCES OF THE CONNECTION AND COMMAND OBJECT
+        Dim objConnection As New SqlConnection(mstrConnection)
+        ' Tell SQL server the name of the stored procedure you will be executing
+        Dim mdbDataAdapter As New SqlDataAdapter(strSPName, objConnection)
+        Try
+            ' SETS THE COMMAND TYPE TO "STORED PROCEDURE"
+            mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
+
+            ' ADD PARAMETER(S) TO SPROC
+            mdbDataAdapter.SelectCommand.Parameters.Add(New SqlParameter(strParamName, strParamValue))
+            ' clear dataset
+            mdatasetjourneyclone.Clear()
+
+            ' OPEN CONNECTION AND FILL DATASET
+            mdbDataAdapter.Fill(mdatasetjourneyclone, "tblJourneys")
+
+            ' copy dataset to dataview
+            mMyView.Table = mdatasetjourneyclone.Tables("tblJourneys")
+
+        Catch ex As Exception
+            Throw New Exception("params are " & strSPName.ToString & " " & strParamName.ToString & " " & strParamValue.ToString & " error is " & ex.Message)
         End Try
     End Sub
 

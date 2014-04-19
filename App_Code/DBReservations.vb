@@ -46,6 +46,18 @@ Public Class DBReservations
         End Get
     End Property
 
+    Public ReadOnly Property MyDataSet() As DataSet
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: xxxxx dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mdatasetReservations
+        End Get
+    End Property
+
     Public Sub RunProcedure(ByVal strName As String)
         'Author: Ben Shadburne
         'Purpose: runs procedure
@@ -212,6 +224,15 @@ Public Class DBReservations
         intReservationID = CInt(mdatasetReservations.Tables("tblReservationsClone").Rows(0).Item("ReservationID"))
         Return intReservationID
     End Function
+
+    Public Sub GetJourneysInReservation(intReservationID As Integer)
+        RunSPwithOneParam("usp_ReservationsClone_Get_Journeys", "@ReservationID", intReservationID.ToString)
+
+    End Sub
+
+    Public Sub PutOneJourneyInGridview(intIndex As Integer)
+
+    End Sub
 
 
     Public Sub DoSort()
