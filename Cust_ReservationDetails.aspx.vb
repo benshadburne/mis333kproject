@@ -1,4 +1,4 @@
-﻿
+﻿Option Strict On
 Partial Class _Default
     Inherits System.Web.UI.Page
 
@@ -25,8 +25,6 @@ Partial Class _Default
 
 
     End Sub
-
-
 
     Public Sub CheckSeats()
 

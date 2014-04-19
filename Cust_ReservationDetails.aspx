@@ -30,8 +30,8 @@
          
             <asp:Label CssClass="label" ID="Label6" runat="server" Text="Front of Plane" ></asp:Label>
      </div>
-       <div class="center-block" style="min-width: 800px; text-align:center">
-            <div class="pull-left" id="left isle" style="width:15%; padding-left:34%; min-width:125px">
+      
+          <div class="pull-left" style="margin-left:25%; text-align:center">
                 <button type="button" id="btn1A" class="btn btn-default btn-lg">
   <span class="glyphicon glyphicon glyphicon-unchecked-you"></span>
 </button>
@@ -60,10 +60,11 @@
             <button type="button" id="btn5B" class="btn btn-default btn-lg">
   <span class="glyphicon glyphicon-unchecked"></span>
 </button>
-            </div>
+              </div>
 
 
-            <div class="pull-left" id="right isle" style="width:15%; padding-right:34%; min-width:125px">
+      <div class="pull-left" style="text-align: center">
+                     
                 <button type="button" id="btn1B" class="btn btn-default btn-lg">
   <span class="glyphicon glyphicon glyphicon-unchecked-you"></span>
 </button>
@@ -92,13 +93,15 @@
             <button type="button" id="btn5D" class="btn btn-default btn-lg">
   <span class="glyphicon glyphicon-unchecked"></span>
 </button>
-            </div>
+          </div>
         </div>
        <div />
-        <div class="center-block">
-        <div style="width: 250px; text-align: center" class="pull-left">
+      
+        
+            <div style="width: 100%; text-align: center" class="pull-left">
+            
             <asp:Label CssClass="label" ID="Label7" runat="server" Text="Rear of Plane" ></asp:Label>
-        </div>
+       
         <br />
         <br />
             <div class="center-block" style="width:100%">
@@ -106,9 +109,10 @@
        </div>
         <ul>
          <li><a href="Cust_ModifyReservation.aspx">Modify Reservation</a></li>
+             </div>
 </ul>
-            </div>
-        </div>
+          
+        
        
        
          
