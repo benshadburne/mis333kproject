@@ -18,10 +18,10 @@
             <br />
             <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
             <br />
-            <asp:LinkButton ID="lnkHome" runat="server" PostBackUrl="~/index.aspx" CausesValidation="False">Home</asp:LinkButton>
+            <asp:LinkButton ID="lnkHome" class="btn-link" runat="server" PostBackUrl="~/index.aspx" CausesValidation="False">Home</asp:LinkButton>
             <br />
             <br />
-            <asp:LinkButton ID="lnkShowAll" runat="server" PostBackUrl="~/ShowAll.aspx" CausesValidation="False">Show All Customers</asp:LinkButton>
+            <asp:LinkButton ID="lnkShowAll" CssClass="btn-link" runat="server" PostBackUrl="~/ShowAll.aspx" CausesValidation="False">Show All Customers</asp:LinkButton>
         </div>
    
         <div class ="content">
@@ -49,7 +49,7 @@
                 <asp:Label ID="lblPhone" runat="server" Text="Phone number:"></asp:Label>
             </div>
             <div id ="content-textboxes">
-                <asp:TextBox ID="txtLName" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtLName" class="text-left" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtLName" ErrorMessage="Last name required." ForeColor="Red">*</asp:RequiredFieldValidator>
                 <br />
                 <asp:TextBox ID="txtFName" runat="server"></asp:TextBox>
