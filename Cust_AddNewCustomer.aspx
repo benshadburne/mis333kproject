@@ -32,15 +32,9 @@
                 <br />
                 <asp:Label ID="lblMI" runat="server" Text="Middle Initial:"></asp:Label>
                 <br />
-                <asp:Label ID="lblUsername" runat="server" Text="Username:"></asp:Label>
-                <br />
                 <asp:Label ID="lblPassword" runat="server" Text="Password:"></asp:Label>
                 <br />
                 <asp:Label ID="lblAddress" runat="server" Text="Address:"></asp:Label>
-                <br />
-                <asp:Label ID="lblCity" runat="server" Text="City:"></asp:Label>
-                <br />
-                <asp:Label ID="lblState" runat="server" Text="State:"></asp:Label>
                 <br />
                 <asp:Label ID="lblZip" runat="server" Text="Zip Code:"></asp:Label>
                 <br />
@@ -57,17 +51,10 @@
                 <br />
                 <asp:TextBox ID="txtMI" runat="server"></asp:TextBox>
                 <br />
-                <asp:TextBox ID="txtUsername" runat="server"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ControlToValidate="txtUsername" ErrorMessage="Username required." ForeColor="Red">*</asp:RequiredFieldValidator>
-                <br />
                 <asp:TextBox ID="txtPassword" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator4" runat="server" ControlToValidate="txtPassword" ErrorMessage="Password required." ForeColor="Red">*</asp:RequiredFieldValidator>
                 <br />
                 <asp:TextBox ID="txtAddress" runat="server"></asp:TextBox>
-                <br />
-                <asp:TextBox ID="txtCity" runat="server"></asp:TextBox>
-                <br />
-                <asp:TextBox ID="txtState" runat="server"></asp:TextBox>
                 <br />
                 <asp:TextBox ID="txtZip" runat="server"></asp:TextBox>
                 <br />

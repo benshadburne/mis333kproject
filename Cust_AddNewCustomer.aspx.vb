@@ -17,32 +17,26 @@ Partial Class Cust_AddNewCustomer
         Dim aryNames As New ArrayList
         Dim aryValues As New ArrayList
 
-        aryNames.Add("@Username")
         aryNames.Add("@Password")
         aryNames.Add("@LastName")
         aryNames.Add("@FirstName")
         aryNames.Add("@MI")
         aryNames.Add("@Address")
-        aryNames.Add("@City")
-        aryNames.Add("@State")
         aryNames.Add("@Zip")
         aryNames.Add("@Phone")
         aryNames.Add("@Email")
 
-        aryValues.Add(txtUsername.Text)
         aryValues.Add(txtPassword.Text)
         aryValues.Add(txtLName.Text)
         aryValues.Add(txtFName.Text)
         aryValues.Add(txtMI.Text)
         aryValues.Add(txtAddress.Text)
-        aryValues.Add(txtCity.Text)
-        aryValues.Add(txtState.Text)
         aryValues.Add(txtZip.Text)
         aryValues.Add(txtPhone.Text)
         aryValues.Add(txtEmail.Text)
 
         'Call the SP to insert the record
-        CustDB.UseSPforInsertOrUpdateQuery("usp_Customers_Add_New", aryNames, aryValues)
+        CustDB.UseSPforInsertOrUpdateQuery("usp_CustomersClone_Add_New", aryNames, aryValues)
     End Sub
 
     Protected Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
