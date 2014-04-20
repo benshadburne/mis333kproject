@@ -11,6 +11,8 @@ Partial Class _Default
     Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         'show flights available
         ShowAll()
+        SortandBind()
+
     End Sub
 
     Protected Sub btnShowAll_Click(sender As Object, e As EventArgs) Handles btnShowAll.Click
@@ -44,16 +46,17 @@ Partial Class _Default
         If IsPostBack = False Then
             calFlightSearch.SelectedDate = Now()
             DBAddJourney.AddJourney(WeekdayName(Weekday(calFlightSearch.SelectedDate)), calFlightSearch.SelectedDate.ToString)
-            ShowAll()
-        End If
 
+        End If
+        ShowAll()
+        SortandBind()
 
     End Sub
 
     Public Sub ShowAll()
         DBFlightSearch.GetALLFlightSearchUsingSP()
-
-        SortandBind()
+        DBFlightSearch.GetALLIndirectStartUsingSP()
+        DBFlightSearch.GetALLIndirectFinishUsingSP()
     End Sub
 
     Public Sub SortandBind()
@@ -63,14 +66,24 @@ Partial Class _Default
         'Return: sorted and binded data
         'Date: 03/18/2014
 
+        DBFlightSearch.DoSort()
+
         'this filters by start airport, end airport, date, and earliest start time
         DBFlightSearch.SearchDirect(Session("StartAirport").ToString, Session("EndAirport").ToString, DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
-        DBFlightSearch.DoSort()
+        DBFlightSearch.SearchIndirectStart(Session("StartAirport").ToString, Session("EndAirport").ToString, DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
+
+        'bind all data
         gvDirectFlights.DataSource = DBFlightSearch.MyView
         gvDirectFlights.DataBind()
+        gvIndirectStart.DataSource = DBFlightSearch.MyViewStart
+        gvIndirectStart.DataBind()
+        gvIndirectFinish.DataSource = DBFlightSearch.MyViewFinish
+        gvIndirectFinish.DataBind()
 
         ' show record count
-        lblCountDirect.Text = "Count: " & CStr(DBFlightSearch.lblCount)
+        lblCountDirect.Text = CStr(DBFlightSearch.lblCount)
+        lblCountIndirect.Text = CStr(DBFlightSearch.lblCountStart)
+        lblCountFinish.Text = CStr(DBFlightSearch.lblCountFinish)
 
     End Sub
 
@@ -195,5 +208,30 @@ Partial Class _Default
         Else
             Response.Redirect("Res_SelectCustomer.aspx")
         End If
+    End Sub
+
+    Protected Sub gvIndirectStart_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectStart.SelectedIndexChanged
+        lblMessage.Text = ""
+        'need to do searchbtn b/c otherwise other gv's get reset
+
+        DBFlightSearch.SearchIndirectFinish(DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("End City").ToString, lblArrival.Text, _
+        DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString), _
+        DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("Arrival Time").ToString)
+
+        'check if there's anything in second gv
+        If CInt(DBFlightSearch.lblCountFinish) = 0 Then
+            lblMessage.Text = "No second leg results"
+            Exit Sub
+        End If
+
+        SortandBind()
+
+        'and make the count equal to the count
+        lblCountFinish.Text = DBFlightSearch.lblCountFinish.ToString
+
+        gvIndirectFinish.Visible = True
+        lblIndirectFinishC.Visible = True
+        lblIndirectFinish.Visible = True
+        lblCountFinish.Visible = True
     End Sub
 End Class

@@ -88,14 +88,15 @@ Public Class DBFlightSearch
         'Date: 04/17/2014
 
         'this is for regular
-        MyView.Sort = "[Flight Date]"
-
+        MyView.Sort = "[Flight Date], [Departure Time]"
+        MyViewStart.Sort = "[Flight Date], [Departure Time]"
+        MyViewFinish.Sort = "[Flight Date], [Departure Time]"
     End Sub
 
     Public Sub SearchDirect(strDeparture As String, strEnd As String, strDate As String)
         'everything we'll need for this
         MyView.RowFilter = "[Departure City] = '" & strDeparture & "' AND [End City] = '" & strEnd & "' AND [Flight Date] = '" & strDate & "'"
-
+        'for departure time ( AND [Departure Time] >= '" & intTime & "')
     End Sub
 
     Public Sub SearchIndirectStart(strDeparture As String, strEnd As String, strDate As String)

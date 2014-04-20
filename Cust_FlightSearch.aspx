@@ -88,7 +88,8 @@
         <br />
         <asp:Label CssClass="label" ID="Label6" runat="server" Text="Direct Flights"></asp:Label>
         <div class="pull-right">
-            <asp:Label CssClass="label" ID="lblCountDirect" runat="server" Text="Count: "></asp:Label></div>
+             <asp:Label CssClass="label" ID="Label1" runat="server" Text="Count: "></asp:Label>
+            <asp:Label CssClass="label" ID="lblCountDirect" runat="server" Text=""></asp:Label></div>
          <br />
          <asp:GridView class="table" ID="gvDirectFlights" runat="server" AutoGenerateSelectButton="True">
         </asp:GridView>
@@ -98,13 +99,27 @@
     <br />
     <br />
     
-     <asp:Label CssClass="label" ID="Label8" runat="server" Text="Indirect Flights" Visible="false"></asp:Label>
-        <div class="pull-right">
-            <asp:Label CssClass="label" ID="Label9" runat="server" Text="Count:" Visible="false"></asp:Label></div>
+     <asp:Label CssClass="label" ID="lblIndirectStart" runat="server" Text="Indirect Flights: First Leg" Visible="true"></asp:Label>
+        &nbsp;<div class="pull-right" id="StartCount">
+            <asp:Label CssClass="label" ID="lblIndirectStartC" runat="server" Text="Count: " Visible="true"></asp:Label>
+            <asp:Label CssClass="label" ID="lblCountIndirect" runat="server" Text="" Visible="true"></asp:Label></div>
          <br />
-         <asp:GridView class="table" ID="gvIndirectFlights" runat="server" Visible="false"></asp:GridView>
-       
-         </div>      
+
+         <asp:GridView class="table" ID="gvIndirectStart" runat="server" Visible="true" AutoGenerateSelectButton="True"></asp:GridView>
+       <br /><asp:Label CssClass="label" ID="lblIndirectFinish" runat="server" Text="Indirect Flights: Second Leg" Visible="false"></asp:Label>
+        <div class="pull-right">
+
+            <asp:Label CssClass="label" ID="lblIndirectFinishC" runat="server" Text="Count: " Visible="false"></asp:Label>
+
+            <asp:Label CssClass="label" ID="lblCountFinish" runat="server" Text="" Visible="false"> </asp:Label>
+
+        </div>
+        
+         <asp:GridView class="table" ID="gvIndirectFinish" runat="server" Visible="false" AutoGenerateSelectButton="True"></asp:GridView>
+    
+        
+            
+         </div>       
      
 </asp:Content>
 

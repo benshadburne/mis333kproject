@@ -18,15 +18,7 @@ Partial Class _Default
         End If
         'need to add flights before datasets are loaded
         'define variables
-        Dim strDay As String
-        Dim strDate As String
-        'put the name of the day of the week into strDay
-        strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
-
-        strDate = (calFlightSearch.SelectedDate.ToString)
-
-        'adds flights to the date, ensures we have flights to show
-        AddJourneyClass.AddJourney(strDay, strDate)
+        AddJourneys()
 
 
 
@@ -57,6 +49,18 @@ Partial Class _Default
 
     End Sub
 
+    Public Sub AddJourneys()
+        Dim strDay As String
+        Dim strDate As String
+        'put the name of the day of the week into strDay
+        strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
+
+        strDate = (calFlightSearch.SelectedDate.ToString)
+
+        'adds flights to the date, ensures we have flights to show
+        AddJourneyClass.AddJourney(strDay, strDate)
+    End Sub
+
     Public Sub ShowAll()
         DBFlightSearch.GetALLFlightSearchUsingSP()
         DBFlightSearch.GetALLIndirectStartUsingSP()
@@ -84,6 +88,7 @@ Partial Class _Default
         ' show record count
         lblCountDirect.Text = CStr(DBFlightSearch.lblCount)
         lblCountIndirect.Text = CStr(DBFlightSearch.lblCountStart)
+        lblCountFinish.Text = CStr(DBFlightSearch.lblCountFinish)
     End Sub
 
 
