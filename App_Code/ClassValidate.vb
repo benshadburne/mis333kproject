@@ -350,4 +350,29 @@ Public Class ClassValidate
         End If
     End Function
 
+    'Check state to see if it is in the United States by using a really long if statement
+    Public Function CheckUSState(strState As String, strZip As String) As Boolean
+        'Purpose: Check a state to see if it is the US by running an SP that matches the inputted zip code with a two digit state, and if it's one of the 50 states, make sure the State entered into the text box matches correctly
+        'Author: Dennis Phelan
+        'Inputs: The state that the customer is going to enter and the Zip code that passed the validation already and exists
+        'Outputs: False if the US state does not match the zip code, True if it's a non-US state or it matches correctly
+        'Date created: April 20, 2014
+        'Date Last Modified: April 20, 2014
+
+        'List out all of the states
+        If strState = "AL" Or strState = "AK" Or strState = "AR" Or strState = "AZ" Or strState = "CA" Or strState = "CO" Or strState = "CT" Or strState = "DE" Or strState = "FL" Or strState = "GA" Or strState = "HI" Or strState = "ID" Or strState = "IL" Or strState = "IN" Or strState = "IA" Or strState = "KS" Or strState = "KY" Or strState = "LA" Or strState = "ME" Or strState = "MD" Or strState = "MA" Or strState = "MI" Or strState = "MN" Or strState = "MS" Or strState = "MO" Or strState = "MT" Or strState = "NE" Or strState = "NV" Or strState = "NH" Or strState = "NJ" Or strState = "NM" Or strState = "NY" Or strState = "NC" Or strState = "ND" Or strState = "OH" Or strState = "OK" Or strState = "OR" Or strState = "PA" Or strState = "RI" Or strState = "SC" Or strState = "SD" Or strState = "TN" Or strState = "TX" Or strState = "UT" Or strState = "VT" Or strState = "VA" Or strState = "WA" Or strState = "WV" Or strState = "WI" Or strState = "WY" Then
+
+            'If it is a US State, check to make sure that entered in state matches the state that corresponds with the the zip code entered
+            If strState <> ZObject.MatchZipToState(strZip) Then
+                Return False
+            End If
+
+            'If it passes, return True
+            Return True
+        End If
+
+        'If a state is not entered, or it is a non-US state, pass true since Zip code was already checked
+        Return True
+    End Function
+
 End Class

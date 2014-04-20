@@ -143,5 +143,27 @@ Public Class DBZip
             Return True
         End If
     End Function
+
+    'Function for returning the state that matches with the zip code
+    Public Function MatchZipToState(strZip As String) As String
+        'Purpose: Run a stored procedure that matches the state with the zip code, and then set a value equal to the state that is outputted
+        'Author: Dennis Phelan
+        'Input: the Zip code the user enters
+        'Outputs: the State that goes with the zip code
+        'Date Created: April 20, 2014
+        'Date Last Modified: April 20, 2014
+
+        'Declare the result
+        Dim strResult As String
+
+        'Run the SP with one param that matches the zip to the state
+        RunSPwithOneParam("usp_ZipsClone_Match_Zip_to_State", "@zip", strZip)
+
+        'Set the result to the State that is outputted
+        strResult = mMyView.Table.Rows(0).Item("State").ToString
+
+        'Return the result
+        Return strResult
+    End Function
 End Class
 
