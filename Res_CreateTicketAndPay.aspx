@@ -8,7 +8,7 @@
     </div>
 
     <div id="gridview">
-
+        
 
         <asp:GridView ID="gvJourney" runat="server">
             <Columns>
@@ -16,6 +16,7 @@
             </Columns>
         </asp:GridView>
 
+        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
 
     </div>
 </asp:Content>

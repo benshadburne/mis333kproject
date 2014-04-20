@@ -145,10 +145,10 @@ Public Class DBFlightsClone
             Me.MyDataSet.Clear()
 
             ' OPEN CONNECTION AND FILL DATASET
-            mdbDataAdapter.Fill(MyDataSet, "tblFlightClone")
+            mdbDataAdapter.Fill(MyDataSet, "tblFlightsClone")
 
             ' copy dataset to dataview
-            mMyView.Table = MyDataSet.Tables("tblFlightClone")
+            mMyView.Table = MyDataSet.Tables("tblFlightsClone")
 
         Catch ex As Exception
             Throw New Exception("params are " & strSPName.ToString & " " & strParamName.ToString & " " & strParamValue.ToString & " error is " & ex.Message)
