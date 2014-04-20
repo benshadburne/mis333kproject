@@ -107,7 +107,8 @@ Public Class DBFlightSearch
     Public Sub SearchIndirectFinish(strDeparture As String, strEnd As String, strDate As String, strTime As String)
         'indirect flights have to happen all in one day, or not at all
         MyViewFinish.RowFilter = "[Departure City] = '" & strDeparture & "' AND [End City] = '" & strEnd & "' AND [Flight Date] = '" _
-            & strDate & "' AND [Departure Time] > '" & strTime & "'"
+         & strDate & "' AND [Departure Time] > '" & strTime & "'"
+
     End Sub
 
     Public Function SearchTime(ByVal strIn As String) As String
@@ -294,19 +295,6 @@ Public Class DBFlightSearch
             Return mMyViewFinish
         End Get
     End Property
-
-    Public Sub DoSortIndirect()
-        'Author: Aaryaman Singhal
-        'Purpose: sorts data by departure time
-        'Arguments: none
-        'Return: sorted dataview
-        'Date: 04/17/2014
-
-
-        mMyViewStart.Sort = "[Departure Time]"
-        mMyViewFinish.Sort = "[Departure Time]"
-
-    End Sub
 
     Public ReadOnly Property lblCountStart() As Integer
         'Author: Ben Shadburne
