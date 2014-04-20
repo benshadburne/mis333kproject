@@ -6,6 +6,8 @@ Partial Class Res_SelectCustomer
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        Session("Adults") = 2
+
         If IsPostBack = False Then
             CustomerDB.GetAllCustomersCloneUsingSP()
 
@@ -29,7 +31,7 @@ Partial Class Res_SelectCustomer
 
     Protected Sub gvCustomers_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvCustomers.SelectedIndexChanged
         'add a session variable to remember the selected customer
-        Session.Add("SelectedCustomer", gvCustomers.SelectedRow.Cells(1).Text)
+        Session.Add("SelectedCustomer", gvCustomers.SelectedRow.Cells(0).Text)
 
         Response.Redirect("Res_CreateTicketAndPay.aspx")
 

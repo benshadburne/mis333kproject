@@ -161,6 +161,12 @@ Public Class DBFlightsClone
         RunSPwithOneParam(strSPname, strParamName, strDay)
     End Sub
 
+
+    Public Sub GetOneFlight(strSPName As String, strParamName As String, strFlightNumber As String)
+
+        RunSPwithOneParam(strSPName, strParamName, strFlightNumber)
+    End Sub
+
     Protected Sub UseSP(ByVal strUSPName As String, ByVal strDatasetName As DataSet, ByVal strViewName As DataView, ByVal strTableName As String, ByVal aryParamNames As ArrayList, ByVal aryParamValues As ArrayList)
         'Purpose: Run any stored procedure with any number of parameters
         'Arguments: Stored procedure name, tblName, dataset name, dataview name, arraylist of parameter names, and arraylist of parameter values
