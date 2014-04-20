@@ -11,7 +11,7 @@ Partial Class _Default
         strReservationID = CStr(10004)
         strAdvantageNum = CStr(5000)
         Session("Login") = strAdvantageNum
-        lblReservationID.Text += strReservationID
+        lblReservationID.Text = strReservationID
         'check customer login
 
         ''check session reservationID if it's empty
@@ -38,9 +38,14 @@ Partial Class _Default
         ddlJourneyID.DataValueField = "JourneyID"
         ddlJourneyID.DataBind()
 
-        'bind seats
+        'bind seats and seats w/advantage numbers
         DBSeats.GetALLSeatsUsingSP()
         DBSeats.FilterJourneyID(ddlJourneyID.SelectedValue)
+        DBSeats.GetALLSeatsAdvantageUsingSP()
+        DBSeats.GetALLSeatsAdvantageUserUsingSP()
+        DBSeats.FilterAdvantage(Session("Login").ToString)
+        DBSeats.GetALLSeatsAdvantageOthersUsingSP()
+        DBSeats.FilterAdvantageOthers(Session("Login").ToString, strReservationID)
 
         'check seats to initialize them
         CheckSeats()
@@ -49,9 +54,11 @@ Partial Class _Default
 
     Public Sub CheckSeats()
 
+        'button variable makes it so that I can give the work 'button' methods like .backcolor for each button in the arlSeats array
         Dim button As Button
-        Dim arlSeats As ArrayList
+        Dim arlSeats As New ArrayList
 
+        'adding all buttons to the arraylist
         arlSeats.Add(btn1A)
         arlSeats.Add(btn1B)
         arlSeats.Add(btn2A)
@@ -69,30 +76,33 @@ Partial Class _Default
         arlSeats.Add(btn5C)
         arlSeats.Add(btn5D)
 
+        'basically it does a test in each step
         For i = 0 To 15
             button = CType(arlSeats(i), Button)
+            'first test is if the seat is empty, if yes then it makes the color lightgray
             If CInt(DBSeats.MyView.Table().Rows(i).Item("Status")) = 0 Then
                 button.BackColor = Drawing.Color.LightGray
-                'ElseIf CInt(DBSeats.MyView.Table().Rows(i).Item("JourneyID")) = CInt(Session("Login")) Then
+                'second test checks if the advantage dataset advantage number (should be user's advantage number)
+            ElseIf DBSeats.MyViewAdvantage.Table().Rows(i).Item("AdvantageNumber").ToString = DBSeats.MyViewAdvantageUser.Table().Rows(0).Item("AdvantageNumber").ToString Then
                 button.BackColor = Drawing.Color.Green
-                'Else If 
+                'third test is whether the 'Others' dataset is empty (basically if there are other nonreservation people on the plane
+            ElseIf DBSeats.lblCountOthers <> 0 Then
+                'it has to loop through all the people in the dataset and check whether their advantage number is the one in the seat we are checking (i)
+                For j = 0 To DBSeats.lblCountOthers - 1
+                    If DBSeats.MyViewAdvantage.Table().Rows(i).Item("AdvantageNumber").ToString = DBSeats.MyViewAdvantageOthers.Table().Rows(j).Item("AdvantageNumber").ToString Then
+                        button.BackColor = Drawing.Color.Coral
+                        Exit For
+                    End If
+                    'if it completes the for loop without passing the if statement, then the color will be Blue for another person on the reservation
+                    button.BackColor = Drawing.Color.Blue
+                Next
+            Else
+                'if this runs, the seat is filled by someone who is on the reservation but not the user
+                button.BackColor = Drawing.Color.Blue
             End If
         Next
-
-
-
-
-
-
+        lblMessage.Text = DBSeats.MyViewAdvantage.Table().Rows(2).Item("AdvantageNumber").ToString
     End Sub
-
-    Public Sub ChangeSeat(strSeat As String, strType As String)
-
-        
-
-
-    End Sub
-
 
     Public Sub SortandBind()
         'Author: Ben Shadburne
@@ -116,6 +126,7 @@ Partial Class _Default
         CheckSeats()
     End Sub
 
+    'every time a button is clicked this happens 
     Protected Sub btn1A_Click(sender As Object, e As EventArgs) Handles btn1A.Click, btn1B.Click, _
         btn2A.Click, btn2B.Click, btn3A.Click, btn3B.Click, btn3C.Click, btn3D.Click, btn4A.Click, btn4B.Click, _
         btn4C.Click, btn4D.Click, btn5A.Click, btn5B.Click, btn5C.Click, btn5D.Click
@@ -123,14 +134,19 @@ Partial Class _Default
         Dim button As Button
         button = CType(sender, Button)
 
-        If button.BackColor = Drawing.Color.Coral Then
+        'basically, they can't choose the seat if it's filled by anyone
+        If button.BackColor = Drawing.Color.Coral Or button.BackColor = Drawing.Color.Blue Or button.BackColor = Drawing.Color.Green Then
+            'seat already taken
             Exit Sub
         End If
 
+        'if seat is empty then stuff happens
         If button.BackColor = Drawing.Color.Gray Then
+            'this runs code to make sure database is updated
+            DBSeats.GreyPress(DBSeats.MyViewAdvantageUser.Table().Rows(0).Item("Seat").ToString)
+
+            'changes grey to green
             button.BackColor = Drawing.Color.Green
-        ElseIf button.BackColor = Drawing.Color.Green Then
-            button.BackColor = Drawing.Color.Gray
         End If
 
     End Sub

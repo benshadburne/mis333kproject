@@ -20,6 +20,7 @@
         <br />
          <asp:Label CssClass="h3" ID="Label3" runat="server" Text="Other Tickets:"></asp:Label>
         <asp:GridView class="table" ID="gvOtherReservation" runat="server"></asp:GridView>
+        <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
    <br />
         <asp:Label CssClass="label" ID="Label5" runat="server" Text="Choose the JourneyID:"></asp:Label>
         <br />
