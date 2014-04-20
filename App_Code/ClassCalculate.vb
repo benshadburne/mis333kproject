@@ -7,6 +7,9 @@ Imports Microsoft.VisualBasic
 
 Public Class ClassCalculate
 
+    'Declare an object for getting the Base Fare
+
+
     'Should these be in the tblConstants??
     'Lay out the constants
     Const FIRST_CLASS_Constant As Decimal = 1.2D
@@ -50,6 +53,8 @@ Public Class ClassCalculate
             decBaseFare = value
         End Set
     End Property
+
+
 
 
     'Public sub for asking for the age and then applying the discount
@@ -122,5 +127,6 @@ Public Class ClassCalculate
 
     End Sub
 
+    'Use the value calculated here to then transfer it to the DBTickets to run a SP to update the price of the ticket
 
 End Class

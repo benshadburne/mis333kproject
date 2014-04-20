@@ -213,4 +213,25 @@ Public Class DBFlightsClone
         'run the use SP sub to add flights using information passed from form
         UseSP("usp_FlightClone_Add_New", mdatasetFlightsClone, mMyView, "tblFlightClone", aryParamNames, aryParamValues)
     End Sub
+
+    Public Function GetBaseFare(strFlightNumber As String) As Decimal
+        'Purpose: Get the Base Fare from the Database to use in the Calculation Class for it to be discounted
+        'Author: Dennis Phelan
+        'Inputs: The Flight Number the customer/employee is looking at
+        'Outputs: The Base Fare
+        'Date Created: April 20, 2014
+        'Date Last Modified: April 20, 2014
+
+        'Declare the result
+        Dim decResult As Decimal
+
+        'Run the stored procedure to that will give you the one base fare
+        RunSPwithOneParam("usp_FlightClone_Get_BaseFare", "@FlightNumber", strFlightNumber)
+
+        'Set the result to the value that appears in the database
+        decResult = Convert.ToDecimal(mMyView.Table.Rows(0).Item("BaseFare"))
+
+        'Return the Base Fare
+        Return decResult
+    End Function
 End Class
