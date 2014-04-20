@@ -8,7 +8,7 @@ Imports Microsoft.VisualBasic
 Public Class ClassCalculate
 
     'Declare an object for getting the Base Fare
-
+    Dim FObject As New DBFlightsClone
 
     'Should these be in the tblConstants??
     'Lay out the constants
@@ -23,6 +23,7 @@ Public Class ClassCalculate
     Dim decBaseFare As Decimal
     Dim decTentativeFinalPay As Decimal
     Dim intAge As Integer
+    Dim strFlightNumber As String
     Dim decAgeDiscount As Decimal
 
     'Public Properties for the various inputs and outputs
@@ -36,6 +37,16 @@ Public Class ClassCalculate
         End Set
     End Property
 
+    'Public Property for the FlightNumber
+    Public Property FlightNumber As String
+        Get
+            Return strFlightNumber
+        End Get
+        Set(value As String)
+            strFlightNumber = value
+        End Set
+    End Property
+
     'Public ReadOnly Property for the age discount
     Public ReadOnly Property AgeDiscount As Decimal
         Get
@@ -43,22 +54,15 @@ Public Class ClassCalculate
         End Get
     End Property
 
-    'Public Property for the Base Fare
-    ''I think I need to declare an object from the Flight DB so I can grab the base fare from that flight
-    Public Property BaseFare As Decimal
-        Get
-            Return decBaseFare
-        End Get
-        Set(value As Decimal)
-            decBaseFare = value
-        End Set
-    End Property
+    'Public Function for returning the Base Fare
+    Public Function GetBaseFareFromFlightDB(strFlightNumber As String) As Decimal
+        decBaseFare = FObject.GetBaseFare(strFlightNumber)
 
-
-
+        Return decBaseFare
+    End Function
 
     'Public sub for asking for the age and then applying the discount
-    Public Sub CalculateAgeDiscount()
+    Public Function CalculateAgeDiscount(intAge As Integer) As String
         'Purpose: Apply the age discount if there is one to the base fare _
         '           NOTE: the age will be verified at the Gate check-in so this is the only tentative amount
         'Author: Dennis Phelan
@@ -66,6 +70,8 @@ Public Class ClassCalculate
         'Outputs: Does not return anything; Calculates the age discount
         'Date Created: April 20, 2014
         'Date Last Modified: April 21, 2014
+
+        GetBaseFareFromFlightDB(strFlightNumber)
 
         'Check to see if the age is a senior
         If intAge >= 65 Then
@@ -81,7 +87,8 @@ Public Class ClassCalculate
             decAgeDiscount = decBaseFare
         End If
 
-    End Sub
+        Return decAgeDiscount.ToString
+    End Function
 
     'Calculate Date
     Public Sub CalculateTimeBeforeFlight()

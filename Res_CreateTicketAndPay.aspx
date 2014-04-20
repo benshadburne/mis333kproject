@@ -19,5 +19,21 @@
         <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
 
     </div>
+    
+    <br />
+    <br />
+    <asp:Label ID="Label1" runat="server" Text="Flight Number"></asp:Label>
+    <asp:TextBox ID="txtFlightNumber" runat="server"></asp:TextBox>
+    <br />
+    <asp:Label ID="Label2" runat="server" Text="Age"></asp:Label>
+    <asp:TextBox ID="txtAge" runat="server"></asp:TextBox>
+    
+    <br />
+    <asp:Button ID="btnGetBaseFare" CssClass="btn" runat="server" Text="Get Base Fare" />
+    <br />
+    <asp:Label ID="lblResult" runat="server" Text="Label"></asp:Label>
+
+
+
 </asp:Content>
 

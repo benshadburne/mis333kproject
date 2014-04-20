@@ -1,6 +1,11 @@
-﻿
+﻿Option Strict On
+
 Partial Class _Default
     Inherits System.Web.UI.Page
+
+    'Declare instances of classes
+    Dim calc As New ClassCalculate
+
     Dim DBReservations As New DBReservations
     Dim DBJourney As New DBjourneyclone
     Dim DBFlight As New DBFlightsClone
@@ -23,7 +28,7 @@ Partial Class _Default
 
     Private Sub LoadGridview()
 
-        DBJourney.GetOneJourney(CInt(DBReservations.MyDataSet.Tables("tblReservationsClone").Rows(Session("CurrentRecord")).Item("JourneyOne")))
+        DBJourney.GetOneJourney(CInt(DBReservations.MyDataSet.Tables("tblReservationsClone").Rows(CInt(Session("CurrentRecord"))).Item("JourneyOne")))
 
         gvJourney.DataSource = DBJourney.MyDataSet
         gvJourney.DataBind()
@@ -35,19 +40,28 @@ Partial Class _Default
         Dim strFlightNumber As String
         Dim strBaseFare As String
 
-        DBJourney.GetOneJourney(CInt(DBReservations.MyDataSet.Tables("tblReservationsClone").Rows(Session("CurrentRecord")).Item("JourneyOne")))
+        DBJourney.GetOneJourney(CInt(DBReservations.MyDataSet.Tables("tblReservationsClone").Rows(CInt(Session("CurrentRecord"))).Item("JourneyOne")))
 
-        strJourneyID = DBJourney.MyDataSet.Tables("tblJourneys").Rows(Session("CurrentRecord")).Item("JourneyID")
-        strFlightNumber = DBJourney.MyDataSet.Tables("tblJourneys").Rows(Session("CurrentRecord")).Item("FlightNumber")
+        strJourneyID = DBJourney.MyDataSet.Tables("tblJourneys").Rows(CInt(Session("CurrentRecord"))).Item("JourneyID").ToString
+        strFlightNumber = DBJourney.MyDataSet.Tables("tblJourneys").Rows(CInt(Session("CurrentRecord"))).Item("FlightNumber").ToString
 
         DBFlight.GetOneFlight("usp_FlightClone_Get_One", "@FlightNumber", strFlightNumber)
 
-        strBaseFare = DBFlight.MyDataSet.Tables("tblFlightsClone").Rows(0).Item("BaseFare")
+        strBaseFare = DBFlight.MyDataSet.Tables("tblFlightsClone").Rows(0).Item("BaseFare").ToString
 
         DBTicket.AddTicket(Session("ReservationID").ToString, Session("SelectedCustomer").ToString, strJourneyID, strFlightNumber, strBaseFare)
 
         TextBox1.Text = strJourneyID & "," & strFlightNumber & "," & strBaseFare
 
 
+    End Sub
+
+    Protected Sub btnGetBaseFare_Click(sender As Object, e As EventArgs) Handles btnGetBaseFare.Click
+
+        'lblResult.Text = calc.GetBaseFareFromFlightDB(txtFlightNumber.Text).ToString
+
+        calc.FlightNumber = txtFlightNumber.Text
+
+        lblResult.Text = calc.CalculateAgeDiscount(CInt(txtAge.Text)).ToString
     End Sub
 End Class
