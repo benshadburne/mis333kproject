@@ -148,27 +148,27 @@ Partial Class _Default
 
         'need to do searchbtn b/c otherwise other gv's get reset
         SearchBtn()
-        lblMessage.Text = gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(5).ToString
-        DBFlightSearch.SearchIndirectFinish(DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("End City").ToString, ddlArrival.SelectedValue, _
+        SortandBind()
+        DBFlightSearch.SearchIndirectFinish(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(6).Text, ddlArrival.SelectedValue, _
         DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString), _
-        DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("Arrival Time").ToString())
+        gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(7).Text)
 
         SortandBind()
         'check if there's anything in second gv
-        'If CInt(DBFlightSearch.lblCountFinish) = 0 Then
-        '    lblMessage.Text = "No second leg results"
-        '    Exit Sub
-        'End If
+        If CInt(DBFlightSearch.lblCountFinish) = 0 Then
+            lblMessage.Text = "No second leg results"
+            Exit Sub
+        End If
 
 
 
-        ''and make the count equal to the count
-        'lblCountFinish.Text = DBFlightSearch.lblCountFinish.ToString
+        'and make the count equal to the count
+        lblCountFinish.Text = DBFlightSearch.lblCountFinish.ToString
 
-        'gvIndirectFinish.Visible = True
-        'lblIndirectFinishC.Visible = True
-        'lblIndirectFinish.Visible = True
-        'lblCountFinish.Visible = True
+        gvIndirectFinish.Visible = True
+        lblIndirectFinishC.Visible = True
+        lblIndirectFinish.Visible = True
+        lblCountFinish.Visible = True
 
 
     End Sub
