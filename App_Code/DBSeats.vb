@@ -19,16 +19,11 @@ Public Class DBSeats
     'setting up db, dim connection, adapter, query, dataset
     Dim mMyView As New DataView
     Dim mMyViewAdvantage As New DataView
-    Dim mMyViewAdvantageOthers As New DataView
-    Dim mMyViewAdvantageUser As New DataView
     Dim mdbConn As New SqlConnection
     Dim mstrConnection As String = "workstation id=COMPUTER;packet size=4096;data source=MISSQL.mccombs.utexas.edu;integrated security=False;initial catalog=mis333k_20142_Team06;user id=msbcf819;password=Databasepassword5"
     Dim mdbDataAdapter As New SqlDataAdapter
     Dim mdatasetSeats As New DataSet
     Dim mdatasetSeatsAdvantage As New DataSet
-    Dim mdatasetSeatsAdvantageOthers As New DataSet
-    Dim mdatasetSeatsAdvantageUser As New DataSet
-    Dim mQueryString As String
 
     Public Sub GetALLSeatsUsingSP()
         'Author: Ben Shadburne
@@ -173,65 +168,8 @@ Public Class DBSeats
     End Property
 
 
-
-
-
-
-
-
-    'THIS IS WITH THE ADVANTAGE NUMBER OF USER INCLUDED
-
-    Public Sub GetALLSeatsAdvantageUserUsingSP(strIn As String)
-        'Author: Ben Shadburne
-        'Purpose: runs xxxxx procedure
-        'Arguments: na
-        'Return: na
-        'Date: 03/18/2014
-        Dim aryParamName As New ArrayList
-        Dim aryParamValue As New ArrayList
-
-        aryParamName.Add("@JourneyID")
-        aryParamValue.Add(strIn)
-
-        UseSPToRetrieveRecords("usp_SeatAdvantage_Get_All", mdatasetSeatsAdvantageUser, mMyViewAdvantageUser, "tblSeatsAdvantageUser", aryParamName, aryParamValue)
-
-    End Sub
-
-    'define a public read only property
-    Public ReadOnly Property MyViewAdvantageUser() As DataView
-        'Author: Ben Shadburne
-        'Purpose: returns read only dataview
-        'Arguments: na
-        'Return: xxxxx dataview
-        'Date: 03/18/2014
-
-        Get
-            Return mMyViewAdvantageUser
-        End Get
-    End Property
-
-    Public Sub FilterAdvantage(strNumber As String)
-        MyViewAdvantageUser.RowFilter = "[AdvantageNumber] = '" & strNumber & "'"
-    End Sub
-
-    Public ReadOnly Property lblCountAdvantageUser() As Integer
-        'Author: Ben Shadburne
-        'Purpose: return lblcount
-        'Arguments:  none
-        'Return: count of xxxxx
-        'Date: 03/07/2014
-
-        Get
-            'returns the count to the label
-            Return MyViewAdvantageUser.Count
-        End Get
-    End Property
-
-
-
-    'Update Query
-
-    Public Sub GreyPress(strSeat As String, strNewSeat As String, strAdvantageNumber As String, strJourneyID As String)
+    'Extra Subs
+    Public Sub UpdateTicket(strNewSeat As String, strAdvantageNumber As String, strJourneyID As String)
 
         'these are for updating the ticket table
         Dim aryTicketName As New ArrayList
@@ -246,34 +184,65 @@ Public Class DBSeats
         'run update for ticket as well
         UseSPforInsertOrUpdateQuery("usp_Ticket_Seat_Set", aryTicketName, aryTicketValue)
 
+    End Sub
 
-
-        'if they have a seat selected already
+    Public Sub UpdateJourneySeatBridge(strSeat As String, intStatus As Integer, strJourneyID As String)
+        'runs update on journeyseatbridge
+        'makes array lists
         Dim aryParamName As New ArrayList
         Dim aryParamValue As New ArrayList
+        aryParamName.Add("@JourneyID")
         aryParamName.Add("@Seat")
         aryParamName.Add("@Status")
-        If lblCountAdvantageUser <> 0 Then
-            'they have one selected, so we gotta change the status of their current seat to 0
-            aryParamValue.Add(strSeat)
-            aryParamValue.Add(0)
+        aryParamValue.Add(strJourneyID)
+        aryParamValue.Add(strSeat)
+        aryParamValue.Add(intStatus)
 
-            UseSPforInsertOrUpdateQuery("usp_Seats_Alter_User_Seat", aryParamName, aryParamValue)
-            'remove so we can update 
-            aryParamValue.Remove(0)
-            aryParamValue.Remove(strSeat)
-        End If
-        'either way, update status of new seat to 1 in table
-        aryParamValue.Add(strNewSeat)
-        aryParamValue.Add(1)
-
-        'run update in journeyseatbridge
+        'runs the update
         UseSPforInsertOrUpdateQuery("usp_Seats_Alter_User_Seat", aryParamName, aryParamValue)
+    End Sub
 
+    Public Sub GreyPress(strOldSeat As String, strNewSeat As String, strAdvantageNumber As String, strJourneyID As String)
+
+        UpdateTicket(strNewSeat, strAdvantageNumber, strJourneyID)
+
+        'if they have a seat selected already
+        If strOldSeat <> "" Then
+            'run update to remove existing values
+            UpdateJourneySeatBridge(strOldSeat, 0, strJourneyID)
+        End If
         
+        'either way, run update in journeyseatbridge for new values
+        UpdateJourneySeatBridge(strNewSeat, 1, strJourneyID)
 
     End Sub
 
+    Public Sub BluePress(strOldSeat As String, strNewSeat As String, strAdvantageNumber As String, strJourneyID As String)
+
+        UpdateTicket(strNewSeat, strAdvantageNumber, strJourneyID)
+
+        If strOldSeat <> "" Then
+            UpdateJourneySeatBridge(strOldSeat, 1, strJourneyID)
+        End If
+        'either way, update status of new seat to 2 in table
+        UpdateJourneySeatBridge(strNewSeat, 2, strJourneyID)
+
+    End Sub
+
+    Public Sub GreyPressBaby(strOldSeat As String, strNewSeat As String, strAdvantageNumber As String, strJourneyID As String, strInfant As String)
+        'update parent ticket
+        UpdateTicket(strNewSeat, strAdvantageNumber, strJourneyID)
+        'update infant ticket
+        UpdateTicket(strNewSeat, strInfant, strJourneyID)
+
+        'if they have a seat selected already
+        If strOldSeat <> "" Then
+            UpdateJourneySeatBridge(strOldSeat, 0, strJourneyID)
+        End If
+        'either way, update status of new seat to 1 in table
+        UpdateJourneySeatBridge(strNewSeat, 2, strJourneyID)
+
+    End Sub
 
     Public Sub UseSPforInsertOrUpdateQuery(ByVal strUSPName As String, ByVal aryParamNames As ArrayList, ByVal aryParamValues As ArrayList)
         'Purpose: Sort the dataview by the argument (general sub)
