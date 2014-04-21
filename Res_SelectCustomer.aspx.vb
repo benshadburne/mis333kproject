@@ -39,9 +39,10 @@ Partial Class Res_SelectCustomer
         Dim strFlightNumber As String
         Dim strBaseFare As String
         Dim intTotalJourneys As Integer
+        Dim strAdvantageNumber As String
 
         'add a session variable to remember the selected customer
-        Session.Add("SelectedCustomer", gvCustomers.SelectedRow.Cells(1).Text)
+        strAdvantageNumber = gvCustomers.SelectedRow.Cells(1).Text
 
         DBReservations.GetJourneysInReservation(CInt(Session("ReservationID")))
 
@@ -57,7 +58,7 @@ Partial Class Res_SelectCustomer
 
             strBaseFare = DBFlight.MyDataSet.Tables("tblFlightsClone").Rows(0).Item("BaseFare")
 
-            DBTicket.AddTicket(Session("ReservationID").ToString, Session("SelectedCustomer").ToString, strJourneyID, strFlightNumber, strBaseFare)
+            DBTicket.AddTicket(Session("ReservationID").ToString, strAdvantageNumber, strJourneyID, strFlightNumber, strBaseFare)
 
         Next
 

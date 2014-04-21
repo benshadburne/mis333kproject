@@ -37,25 +37,27 @@ Partial Class Cust_CreateReservationAndSelectFlight
 
     Protected Sub btnAddJourney_Click(sender As Object, e As EventArgs) Handles btnAddJourney.Click
 
-        'run all the validations
-        'check to make sure children + adults is 16 or less
-        If ddlAdult.SelectedValue + ddlChildren.SelectedValue > 16 Then
-            lblMessage.Text = "You can have a maximum of 16 people over age 2 in your reservation."
-        End If
-
-        'check to make sure adults > babies
-        If ddlBabies.SelectedValue > ddlAdult.SelectedValue Then
-            lblMessage.Text = "You cannot have more babies than adults in your reservation"
-        End If
-
-        Session.Add("Adults", ddlAdult.SelectedValue)
-        Session.Add("Children", ddlChildren.SelectedValue)
-        Session.Add("Babies", ddlBabies.SelectedValue)
-
         'if this is the first add journey then do these things
         If Session("JourneyNumber") Is Nothing Then
+
+            'check to make sure children + adults is 16 or less
+            If (ddlAdult.SelectedValue + ddlChildren.SelectedValue) > 16 Then
+                lblMessage.Text = "You can have a maximum of 16 people over age 2 in your reservation."
+                Exit Sub
+            End If
+
+            'check to make sure adults > babies
+            If ddlBabies.SelectedValue > ddlAdult.SelectedValue Then
+                lblMessage.Text = "You cannot have more babies than adults in your reservation"
+                Exit Sub
+            End If
+
+            'add session variables
             Session.Add("JourneyNumber", CInt(0))
             Session.Add("TripType", rblTrip.SelectedValue.ToString)
+            Session.Add("Adults", ddlAdult.SelectedValue)
+            Session.Add("Children", ddlChildren.SelectedValue)
+            Session.Add("Babies", ddlBabies.SelectedValue)
         End If
 
         CreateSessionVariablesAndRedirect()
@@ -76,7 +78,7 @@ Partial Class Cust_CreateReservationAndSelectFlight
             ddlDepartureCity.Enabled = False
         End If
 
-        If Session("TripType") Is Nothing Then
+        If Session("JourneyNumber") Is Nothing Then
             'dont do anything
         Else
             'hide the radio button list and drop downs for number of customers
@@ -91,9 +93,13 @@ Partial Class Cust_CreateReservationAndSelectFlight
             'make the add as final leg button visisble
             btnFinalLeg.Visible = True
 
+            'remove add journey button 
+            If Session("JourneyNumber") >= 7 Then
+                btnAddJourney.Visible = False
+                lblMessage.Text = "This will be your last leg. If you want to add additional legs, please do so on another reservation."
+            End If
+
         End If
-
-
 
     End Sub
 

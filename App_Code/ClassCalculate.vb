@@ -16,7 +16,7 @@ Public Class ClassCalculate
     Const AGE_SeniorDiscount_Constant As Decimal = 0.1D
     Const AGE_ChildDiscount_Constant As Decimal = 0.15D
     Const TIME_2WeeksDiscount_Constant As Decimal = 0.1D
-    Const INTERNET_PurchaseDiscount_Constant As Decimal = 0.15D
+    Const INTERNET_PurchaseDiscount_Constant As Decimal = 0.05D
     Const SALES_TAX_Constant As Decimal = 1.0775D
 
     'Declare the base fare and end result of the price
@@ -26,6 +26,7 @@ Public Class ClassCalculate
     Dim intAge As Integer
     Dim strFlightNumber As String
     Dim decAgeDiscount As Decimal
+    Dim decInternetDiscount As Decimal
 
     'Public Properties for the various inputs and outputs
     'Public Property for the CustomerAge
@@ -108,7 +109,9 @@ Public Class ClassCalculate
     'Calculate Date
     Public Sub CalculateTimeBeforeFlight()
 
-        'Need the current system date time
+        'Need the date stored as current time in DB
+
+
         'need when the flight time is going to be
         ''Both of these will be from the tables, so I will need another object from flight table and the system date table
         ''Or, I can see if there is a current time function
@@ -126,6 +129,8 @@ Public Class ClassCalculate
 
     'Calculate the discount from whether someone used the Customer site to purchase their ticket
     Public Sub CalculateInternetPurchaseDiscount()
+
+        decInternetDiscount = decBaseFare * INTERNET_PurchaseDiscount_Constant
 
         'Check to see if the Save button is clicked on the Customer site and see if it is true
         'If true, apply the discount to the BaseFare

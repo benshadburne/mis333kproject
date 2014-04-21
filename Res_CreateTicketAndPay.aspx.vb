@@ -58,7 +58,6 @@ Partial Class _Default
 
     Protected Sub btnGetBaseFare_Click(sender As Object, e As EventArgs) Handles btnGetBaseFare.Click
 
-
         'Populate the inputs that are public properties in the Calculate class
         calc.FlightNumber = txtFlightNumber.Text
         calc.CustomerAge = CInt(txtAge.Text)
