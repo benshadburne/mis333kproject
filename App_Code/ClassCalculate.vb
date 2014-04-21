@@ -13,15 +13,16 @@ Public Class ClassCalculate
     'Should these be in the tblConstants??
     'Lay out the constants
     Const FIRST_CLASS_Constant As Decimal = 1.2D
-    Const AGE_SeniorDiscount_Constant As Decimal = 0.9D
-    Const AGE_ChildDiscount_Constant As Decimal = 0.85D
-    Const TIME_2WeeksDiscount_Constant As Decimal = 0.9D
-    Const INTERNET_PurchaseDiscount_Constant As Decimal = 0.95D
+    Const AGE_SeniorDiscount_Constant As Decimal = 0.1D
+    Const AGE_ChildDiscount_Constant As Decimal = 0.15D
+    Const TIME_2WeeksDiscount_Constant As Decimal = 0.1D
+    Const INTERNET_PurchaseDiscount_Constant As Decimal = 0.15D
     Const SALES_TAX_Constant As Decimal = 1.0775D
 
     'Declare the base fare and end result of the price
     Dim decBaseFare As Decimal
-    Dim decTentativeFinalPay As Decimal
+    Dim decTentativeFinalPayBeforeTax As Decimal
+    Dim decTentativeFinalPayAfterTax As Decimal
     Dim intAge As Integer
     Dim strFlightNumber As String
     Dim decAgeDiscount As Decimal
@@ -54,15 +55,31 @@ Public Class ClassCalculate
         End Get
     End Property
 
+    'Public ReadOnly Property for the tentativefinalpaybeforediscount
+    Public ReadOnly Property Subtotal As Decimal
+        Get
+            Return decTentativeFinalPayBeforeTax
+        End Get
+    End Property
+
     'Public Function for returning the Base Fare
     Public Function GetBaseFareFromFlightDB(strFlightNumber As String) As Decimal
+        'Purpose: Get the base fare from the DBFlight Class that uses an SP to get it from the table
+        'Author: Dennis Phelan
+        'Inputs: The flight number that will be passed as a public property with the value form the form
+        'Outputs: the Base fare that will be used on this class
+        'Date Created: April 20, 2014
+        'Date Last Modified: April 20, 2014
+
+        'Use the function in the DBFlight
         decBaseFare = FObject.GetBaseFare(strFlightNumber)
 
+        'Return the base fare to be used throughout this form for the discounts
         Return decBaseFare
     End Function
 
     'Public sub for asking for the age and then applying the discount
-    Public Function CalculateAgeDiscount(intAge As Integer) As String
+    Public Sub CalculateAgeDiscount(intAge As Integer)
         'Purpose: Apply the age discount if there is one to the base fare _
         '           NOTE: the age will be verified at the Gate check-in so this is the only tentative amount
         'Author: Dennis Phelan
@@ -84,11 +101,9 @@ Public Class ClassCalculate
 
             'just apply the decAgeDiscount as the decBaseFare
         Else
-            decAgeDiscount = decBaseFare
+            decAgeDiscount = 0
         End If
-
-        Return decAgeDiscount.ToString
-    End Function
+    End Sub
 
     'Calculate Date
     Public Sub CalculateTimeBeforeFlight()
@@ -121,6 +136,10 @@ Public Class ClassCalculate
 
     'Public Sub for adding up all of the different values
     Public Sub CalculateSubTotalDiscount()
+
+        CalculateAgeDiscount(intAge)
+
+        decTentativeFinalPayBeforeTax = decBaseFare - decAgeDiscount
 
         'Put all of the subs in here
         'Add up all of the outputs and have it equal decTentativeFinalPayBeforeTax

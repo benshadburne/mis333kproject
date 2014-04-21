@@ -58,10 +58,16 @@ Partial Class _Default
 
     Protected Sub btnGetBaseFare_Click(sender As Object, e As EventArgs) Handles btnGetBaseFare.Click
 
-        'lblResult.Text = calc.GetBaseFareFromFlightDB(txtFlightNumber.Text).ToString
 
+        'Populate the inputs that are public properties in the Calculate class
         calc.FlightNumber = txtFlightNumber.Text
+        calc.CustomerAge = CInt(txtAge.Text)
 
-        lblResult.Text = calc.CalculateAgeDiscount(CInt(txtAge.Text)).ToString
+        'Run the subtotal calculation
+        calc.CalculateSubTotalDiscount()
+
+        'Output the subtotal calculation
+        lblResult.Text = calc.Subtotal.ToString
+
     End Sub
 End Class
