@@ -12,12 +12,12 @@ Public Class ClassCalculate
 
     'Should these be in the tblConstants??
     'Lay out the constants
-    Const FIRST_CLASS_Constant As Decimal = 1.2D
+    Const FIRST_CLASS_Constant As Decimal = 0.2D
     Const AGE_SeniorDiscount_Constant As Decimal = 0.1D
     Const AGE_ChildDiscount_Constant As Decimal = 0.15D
     Const TIME_TwoWeeksDiscount_Constant As Decimal = 0.1D
     Const INTERNET_PurchaseDiscount_Constant As Decimal = 0.05D
-    Const SALES_TAX_Constant As Decimal = 1.0775D
+    Const SALES_TAX_Constant As Decimal = 0.0775D
 
     'Declare the base fare and end result of the price
     Dim decBaseFare As Decimal
@@ -29,6 +29,9 @@ Public Class ClassCalculate
     Dim datReservation As Date
     Dim decTwoWeeksDiscount As Decimal
     Dim decInternetDiscount As Decimal
+    Dim intFirstClass As Integer
+    Dim decFirstClassPremium As Decimal
+    Dim decTax As Decimal
 
     'Public Properties for the various inputs and outputs
     'Public Property for the CustomerAge
@@ -61,26 +64,27 @@ Public Class ClassCalculate
         End Set
     End Property
 
-
-    'Public ReadOnly Property for the age discount
-    Public ReadOnly Property AgeDiscount As Decimal
+    'Public Property for the First Class option
+    Public Property FirstClass As Integer
         Get
-            Return decAgeDiscount
+            Return intFirstClass
         End Get
+        Set(value As Integer)
+            intFirstClass = value
+        End Set
     End Property
-
-    'Public ReadOnly Property for the 2 weeks Discount
-    Public ReadOnly Property TwoWeeksDiscount As Decimal
-        Get
-            Return decTwoWeeksDiscount
-        End Get
-    End Property
-
 
     'Public ReadOnly Property for the tentativefinalpaybeforediscount
     Public ReadOnly Property Subtotal As Decimal
         Get
             Return decTentativeFinalPayBeforeTax
+        End Get
+    End Property
+
+    'Public ReadOnly Property for the tentativefinalpaybeforediscount
+    Public ReadOnly Property Total As Decimal
+        Get
+            Return decTentativeFinalPayAfterTax
         End Get
     End Property
 
@@ -101,7 +105,7 @@ Public Class ClassCalculate
     End Function
 
     'Public sub for asking for the age and then applying the discount
-    Public Sub CalculateAgeDiscount(intAge As Integer)
+    Public Sub CalculateAgeDiscount()
         'Purpose: Apply the age discount if there is one to the base fare _
         '           NOTE: the age will be verified at the Gate check-in so this is the only tentative amount
         'Author: Dennis Phelan
@@ -159,7 +163,12 @@ Public Class ClassCalculate
 
     'Calculate the discount related to the date
     Public Sub CalculateDateDiscount()
-        'Purpose: Take the value from the 
+        'Purpose: Take the value from the CalculateTimeOfFlight to decide if it is 14 days, and then apply the discount if it is 14 days or more
+        'Author: Dennis Phelan
+        'Inputs: None
+        'Outputs: the decTwoWeeksDiscount
+        'Date Created: April 21, 2014
+        'Date Last Modified: April 21, 2014
 
         'First, get the base fare from the flight DB
         GetBaseFareFromFlightDB(strFlightNumber)
@@ -168,13 +177,21 @@ Public Class ClassCalculate
         If CalculateTimeBeforeFlight(datReservation) = True Then
             decTwoWeeksDiscount = decBaseFare * TIME_TwoWeeksDiscount_Constant
         Else
+            'If not 14 days or more out, the discount is 0
             decTwoWeeksDiscount = 0
         End If
     End Sub
 
     'Calculate the discount from whether someone used the Customer site to purchase their ticket
     Public Sub CalculateInternetPurchaseDiscount()
+        'Purpose: Calculate a discount if the customer purchases their ticket online
+        'Author: Dennis Phelan
+        'Inputs: None
+        'Outputs: decInternetDiscount
+        'Date Created: April 21, 2014
+        'Date Last Modified: April 21, 2014
 
+        'Calculate the Internet discount
         decInternetDiscount = decBaseFare * INTERNET_PurchaseDiscount_Constant
 
         'Check to see if the Save button is clicked on the Customer site and see if it is true
@@ -182,16 +199,51 @@ Public Class ClassCalculate
 
     End Sub
 
+    Public Sub CalculateFirstClass()
+        'Purpose: Calculate the premium for flying first class
+        'Author: Dennis Phelan
+        'Inputs: None
+        'Outputs: The first class premium
+        'Date Created: April 21, 2014
+        'Date Last Created: April 21, 2014
+
+        'Get the base fare
+        GetBaseFareFromFlightDB(strFlightNumber)
+
+        'Checking to see if the first class option is selected
+        If intFirstClass = 1 Then
+            decFirstClassPremium = decBaseFare * FIRST_CLASS_Constant
+
+        Else
+            'If not selected, first class premium is 0
+            decFirstClassPremium = 0
+        End If
+    End Sub
 
 
     'Public Sub for adding up all of the different values
     Public Sub CalculateSubTotalDiscount()
+        'Purpose: Use all of the above subs to get the numbers and get the ticket price with the discounts before Tax
+        'Author: Dennis Phelan
+        'Inputs: None
+        'Outputs: the FinalPayBeforeTax
+        'Date Created: April 21, 2014
+        'Date Last Modified: April 21, 2014
 
-        CalculateAgeDiscount(intAge)
+        'Get the first class premium
+        CalculateFirstClass()
 
+        'Get the age discount
+        CalculateAgeDiscount()
+
+        'Get the date discount
         CalculateDateDiscount()
 
-        decTentativeFinalPayBeforeTax = decBaseFare - decAgeDiscount - decTwoWeeksDiscount
+        'Get the Internet discount
+        CalculateInternetPurchaseDiscount()
+
+        'Add up all of the discounts
+        decTentativeFinalPayBeforeTax = decBaseFare + decFirstClassPremium - decAgeDiscount - decTwoWeeksDiscount - decInternetDiscount
 
         'Put all of the subs in here
         'Add up all of the outputs and have it equal decTentativeFinalPayBeforeTax
@@ -200,17 +252,48 @@ Public Class ClassCalculate
 
     'Public Sub for calculating the tax
     Public Sub CalculateTax()
+        'Purpose: Calculate the tax for the final pay
+        'Author: Dennis Phelan
+        'Inputs: None
+        'Outputs: the tax amount of the final pay
+        'Date Created: April 21, 2014
+        'Date Last Modified: April 21, 2014
+
+        'Calculate the subtotal with discounts
+        CalculateSubTotalDiscount()
+
+        'Calculate the tax
+        decTax = decTentativeFinalPayBeforeTax * SALES_TAX_Constant
 
     End Sub
 
     Public Sub CalculateTotalDiscount()
+        'Purpose: Calculate the total discount for the final pay
+        'Author: Dennis Phelan
+        'Inputs: None
+        'Outputs: the tax amount of the final pay
+        'Date Created: April 21, 2014
+        'Date Last Modified: April 21, 2014
+
+        'Get the subtotal
+        CalculateSubTotalDiscount()
+
+        'Get the tax
+        CalculateTax()
+
+        'Add them up to get the total discount
+        decTentativeFinalPayAfterTax = decTentativeFinalPayBeforeTax + decTax
+
+        ''''''''''''''''Check the age one more time; if an infant, they get on for free. But only one infant per older person'''''''''''''''''''''''''''''
+        If intAge < 3 Then
+            decTentativeFinalPayAfterTax = decTentativeFinalPayAfterTax * 0
+        End If
 
         'Put the CalculateSubTotalDiscount() sub in here
         'Multiply that with the tax to get the total discount after the tax
-
     End Sub
 
-    'Use the value calculated here to then transfer it to the DBTickets to run a SP to update the price of the ticket
+    '''''''''''''''Use the value calculated here to then transfer it to the DBTickets to run a SP to update the price of the ticket paid and the base fare at purchase'''''''''''''
 
     Public Function CalculateArrivalTime(intDepartureTime As Integer, intDuration As Integer) As String
         'declare variables

@@ -62,12 +62,14 @@ Partial Class _Default
         calc.FlightNumber = txtFlightNumber.Text
         calc.CustomerAge = CInt(txtAge.Text)
         calc.DateOfFlight = CDate(txtDate.Text)
+        calc.FirstClass = radFirstClass.SelectedIndex
+
 
         'Run the subtotal calculation
-        calc.CalculateSubTotalDiscount()
+        calc.CalculateTotalDiscount()
 
         'Output the subtotal calculation
-        lblResult.Text = calc.Subtotal.ToString
+        lblResult.Text = calc.Total.ToString
 
         'If calc.CalculateTimeBeforeFlight(CDate(txtAge.Text)) = True Then
         '    lblResult.Text = "You are 14 days out and receive a discount!"

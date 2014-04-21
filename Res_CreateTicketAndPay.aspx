@@ -22,6 +22,11 @@
     
     <br />
     <br />
+
+    <asp:RadioButtonList ID="radFirstClass" runat="server">
+        <asp:ListItem>Economy</asp:ListItem>
+        <asp:ListItem>First Class</asp:ListItem>
+    </asp:RadioButtonList>
     <asp:Label ID="Label1" runat="server" Text="Flight Number"></asp:Label>
     <asp:TextBox ID="txtFlightNumber" runat="server"></asp:TextBox>
     <br />
