@@ -221,7 +221,7 @@ Partial Class _Default
 
         'check if there's anything in second gv
         If CInt(DBFlightSearch.lblCountFinish) = 0 Then
-            lblMessage.Text = "No second leg results"
+            lblMessage.Text = "No second leg results. Please choose a direct flight"
             Exit Sub
         End If
 

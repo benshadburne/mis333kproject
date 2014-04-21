@@ -37,20 +37,32 @@ Partial Class Cust_CreateReservationAndSelectFlight
 
     Protected Sub btnAddJourney_Click(sender As Object, e As EventArgs) Handles btnAddJourney.Click
 
+        'make sure start and end city are different
+        If ddlArrivalCity.SelectedValue = ddlDepartureCity.SelectedValue Then
+            lblMessage.Text = "arrival and departure city cannot be the same"
+            Exit Sub
+        End If
+
         'if this is the first add journey then do these things
         If Session("JourneyNumber") Is Nothing Then
 
             'check to make sure children + adults is 16 or less
-            If (ddlAdult.SelectedValue + ddlChildren.SelectedValue) > 16 Then
+            If (ddlAdult.SelectedIndex + ddlChildren.SelectedIndex) > 16 Then
                 lblMessage.Text = "You can have a maximum of 16 people over age 2 in your reservation."
                 Exit Sub
             End If
 
             'check to make sure adults > babies
-            If ddlBabies.SelectedValue > ddlAdult.SelectedValue Then
+            If ddlBabies.SelectedIndex > (ddlAdult.SelectedIndex + ddlChildren.SelectedIndex) Then
                 lblMessage.Text = "You cannot have more babies than adults in your reservation"
                 Exit Sub
             End If
+
+            If rblTrip.SelectedIndex = -1 Then
+                lblMessage.Text = "Please choose a trip type by clicking a radio button."
+                Exit Sub
+            End If
+
 
             'add session variables
             Session.Add("JourneyNumber", CInt(0))
