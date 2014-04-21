@@ -30,7 +30,7 @@
         <div id ="right">
             <div class ="input-group-lg">
                 <asp:TextBox ID="txtFlightNumber" runat="server"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="rfvFlightNumber" runat="server" ErrorMessage="Please enter a last name!" ControlToValidate="txtFlightNumber" Text="*"></asp:RequiredFieldValidator><br />
+                <asp:RequiredFieldValidator ID="rfvFlightNumber" runat="server" ErrorMessage="Please enter a flight number!" ControlToValidate="txtFlightNumber" Text="*"></asp:RequiredFieldValidator><br />
                 <asp:DropDownList ID="ddlDepartureCity" runat="server"></asp:DropDownList><br />
                 <asp:DropDownList ID="ddlArrivalCity" runat="server"></asp:DropDownList><br />
                 <asp:DropDownList ID="ddlDepartureTimeHour" runat="server">

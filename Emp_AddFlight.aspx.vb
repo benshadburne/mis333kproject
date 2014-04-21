@@ -51,6 +51,11 @@ Partial Class Emp_AddFlight
     End Sub
 
     Protected Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
+        'build variable for flight number
+        Dim intFlightNumber As Integer
+
+        'build variable for checking if a day of the week is selected
+        Dim intCount As Integer
         'build array for days of week selected
         Dim Days(6) As String
 
@@ -59,12 +64,44 @@ Partial Class Emp_AddFlight
             'check if item is selected. if yes, make Days(i) = "y", else, = "n"
             If cblDaysToFly.Items(i).Selected = True Then
                 Days(i) = "Y"
+                intCount += 1
             Else
                 Days(i) = "N"
             End If
 
         Next
 
+        'validate that flight number is unique ***THIS NEEDS TO BE MADE OO COMPLIANT
+        FObject.RunSPwithOneParam("usp_FlightClone_Get_One", "@FlightNumber", txtFlightNumber.Text)
+        If FObject.MyDataSet.Tables("tblFlightsClone").Rows.Count <> 0 Then
+            lblMessage.Text = "Please enter a unique flight number!"
+            Exit Sub
+        End If
+
+        'validate flight number is integer *** NOT CATCHING DECIMALS
+        intFlightNumber = VObject.CheckInteger(txtFlightNumber.Text)
+        If intFlightNumber < 0 Then
+            lblMessage.Text = "Please enter an integer for flight number!"
+            Exit Sub
+        End If
+
+        'If VObject.CheckIntegerWithSubstring(txtFlightNumber.Text) = False Then
+        '    lblMessage.Text = "Please enter an integer for base fare!"
+        '    Exit Sub
+        'End If
+
+        'validate that a day of the week is checked 
+        If intCount = 0 Then
+            lblMessage.Text = "Plase select at least one day of the week!"
+            Exit Sub
+        End If
+
+
+        'validate that base fare is integer
+        If VObject.CheckIntegerWithSubstring(txtBaseFare.Text) = False Then
+            lblMessage.Text = "Please enter an integer for base fare!"
+            Exit Sub
+        End If
 
         'create array for parameter names
         Dim aryParamNames As New ArrayList
@@ -87,6 +124,10 @@ Partial Class Emp_AddFlight
 
         'create array for parameter values
         Dim aryParamValues As New ArrayList
+
+        'fill missing variables
+        strDepartureTime = ddlDepartureTimeHour.SelectedItem.Text & ddlDepartureTimeMinutes.SelectedItem.Text
+        strArrivalTime = lblArrivalTime.Text
 
         'fill that array
         aryParamValues.Add(txtFlightNumber.Text)
