@@ -7,6 +7,8 @@ Partial Class Res_SelectCustomer
     Dim DBFlight As New DBFlightsClone
     Dim DBTicket As New DBTickets
     Dim CustomerDB As New DBCustomersClone
+    Dim Validation As New ClassValidate
+
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -35,6 +37,65 @@ Partial Class Res_SelectCustomer
 
 
     Protected Sub gvCustomers_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvCustomers.SelectedIndexChanged
+        pnlDoSearch.Visible = False
+        pnlAddAge.Visible = True
+
+        lblAge.Text = "Please enter " & gvCustomers.Rows(gvCustomers.SelectedIndex).Cells(4).Text & " " & _
+        gvCustomers.Rows(gvCustomers.SelectedIndex).Cells(3).Text & "'s age."
+
+        gvCustomers.Visible = False
+
+    End Sub
+
+    Protected Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
+        'run the validation before doing anything else
+
+        If Validation.CheckIntegerWithSubstring(txtAge.Text) = False Then
+            'bad data
+            lblAgeMessage.Text = "Please enter a positive integer age."
+            Exit Sub
+        End If
+
+        Dim intAge As Integer
+
+        intAge = CInt(txtAge.Text)
+
+        'this code makes sure the age entered is moderately realistic
+        If intAge > 125 Then
+            lblAgeMessage.Text = "We're sorry, Penguin united does not allow people 125 years old to fly due to health risks"
+            Exit Sub
+        End If
+
+        'this code reduces the session variables for the number of people on the reservation who still need tickets
+        If intAge > 12 Then
+            If Session("Adults") = 0 Then
+                'WHAT IF THE SAME CUSTOMER HAS A DIFFERENT AGE ON DIFFERENT FLIGHTS????
+                lblAgeMessage.Text = "Your reservation has no more adults on it. Please enter an age that matches with your" & _
+                    "selected number of tickets for children and babies from earlier"
+            Else
+                Session("Adults") -= 1
+            End If
+        Else
+            If intAge > 2 Then
+                If Session("Children") = 0 Then
+                    'WHAT IF THE SAME CUSTOMER HAS A DIFFERENT AGE ON DIFFERENT FLIGHTS????
+                    lblAgeMessage.Text = "Your reservation has no more children on it. Please enter an age that matches with your" & _
+                        "selected number of tickets for adults and babies from earlier"
+                Else
+                    Session("Children") -= 1
+                End If
+            Else
+                If Session("Babies") = 0 Then
+                    'WHAT IF THE SAME CUSTOMER HAS A DIFFERENT AGE ON DIFFERENT FLIGHTS????
+                    lblAgeMessage.Text = "Your reservation has no more babies on it. Please enter an age that matches with your" & _
+                        "selected number of tickets for adults and children from earlier"
+                Else
+                    Session("Babies") -= 1
+                End If
+            End If
+        End If
+
+        'define variables for adding tickets
         Dim strJourneyID As String
         Dim strFlightNumber As String
         Dim strBaseFare As String
@@ -81,7 +142,17 @@ Partial Class Res_SelectCustomer
 
         Next
 
-        'Session("Adults") -= 1 <--- this could also be a child or baby or whatever
+        'make the gv visible again
+        gvCustomers.Visible = True
+
+        'change which panels are visible
+        pnlDoSearch.Visible = True
+        pnlAddAge.Visible = False
+
+        If Session("Adults") = Session("Children") And Session("Adults") = Session("Babies") And Session("Adults") = 0 Then
+            'response redirect
+        End If
+
     End Sub
 
     Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click

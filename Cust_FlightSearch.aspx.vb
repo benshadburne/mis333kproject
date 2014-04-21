@@ -227,6 +227,9 @@ Partial Class _Default
 
         SortandBind()
 
+        'highlight the selected row
+        gvIndirectStart.SelectedRow.Style.Add("background-color", "#ffcccc")
+
         'and make the count equal to the count
         lblCountFinish.Text = DBFlightSearch.lblCountFinish.ToString
 
@@ -239,7 +242,6 @@ Partial Class _Default
     Protected Sub gvIndirectFinish_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectFinish.SelectedIndexChanged
 
         'code if they chose the second leg
-        'set first and second leg journey ID's to these sessions
         'add this flight to the reservation table
         intJourneyID = CInt(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(1).Text)
 

@@ -6,6 +6,7 @@
     <div id="header">
         Select customer to create a ticket
    </div>
+    <asp:Panel ID="pnlDoSearch" runat="server"> 
     <div id="middle">
     <asp:Label ID="Label1" runat="server" padding="3px" Text="Select a Filter:"></asp:Label>
 
@@ -32,6 +33,28 @@
         <asp:Button ID="btnSearch" runat="server" Text="Search" />
 
         </div>
+
+        </asp:Panel>
+
+    <asp:Panel ID="pnlAddAge" runat="server" Visible="false"> 
+    <div id="Div1">
+    <asp:Label ID="lblAge" runat="server" padding="3px" Text="Please enter your age"></asp:Label>
+
+        <br />
+      
+        <asp:TextBox ID="txtAge" runat="server"></asp:TextBox>
+
+        <br />
+        <asp:Label ID="lblAgeMessage" runat="server" Text=""></asp:Label>
+
+        <asp:Button ID="btnConfirm" runat="server" Text="Confirm" />
+
+        </div>
+
+        </asp:Panel>
+
+    <asp:Label ID="lblMessage" runat="server"></asp:Label>
+    <br />
     <asp:GridView ID="gvCustomers" runat="server">
         <Columns>
             <asp:CommandField ShowSelectButton="True" />
