@@ -29,6 +29,9 @@
     <asp:TextBox ID="txtAge" runat="server"></asp:TextBox>
     
     <br />
+    <asp:Label ID="Label3" runat="server" Text="Date"></asp:Label>
+    <asp:TextBox ID="txtDate" runat="server"></asp:TextBox>
+    <br />
     <asp:Button ID="btnGetBaseFare" CssClass="btn" runat="server" Text="Get Base Fare" />
     <br />
     <asp:Label ID="lblResult" runat="server" Text="Label"></asp:Label>

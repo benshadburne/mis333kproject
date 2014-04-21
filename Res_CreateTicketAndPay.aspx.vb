@@ -61,12 +61,19 @@ Partial Class _Default
         'Populate the inputs that are public properties in the Calculate class
         calc.FlightNumber = txtFlightNumber.Text
         calc.CustomerAge = CInt(txtAge.Text)
+        calc.DateOfFlight = CDate(txtDate.Text)
 
         'Run the subtotal calculation
         calc.CalculateSubTotalDiscount()
 
         'Output the subtotal calculation
         lblResult.Text = calc.Subtotal.ToString
+
+        'If calc.CalculateTimeBeforeFlight(CDate(txtAge.Text)) = True Then
+        '    lblResult.Text = "You are 14 days out and receive a discount!"
+        'Else
+        '    lblResult.Text = "No discount for you!"
+        'End If
 
     End Sub
 End Class

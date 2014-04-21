@@ -8,14 +8,14 @@ Imports Microsoft.VisualBasic
 Public Class ClassCalculate
 
     'Declare an object for getting the Base Fare
-    Dim FObject As New DBFlightsClone
+    Dim FlightDB As New DBFlightsClone
 
     'Should these be in the tblConstants??
     'Lay out the constants
     Const FIRST_CLASS_Constant As Decimal = 1.2D
     Const AGE_SeniorDiscount_Constant As Decimal = 0.1D
     Const AGE_ChildDiscount_Constant As Decimal = 0.15D
-    Const TIME_2WeeksDiscount_Constant As Decimal = 0.1D
+    Const TIME_TwoWeeksDiscount_Constant As Decimal = 0.1D
     Const INTERNET_PurchaseDiscount_Constant As Decimal = 0.05D
     Const SALES_TAX_Constant As Decimal = 1.0775D
 
@@ -26,6 +26,8 @@ Public Class ClassCalculate
     Dim intAge As Integer
     Dim strFlightNumber As String
     Dim decAgeDiscount As Decimal
+    Dim datReservation As Date
+    Dim decTwoWeeksDiscount As Decimal
     Dim decInternetDiscount As Decimal
 
     'Public Properties for the various inputs and outputs
@@ -39,6 +41,16 @@ Public Class ClassCalculate
         End Set
     End Property
 
+    'Public Property for the Date
+    Public Property DateOfFlight As Date
+        Get
+            Return datReservation
+        End Get
+        Set(value As Date)
+            datReservation = value
+        End Set
+    End Property
+
     'Public Property for the FlightNumber
     Public Property FlightNumber As String
         Get
@@ -49,12 +61,21 @@ Public Class ClassCalculate
         End Set
     End Property
 
+
     'Public ReadOnly Property for the age discount
     Public ReadOnly Property AgeDiscount As Decimal
         Get
             Return decAgeDiscount
         End Get
     End Property
+
+    'Public ReadOnly Property for the 2 weeks Discount
+    Public ReadOnly Property TwoWeeksDiscount As Decimal
+        Get
+            Return decTwoWeeksDiscount
+        End Get
+    End Property
+
 
     'Public ReadOnly Property for the tentativefinalpaybeforediscount
     Public ReadOnly Property Subtotal As Decimal
@@ -73,7 +94,7 @@ Public Class ClassCalculate
         'Date Last Modified: April 20, 2014
 
         'Use the function in the DBFlight
-        decBaseFare = FObject.GetBaseFare(strFlightNumber)
+        decBaseFare = FlightDB.GetBaseFare(strFlightNumber)
 
         'Return the base fare to be used throughout this form for the discounts
         Return decBaseFare
@@ -107,9 +128,19 @@ Public Class ClassCalculate
     End Sub
 
     'Calculate Date
-    Public Sub CalculateTimeBeforeFlight()
+    Public Function CalculateTimeBeforeFlight(datReservation As Date) As Boolean
+        'Purpose: 
 
+        'Checks to see if the reservation is 14 days out or not
+        If datReservation < Now.AddDays(14) Then
+            Return False
+        End If
+
+        'If it is, then return True
+        Return True
         'Need the date stored as current time in DB
+
+        ''''''''''''''''''''''''HOW SPECIFIC DOES THE 2 WEEKS NEED TO BE? IF IT IS 2 WEEKS FROM MONDAY, BUT THE FLIGHT IS AT 9:30 AM AND I RESERVE AT 12:30 PM, IS IT STILL 2 WEEKS?''''''''''''''''''''
 
 
         'need when the flight time is going to be
@@ -117,14 +148,20 @@ Public Class ClassCalculate
         ''Or, I can see if there is a current time function
 
 
-    End Sub
+    End Function
 
     'Calculate the discount related to the date
     Public Sub CalculateDateDiscount()
 
-        'Output from the CalculateTimeBeforeFlight()
-        'If statement to see if it is 2 weeks out before
+        'First, get the base fare from the flight DB
+        GetBaseFareFromFlightDB(strFlightNumber)
 
+        'Check to see if there is a discount or not
+        If CalculateTimeBeforeFlight(datReservation) = True Then
+            decTwoWeeksDiscount = decBaseFare * TIME_TwoWeeksDiscount_Constant
+        Else
+            decTwoWeeksDiscount = 0
+        End If
     End Sub
 
     'Calculate the discount from whether someone used the Customer site to purchase their ticket
@@ -144,10 +181,17 @@ Public Class ClassCalculate
 
         CalculateAgeDiscount(intAge)
 
-        decTentativeFinalPayBeforeTax = decBaseFare - decAgeDiscount
+        CalculateDateDiscount()
+
+        decTentativeFinalPayBeforeTax = decBaseFare - decAgeDiscount - decTwoWeeksDiscount
 
         'Put all of the subs in here
         'Add up all of the outputs and have it equal decTentativeFinalPayBeforeTax
+
+    End Sub
+
+    'Public Sub for calculating the tax
+    Public Sub CalculateTax()
 
     End Sub
 
