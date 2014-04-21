@@ -255,7 +255,7 @@ Public Class DBjourneyclone
 
         'J stores the number of times we need to loop through the flights that must be added if they aren't in it already. 
         Try
-            j = FlightsNeeded.Tables("tblFlightClone").Rows.Count - 1
+            j = FlightsNeeded.Tables("tblFlightsClone").Rows.Count - 1
         Catch ex As Exception
             Exit Sub
         End Try
@@ -266,7 +266,7 @@ Public Class DBjourneyclone
         'l is the counter variable for this loop
         For k = 0 To j
             'Remember the flight number we are considering adding
-            intFlightNumber = CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("FlightNumber"))
+            intFlightNumber = CInt(FlightsNeeded.Tables("tblFlightsClone").Rows(k).Item("FlightNumber"))
 
             'make the boolean true. If it stays true through the next loop, we will add a record
             bolAddJourney = True
@@ -284,7 +284,7 @@ Public Class DBjourneyclone
 
             'if the boolean isn't changed, add a new flight to the database
             If bolAddJourney = True Then
-                AddNewJourney("usp_JourneyClone_Add_New", intFlightNumber, datSelectedDate, CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("DepartureTime")), CInt(FlightsNeeded.Tables("tblFlightClone").Rows(k).Item("ArrivalTime")), strDay)
+                AddNewJourney("usp_JourneyClone_Add_New", intFlightNumber, datSelectedDate, CInt(FlightsNeeded.Tables("tblFlightsClone").Rows(k).Item("DepartureTime")), CInt(FlightsNeeded.Tables("tblFlightsClone").Rows(k).Item("ArrivalTime")), strDay)
 
                 'also add unfilled seats to the JourneySeat bridge table in that case
                 'need the journeyID of the journey just added first
