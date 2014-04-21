@@ -129,14 +129,20 @@ Public Class DBSeats
     'THIS IS WITH THE ADVANTAGE NUMBER INCLUDED 
     '(past here will only have records if tickets have been produced for this journey)
 
-    Public Sub GetALLSeatsAdvantageUsingSP()
+    Public Sub GetALLSeatsAdvantageUsingSP(strIn As String)
         'Author: Ben Shadburne
         'Purpose: runs xxxxx procedure
         'Arguments: na
         'Return: na
         'Date: 03/18/2014
 
-        RunProcedureAdvantage("usp_SeatAdvantage_Get_All")
+        Dim aryParamName As New ArrayList
+        Dim aryParamValue As New ArrayList
+
+        aryParamName.Add("@JourneyID")
+        aryParamValue.Add(strIn)
+
+        UseSPToRetrieveRecords("usp_SeatAdvantage_Get_All", mdatasetSeatsAdvantage, mMyViewAdvantage, "tblSeatsAdvantage", aryParamName, aryParamValue)
 
     End Sub
 
@@ -152,31 +158,6 @@ Public Class DBSeats
             Return mMyViewAdvantage
         End Get
     End Property
-
-    Public Sub RunProcedureAdvantage(ByVal strName As String)
-        'Author: Ben Shadburne
-        'Purpose: runs procedure
-        'Arguments: procedure name
-        'Return: na
-        'Date: na
-
-        'create instances of the conneciton and command object
-        Dim objConnection As New SqlConnection(mstrConnection)
-        'tell sql server the name of the stored procedure you will be executing
-        Dim mdbDataAdapter As New SqlDataAdapter(strName, objConnection)
-        Try
-            'sets the command type to "stored procedure"
-            mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
-            'clear dataset
-            Me.mdatasetSeatsAdvantage.Clear()
-            'open conneciton and fill dataset
-            mdbDataAdapter.Fill(mdatasetSeatsAdvantage, "tblSeatsAdvantage")
-            'copy dataset to dataview
-            mMyViewAdvantage.Table = mdatasetSeatsAdvantage.Tables("tblSeatsAdvantage")
-        Catch ex As Exception
-            Throw New Exception("stored procedure is " & strName.ToString & " error is " & ex.Message)
-        End Try
-    End Sub
 
     Public ReadOnly Property lblCountAdvantage() As Integer
         'Author: Ben Shadburne
@@ -200,14 +181,19 @@ Public Class DBSeats
 
     'THIS IS WITH THE ADVANTAGE NUMBER OF USER INCLUDED
 
-    Public Sub GetALLSeatsAdvantageUserUsingSP()
+    Public Sub GetALLSeatsAdvantageUserUsingSP(strIn As String)
         'Author: Ben Shadburne
         'Purpose: runs xxxxx procedure
         'Arguments: na
         'Return: na
         'Date: 03/18/2014
+        Dim aryParamName As New ArrayList
+        Dim aryParamValue As New ArrayList
 
-        RunProcedureAdvantageUser("usp_SeatAdvantage_Get_All")
+        aryParamName.Add("@JourneyID")
+        aryParamValue.Add(strIn)
+
+        UseSPToRetrieveRecords("usp_SeatAdvantage_Get_All", mdatasetSeatsAdvantageUser, mMyViewAdvantageUser, "tblSeatsAdvantageUser", aryParamName, aryParamValue)
 
     End Sub
 
@@ -223,31 +209,6 @@ Public Class DBSeats
             Return mMyViewAdvantageUser
         End Get
     End Property
-
-    Public Sub RunProcedureAdvantageUser(ByVal strName As String)
-        'Author: Ben Shadburne
-        'Purpose: runs procedure
-        'Arguments: procedure name
-        'Return: na
-        'Date: na
-
-        'create instances of the conneciton and command object
-        Dim objConnection As New SqlConnection(mstrConnection)
-        'tell sql server the name of the stored procedure you will be executing
-        Dim mdbDataAdapter As New SqlDataAdapter(strName, objConnection)
-        Try
-            'sets the command type to "stored procedure"
-            mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
-            'clear dataset
-            Me.mdatasetSeatsAdvantageUser.Clear()
-            'open conneciton and fill dataset
-            mdbDataAdapter.Fill(mdatasetSeatsAdvantageUser, "tblSeatsAdvantage")
-            'copy dataset to dataview
-            mMyViewAdvantageUser.Table = mdatasetSeatsAdvantageUser.Tables("tblSeatsAdvantage")
-        Catch ex As Exception
-            Throw New Exception("stored procedure is " & strName.ToString & " error is " & ex.Message)
-        End Try
-    End Sub
 
     Public Sub FilterAdvantage(strNumber As String)
         MyViewAdvantageUser.RowFilter = "[AdvantageNumber] = '" & strNumber & "'"
@@ -268,97 +229,49 @@ Public Class DBSeats
 
 
 
-    'THIS IS WITH THE ADVANTAGE NUMBER FOR OTHERS INCLUDED
-
-    Public Sub GetALLSeatsAdvantageOthersUsingSP()
-        'Author: Ben Shadburne
-        'Purpose: runs xxxxx procedure
-        'Arguments: na
-        'Return: na
-        'Date: 03/18/2014
-
-        RunProcedureAdvantageOthers("usp_SeatAdvantage_Get_All")
-
-    End Sub
-
-    'define a public read only property
-    Public ReadOnly Property MyViewAdvantageOthers() As DataView
-        'Author: Ben Shadburne
-        'Purpose: returns read only dataview
-        'Arguments: na
-        'Return: xxxxx dataview
-        'Date: 03/18/2014
-
-        Get
-            Return mMyViewAdvantageOthers
-        End Get
-    End Property
-
-    Public Sub RunProcedureAdvantageOthers(ByVal strName As String)
-        'Author: Ben Shadburne
-        'Purpose: runs procedure
-        'Arguments: procedure name
-        'Return: na
-        'Date: na
-
-        'create instances of the conneciton and command object
-        Dim objConnection As New SqlConnection(mstrConnection)
-        'tell sql server the name of the stored procedure you will be executing
-        Dim mdbDataAdapter As New SqlDataAdapter(strName, objConnection)
-        Try
-            'sets the command type to "stored procedure"
-            mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
-            'clear dataset
-            Me.mdatasetSeatsAdvantageOthers.Clear()
-            'open conneciton and fill dataset
-            mdbDataAdapter.Fill(mdatasetSeatsAdvantageOthers, "tblSeatsAdvantageOthers")
-            'copy dataset to dataview
-            mMyViewAdvantageOthers.Table = mdatasetSeatsAdvantageOthers.Tables("tblSeatsAdvantageOthers")
-        Catch ex As Exception
-            Throw New Exception("stored procedure is " & strName.ToString & " error is " & ex.Message)
-        End Try
-    End Sub
-
-    Public Sub FilterAdvantageOthers(strNumber As String, strReservationID As String)
-        MyViewAdvantageOthers.RowFilter = "[ReservationID] <> '" & strReservationID & "'"
-    End Sub
-
-    Public ReadOnly Property lblCountOthers() As Integer
-        'Author: Ben Shadburne
-        'Purpose: return lblcount
-        'Arguments:  none
-        'Return: count of xxxxx
-        'Date: 03/07/2014
-
-        Get
-            'returns the count to the label
-            Return MyViewAdvantageOthers.Count
-        End Get
-    End Property
-
-
     'Update Query
 
-    Public Sub GreyPress(strSeat As String)
-        'first gotta check if they have a seat selected already
+    Public Sub GreyPress(strSeat As String, strNewSeat As String, strAdvantageNumber As String, strJourneyID As String)
+
+        'these are for updating the ticket table
+        Dim aryTicketName As New ArrayList
+        Dim aryTicketValue As New ArrayList
+        aryTicketName.Add("@Seat")
+        aryTicketName.Add("@JourneyID")
+        aryTicketName.Add("@AdvantageNumber")
+        aryTicketValue.Add(strNewSeat)
+        aryTicketValue.Add(strJourneyID)
+        aryTicketValue.Add(strAdvantageNumber)
+
+        'run update for ticket as well
+        UseSPforInsertOrUpdateQuery("usp_Ticket_Seat_Set", aryTicketName, aryTicketValue)
+
+
+
+        'if they have a seat selected already
         Dim aryParamName As New ArrayList
         Dim aryParamValue As New ArrayList
         aryParamName.Add("@Seat")
-        aryParamValue.Add(MyViewAdvantage.Table().Rows(0).Item("Seat").ToString)
         aryParamName.Add("@Status")
-        If lblCountAdvantage <> 0 Then
+        If lblCountAdvantageUser <> 0 Then
             'they have one selected, so we gotta change the status of their current seat to 0
+            aryParamValue.Add(strSeat)
             aryParamValue.Add(0)
 
             UseSPforInsertOrUpdateQuery("usp_Seats_Alter_User_Seat", aryParamName, aryParamValue)
             'remove so we can update 
             aryParamValue.Remove(0)
+            aryParamValue.Remove(strSeat)
         End If
         'either way, update status of new seat to 1 in table
+        aryParamValue.Add(strNewSeat)
         aryParamValue.Add(1)
 
-        'run update
+        'run update in journeyseatbridge
         UseSPforInsertOrUpdateQuery("usp_Seats_Alter_User_Seat", aryParamName, aryParamValue)
+
+        
+
     End Sub
 
 
@@ -402,6 +315,49 @@ Public Class DBSeats
             Throw New Exception(strError & " error message is " & ex.Message)
         End Try
     End Sub
+
+    Protected Sub UseSPToRetrieveRecords(ByVal strUSPName As String, ByVal strDatasetName As DataSet, ByVal strViewName As DataView, ByVal strTableName As String, ByVal aryParamNames As ArrayList, ByVal aryParamValues As ArrayList)
+        'Purpose: Run any stored procedure with any number of parameters
+        'Arguments: Stored procedure name, tblName, dataset name, dataview name, arraylist of parameter names, and arraylist of parameter values
+        'Returns: Nothing
+        'Author: Rick Byars
+        'Date: 4/16/10
+        'Creates instances of the connection and command object
+        Dim objConnection As New SqlConnection(mstrConnection)
+        'Tell SQL server the name of the stored procedure
+        Dim objCommand As New SqlDataAdapter(strUSPName, objConnection)
+        Try
+            'Sets the command type to stored procedure
+            objCommand.SelectCommand.CommandType = CommandType.StoredProcedure
+
+            'Add parameters to stored procedure
+            Dim index As Integer = 0
+            For Each paramName As String In aryParamNames
+                objCommand.SelectCommand.Parameters.Add(New SqlParameter(CStr(aryParamNames(index)), CStr(aryParamValues(index))))
+                index = index + 1
+            Next
+
+            'Clear dataset
+            strDatasetName.Clear()
+
+            'Open the connection and fill dataset
+            objCommand.Fill(strDatasetName, strTableName)
+            ' fill view
+            strViewName.Table = strDatasetName.Tables(strTableName)
+
+            'Print out each element of our arraylists if error occured
+        Catch ex As Exception
+            Dim strError As String = ""
+            Dim index As Integer = 0
+            For Each paramName As String In aryParamNames
+                strError = strError & "ParamName: " & CStr(aryParamNames(index))
+                strError = strError & " ParamValue: " & CStr(aryParamValues(index))
+                index = index + 1
+            Next
+            Throw New Exception(strError & " error message is " & ex.Message)
+        End Try
+    End Sub
+
 
 End Class
 

@@ -10,25 +10,27 @@ Partial Class _Default
         Dim strAdvantageNum As String
         strReservationID = CStr(10004)
         strAdvantageNum = CStr(5000)
+
+
         Session("Login") = strAdvantageNum
+        Session("ReservationID") = strReservationID
         lblReservationID.Text = strReservationID
         'check customer login
 
         ''check session reservationID if it's empty
-        'strCheck = Session("ReservationID").ToString
-        'If strCheck = "" Then
+        'strReservationID = Session("ReservationID").ToString
+        'If strReservationID = "" Then
         '    Response.Redirect("HomePage.aspx")
         'End If
 
+        ''check session login if it's empty
+        'strAdvantageNum = Session("Login").ToString
+        'If strAdvantageNum = "" then
+        '   Response.Redirect("HomePage.aspx")
+        'End If
+
         'next, need to load all tickets dataset
-        DBTickets.GetALLTicketsUsingSP()
-        DBTickets.GetALLOthersTicketsUsingSP()
-
-
-        'filter for the given reservationID for tickets 
-        DBTickets.FilterYou(strReservationID, strAdvantageNum)
-        DBTickets.FilterOthers(strReservationID, strAdvantageNum)
-
+        LoadTickets()
 
         SortandBind()
 
@@ -39,17 +41,26 @@ Partial Class _Default
         ddlJourneyID.DataBind()
 
         'bind seats and seats w/advantage numbers
-        DBSeats.GetALLSeatsUsingSP()
-        DBSeats.FilterJourneyID(ddlJourneyID.SelectedValue)
-        DBSeats.GetALLSeatsAdvantageUsingSP()
-        DBSeats.GetALLSeatsAdvantageUserUsingSP()
-        DBSeats.FilterAdvantage(Session("Login").ToString)
-        DBSeats.GetALLSeatsAdvantageOthersUsingSP()
-        DBSeats.FilterAdvantageOthers(Session("Login").ToString, strReservationID)
-
+        BindSeats()
         'check seats to initialize them
         CheckSeats()
 
+    End Sub
+
+    Public Sub LoadTickets()
+        DBTickets.GetALLTicketsUsingSP()
+        DBTickets.GetALLOthersTicketsUsingSP()
+        DBTickets.FilterYou(Session("ReservationID").ToString, Session("Login").ToString)
+        DBTickets.FilterOthers(Session("ReservationID").ToString, Session("Login").ToString)
+
+    End Sub
+
+    Public Sub BindSeats()
+        DBSeats.GetALLSeatsUsingSP()
+        DBSeats.FilterJourneyID(ddlJourneyID.SelectedValue)
+        DBSeats.GetALLSeatsAdvantageUsingSP(ddlJourneyID.SelectedValue)
+        DBSeats.GetALLSeatsAdvantageUserUsingSP(ddlJourneyID.SelectedValue)
+        DBSeats.FilterAdvantage(Session("Login").ToString)
     End Sub
 
     Public Sub CheckSeats()
@@ -76,6 +87,7 @@ Partial Class _Default
         arlSeats.Add(btn5C)
         arlSeats.Add(btn5D)
 
+
         'basically it does a test in each step
         For i = 0 To 15
             button = CType(arlSeats(i), Button)
@@ -83,25 +95,19 @@ Partial Class _Default
             If CInt(DBSeats.MyView.Table().Rows(i).Item("Status")) = 0 Then
                 button.BackColor = Drawing.Color.LightGray
                 'second test checks if the advantage dataset advantage number (should be user's advantage number)
-            ElseIf DBSeats.MyViewAdvantage.Table().Rows(i).Item("AdvantageNumber").ToString = DBSeats.MyViewAdvantageUser.Table().Rows(0).Item("AdvantageNumber").ToString Then
+            ElseIf ConvertInteger(DBSeats.MyViewAdvantage.Table().Rows(i).Item("AdvantageNumber").ToString) = CInt(Session("Login")) Then
                 button.BackColor = Drawing.Color.Green
+                Session("UserSeat") = DBSeats.MyViewAdvantage.Table().Rows(i).Item("Seat").ToString
                 'third test is whether the 'Others' dataset is empty (basically if there are other nonreservation people on the plane
-            ElseIf DBSeats.lblCountOthers <> 0 Then
+            ElseIf ConvertInteger(DBSeats.MyViewAdvantage.Table().Rows(i).Item("ReservationID").ToString) <> CInt(Session("ReservationID")) Then
                 'it has to loop through all the people in the dataset and check whether their advantage number is the one in the seat we are checking (i)
-                For j = 0 To DBSeats.lblCountOthers - 1
-                    If DBSeats.MyViewAdvantage.Table().Rows(i).Item("AdvantageNumber").ToString = DBSeats.MyViewAdvantageOthers.Table().Rows(j).Item("AdvantageNumber").ToString Then
-                        button.BackColor = Drawing.Color.Coral
-                        Exit For
-                    End If
-                    'if it completes the for loop without passing the if statement, then the color will be Blue for another person on the reservation
-                    button.BackColor = Drawing.Color.Blue
-                Next
+                button.BackColor = Drawing.Color.Coral
             Else
                 'if this runs, the seat is filled by someone who is on the reservation but not the user
                 button.BackColor = Drawing.Color.Blue
             End If
         Next
-        lblMessage.Text = DBSeats.MyViewAdvantage.Table().Rows(2).Item("AdvantageNumber").ToString
+
     End Sub
 
     Public Sub SortandBind()
@@ -143,10 +149,27 @@ Partial Class _Default
         'if seat is empty then stuff happens
         If button.BackColor = Drawing.Color.LightGray Then
             'this runs code to make sure database is updated
-            DBSeats.GreyPress(DBSeats.MyViewAdvantageUser.Table().Rows(0).Item("Seat").ToString)
+            Dim strNewSeat As String
+            strNewSeat = button.ID.Substring(3, 2)
+            DBSeats.GreyPress(Session("UserSeat").ToString, strNewSeat, Session("Login").ToString, ddlJourneyID.SelectedValue)
         End If
 
         'alter the colors of the seats if needed
+
+        BindSeats()
         CheckSeats()
+        LoadTickets()
+        SortandBind()
     End Sub
+
+    Public Function ConvertInteger(strIn As String) As Integer
+        Dim intFill As Integer
+        Try
+            intFill = CInt(strIn)
+        Catch ex As Exception
+            Return -1
+        End Try
+        Return CInt(strIn)
+    End Function
+
 End Class
