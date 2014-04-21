@@ -129,7 +129,14 @@ Public Class ClassCalculate
 
     'Calculate Date
     Public Function CalculateTimeBeforeFlight(datReservation As Date) As Boolean
-        'Purpose: 
+        'Purpose: Calculates whether or not the time of purchase is two weeks before the flight takes off
+        'Author: Dennis Phelan
+        'Inputs: datReservation that is the time 
+        'Outputs: True or False if the reservation is 2 weeks out or not
+        'Date Created: April 21, 2014
+        'Date Last Modified: April 21, 2014
+
+        ''''''''''''''''''''''''''''ALSO, Need to make sure the format of our date is used'''''''''''''''''''
 
         'Checks to see if the reservation is 14 days out or not
         If datReservation < Now.AddDays(14) Then
@@ -152,6 +159,7 @@ Public Class ClassCalculate
 
     'Calculate the discount related to the date
     Public Sub CalculateDateDiscount()
+        'Purpose: Take the value from the 
 
         'First, get the base fare from the flight DB
         GetBaseFareFromFlightDB(strFlightNumber)
