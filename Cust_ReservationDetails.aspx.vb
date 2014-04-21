@@ -141,13 +141,12 @@ Partial Class _Default
         End If
 
         'if seat is empty then stuff happens
-        If button.BackColor = Drawing.Color.Gray Then
+        If button.BackColor = Drawing.Color.LightGray Then
             'this runs code to make sure database is updated
             DBSeats.GreyPress(DBSeats.MyViewAdvantageUser.Table().Rows(0).Item("Seat").ToString)
-
-            'changes grey to green
-            button.BackColor = Drawing.Color.Green
         End If
 
+        'alter the colors of the seats if needed
+        CheckSeats()
     End Sub
 End Class
