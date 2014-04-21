@@ -13,10 +13,10 @@ Partial Class _Default
         ShowAll()
         SortandBind()
 
-    End Sub
-
-    Protected Sub btnShowAll_Click(sender As Object, e As EventArgs) Handles btnShowAll.Click
-
+        gvIndirectFinish.Visible = False
+        lblIndirectFinish.Visible = False
+        lblIndirectFinishC.Visible = False
+        lblCountFinish.Visible = False
     End Sub
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -214,9 +214,9 @@ Partial Class _Default
         lblMessage.Text = ""
         'need to do searchbtn b/c otherwise other gv's get reset
 
-        DBFlightSearch.SearchIndirectFinish(DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("End City").ToString, lblArrival.Text, _
+        DBFlightSearch.SearchIndirectFinish(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(6).Text, lblArrival.Text, _
         DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString), _
-        DBFlightSearch.MyViewStart.Table().Rows(gvIndirectStart.SelectedIndex).Item("Arrival Time").ToString)
+        gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(7).Text)
 
         'check if there's anything in second gv
         If CInt(DBFlightSearch.lblCountFinish) = 0 Then
@@ -233,5 +233,19 @@ Partial Class _Default
         lblIndirectFinishC.Visible = True
         lblIndirectFinish.Visible = True
         lblCountFinish.Visible = True
+    End Sub
+
+    Protected Sub gvIndirectFinish_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectFinish.SelectedIndexChanged
+
+        'code if they chose the second leg
+        'set first and second leg journey ID's to these sessions
+        Session("FirstLeg") = gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(1).Text
+        Session("SecondLeg") = gvIndirectFinish.Rows(gvIndirectStart.SelectedIndex).Cells(1).Text
+
+        'mark the airport they must now leave from for next leg
+        Session("StartAirport") = Session("EndAirport")
+
+        'redirect them to selection
+        Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
     End Sub
 End Class

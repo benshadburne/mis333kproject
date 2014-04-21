@@ -254,7 +254,11 @@ Public Class DBjourneyclone
         Dim intFlightNumber As Integer
 
         'J stores the number of times we need to loop through the flights that must be added if they aren't in it already. 
-        j = FlightsNeeded.Tables("tblFlightClone").Rows.Count - 1
+        Try
+            j = FlightsNeeded.Tables("tblFlightClone").Rows.Count - 1
+        Catch ex As Exception
+            Exit Sub
+        End Try
 
         'i stores the number of times we need to loop through the flights that are already added
         i = FlightsAdded.Tables("tblJourneyClone").Rows.Count - 1
