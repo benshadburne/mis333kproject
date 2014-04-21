@@ -160,4 +160,44 @@ Public Class ClassCalculate
 
     'Use the value calculated here to then transfer it to the DBTickets to run a SP to update the price of the ticket
 
+    Public Function CalculateArrivalTime(intDepartureTime As Integer, intDuration As Integer) As String
+        'declare variables
+        Dim intArrivalTime As Integer
+        Dim strArrivalTime As String
+        Dim intNumberofHours As Integer
+        Dim intMinutesRemainder As Integer
+        Dim intDepartureMinutes As Integer
+        Dim intTotalMinutes As Integer
+        Dim intDepartureHours As Integer
+
+        'find number of hours (not considering minutes) of flight
+        intNumberofHours = Math.DivRem(intDuration, 100, intMinutesRemainder)
+        'find how many hours have passed in day by time flight departs
+        intDepartureHours = Math.DivRem(intDepartureTime, 100, intDepartureMinutes)
+
+        'find total number of minutes we will need to add (3:59 with flight duration of 1 hour, 30 minutes is 89 minutes to add)
+        intTotalMinutes = intDepartureMinutes + intMinutesRemainder
+
+        'if total number of minutes to add is greater than 60, add an hour to add
+        If intTotalMinutes > 60 Then
+            intTotalMinutes = intTotalMinutes - 60
+            intNumberofHours += 1
+        End If
+
+        'the arrival time equals the number of hours in day at time of departure, plus number of hours in air...
+        intArrivalTime = intDepartureHours * 100 + intNumberofHours * 100
+        'plus number of minutes leftover
+        intArrivalTime = intArrivalTime + intTotalMinutes
+
+        'if this happens to put us in the next day, we need to take away 2400 minutes
+        If intArrivalTime > 2400 Then
+            intArrivalTime = intArrivalTime - 2400
+        End If
+
+        'return the calculated arrival time as a string
+        strArrivalTime = intArrivalTime.ToString
+
+        Return strArrivalTime
+    End Function
+
 End Class

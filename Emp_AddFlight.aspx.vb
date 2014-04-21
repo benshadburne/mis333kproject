@@ -11,6 +11,18 @@ Partial Class Emp_AddFlight
     'create instance of Airport class ***ASK AARYAMAN WHY NAMED DBAIRPORTCLONE
     Dim AObject As New DBairportclone
 
+    'create instance of validation class
+    Dim VObject As New ClassValidate
+
+    'create instance of calculation class
+    Dim CObject As New ClassCalculate
+
+    'create instance of mileage class
+    Dim MObject As New DBMileage
+
+    Dim strDepartureTime As String
+    Dim strArrivalTime As String
+
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         'if first time loading page, load drop down lists
         If IsPostBack = False Then
@@ -52,13 +64,6 @@ Partial Class Emp_AddFlight
             End If
 
         Next
-        'build departure time and arrival time
-        Dim strDepartureTime As String
-        Dim strArrivalTime As String
-
-        'make it equal to hour and minute on ddls for departure time
-        strDepartureTime = ddlDepartureTimeHour.SelectedItem.Text & ddlDepartureTimeMinutes.SelectedItem.Text
-        strArrivalTime = ddlArrivalTimeHour.SelectedItem.Text & ddlArrivalTimeMinutes.SelectedItem.Text
 
 
         'create array for parameter names
@@ -105,5 +110,50 @@ Partial Class Emp_AddFlight
         'show success message to user
         lblMessage.Text = "You have successfully added flight #" & txtFlightNumber.Text
 
+    End Sub
+
+
+    Protected Sub ddlDepartureTimeMinutes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlDepartureTimeMinutes.SelectedIndexChanged, ddlDepartureTimeHour.SelectedIndexChanged
+
+
+    End Sub
+
+    Protected Sub btnCalculateArrivalTime_Click(sender As Object, e As EventArgs) Handles btnCalculateArrivalTime.Click
+        'make it equal to hour and minute on ddls for departure time
+        strDepartureTime = ddlDepartureTimeHour.SelectedItem.Text & ddlDepartureTimeMinutes.SelectedItem.Text
+        'make intDepartureTime and intarrival time variables
+        Dim intDepartureTime As Integer
+
+        'check to see if valid integer
+        intDepartureTime = VObject.CheckInteger(strDepartureTime)
+
+        If intDepartureTime = -1 Then 'something went wrong
+            Exit Sub
+        End If
+
+        'create variable for duration of flight
+        Dim intDuration As Integer
+
+        'find duration
+        Dim aryParamNamesMileage As New ArrayList
+        Dim aryParamValuesMileage As New ArrayList
+
+        'add param names to array list
+        aryParamNamesMileage.Add("@StartAirport")
+        aryParamNamesMileage.Add("@EndAirport")
+
+        'add param values to array list
+        aryParamValuesMileage.Add(ddlDepartureCity.SelectedValue)
+        aryParamValuesMileage.Add(ddlArrivalCity.SelectedValue)
+
+        'find duration of flight
+        MObject.FindDuration(aryParamNamesMileage, aryParamValuesMileage)
+        intDuration = CInt(MObject.MyDataSet.Tables("tblMileageClone").Rows(0).Item(0))
+
+        'calculate the arrival time that needs to appear
+        strArrivalTime = CObject.CalculateArrivalTime(intDepartureTime, intDuration)
+
+        'put it in label
+        lblArrivalTime.Text = strArrivalTime
     End Sub
 End Class
