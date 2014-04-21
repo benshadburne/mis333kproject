@@ -44,18 +44,37 @@ Partial Class Res_SelectCustomer
         'add a session variable to remember the selected customer
         strAdvantageNumber = gvCustomers.SelectedRow.Cells(1).Text
 
+        'this populates a list of all the journeys in a reservation
         DBReservations.GetJourneysInReservation(CInt(Session("ReservationID")))
 
+        'this counts the total number of journeys in a reservation
         intTotalJourneys = DBReservations.MyDataSet.Tables("tblReservationsClone").Rows.Count - 1
 
+        'this loop runs from 0 through all the journeys in a reservation
+
+
         For i = 0 To intTotalJourneys
+
+            'select the first journeyID from the list of journeyIDs
             DBJourney.GetOneJourney(CInt(DBReservations.MyDataSet.Tables("tblReservationsClone").Rows(i).Item("JourneyOne")))
 
+            'put that journey id in a string
             strJourneyID = DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("JourneyID")
+
+            If DBTicket.CheckIfTicketIsUnique(strJourneyID, strAdvantageNumber) = True Then
+                'ticket is unique -- add tickets
+            Else
+                'lblMessage.Text = this customer is already on a flight in this reservation. Give these tickets to a different customer
+                Exit Sub
+            End If
+
+            'put the flight number for that journeyID in a string
             strFlightNumber = DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber")
 
+            'get the flight information for the journey using its flight number
             DBFlight.GetOneFlight("usp_FlightClone_Get_One", "@FlightNumber", strFlightNumber)
 
+            'put the base fare for the flight in a string
             strBaseFare = DBFlight.MyDataSet.Tables("tblFlightsClone").Rows(0).Item("BaseFare")
 
             DBTicket.AddTicket(Session("ReservationID").ToString, strAdvantageNumber, strJourneyID, strFlightNumber, strBaseFare)
