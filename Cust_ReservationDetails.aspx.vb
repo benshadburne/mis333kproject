@@ -9,7 +9,7 @@ Partial Class _Default
         Dim strReservationID As String
         Dim strAdvantageNum As String
         strReservationID = CStr(10004)
-        strAdvantageNum = CStr(5001)
+        strAdvantageNum = CStr(5000)
 
         Session("Infant") = ""
         Session("InfantID") = ""

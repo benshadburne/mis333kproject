@@ -45,6 +45,7 @@ Partial Class _Default
         ShowAll()
         SortandBind()
 
+        lblMessage.Text = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
 
 
     End Sub
@@ -55,7 +56,7 @@ Partial Class _Default
         'put the name of the day of the week into strDay
         strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
 
-        strDate = (calFlightSearch.SelectedDate.ToString)
+        strDate = (DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
 
         'adds flights to the date, ensures we have flights to show
         AddJourneyClass.AddJourney(strDay, strDate)
@@ -105,7 +106,7 @@ Partial Class _Default
     Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
 
         lblMessage.Text = ""
-
+        AddJourneys()
         SearchBtn()
 
         SortandBind()
