@@ -32,6 +32,14 @@
 
         <asp:Button ID="btnSearch" runat="server" Text="Search" />
 
+        <br />
+        <br />
+        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+        <br />
+        <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
+        <br />
+        <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
+
         </div>
 
         </asp:Panel>
@@ -45,9 +53,11 @@
         <asp:TextBox ID="txtAge" runat="server"></asp:TextBox>
 
         <br />
-        <asp:Label ID="lblAgeMessage" runat="server" Text=""></asp:Label>
 
         <asp:Button ID="btnConfirm" runat="server" Text="Confirm" />
+
+        <br />
+        <asp:Label ID="lblAgeMessage" runat="server" Text=""></asp:Label>
 
         </div>
 

@@ -29,6 +29,10 @@ Partial Class _Default
         ShowAll()
         SortandBind()
 
+        MakeIndirectInvisible()
+    End Sub
+
+    Private Sub MakeIndirectInvisible()
         gvIndirectFinish.Visible = False
         lblIndirectFinish.Visible = False
         lblIndirectFinishC.Visible = False
@@ -119,6 +123,8 @@ Partial Class _Default
         'converts to only the date calFlightSearch.SelectedDate.ToShortDateString
 
         ShowAll()
+        SortandBind()
+        MakeIndirectInvisible()
 
     End Sub
 
@@ -227,11 +233,11 @@ Partial Class _Default
 
         DBFlightSearch.SearchIndirectFinish(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(6).Text, lblArrival.Text, _
         DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString), _
-        gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(7).Text)
+        gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(4).Text)
 
         'check if there's anything in second gv
         If CInt(DBFlightSearch.lblCountFinish) = 0 Then
-            lblMessage.Text = "No second leg results. Please choose a direct flight"
+            lblMessage.Text = "No second leg results. Please choose a direct flight or different indirect flight"
             Exit Sub
         End If
 
@@ -251,9 +257,13 @@ Partial Class _Default
     End Sub
 
     Protected Sub gvIndirectFinish_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectFinish.SelectedIndexChanged
-        lblMessage.Text = gvIndirectFinish.Rows(gvIndirectFinish.SelectedIndex).Cells(1).Text
-        'code if they chose the second leg
+        'This code binds all the gridviews. 
+        'Without this code, they change on button click and the selected index has diff info in it
         'add this flight to the reservation table
+        DBFlightSearch.SearchIndirectFinish(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(6).Text, lblArrival.Text, _
+        DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString), _
+        gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(4).Text)
+        SortandBind()
 
         'use another variable to hold the session variable. Otherwise it gives me option strict on problems
         intJourneyNumber = CInt(Session("JourneyNumber"))

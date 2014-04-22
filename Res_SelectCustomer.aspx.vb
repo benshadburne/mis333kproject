@@ -22,6 +22,9 @@ Partial Class Res_SelectCustomer
         'Date: 02/06/2014
         'Description: A sub that gets all customers, sorts them, and then puts them on the form 
 
+        Label2.Text = Session("Adults").ToString
+        Label3.Text = Session("Children").ToString
+        Label4.Text = Session("Babies").ToString
 
     End Sub
 
@@ -68,26 +71,29 @@ Partial Class Res_SelectCustomer
             If Session("Adults") = 0 Then
                 'WHAT IF THE SAME CUSTOMER HAS A DIFFERENT AGE ON DIFFERENT FLIGHTS????
                 lblAgeMessage.Text = "Your reservation has no more adults on it. Please enter an age that matches with your" & _
-                    "selected number of tickets for children and babies from earlier"
+                    " selected number of tickets for children and babies from earlier"
+                Exit Sub
             Else
-                Session("Adults") -= 1
+                Session("Adults") = Session("Adults") - 1
             End If
         Else
             If intAge > 2 Then
                 If Session("Children") = 0 Then
                     'WHAT IF THE SAME CUSTOMER HAS A DIFFERENT AGE ON DIFFERENT FLIGHTS????
                     lblAgeMessage.Text = "Your reservation has no more children on it. Please enter an age that matches with your" & _
-                        "selected number of tickets for adults and babies from earlier"
+                        " selected number of tickets for adults and babies from earlier"
+                    Exit Sub
                 Else
-                    Session("Children") -= 1
+                    Session("Children") = Session("Children") - 1
                 End If
             Else
                 If Session("Babies") = 0 Then
                     'WHAT IF THE SAME CUSTOMER HAS A DIFFERENT AGE ON DIFFERENT FLIGHTS????
                     lblAgeMessage.Text = "Your reservation has no more babies on it. Please enter an age that matches with your" & _
-                        "selected number of tickets for adults and children from earlier"
+                        " selected number of tickets for adults and children from earlier"
+                    Exit Sub
                 Else
-                    Session("Babies") -= 1
+                    Session("Babies") = Session("Babies") - 1
                 End If
             End If
         End If

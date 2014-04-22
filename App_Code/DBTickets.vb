@@ -219,8 +219,10 @@ Public Class DBTickets
     End Sub
 
     Public Function CheckIfTicketIsUnique(strJourneyID As String, strAdvantageNumber As String) As Boolean
-        Dim aryParamNames As ArrayList
-        Dim aryParamValues As ArrayList
+        'defines array to put parameter names into
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+
 
         aryParamNames.Add("@JourneyID")
         aryParamNames.Add("@AdvantageNumber")
