@@ -251,7 +251,7 @@ Partial Class _Default
     End Sub
 
     Protected Sub gvIndirectFinish_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectFinish.SelectedIndexChanged
-
+        lblMessage.Text = gvIndirectFinish.Rows(gvIndirectFinish.SelectedIndex).Cells(1).Text
         'code if they chose the second leg
         'add this flight to the reservation table
 
@@ -296,23 +296,23 @@ Partial Class _Default
             'if this is a round trip, send back the other 
             If Session("TripType").ToString = "Round Trip" Then
 
-                    'add the second leg of the journey
-                    DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
+                'add the second leg of the journey
+                DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
 
-                    'get correct values for journey number
+                'get correct values for journey number
                 Session("JourneyNumber") = 2
 
-                    'switch begin, end airport
-                    strTempAirport = Session("EndAirport").ToString
-                    Session("EndAirport") = Session("StartAirport")
-                    Session("StartAirport") = strTempAirport
-                    'reload the page and exit sub
-                    ShowAll()
-                    lblReturn.Visible = True
-                    Exit Sub
-                End If
+                'switch begin, end airport
+                strTempAirport = Session("EndAirport").ToString
+                Session("EndAirport") = Session("StartAirport")
+                Session("StartAirport") = strTempAirport
+                'reload the page and exit sub
+                ShowAll()
+                lblReturn.Visible = True
+                Exit Sub
+            End If
 
-            Else
+        Else
             'add a later journey -- update info needed
             intJourneyID = CInt(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(1).Text)
 
@@ -325,21 +325,21 @@ Partial Class _Default
             DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
 
 
-                If Session("TripType").ToString = "Round Trip" Then
-                    'remove session variables
-                    RemoveSessionVariablesAndRedirect()
-                    Exit Sub
-                End If
-
-                'update this session variable if this is a multiple city trip
-                Session("JourneyNumber") = intJourneyNumber
-
+            If Session("TripType").ToString = "Round Trip" Then
+                'remove session variables
+                RemoveSessionVariablesAndRedirect()
+                Exit Sub
             End If
 
-            'mark the airport they must now leave from for next leg
-            Session("StartAirport") = Session("EndAirport")
+            'update this session variable if this is a multiple city trip
+            Session("JourneyNumber") = intJourneyNumber
 
-            'redirect them to selection
-            Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
+        End If
+
+        'mark the airport they must now leave from for next leg
+        Session("StartAirport") = Session("EndAirport")
+
+        'redirect them to selection
+        Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
     End Sub
 End Class
