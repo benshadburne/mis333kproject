@@ -220,12 +220,9 @@ Partial Class _Default
         Session.Remove("JourneyNumber")
         Session.Remove("TripType")
 
-        If CInt(Session("Adult")) + CInt(Session("Child")) + CInt(Session("Babies")) = 1 Then
-            'run code to add a ticket for the customer that is logged in
-            Response.Redirect("Cust_SelectSeats.aspx")
-        Else
-            Response.Redirect("Res_SelectCustomer.aspx")
-        End If
+
+        Response.Redirect("Res_SelectCustomer.aspx")
+
     End Sub
 
     Protected Sub gvIndirectStart_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectStart.SelectedIndexChanged
@@ -344,6 +341,15 @@ Partial Class _Default
             'update this session variable if this is a multiple city trip
             Session("JourneyNumber") = intJourneyNumber
 
+        End If
+
+        If Session("IsFinal") Is Nothing Then
+            'dont do anything
+        Else
+            'remove session variables
+            'redirect to customer Reservation page
+            Session.Remove("IsFinal")
+            RemoveSessionVariablesAndRedirect()
         End If
 
         'mark the airport they must now leave from for next leg
