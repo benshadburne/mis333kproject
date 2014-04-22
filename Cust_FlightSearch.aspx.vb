@@ -167,7 +167,7 @@ Partial Class _Default
                 'reload the page and exit sub
                 ShowAll()
                 lblReturn.Visible = True
-                Exit Sub
+                Response.Redirect("Cust_FlightSearch.aspx")
             End If
 
         Else
@@ -215,7 +215,7 @@ Partial Class _Default
         Session.Remove("TripType")
 
         If CInt(Session("Adult")) + CInt(Session("Child")) + CInt(Session("Babies")) = 1 Then
-            'run code to add a ticket
+            'run code to add a ticket for the customer that is logged in
             Response.Redirect("Cust_SelectSeats.aspx")
         Else
             Response.Redirect("Res_SelectCustomer.aspx")
@@ -247,13 +247,13 @@ Partial Class _Default
         lblIndirectFinishC.Visible = True
         lblIndirectFinish.Visible = True
         lblCountFinish.Visible = True
+
     End Sub
 
     Protected Sub gvIndirectFinish_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectFinish.SelectedIndexChanged
 
         'code if they chose the second leg
         'add this flight to the reservation table
-        intJourneyID = CInt(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(1).Text)
 
         'use another variable to hold the session variable. Otherwise it gives me option strict on problems
         intJourneyNumber = CInt(Session("JourneyNumber"))
@@ -265,8 +265,11 @@ Partial Class _Default
         strJourneyNumber = DBReservations.ConvertJourneyNumberToString(intJourneyNumber)
 
         If intJourneyNumber = 1 Then
+            'get the date to put in as start reservation date
+            strDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
 
-            strDate = gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(2).Text
+            'get Journey ID for first flight
+            intJourneyID = CInt(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(1).Text)
 
             'add the first record of the reservation
             DBReservations.AddFirstReservationJourney("usp_ReservationsClone_Add_Journey", strJourneyNumber, intJourneyID, strDate)
@@ -277,12 +280,12 @@ Partial Class _Default
             'retrieve the reservationID for the reservation we just added to. Store it in a new session variable
             Session.Add("ReservationID", DBReservations.GetNewestReservationID())
 
+            'now the Journey ID is the one from the finish gridview
+            intJourneyID = CInt(gvIndirectFinish.Rows(gvIndirectFinish.SelectedIndex).Cells(1).Text)
+            strJourneyNumber = "JourneyTwo"
+
             'if this is a one way ticket, have them go book their seats
             If Session("TripType").ToString = "One Way" Then
-                'add second leg of flight --
-                'get correct values for stuff
-                intJourneyID = CInt(gvIndirectFinish.Rows(gvIndirectFinish.SelectedIndex).Cells(1).Text)
-                strJourneyNumber = "JourneyTwo"
                 'add the second leg of the journey
                 DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
                 'remove session variables and redirect
@@ -292,16 +295,12 @@ Partial Class _Default
 
             'if this is a round trip, send back the other 
             If Session("TripType").ToString = "Round Trip" Then
-                    'add second leg of flight --
-                    'get correct values for stuff
-                    intJourneyID = CInt(gvIndirectFinish.Rows(gvIndirectFinish.SelectedIndex).Cells(1).Text)
-                    strJourneyNumber = "JourneyTwo"
 
                     'add the second leg of the journey
                     DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
 
                     'get correct values for journey number
-                    Session("JourneyNumber") = 3
+                Session("JourneyNumber") = 2
 
                     'switch begin, end airport
                     strTempAirport = Session("EndAirport").ToString
@@ -316,8 +315,6 @@ Partial Class _Default
             Else
             'add a later journey -- update info needed
             intJourneyID = CInt(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(1).Text)
-            intJourneyNumber = CInt(Session("JourneyNumber"))
-            strJourneyNumber = DBReservations.ConvertJourneyNumberToString(intJourneyID)
 
             DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
 

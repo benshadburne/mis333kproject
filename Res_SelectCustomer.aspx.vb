@@ -12,9 +12,6 @@ Partial Class Res_SelectCustomer
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        Session.Add("ReservationID", 10025)
-
-
         If IsPostBack = False Then
             CustomerDB.GetAllCustomersCloneUsingSP()
 

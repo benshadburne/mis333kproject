@@ -52,6 +52,11 @@ Partial Class Cust_CreateReservationAndSelectFlight
                 Exit Sub
             End If
 
+            If ddlAdult.SelectedIndex + ddlChildren.SelectedIndex = 0 Then
+                lblMessage.Text = "There must be at least one adult or child on a reservation"
+                Exit Sub
+            End If
+
             'check to make sure adults > babies
             If ddlBabies.SelectedIndex > (ddlAdult.SelectedIndex + ddlChildren.SelectedIndex) Then
                 lblMessage.Text = "You cannot have more babies than adults in your reservation"
