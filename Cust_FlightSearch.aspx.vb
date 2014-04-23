@@ -14,23 +14,23 @@ Partial Class _Default
     Dim strTempAirport As String
 
 
-    Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
-        Dim strDay As String
-        Dim strDate As String
+    'Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+    '    Dim strDay As String
+    '    Dim strDate As String
 
-        'populate those variables
-        strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
-        strDate = calFlightSearch.SelectedDate.ToString
+    '    'populate those variables
+    '    strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
+    '    strDate = calFlightSearch.SelectedDate.ToString
 
-        'add journeys for those days if they aren't added already
-        DBAddJourney.AddJourney(strDay, strDate)
+    '    'add journeys for those days if they aren't added already
+    '    DBAddJourney.AddJourney(strDay, strDate)
 
-        'show flights available
-        ShowAll()
-        SortandBind()
+    '    'show flights available
+    '    ShowAll()
+    '    SortandBind()
 
-        MakeIndirectInvisible()
-    End Sub
+    '    MakeIndirectInvisible()
+    'End Sub
 
     Private Sub MakeIndirectInvisible()
         gvIndirectFinish.Visible = False
@@ -114,7 +114,7 @@ Partial Class _Default
 
         'populate those variables
         strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
-        strDate = calFlightSearch.SelectedDate.ToString
+        strDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
 
         'add journeys for those days if they aren't added already
         DBAddJourney.AddJourney(strDay, strDate)
@@ -151,9 +151,6 @@ Partial Class _Default
             'add the first record of the reservation
             DBReservations.AddFirstReservationJourney("usp_ReservationsClone_Add_Journey", strJourneyNumber, intJourneyID, strDate)
 
-            'update the session variable
-            Session("JourneyNumber") = intJourneyNumber
-
             'retrieve the reservationID for the reservation we just added to. Store it in a new session variable
             Session.Add("ReservationID", DBReservations.GetNewestReservationID())
 
@@ -164,16 +161,13 @@ Partial Class _Default
                 Exit Sub
             End If
 
+            'update the session variable
+            Session("JourneyNumber") = intJourneyNumber
+
             'if this is a round trip, send back the other 
             If Session("TripType").ToString = "Round Trip" Then
                 'switch begin, end airport
-                strTempAirport = Session("EndAirport").ToString
-                Session("EndAirport") = Session("StartAirport")
-                Session("StartAirport") = strTempAirport
-                'reload the page and exit sub
-                ShowAll()
-                lblReturn.Visible = True
-                Response.Redirect("Cust_FlightSearch.aspx")
+                FirstHalfRoundTrip()
             End If
 
         Else
@@ -183,7 +177,6 @@ Partial Class _Default
             If Session("TripType").ToString = "Round Trip" Then
                 'remove session variables
                 RemoveSessionVariablesAndRedirect()
-                Exit Sub
             End If
 
             'update this session variable if this is a multiple city trip
@@ -282,19 +275,20 @@ Partial Class _Default
             DBReservations.AddFirstReservationJourney("usp_ReservationsClone_Add_Journey", strJourneyNumber, intJourneyID, strDate)
 
             'update the session variable
-            Session("JourneyNumber") = intJourneyNumber
+            intJourneyNumber += 1
 
             'retrieve the reservationID for the reservation we just added to. Store it in a new session variable
             Session.Add("ReservationID", DBReservations.GetNewestReservationID())
 
             'now the Journey ID is the one from the finish gridview
             intJourneyID = CInt(gvIndirectFinish.Rows(gvIndirectFinish.SelectedIndex).Cells(1).Text)
-            strJourneyNumber = "JourneyTwo"
+            strJourneyNumber = DBReservations.ConvertJourneyNumberToString(intJourneyNumber)
+
+            'add the second leg of the journey
+            DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
 
             'if this is a one way ticket, have them go book their seats
             If Session("TripType").ToString = "One Way" Then
-                'add the second leg of the journey
-                DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
                 'remove session variables and redirect
                 RemoveSessionVariablesAndRedirect()
                 Exit Sub
@@ -303,19 +297,11 @@ Partial Class _Default
             'if this is a round trip, send back the other 
             If Session("TripType").ToString = "Round Trip" Then
 
-                'add the second leg of the journey
-                DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
-
                 'get correct values for journey number
-                Session("JourneyNumber") = 2
+                Session("JourneyNumber") = intJourneyNumber
 
-                'switch begin, end airport
-                strTempAirport = Session("EndAirport").ToString
-                Session("EndAirport") = Session("StartAirport")
-                Session("StartAirport") = strTempAirport
-                'reload the page and exit sub
-                ShowAll()
-                lblReturn.Visible = True
+                'switch begin, end airport, reload page
+                FirstHalfRoundTrip()
                 Exit Sub
             End If
 
@@ -358,4 +344,15 @@ Partial Class _Default
         'redirect them to selection
         Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
     End Sub
+
+    Private Sub FirstHalfRoundTrip()
+        strTempAirport = Session("EndAirport").ToString
+        Session("EndAirport") = Session("StartAirport")
+        Session("StartAirport") = strTempAirport
+        'reload the page and exit sub
+        ShowAll()
+        lblReturn.Visible = True
+        Response.Redirect("Cust_FlightSearch.aspx")
+    End Sub
+
 End Class

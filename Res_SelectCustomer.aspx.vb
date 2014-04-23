@@ -48,6 +48,8 @@ Partial Class Res_SelectCustomer
     End Sub
 
     Protected Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
+        lblAgeMessage.Text = ""
+        lblMessage.Text = ""
         'run the validation before doing anything else
 
         If Validation.CheckIntegerWithSubstring(txtAge.Text) = False Then
@@ -125,13 +127,6 @@ Partial Class Res_SelectCustomer
             'put that journey id in a string
             strJourneyID = DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("JourneyID")
 
-            If DBTicket.CheckIfTicketIsUnique(strJourneyID, strAdvantageNumber) = True Then
-                'ticket is unique -- add tickets
-            Else
-                'lblMessage.Text = this customer is already on a flight in this reservation. Give these tickets to a different customer
-                Exit Sub
-            End If
-
             'put the flight number for that journeyID in a string
             strFlightNumber = DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber")
 
@@ -141,6 +136,7 @@ Partial Class Res_SelectCustomer
             'put the base fare for the flight in a string
             strBaseFare = DBFlight.MyDataSet.Tables("tblFlightsClone").Rows(0).Item("BaseFare")
 
+            'add the ticket
             DBTicket.AddTicket(Session("ReservationID").ToString, strAdvantageNumber, strJourneyID, strFlightNumber, strBaseFare)
 
         Next
@@ -154,6 +150,7 @@ Partial Class Res_SelectCustomer
 
         If Session("Adults") = Session("Children") And Session("Adults") = Session("Babies") And Session("Adults") = 0 Then
             'response redirect
+            lblMessage.Text = "You have added all the tickets for your reservation. Now move on to select seats."
         End If
 
     End Sub
