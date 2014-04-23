@@ -59,7 +59,7 @@ Partial Class Cust_CreateReservationAndSelectFlight
 
             'check to make sure adults > babies
             If ddlBabies.SelectedIndex > (ddlAdult.SelectedIndex + ddlChildren.SelectedIndex) Then
-                lblMessage.Text = "You cannot have more babies than adults in your reservation"
+                lblMessage.Text = "You cannot have more babies than adults and children in your reservation"
                 Exit Sub
             End If
 

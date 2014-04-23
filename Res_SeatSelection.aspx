@@ -33,19 +33,59 @@
             <asp:Label CssClass="label" ID="Label6" runat="server" Text="Front of Plane" ></asp:Label>
      </div>
       
-          <div class="pull-left" style="margin-left:25%; text-align:center">
-                <asp:Button class="btn-seat" ID="btn1A" runat="server" Text="" />
+        <div class="pull-left" style="text-align:right">
+               
+                 
+              <asp:Button ID="btnCalculate" runat="server" Text="Calculate Cost" />
               <br />
-              <asp:Button class="btn-seat" ID="btn2A" runat="server" Text="" />
+              <asp:Label ID="Label8" runat="server" Text="Pay with:"></asp:Label>
+            <br />
+              <asp:RadioButtonList ID="rblPayment" runat="server" AutoPostBack="True">
+                  <asp:ListItem>Miles</asp:ListItem>
+                  <asp:ListItem>Money</asp:ListItem>
+              </asp:RadioButtonList>
+               
+            <asp:Label ID="lblMiles" runat="server" Text=""></asp:Label>
               <br />
-              <asp:Button class="btn-seat" ID="btn3A" runat="server" Text="" />
-              <asp:Button class="btn-seat" ID="btn3B" runat="server" Text="" />
               <br />
-              <asp:Button class="btn-seat" ID="btn4A" runat="server" Text="" />
-              <asp:Button class="btn-seat" ID="btn4B" runat="server" Text="" />
+            <asp:Label ID="lblCost" runat="server" Text=""></asp:Label>
               <br />
-              <asp:Button class="btn-seat" ID="btn5A" runat="server" Text="" />
-              <asp:Button class="btn-seat" ID="btn5B" runat="server" Text="" />
+              <br />
+                           
+                 
+              <asp:Button ID="btnPay" runat="server" Text="Pay" />
+              
+              <br />
+            <br />
+            <asp:Label ID="Label9" runat="server" Text="Would you like to upgrade for 500 miles?"></asp:Label>
+
+                                       
+                 
+              <asp:Button ID="btnYes" runat="server" Text="Yes" />
+              
+                                         
+                 
+              <asp:Button ID="btnNo" runat="server" Text="No" />
+              
+              
+
+               
+                 
+              </div> 
+        
+         <div class="pull-left" style="text-align:center">
+                <asp:Button class="btn-seat" ID="btn1A" runat="server" Text="1A" />
+              <br />
+              <asp:Button class="btn-seat" ID="btn2A" runat="server" Text="2A" />
+              <br />
+              <asp:Button class="btn-seat" ID="btn3A" runat="server" Text="3A" />
+              <asp:Button class="btn-seat" ID="btn3B" runat="server" Text="3B" />
+              <br />
+              <asp:Button class="btn-seat" ID="btn4A" runat="server" Text="4A" />
+              <asp:Button class="btn-seat" ID="btn4B" runat="server" Text="4B" />
+              <br />
+              <asp:Button class="btn-seat" ID="btn5A" runat="server" Text="5A" />
+              <asp:Button class="btn-seat" ID="btn5B" runat="server" Text="5B" />
                 <br />
                  
               </div>
@@ -53,18 +93,18 @@
 
       <div class="pull-left" style="text-align: center">
                      
-              <asp:Button class="btn-seat" ID="btn1B" runat="server" Text="" />
+              <asp:Button class="btn-seat" ID="btn1B" runat="server" Text="1B" />
               <br />
-              <asp:Button class="btn-seat" ID="btn2B" runat="server" Text="" />
+              <asp:Button class="btn-seat" ID="btn2B" runat="server" Text="2B" />
               <br />
-              <asp:Button class="btn-seat" ID="btn3C" runat="server" Text="" />
-              <asp:Button class="btn-seat" ID="btn3D" runat="server" Text="" />
+              <asp:Button class="btn-seat" ID="btn3C" runat="server" Text="3C" />
+              <asp:Button class="btn-seat" ID="btn3D" runat="server" Text="3D" />
               <br />
-              <asp:Button class="btn-seat" ID="btn4C" runat="server" Text="" />
-              <asp:Button class="btn-seat" ID="btn4D" runat="server" Text="" />
+              <asp:Button class="btn-seat" ID="btn4C" runat="server" Text="4C" />
+              <asp:Button class="btn-seat" ID="btn4D" runat="server" Text="4D" />
               <br />
-              <asp:Button class="btn-seat" ID="btn5C" runat="server" Text="" />
-              <asp:Button class="btn-seat" ID="btn5D" runat="server" Text="" />
+              <asp:Button class="btn-seat" ID="btn5C" runat="server" Text="5C" />
+              <asp:Button class="btn-seat" ID="btn5D" runat="server" Text="5D" />
                 <br />
           </div>
         </div>

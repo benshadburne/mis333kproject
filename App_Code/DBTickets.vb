@@ -19,6 +19,8 @@ Public Class DBTickets
     Dim mdatasetTickets As New DataSet
     Dim mdatasetTicketsOthers As New DataSet
     Dim mQueryString As String
+    Dim mMyViewOne As New DataView
+    Dim mdatasetOne As New DataSet
 
     Public Sub GetALLTicketsUsingSP()
         'Author: Ben Shadburne
@@ -99,13 +101,13 @@ Public Class DBTickets
             ' ADD PARAMETER(S) TO SPROC
             mdbDataAdapter.SelectCommand.Parameters.Add(New SqlParameter(strParamName, strParamValue))
             ' clear dataset
-            mdatasetTickets.Clear()
+            mdatasetOne.Clear()
 
             ' OPEN CONNECTION AND FILL DATASET
-            mdbDataAdapter.Fill(mdatasetTickets, "tblTickets")
+            mdbDataAdapter.Fill(mdatasetOne, "tblTickets")
 
             ' copy dataset to dataview
-            mMyView.Table = mdatasetTickets.Tables("tblTickets")
+            mMyView.Table = mdatasetOne.Tables("tblTickets")
 
         Catch ex As Exception
             Throw New Exception("params are " & strSPName.ToString & " " & strParamName.ToString & " " & strParamValue.ToString & " error is " & ex.Message)
@@ -238,6 +240,28 @@ Public Class DBTickets
             Return True
         End If
     End Function
+
+    Public Function GetMileage(strAdvantageNumber As String) As String
+
+        RunSPwithOneParam("usp_CustomersClone_Get_Miles", "@AdvantageNumber", strAdvantageNumber)
+
+        Return mdatasetOne.Tables("tblTickets").Rows(0).Item("Miles").ToString
+
+    End Function
+
+    Public Function GetAge(strAdvantageNumber As String) As Integer
+
+        RunSPwithOneParam("usp_TicketsClone_Get_One", "@AdvantageNumber", strAdvantageNumber)
+
+        Return CInt(mdatasetOne.Tables("tblTickets").Rows(0).Item("Age"))
+
+    End Function
+
+    Public Sub AddTicketPrices(strSPName As String, intPricePaid As Integer, intMileagePaid As Integer, intTicketID As int)
+        'fill this out
+
+
+    End Sub
 
     Public Sub DoSort(ByVal intIndex As Integer)
         'Author: Ben Shadburne

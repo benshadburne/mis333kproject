@@ -8,23 +8,21 @@ Partial Class _Default
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim strReservationID As String
         Dim strAdvantageNum As String
-        strReservationID = CStr(10004)
         strAdvantageNum = CStr(5000)
+
+        'check session reservationID if it's empty
+        strReservationID = Session("ReservationID").ToString
+        If strReservationID = "" Then
+            Response.Redirect("HomePage.aspx")
+        End If
 
         Session("Infant") = ""
         Session("InfantID") = ""
         Session("Login") = strAdvantageNum
-        Session("ReservationID") = strReservationID
         lblReservationID.Text = strReservationID
         'check customer login
 
-        ''check session reservationID if it's empty
-        'strReservationID = Session("ReservationID").ToString
-        'If strReservationID = "" Then
-        '    Response.Redirect("HomePage.aspx")
-        'End If
-
-        ''check session login if it's empty
+        ''check session login if it's empty 
         'strAdvantageNum = Session("Login").ToString
         'If strAdvantageNum = "" then
         '   Response.Redirect("HomePage.aspx")
@@ -235,4 +233,28 @@ Partial Class _Default
         Return CInt(strIn)
     End Function
 
+    Protected Sub RadioButtonList1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rblPayment.SelectedIndexChanged
+        Dim strMiles As String
+        Dim intAge As Integer
+
+        If rblPayment.SelectedValue = "Miles" Then
+            strMiles = DBTickets.GetMileage(gvYourReservation.Columns(1).ToString)
+            lblMiles.Text = "You currently have " & strMiles & " miles in your account."
+            'If statement to see if this is a first class ticket
+            'lblCost.Text = "The ticket costs 1000 miles."
+            'else
+            'lblCost.Text = "The ticket costs 2000 miles."
+        Else
+            'run all the cost calculations
+            intAge = DBTickets.GetAge(gvYourReservation.Columns(1).ToString)
+
+
+        End If
+    End Sub
+
+    Protected Sub btnPay_Click(sender As Object, e As EventArgs) Handles btnPay.Click
+
+        'send information to the DB
+
+    End Sub
 End Class

@@ -149,8 +149,11 @@ Partial Class Res_SelectCustomer
         pnlAddAge.Visible = False
 
         If Session("Adults") = Session("Children") And Session("Adults") = Session("Babies") And Session("Adults") = 0 Then
-            'response redirect
-            lblMessage.Text = "You have added all the tickets for your reservation. Now move on to select seats."
+            'remove session variables and redirect
+            Session.Remove("Adults")
+            Session.Remove("Children")
+            Session.Remove("Babies")
+            Response.Redirect("Res_SeatSelection.aspx")
         End If
 
     End Sub

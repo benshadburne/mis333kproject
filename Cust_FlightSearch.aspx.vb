@@ -264,25 +264,25 @@ Partial Class _Default
         'get the right string for the column name in the DB
         strJourneyNumber = DBReservations.ConvertJourneyNumberToString(intJourneyNumber)
 
+        'get Journey ID for first flight
+        intJourneyID = CInt(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(1).Text)
+
         If intJourneyNumber = 1 Then
             'get the date to put in as start reservation date
             strDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
-
-            'get Journey ID for first flight
-            intJourneyID = CInt(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(1).Text)
 
             'add the first record of the reservation
             DBReservations.AddFirstReservationJourney("usp_ReservationsClone_Add_Journey", strJourneyNumber, intJourneyID, strDate)
 
             'update the session variable
             intJourneyNumber += 1
+            strJourneyNumber = DBReservations.ConvertJourneyNumberToString(intJourneyNumber)
 
             'retrieve the reservationID for the reservation we just added to. Store it in a new session variable
             Session.Add("ReservationID", DBReservations.GetNewestReservationID())
 
             'now the Journey ID is the one from the finish gridview
             intJourneyID = CInt(gvIndirectFinish.Rows(gvIndirectFinish.SelectedIndex).Cells(1).Text)
-            strJourneyNumber = DBReservations.ConvertJourneyNumberToString(intJourneyNumber)
 
             'add the second leg of the journey
             DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
@@ -306,14 +306,12 @@ Partial Class _Default
             End If
 
         Else
-            'add a later journey -- update info needed
-            intJourneyID = CInt(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(1).Text)
 
             DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
 
             intJourneyID = CInt(gvIndirectFinish.Rows(gvIndirectFinish.SelectedIndex).Cells(1).Text)
             intJourneyNumber += 1
-            strJourneyNumber = DBReservations.ConvertJourneyNumberToString(intJourneyID)
+            strJourneyNumber = DBReservations.ConvertJourneyNumberToString(intJourneyNumber)
 
             DBReservations.AddLaterReservationJourneys("usp_ReservationsClone_Add_Later_Journeys", strJourneyNumber, intJourneyID, CInt(Session("ReservationID")))
 
@@ -324,10 +322,8 @@ Partial Class _Default
                 Exit Sub
             End If
 
-            'update this session variable if this is a multiple city trip
-            Session("JourneyNumber") = intJourneyNumber
-
         End If
+
 
         If Session("IsFinal") Is Nothing Then
             'dont do anything
@@ -337,6 +333,9 @@ Partial Class _Default
             Session.Remove("IsFinal")
             RemoveSessionVariablesAndRedirect()
         End If
+
+        'update this session variable if this is a multiple city trip
+        Session("JourneyNumber") = intJourneyNumber
 
         'mark the airport they must now leave from for next leg
         Session("StartAirport") = Session("EndAirport")
