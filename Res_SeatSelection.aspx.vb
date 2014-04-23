@@ -4,6 +4,7 @@ Partial Class _Default
 
     Dim DBSeats As New DBSeats
     Dim DBTickets As New DBTickets
+    Dim Calculate As New ClassCalculate
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim strReservationID As String
@@ -236,6 +237,12 @@ Partial Class _Default
     Protected Sub RadioButtonList1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rblPayment.SelectedIndexChanged
         Dim strMiles As String
         Dim intAge As Integer
+        Dim intBaseFare As Integer
+        Dim decAgeDiscount As Decimal
+        Dim decFirstClassPremium As Decimal = 0
+        Dim decInternetDiscount As Decimal = 0
+        Dim decTwoWeekDiscount As Decimal
+
 
         If rblPayment.SelectedValue = "Miles" Then
             strMiles = DBTickets.GetMileage(gvYourReservation.Columns(1).ToString)
@@ -247,6 +254,19 @@ Partial Class _Default
         Else
             'run all the cost calculations
             intAge = DBTickets.GetAge(gvYourReservation.Columns(1).ToString)
+            intBaseFare = DBTickets.GetBaseFare(gvOtherReservation.Columns(1).ToString)
+            decAgeDiscount = Calculate.CalculateAgeDiscount(intAge, intBaseFare)
+            'decFirstClassPremium = Calculate.CalculateFirstClass(intAge, 1 if first class, 0 if not)
+
+            ''use if statement to see if we should apply an internet discount
+            'If Session("login") = "customer" Then
+            '    'internet reservation
+            '    decInternetDiscount = Calculate.CalculateInternetPurchaseDiscount(intBaseFare)
+            'Else
+            '    decInternetDiscount = 0
+            'End If
+
+            decTwoWeekDiscount = Calculate.CalculateDateDiscount()
 
 
         End If

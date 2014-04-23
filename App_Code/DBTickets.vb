@@ -241,14 +241,6 @@ Public Class DBTickets
         End If
     End Function
 
-    Public Function GetMileage(strAdvantageNumber As String) As String
-
-        RunSPwithOneParam("usp_CustomersClone_Get_Miles", "@AdvantageNumber", strAdvantageNumber)
-
-        Return mdatasetOne.Tables("tblTickets").Rows(0).Item("Miles").ToString
-
-    End Function
-
     Public Function GetAge(strAdvantageNumber As String) As Integer
 
         RunSPwithOneParam("usp_TicketsClone_Get_One", "@AdvantageNumber", strAdvantageNumber)
@@ -257,9 +249,38 @@ Public Class DBTickets
 
     End Function
 
-    Public Sub AddTicketPrices(strSPName As String, intPricePaid As Integer, intMileagePaid As Integer, intTicketID As int)
-        'fill this out
+    Public Function GetMileage(strAdvantageNumber As String) As String
 
+        RunSPwithOneParam("usp_CustomersClone_Get_Miles", "@AdvantageNumber", strAdvantageNumber)
+
+        Return mdatasetOne.Tables("tblTickets").Rows(0).Item("Miles").ToString
+
+    End Function
+
+    Public Function GetBaseFare(strAdvantageNumber As String) As Integer
+
+        RunSPwithOneParam("usp_TicketsClone_Get_One", "@AdvantageNumber", strAdvantageNumber)
+
+        Return CInt(mdatasetOne.Tables("tblTickets").Rows(0).Item("BaseFareAtPurchase"))
+
+    End Function
+
+    Public Sub AddTicketPrices(strSPName As String, intPricePaid As Integer, intMileagePaid As Integer, intTicketID As Integer)
+        'defines array to put parameter names into
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+
+        'add parameter names to names array list
+        aryParamNames.Add("@PricePaid")
+        aryParamNames.Add("@MilesPaid")
+        aryParamNames.Add("@TicketID")
+
+        'add values to parameter values array list
+        aryParamValues.Add(intPricePaid)
+        aryParamValues.Add(intMileagePaid)
+        aryParamValues.Add(intTicketID)
+
+        UseSPforInsertOrUpdateQuery("usp_TicketClone_Add_Price", aryParamNames, aryParamValues)
 
     End Sub
 

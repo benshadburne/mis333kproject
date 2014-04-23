@@ -105,16 +105,14 @@ Public Class ClassCalculate
     End Function
 
     'Public sub for asking for the age and then applying the discount
-    Public Sub CalculateAgeDiscount()
+    Public Function CalculateAgeDiscount(intAge As Integer, intBaseFare As Integer) As Decimal
         'Purpose: Apply the age discount if there is one to the base fare _
         '           NOTE: the age will be verified at the Gate check-in so this is the only tentative amount
-        'Author: Dennis Phelan
-        'Inputs: No input
-        'Outputs: Does not return anything; Calculates the age discount
+        'Author: Dennis Phelan and Aaryaman Singhal
+        'Inputs: 
+        'Outputs: returns age discount
         'Date Created: April 20, 2014
-        'Date Last Modified: April 21, 2014
-
-        GetBaseFareFromFlightDB(strFlightNumber)
+        'Date Last Modified: April 21, 2014, Now April 23, 2014
 
         'Check to see if the age is a senior
         If intAge >= 65 Then
@@ -129,7 +127,9 @@ Public Class ClassCalculate
         Else
             decAgeDiscount = 0
         End If
-    End Sub
+
+        Return decAgeDiscount
+    End Function
 
     'Calculate Date
     Public Function CalculateTimeBeforeFlight(datReservation As Date) As Boolean
@@ -162,7 +162,7 @@ Public Class ClassCalculate
     End Function
 
     'Calculate the discount related to the date
-    Public Sub CalculateDateDiscount()
+    Public Function CalculateDateDiscount() As Decimal
         'Purpose: Take the value from the CalculateTimeOfFlight to decide if it is 14 days, and then apply the discount if it is 14 days or more
         'Author: Dennis Phelan
         'Inputs: None
@@ -180,10 +180,12 @@ Public Class ClassCalculate
             'If not 14 days or more out, the discount is 0
             decTwoWeeksDiscount = 0
         End If
-    End Sub
+
+        Return decTwoWeeksDiscount
+    End Function
 
     'Calculate the discount from whether someone used the Customer site to purchase their ticket
-    Public Sub CalculateInternetPurchaseDiscount()
+    Public Function CalculateInternetPurchaseDiscount(intBaseFare As Integer) As Decimal
         'Purpose: Calculate a discount if the customer purchases their ticket online
         'Author: Dennis Phelan
         'Inputs: None
@@ -197,9 +199,11 @@ Public Class ClassCalculate
         'Check to see if the Save button is clicked on the Customer site and see if it is true
         'If true, apply the discount to the BaseFare
 
-    End Sub
+        Return decInternetDiscount
 
-    Public Sub CalculateFirstClass()
+    End Function
+
+    Public Function CalculateFirstClass(intBaseFare As Integer, intFirstClass As Integer) As Decimal
         'Purpose: Calculate the premium for flying first class
         'Author: Dennis Phelan
         'Inputs: None
@@ -218,29 +222,21 @@ Public Class ClassCalculate
             'If not selected, first class premium is 0
             decFirstClassPremium = 0
         End If
-    End Sub
+
+        Return decFirstClassPremium
+    End Function
 
 
     'Public Sub for adding up all of the different values
-    Public Sub CalculateSubTotalDiscount()
+    Public Sub CalculateSubTotalDiscount(intBaseFare As Integer, decFirstClassPremium As Decimal, decAgeDiscount As Decimal, decTwoWeekDiscount As Decimal, decInternetDiscount As Decimal)
         'Purpose: Use all of the above subs to get the numbers and get the ticket price with the discounts before Tax
-        'Author: Dennis Phelan
-        'Inputs: None
+        'Author: Dennis Phelan, Aaryaman
+        'Inputs: base fair, first class premium, age discount, two week discount, intenet discount
         'Outputs: the FinalPayBeforeTax
         'Date Created: April 21, 2014
         'Date Last Modified: April 21, 2014
 
         'Get the first class premium
-        CalculateFirstClass()
-
-        'Get the age discount
-        CalculateAgeDiscount()
-
-        'Get the date discount
-        CalculateDateDiscount()
-
-        'Get the Internet discount
-        CalculateInternetPurchaseDiscount()
 
         'Add up all of the discounts
         decTentativeFinalPayBeforeTax = decBaseFare + decFirstClassPremium - decAgeDiscount - decTwoWeeksDiscount - decInternetDiscount
