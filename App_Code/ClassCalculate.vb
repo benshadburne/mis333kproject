@@ -255,8 +255,8 @@ Public Class ClassCalculate
         'Date Created: April 21, 2014
         'Date Last Modified: April 21, 2014
 
-        'Calculate the subtotal with discounts
-        CalculateSubTotalDiscount()
+        ''Calculate the subtotal with discounts
+        'CalculateSubTotalDiscount()
 
         'Calculate the tax
         decTax = decTentativeFinalPayBeforeTax * SALES_TAX_Constant
@@ -271,8 +271,8 @@ Public Class ClassCalculate
         'Date Created: April 21, 2014
         'Date Last Modified: April 21, 2014
 
-        'Get the subtotal
-        CalculateSubTotalDiscount()
+        ''Get the subtotal
+        'CalculateSubTotalDiscount()
 
         'Get the tax
         CalculateTax()
