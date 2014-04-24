@@ -13,11 +13,13 @@ Public Class DBTickets
     'setting up db, dim connection, adapter, query, dataset
     Dim mMyView As New DataView
     Dim mMyViewOthers As New DataView
+    Dim mMyViewAdvantageNumbers As New DataView
     Dim mdbConn As New SqlConnection
     Dim mstrConnection As String = "workstation id=COMPUTER;packet size=4096;data source=MISSQL.mccombs.utexas.edu;integrated security=False;initial catalog=mis333k_20142_Team06;user id=msbcf819;password=Databasepassword5"
     Dim mdbDataAdapter As New SqlDataAdapter
     Dim mdatasetTickets As New DataSet
     Dim mdatasetTicketsOthers As New DataSet
+    Dim mdatasetAdvantageNumbers As New DataSet
     Dim mQueryString As String
     Dim mMyViewOne As New DataView
     Dim mdatasetOne As New DataSet
@@ -34,6 +36,26 @@ Public Class DBTickets
 
     End Sub
 
+    Public Sub GetAdvantageNumbersUsingSP(strJourneyID As String, strReservationID As String)
+        'Author: Ben Shadburne
+        'Purpose: runs advantagenumber procedure
+        'Arguments: journeyid and reservationid
+        'Return: na
+        'Date: 04/23/2014
+
+        Dim aryParamName As New ArrayList
+        Dim aryParamValue As New ArrayList
+
+        aryParamName.Add("@JourneyID")
+        aryParamName.Add("@ReservationID")
+        aryParamValue.Add(strJourneyID)
+        aryParamValue.Add(strReservationID)
+
+        UseSP("usp_Tickets_Get_Advantage", mdatasetAdvantageNumbers, mMyViewAdvantageNumbers, "tblAdvantageNumbers", aryParamName, aryParamValue)
+
+
+    End Sub
+
     'define a public read only property
     Public ReadOnly Property MyView() As DataView
         'Author: Ben Shadburne
@@ -44,6 +66,18 @@ Public Class DBTickets
 
         Get
             Return mMyView
+        End Get
+    End Property
+
+    Public ReadOnly Property MyViewAdvantageNumbers() As DataView
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: xxxxx dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mMyViewAdvantageNumbers
         End Get
     End Property
 
@@ -293,13 +327,7 @@ Public Class DBTickets
 
         mMyView.Sort = "TicketID, "
 
-        'sort using radio buttons
-        If intIndex = 0 Then
-            'sort by name
-            mMyView.Sort = "lastname, firstname"
-        Else
-            mMyView.Sort = "username"
-        End If
+        
     End Sub
 
     Public Sub FilterYou(ByVal strRes As String, strAdvantage As String)
