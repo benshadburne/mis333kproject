@@ -57,7 +57,7 @@
               
               <br />
             <br />
-            <asp:Label ID="Label9" runat="server" Text="Would you like to upgrade for 500 miles?"></asp:Label>
+            <asp:Label ID="lblUpgrade" runat="server" Text="Would you like to upgrade for 500 miles?"></asp:Label>
 
                                        
                  

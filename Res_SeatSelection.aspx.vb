@@ -9,12 +9,19 @@ Partial Class _Default
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim strReservationID As String
         Dim strAdvantageNum As String
-        strAdvantageNum = CStr(5000)
 
+        'write some code to pull up the advantage number we need to use to select the seats. 
+        strAdvantageNum = CInt(5001)
         'check session reservationID if it's empty
         strReservationID = Session("ReservationID").ToString
         If strReservationID = "" Then
             Response.Redirect("HomePage.aspx")
+        End If
+
+        'check to see if there is a running price subtotal on the page
+        If Session("RunningSubtotal") Is Nothing Then
+            'there isn't a running price subtotal, create one
+            Session.Add("RunningSubtotal", 0)
         End If
 
         Session("Infant") = ""
@@ -33,7 +40,6 @@ Partial Class _Default
         LoadTickets()
 
         SortandBind()
-
 
         'bind ddl for journeys
         ddlJourneyID.DataSource = DBTickets.MyView
@@ -242,15 +248,18 @@ Partial Class _Default
         Dim decFirstClassPremium As Decimal = 0
         Dim decInternetDiscount As Decimal = 0
         Dim decTwoWeekDiscount As Decimal
+        Dim decSubtotal As Decimal
 
 
         If rblPayment.SelectedValue = "Miles" Then
             strMiles = DBTickets.GetMileage(gvYourReservation.Columns(1).ToString)
             lblMiles.Text = "You currently have " & strMiles & " miles in your account."
-            'If statement to see if this is a first class ticket
-            'lblCost.Text = "The ticket costs 1000 miles."
-            'else
-            'lblCost.Text = "The ticket costs 2000 miles."
+            If FirstClassSelected() = True Then
+                lblCost.Text = "The ticket costs 2000 miles."
+            Else
+                lblCost.Text = "The ticket costs 1000 miles."
+            End If
+
         Else
             'run all the cost calculations
             intAge = DBTickets.GetAge(gvYourReservation.Columns(1).ToString)
@@ -268,13 +277,117 @@ Partial Class _Default
 
             decTwoWeekDiscount = Calculate.CalculateDateDiscount()
 
+            decSubtotal = Calculate.CalculateSubTotalDiscount(intBaseFare, decFirstClassPremium, decAgeDiscount, decTwoWeekDiscount, decInternetDiscount)
+
+            Session.Add("Subtotal", decSubtotal)
+
+            lblCost.Text = "This ticket will cost you $" & decSubtotal.ToString("n2") & "."
 
         End If
+
+        btnPay.Visible = True
+
+
     End Sub
 
     Protected Sub btnPay_Click(sender As Object, e As EventArgs) Handles btnPay.Click
+        Dim strMiles As String
+        Dim intMiles As Integer
+
+        strMiles = DBTickets.GetMileage(gvYourReservation.Columns(1).ToString)
+        intMiles = CInt(strMiles)
 
         'send information to the DB
+        'check if we are paying by money
+        If rblPayment.SelectedIndex = 1 Then
+            'check to see if the customer chose a first class ticket
+            If FirstClassSelected() = False Then
+                'they didn't choose a first class ticket
+                If FirstClassAvailable() = True And intMiles >= 500 Then
+                    lblUpgrade.Visible = True
+                    btnYes.Visible = True
+                    btnNo.Visible = True
+                    'must make sure we put them in a first class seat somehow...
+                    'send payment information to database (miles and moneys)
+                    Session("RunningSubtotal") = CDec(Session("RunningSubtotal")) + CDec(Session("Subtotal"))
+                    Session.Remove("Subtotal")
+                End If
+            Else
+                'do nothing
+            End If
+        Else
+            'they are paying by miles
+            If FirstClassSelected() = True Then
+                'check to see if they have over 2000 miles
+                If intMiles >= 2000 Then
+                    intMiles -= 2000
+                    'send new mileage to the database
+                Else
+                    'not enough miles
+                    lblMessage.Text = "You don't have enough miles to pay for your first class ticket. Try paying with money"
+                    Exit Sub
+                End If
+            Else
+                'first class not selected
+                If intMiles >= 1000 Then
+                    intMiles -= 1000
+                    'send new mileage to the database
+                Else
+                    'not enough miles
+                    lblMessage.Text = "You don't have enough miles to pay for your first class ticket. Please pay with money."
+                    rblPayment.SelectedIndex = 0
+                    rblPayment.Enabled = False
+                    Exit Sub
+                End If
+            End If
+        End If
 
+
+    End Sub
+
+    Public Function FirstClassAvailable() As Boolean
+        Dim Button As Button
+        Dim arlSeats As New ArrayList
+
+        'adding all buttons to the arraylist
+        arlSeats.Add(btn1A)
+        arlSeats.Add(btn1B)
+        arlSeats.Add(btn2A)
+        arlSeats.Add(btn2B)
+
+        For i = 0 To 3
+            Button = CType((arlSeats(i)), Button)
+            If Button.BackColor = Drawing.Color.LightGray Then
+                Return True
+            End If
+        Next
+
+        Return False
+
+    End Function
+
+    Public Function FirstClassSelected() As Boolean
+        Dim Button As Button
+        Dim arlSeats As New ArrayList
+
+        'adding all buttons to the arraylist
+        arlSeats.Add(btn1A)
+        arlSeats.Add(btn1B)
+        arlSeats.Add(btn2A)
+        arlSeats.Add(btn2B)
+
+        For i = 0 To 3
+            Button = CType((arlSeats(i)), Button)
+            If Button.BackColor = Drawing.Color.Green Then
+                Return True
+            End If
+        Next
+
+        Return False
+
+    End Function
+
+    Public Sub GoToNextCustomer()
+        'write some code so that we will select the next customer
     End Sub
 End Class

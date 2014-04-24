@@ -228,7 +228,7 @@ Public Class ClassCalculate
 
 
     'Public Sub for adding up all of the different values
-    Public Sub CalculateSubTotalDiscount(intBaseFare As Integer, decFirstClassPremium As Decimal, decAgeDiscount As Decimal, decTwoWeekDiscount As Decimal, decInternetDiscount As Decimal)
+    Public Function CalculateSubTotalDiscount(intBaseFare As Integer, decFirstClassPremium As Decimal, decAgeDiscount As Decimal, decTwoWeekDiscount As Decimal, decInternetDiscount As Decimal) As Decimal
         'Purpose: Use all of the above subs to get the numbers and get the ticket price with the discounts before Tax
         'Author: Dennis Phelan, Aaryaman
         'Inputs: base fair, first class premium, age discount, two week discount, intenet discount
@@ -244,7 +244,9 @@ Public Class ClassCalculate
         'Put all of the subs in here
         'Add up all of the outputs and have it equal decTentativeFinalPayBeforeTax
 
-    End Sub
+        Return decTentativeFinalPayBeforeTax
+
+    End Function
 
     'Public Sub for calculating the tax
     Public Sub CalculateTax()
