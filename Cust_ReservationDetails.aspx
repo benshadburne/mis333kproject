@@ -30,6 +30,7 @@
         <asp:DropDownList CssClass="dropdown" ID="ddlAdvantageNum" runat="server" AutoPostBack="True"></asp:DropDownList>
 
         </div>
+        <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
         </div>
         <br />
         <br />
@@ -43,7 +44,6 @@
         <br />
          <asp:Label CssClass="h3" ID="Label3" runat="server" Text="Other Tickets:"></asp:Label>
         <asp:GridView class="table" ID="gvOtherReservation" runat="server"></asp:GridView>
-        <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
                 <br />
         <br />
             </asp:Panel>
@@ -102,7 +102,7 @@
             <asp:Label CssClass="label" ID="Label7" runat="server" Text="Rear of Plane" ></asp:Label>
        </div>
       </asp:Panel>
-
+        <div class="pull-left" style="width:100%">
         <asp:Panel CssClass="panel" ID="pnlDates" runat="server" Width="100%" Visible="false">
             
             <h2>Modify Journey Date</h2>
@@ -133,7 +133,7 @@
             </div>
 
         </asp:Panel>
-
+        </div>
         </div>
 </asp:Content>
 

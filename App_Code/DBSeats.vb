@@ -101,6 +101,11 @@ Public Class DBSeats
         MyView.RowFilter = "[JourneyID] = '" & strIn & "'"
     End Sub
 
+    Public Sub FilterJourneyEmpty(ByVal strJourneyID As String)
+
+        MyView.RowFilter = "[JourneyID] = '" & strJourneyID & "' AND [Status] = '0'"
+    End Sub
+
     Public ReadOnly Property lblCount() As Integer
         'Author: Ben Shadburne
         'Purpose: return lblcount
@@ -114,7 +119,7 @@ Public Class DBSeats
         End Get
     End Property
 
-
+    
 
 
 
@@ -172,6 +177,10 @@ Public Class DBSeats
         End Get
     End Property
 
+    Public Sub FilterEmpty()
+        'use count after this filter to show number of empty seats
+        MyViewAdvantage.RowFilter = "[Status] = '0'"
+    End Sub
 
     'Extra Subs
     Public Sub UpdateTicket(strNewSeat As String, strAdvantageNumber As String, strJourneyID As String)

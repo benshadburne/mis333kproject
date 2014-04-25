@@ -4,11 +4,12 @@ Partial Class _Default
 
     Dim DBSeats As New DBSeats
     Dim DBTickets As New DBTickets
+    Dim DBJourneySeats As New DBJourneySeats
     Dim DBFlightSearch As New DBFlightSearch
     Dim AddJourneyClass As New AddJourneyClass
     Dim mAdvantageNumber As Integer
 
-    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load, calFlightDate.SelectionChanged
         Dim strReservationID As String
         Dim strAdvantageNum As String
         strReservationID = CStr(10004)
@@ -56,7 +57,31 @@ Partial Class _Default
         'finally add journeys based on calendar
         AddJourneys()
 
-        lblMessage.Text = mAdvantageNumber.ToString
+        'fill available textbox
+        FillAvailable()
+
+    End Sub
+
+    Public Sub FillAvailable()
+
+        'can't change to an earlier date
+        If calFlightDate.SelectedDate < Now() Then
+            txtAvailable.Text = "Unavailable"
+            Exit Sub
+        End If
+
+        'check how many empty seats there are
+        DBSeats.GetALLSeatsUsingSP()
+        DBSeats.FilterJourneyEmpty(ddlJourneyID.SelectedValue)
+
+        'if number of empty seats is less than number of advantage numbers on reservation then
+        If DBSeats.lblCount < DBTickets.lblCountAdvantage Then
+            'number of empty seats is lower than number of advantage numbers
+            txtAvailable.Text = "Unavailable"
+        Else
+            txtAvailable.Text = "Available"
+        End If
+        lblMessage.Text = DBSeats.lblCount.ToString
     End Sub
 
     Public Sub LoadDDLs()
@@ -283,14 +308,35 @@ Partial Class _Default
 
     Protected Sub btnReservationChange_Click(sender As Object, e As EventArgs) Handles btnReservationChange.Click
 
-        'first we gotta set all existing seats to 0
+        'will only run if textbox says available
+        If txtAvailable.Text <> "Available" Then
+            lblMessage.Text = "Journey is either full or unavailable for selected date"
+            Exit Sub
+        End If
+
+        'first we gotta set all existing seats to 0 and remove their seats from their tickets
         DBSeats.FilterReservationID(Session("ReservationID").ToString)
         For i = 0 To DBSeats.lblCountAdvantage - 1
+            'makes journeyseatbridge value = 0
             DBSeats.UpdateJourneySeatBridge(DBSeats.MyViewAdvantage.Table().Rows(i).Item("Seat").ToString, 0, ddlJourneyID.SelectedValue.ToString)
+            'makes ticket seats blank
+            DBTickets.ModifyTicketSeat(ddlJourneyID.SelectedValue, Session("ReservationID").ToString)
         Next
 
+        'need to find flightnumber for the journeyid selected
+        DBTickets.GetFlightNumber(Session("ReservationID").ToString, ddlJourneyID.SelectedValue)
+
         'next we find the new journeyID and modify the tickets with it
-        'DBFlightSearch.
+        DBJourneySeats.GetJourneyIDUsingSP(DBTickets.MyViewFlight.Table.Rows(0).Item(0).ToString, DBFlightSearch.AlterDate(calFlightDate.SelectedDate.ToShortDateString))
+
+        'run code to update tickets with new journeyID
+        DBTickets.ModifyTicketJourneyID(DBJourneySeats.MyViewSeats.Table().Rows(0).Item("JourneyID").ToString, ddlJourneyID.SelectedValue, Session("ReservationID").ToString)
+
+        'charge them $50, idk?!?!?!??
+
+        'also load ddls so that they represent new journeyID, and fill available so that it responds to new ddls
+        LoadDDLs()
+        FillAvailable()
     End Sub
 
     Public Sub AddJourneys()
@@ -305,4 +351,5 @@ Partial Class _Default
         AddJourneyClass.AddJourney(strDay, strDate)
 
     End Sub
+
 End Class

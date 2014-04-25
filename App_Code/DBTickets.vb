@@ -14,12 +14,14 @@ Public Class DBTickets
     Dim mMyView As New DataView
     Dim mMyViewOthers As New DataView
     Dim mMyViewAdvantageNumbers As New DataView
+    Dim mMyViewFlight As New DataView
     Dim mdbConn As New SqlConnection
     Dim mstrConnection As String = "workstation id=COMPUTER;packet size=4096;data source=MISSQL.mccombs.utexas.edu;integrated security=False;initial catalog=mis333k_20142_Team06;user id=msbcf819;password=Databasepassword5"
     Dim mdbDataAdapter As New SqlDataAdapter
     Dim mdatasetTickets As New DataSet
     Dim mdatasetTicketsOthers As New DataSet
     Dim mdatasetAdvantageNumbers As New DataSet
+    Dim mdatasetFlight As New DataSet
     Dim mQueryString As String
     Dim mMyViewOne As New DataView
     Dim mdatasetOne As New DataSet
@@ -359,6 +361,8 @@ Public Class DBTickets
         MyView.RowFilter = "[ReservationID] = '" & strRes & "' AND [AdvantageNumber] = '" & strAdvantage & "'"
     End Sub
 
+
+
     Public Sub FilterOthers(ByVal strRes As String, strAdvantage As String)
         'Author: Ben Shadburne
         'Purpose: search by state
@@ -382,7 +386,18 @@ Public Class DBTickets
         End Get
     End Property
 
+    Public ReadOnly Property lblCountAdvantage() As Integer
+        'Author: Ben Shadburne
+        'Purpose: return lblcount
+        'Arguments:  none
+        'Return: count of xxxxx
+        'Date: 03/07/2014
 
+        Get
+            'returns the count to the label
+            Return MyViewAdvantageNumbers.Count
+        End Get
+    End Property
 
 
 
@@ -443,6 +458,68 @@ Public Class DBTickets
         End Try
     End Sub
 
+
+    'THIS IS TO MODIFY EXISTING TICKETS WITH NEW JOURNEYID/REMOVE SEAT
+    Public Sub ModifyTicketJourneyID(strNewJourneyID As String, strOldJourneyID As String, strReservationID As String)
+
+        Dim aryParamName As New ArrayList
+        Dim aryParamValue As New ArrayList
+
+        aryParamName.Add("@NewJourneyID")
+        aryParamName.Add("@OldJourneyID")
+        aryParamName.Add("@ReservationID")
+        aryParamValue.Add(strNewJourneyID)
+        aryParamValue.Add(strOldJourneyID)
+        aryParamValue.Add(strReservationID)
+
+        UseSPforInsertOrUpdateQuery("usp_Tickets_Update_JourneyID", aryParamName, aryParamValue)
+
+    End Sub
+
+    Public Sub ModifyTicketSeat(strJourneyID As String, strReservationID As String)
+
+        Dim aryParamName As New ArrayList
+        Dim aryParamValue As New ArrayList
+
+        aryParamName.Add("@JourneyID")
+        aryParamName.Add("@ReservationID")
+        aryParamValue.Add(strJourneyID)
+        aryParamValue.Add(strReservationID)
+
+        UseSPforInsertOrUpdateQuery("usp_Tickets_Update_Seat", aryParamName, aryParamValue)
+
+    End Sub
+
+
+    'this is to retrieve flightnumber
+    Public Sub GetFlightNumber(strReservationID As String, strJourneyID As String)
+
+        Dim aryParamName As New ArrayList
+        Dim aryParamValue As New ArrayList
+
+        aryParamName.Add("@ReservationID")
+        aryParamName.Add("@JourneyID")
+
+        aryParamValue.Add(strReservationID)
+        aryParamValue.Add(strJourneyID)
+
+        UseSP("usp_Tickets_Get_FlightNumber", mdatasetFlight, mMyViewFlight, "tblFlightNumber", aryParamName, aryParamValue)
+
+
+    End Sub
+
+    Public ReadOnly Property MyViewFlight() As DataView
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: xxxxx dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mMyViewFlight
+
+        End Get
+    End Property
 
 End Class
 

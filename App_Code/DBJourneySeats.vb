@@ -18,10 +18,12 @@ Imports System.Data.SqlClient
 Public Class DBJourneySeats
     'setting up db, dim connection, adapter, query, dataset
     Dim mMyViewSeats As New DataView
+    Dim mMyViewJourneyID As New DataView
     Dim mdbConn As New SqlConnection
     Dim mstrConnection As String = "workstation id=COMPUTER;packet size=4096;data source=MISSQL.mccombs.utexas.edu;integrated security=False;initial catalog=mis333k_20142_Team06;user id=msbcf819;password=Databasepassword5"
     Dim mdbDataAdapter As New SqlDataAdapter
     Dim mdatasetJourneySeats As New DataSet
+    Dim mdatasetJourneyID As New DataSet
     Dim mQueryString As String
     Private _session As Integer
 
@@ -84,6 +86,19 @@ Public Class DBJourneySeats
     End Sub
 
 
+
+    Public Sub GetJourneyIDUsingSP(strFlight As String, strDate As String)
+        'this is for just getting journeyID
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+        aryParamNames.Add("@FlightNumber")
+        aryParamNames.Add("@FlightDate")
+        aryParamValues.Add(strFlight)
+        aryParamValues.Add(strDate)
+
+        UseSPToRetrieveRecords("usp_JourneySeats_Get_ID", mdatasetJourneySeats, mMyViewSeats, "tblJourneySeats", aryParamNames, aryParamValues)
+
+    End Sub
 
     Public Sub GetALLJourneySeatsUsingSP()
         'Author: Ben Shadburne
