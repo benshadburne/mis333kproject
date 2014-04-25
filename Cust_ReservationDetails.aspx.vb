@@ -12,11 +12,12 @@ Partial Class _Default
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load, calFlightDate.SelectionChanged
         Dim strReservationID As String
         Dim strAdvantageNum As String
-        strReservationID = CStr(10004)
+        strReservationID = CStr(10001)
         strAdvantageNum = CStr(5000)
 
         Session("Infant") = ""
         Session("InfantID") = ""
+        Session("UserSeat") = ""
         Session("Login") = strAdvantageNum
         Session("ReservationID") = strReservationID
         lblReservationID.Text = strReservationID
@@ -189,7 +190,7 @@ Partial Class _Default
                 button.BackColor = Drawing.Color.Green
                 Session("UserSeat") = DBSeats.MyViewAdvantage.Table().Rows(i).Item("Seat").ToString
                 'if the user is an infant then we make the B into B*
-                If CInt(DBSeats.MyViewAdvantage.Table().Rows(i).Item("Age").ToString) < 3 Then
+                If ConvertInteger(DBSeats.MyViewAdvantage.Table().Rows(i).Item("Age").ToString) < 3 Then
                     Session("Infant") = "Yes"
                     If Len(button.Text) < 4 Then
                         button.Text += "*"
@@ -301,7 +302,7 @@ Partial Class _Default
         Try
             intFill = CInt(strIn)
         Catch ex As Exception
-            Return -1
+            Return 3
         End Try
         Return CInt(strIn)
     End Function
