@@ -12,9 +12,10 @@ Partial Class _Default
         Dim strReservationID As String
         Dim strAdvantageNum As String
 
-        Session("ReservationID") = 10070
+        Session("Login") = 5000
+
         'write some code to pull up the advantage number we need to use to select the seats. 
-        strAdvantageNum = 5001.ToString
+        strAdvantageNum = 5000.ToString
         'check session reservationID if it's empty
 
         If Session("ReservationID") Is Nothing Then

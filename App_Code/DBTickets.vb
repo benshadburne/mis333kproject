@@ -339,6 +339,7 @@ Public Class DBTickets
 
     End Sub
 
+
     Public Sub DoSort(ByVal intIndex As Integer)
         'Author: Ben Shadburne
         'Purpose: sorts data
