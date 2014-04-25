@@ -94,6 +94,19 @@ Public Class DBTickets
         End Get
     End Property
 
+    Public ReadOnly Property MyDataSetOne() As DataSet
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: xxxxx dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mdatasetOne
+
+        End Get
+    End Property
+
     Public Sub RunProcedure(ByVal strName As String)
         'Author: Ben Shadburne
         'Purpose: runs procedure
@@ -298,6 +311,12 @@ Public Class DBTickets
         Return CInt(mdatasetOne.Tables("tblTickets").Rows(0).Item("BaseFareAtPurchase"))
 
     End Function
+
+    Public Sub GetTicketsInReservation(strReservationID As String)
+        'returns all tickets in a reservation
+        RunSPwithOneParam("usp_Tickets_Get_By_Reservation", "@ReservationID", strReservationID)
+
+    End Sub
 
     Public Sub AddTicketPrices(strSPName As String, intPricePaid As Integer, intMileagePaid As Integer, intTicketID As Integer)
         'defines array to put parameter names into

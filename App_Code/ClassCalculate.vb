@@ -105,6 +105,23 @@ Public Class ClassCalculate
     End Function
 
     'Public sub for asking for the age and then applying the discount
+
+    Public Function ConvertToVBDate(strDate As String) As Date
+        Dim strMonth As String
+        Dim strDay As String
+        Dim strYear As String
+        Dim strVBDate As String
+        Dim datDate As Date
+
+        strMonth = strDate.Substring(5, 2)
+        strDay = strDate.Substring(8, 2)
+        strYear = strDate.Substring(0, 4)
+
+        strVBDate = strMonth & "/" & strDay & "/" & strYear
+        datDate = CDate(strVBDate)
+        Return datDate
+    End Function
+
     Public Function CalculateAgeDiscount(intAge As Integer, intBaseFare As Integer) As Decimal
         'Purpose: Apply the age discount if there is one to the base fare _
         '           NOTE: the age will be verified at the Gate check-in so this is the only tentative amount

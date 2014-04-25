@@ -10,12 +10,15 @@ Partial Class _Default
         Dim strReservationID As String
         Dim strAdvantageNum As String
 
+        Session("ReservationID") = 10070
         'write some code to pull up the advantage number we need to use to select the seats. 
-        strAdvantageNum = CInt(5001)
+        strAdvantageNum = 5001.ToString
         'check session reservationID if it's empty
-        strReservationID = Session("ReservationID").ToString
-        If strReservationID = "" Then
+
+        If Session("ReservationID") Is Nothing Then
             Response.Redirect("HomePage.aspx")
+        Else
+            strReservationID = Session("ReservationID").ToString
         End If
 
         'check to see if there is a running price subtotal on the page
@@ -24,6 +27,14 @@ Partial Class _Default
             Session.Add("RunningSubtotal", 0)
         End If
 
+        If IsPostBack = False Then
+            DBTickets.GetTicketsInReservation(strReservationID)
+            Session("TicketCount") = DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
+            If Session("TicketRecord") Is Nothing Then
+                Session("TicketRecord") = 0
+
+            End If
+        End If
         Session("Infant") = ""
         Session("InfantID") = ""
         Session("Login") = strAdvantageNum
@@ -46,10 +57,13 @@ Partial Class _Default
         ddlJourneyID.DataValueField = "JourneyID"
         ddlJourneyID.DataBind()
 
+
+        lblMessage.Text = Calculate.ConvertToVBDate("2014-04-16").ToShortDateString
+
         'bind seats and seats w/advantage numbers
-        BindSeats()
-        'check seats to initialize them
-        CheckSeats()
+        'BindSeats()
+        ''check seats to initialize them
+        'CheckSeats()
 
     End Sub
 
