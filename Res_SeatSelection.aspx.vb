@@ -5,6 +5,8 @@ Partial Class _Default
     Dim DBSeats As New DBSeats
     Dim DBTickets As New DBTickets
     Dim Calculate As New ClassCalculate
+    Dim DBJourney As New DBjourneyclone
+    Dim DBDate As New DBdate
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         Dim strReservationID As String
@@ -263,6 +265,8 @@ Partial Class _Default
         Dim decInternetDiscount As Decimal = 0
         Dim decTwoWeekDiscount As Decimal
         Dim decSubtotal As Decimal
+        Dim datReservation As Date
+        Dim datToday As Date
 
 
         If rblPayment.SelectedValue = "Miles" Then
@@ -279,9 +283,15 @@ Partial Class _Default
             intAge = DBTickets.GetAge(gvYourReservation.Columns(1).ToString)
             intBaseFare = DBTickets.GetBaseFare(gvOtherReservation.Columns(1).ToString)
             decAgeDiscount = Calculate.CalculateAgeDiscount(intAge, intBaseFare)
-            'decFirstClassPremium = Calculate.CalculateFirstClass(intAge, 1 if first class, 0 if not)
+            If FirstClassSelected() = True Then
+                decFirstClassPremium = Calculate.CalculateFirstClass(intBaseFare)
+            End If
 
-            ''use if statement to see if we should apply an internet discount
+
+            datReservation = CDate(DBJourney.GetDateByJourney(gvYourReservation.Columns(3).ToString, gvYourReservation.Columns(0).ToString))
+            datToday = DBDate.GetCurrentDate
+
+            'use if statement to see if we should apply an internet discount
             'If Session("login") = "customer" Then
             '    'internet reservation
             '    decInternetDiscount = Calculate.CalculateInternetPurchaseDiscount(intBaseFare)
@@ -289,7 +299,7 @@ Partial Class _Default
             '    decInternetDiscount = 0
             'End If
 
-            decTwoWeekDiscount = Calculate.CalculateDateDiscount()
+            decTwoWeekDiscount = Calculate.CalculateDateDiscount(intBaseFare, datReservation, datToday)
 
             decSubtotal = Calculate.CalculateSubTotalDiscount(intBaseFare, decFirstClassPremium, decAgeDiscount, decTwoWeekDiscount, decInternetDiscount)
 
@@ -348,7 +358,7 @@ Partial Class _Default
                     'send new mileage to the database
                 Else
                     'not enough miles
-                    lblMessage.Text = "You don't have enough miles to pay for your first class ticket. Please pay with money."
+                    lblMessage.Text = "You don't have enough miles to pay for your economy class ticket. Please pay with money."
                     rblPayment.SelectedIndex = 0
                     rblPayment.Enabled = False
                     Exit Sub

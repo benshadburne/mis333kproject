@@ -149,7 +149,9 @@ Public Class ClassCalculate
     End Function
 
     'Calculate Date
-    Public Function CalculateTimeBeforeFlight(datReservation As Date) As Boolean
+   
+
+    Public Function CalculateTimeBeforeFlight(datReservation As Date, datToday As Date) As Boolean
         'Purpose: Calculates whether or not the time of purchase is two weeks before the flight takes off
         'Author: Dennis Phelan
         'Inputs: datReservation that is the time 
@@ -160,7 +162,7 @@ Public Class ClassCalculate
         ''''''''''''''''''''''''''''ALSO, Need to make sure the format of our date is used'''''''''''''''''''
 
         'Checks to see if the reservation is 14 days out or not
-        If datReservation < Now.AddDays(14) Then
+        If datReservation < datToday.AddDays(14) Then
             Return False
         End If
 
@@ -179,7 +181,7 @@ Public Class ClassCalculate
     End Function
 
     'Calculate the discount related to the date
-    Public Function CalculateDateDiscount() As Decimal
+    Public Function CalculateDateDiscount(intBaseFare As Integer, datReservation As Date, datToday As Date) As Decimal
         'Purpose: Take the value from the CalculateTimeOfFlight to decide if it is 14 days, and then apply the discount if it is 14 days or more
         'Author: Dennis Phelan
         'Inputs: None
@@ -187,12 +189,10 @@ Public Class ClassCalculate
         'Date Created: April 21, 2014
         'Date Last Modified: April 21, 2014
 
-        'First, get the base fare from the flight DB
-        GetBaseFareFromFlightDB(strFlightNumber)
 
         'Check to see if there is a discount or not
-        If CalculateTimeBeforeFlight(datReservation) = True Then
-            decTwoWeeksDiscount = decBaseFare * TIME_TwoWeeksDiscount_Constant
+        If CalculateTimeBeforeFlight(datReservation, datToday) = True Then
+            decTwoWeeksDiscount = intBaseFare * TIME_TwoWeeksDiscount_Constant
         Else
             'If not 14 days or more out, the discount is 0
             decTwoWeeksDiscount = 0
@@ -211,7 +211,7 @@ Public Class ClassCalculate
         'Date Last Modified: April 21, 2014
 
         'Calculate the Internet discount
-        decInternetDiscount = decBaseFare * INTERNET_PurchaseDiscount_Constant
+        decInternetDiscount = intBaseFare * INTERNET_PurchaseDiscount_Constant
 
         'Check to see if the Save button is clicked on the Customer site and see if it is true
         'If true, apply the discount to the BaseFare
@@ -220,7 +220,7 @@ Public Class ClassCalculate
 
     End Function
 
-    Public Function CalculateFirstClass(intBaseFare As Integer, intFirstClass As Integer) As Decimal
+    Public Function CalculateFirstClass(intBaseFare As Integer) As Decimal
         'Purpose: Calculate the premium for flying first class
         'Author: Dennis Phelan
         'Inputs: None
@@ -228,17 +228,11 @@ Public Class ClassCalculate
         'Date Created: April 21, 2014
         'Date Last Created: April 21, 2014
 
-        'Get the base fare
-        GetBaseFareFromFlightDB(strFlightNumber)
 
         'Checking to see if the first class option is selected
-        If intFirstClass = 1 Then
-            decFirstClassPremium = decBaseFare * FIRST_CLASS_Constant
 
-        Else
-            'If not selected, first class premium is 0
-            decFirstClassPremium = 0
-        End If
+        decFirstClassPremium = intBaseFare * FIRST_CLASS_Constant
+
 
         Return decFirstClassPremium
     End Function

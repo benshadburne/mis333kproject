@@ -225,6 +225,25 @@ Public Class DBjourneyclone
         UseSPforInsertOrUpdateQuery(strUSPName, aryParamNames, aryParamValues)
     End Sub
 
+    Public Function GetDateByJourney(strJourneyID As String, strTicketID As String) As String
+        'defines array to put parameter names into
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+
+        'add parameter names to names array list
+        aryParamNames.Add("@JourneyID")
+        aryParamNames.Add("@TicketID")
+
+
+        'add values to parameter values array list
+        aryParamValues.Add(strJourneyID)
+        aryParamValues.Add(strTicketID)
+
+        UseSPToRetrieveRecords("usp_Journeys_Get_Date", mdatasetjourneyclone, mMyView, "tblDate", aryParamNames, aryParamValues)
+
+        Return mdatasetjourneyclone.Tables("tblDate").Rows(0).Item("FlightDate").ToString
+    End Function
+
     Public Sub GetJourneysByDate(ByVal strUSPName As String, ByVal strTableName As String, ByVal strDayOfWeek As String, ByVal datSelectedDate As Date)
 
         'defines array to put parameter names into
@@ -241,7 +260,10 @@ Public Class DBjourneyclone
         aryParamValues.Add(datSelectedDate)
 
         UseSPToRetrieveRecords(strUSPName, MyDataSet, MyView, strTableName, aryParamNames, aryParamValues)
+
     End Sub
+
+
 
     Public Sub CheckWhichJourneysToAdd(FlightsAdded As DataSet, FlightsNeeded As DataSet, datSelectedDate As Date, strDay As String)
         'define counter variables
