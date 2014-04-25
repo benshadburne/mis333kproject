@@ -64,6 +64,8 @@ Partial Class _Default
 
     Public Sub FillAvailable()
 
+        'needs to check which days it is available as well!!!!!
+
         'can't change to an earlier date
         If calFlightDate.SelectedDate < Now() Then
             txtAvailable.Text = "Unavailable"
