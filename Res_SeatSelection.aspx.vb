@@ -1,7 +1,7 @@
 ﻿Option Strict On
 Partial Class _Default
     Inherits System.Web.UI.Page
-
+    'declare databases
     Dim DBSeats As New DBSeats
     Dim DBTickets As New DBTickets
     Dim Calculate As New ClassCalculate
