@@ -72,6 +72,16 @@ Partial Class _Default
             Exit Sub
         End If
 
+        'These are to test whether the flight is available on selected day, will catch as exception if not
+        Try
+            DBTickets.GetFlightNumber(Session("ReservationID").ToString, ddlJourneyID.SelectedValue)
+            DBJourneySeats.GetJourneyIDUsingSP(DBTickets.MyViewFlight.Table.Rows(0).Item(0).ToString, DBFlightSearch.AlterDate(calFlightDate.SelectedDate.ToShortDateString))
+            'if it gets past these, then the journey exists on the selected day
+        Catch ex As Exception
+            txtAvailable.Text = "Unavailable"
+            Exit Sub
+        End Try
+        
         'check how many empty seats there are
         DBSeats.GetALLSeatsUsingSP()
         DBSeats.FilterJourneyEmpty(ddlJourneyID.SelectedValue)
