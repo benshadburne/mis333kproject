@@ -20,7 +20,9 @@ Partial Class _Default
         Session("UserSeat") = ""
         Session("Login") = strAdvantageNum
         Session("ReservationID") = strReservationID
-        lblReservationID.Text = strReservationID
+
+
+
         'check customer login
 
         ''check session reservationID if it's empty
@@ -34,6 +36,10 @@ Partial Class _Default
         'If strAdvantageNum = "" then
         '   Response.Redirect("HomePage.aspx")
         'End If
+
+        If IsPostBack = False Then
+            Session("ActiveUser") = Session("Login").ToString
+        End If
 
         'next, need to load all tickets dataset
         LoadTickets()
@@ -108,15 +114,14 @@ Partial Class _Default
         ddlAdvantageNum.DataSource = DBTickets.MyViewAdvantageNumbers
         ddlAdvantageNum.DataValueField = "AdvantageNumber"
         ddlAdvantageNum.DataBind()
-        
 
     End Sub
 
     Public Sub LoadTickets()
         DBTickets.GetALLTicketsUsingSP()
         DBTickets.GetALLOthersTicketsUsingSP()
-        DBTickets.FilterYou(Session("ReservationID").ToString, Session("Login").ToString)
-        DBTickets.FilterOthers(Session("ReservationID").ToString, Session("Login").ToString)
+        DBTickets.FilterYou(Session("ReservationID").ToString, Session("ActiveUser").ToString)
+        DBTickets.FilterOthers(Session("ReservationID").ToString, Session("ActiveUser").ToString)
 
 
     End Sub
@@ -365,4 +370,10 @@ Partial Class _Default
 
     End Sub
 
+    Protected Sub ddlAdvantageNum_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlAdvantageNum.SelectedIndexChanged
+
+        Session("ActiveUser") = ddlAdvantageNum.SelectedValue
+        LoadTickets()
+        SortandBind()
+    End Sub
 End Class

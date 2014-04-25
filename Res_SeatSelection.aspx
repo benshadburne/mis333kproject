@@ -23,17 +23,28 @@
         <asp:GridView class="table" ID="gvOtherReservation" runat="server"></asp:GridView>
         <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
    <br />
+        <div style="width:100%">
+        <div class="pull-left">
         <asp:Label CssClass="label" ID="Label5" runat="server" Text="Choose the JourneyID:"></asp:Label>
         <br />
-        <asp:DropDownList CssClass="dropdown" ID="ddlJourneyID" runat="server"></asp:DropDownList>
+        <asp:DropDownList CssClass="dropdown" ID="ddlJourneyID" runat="server" AutoPostBack="True"></asp:DropDownList>
+        </div>
+                  
+        <div class="pull-left" style="word-spacing: 0px" >
+             <asp:Label CssClass="label" ID="Label9" runat="server" Text="Choose the Advantage Number:"></asp:Label>
         <br />
+        <asp:DropDownList CssClass="dropdown" ID="ddlAdvantageNum" runat="server" AutoPostBack="True"></asp:DropDownList>
+
+        
+            </div>
+        </div>
         <br />
         <div class="center-block" style="text-align:center ">
          
             <asp:Label CssClass="label" ID="Label6" runat="server" Text="Front of Plane" ></asp:Label>
      </div>
       
-        <div class="pull-left" style="text-align:right">
+        <div class="pull-left" style="text-align:right; width: 200px">
                
                  
               <asp:Button ID="btnCalculate" runat="server" Text="Calculate Cost" />
@@ -73,7 +84,7 @@
                  
               </div> 
         
-         <div class="pull-left" style="text-align:center">
+         <div class="pull-left" style="text-align:center; width: 225px">
                 <asp:Button class="btn-seat" ID="btn1A" runat="server" Text="1A" />
               <br />
               <asp:Button class="btn-seat" ID="btn2A" runat="server" Text="2A" />
@@ -91,7 +102,7 @@
               </div>
 
 
-      <div class="pull-left" style="text-align: center">
+      <div class="pull-left" style="text-align: center; width: 225px">
                      
               <asp:Button class="btn-seat" ID="btn1B" runat="server" Text="1B" />
               <br />

@@ -22,7 +22,7 @@
              <div class="pull-left"  style="word-spacing: 0px">
         <asp:Label CssClass="label" ID="Label5" runat="server" Text="Choose the JourneyID:"></asp:Label>
         <br />
-        <asp:DropDownList CssClass="dropdown" ID="ddlJourneyID" runat="server"></asp:DropDownList>
+        <asp:DropDownList CssClass="dropdown" ID="ddlJourneyID" runat="server" AutoPostBack="True"></asp:DropDownList>
             </div>
         <div class="pull-left" style="word-spacing: 0px" >
              <asp:Label CssClass="label" ID="Label8" runat="server" Text="Choose the Advantage Number:"></asp:Label>

@@ -9,21 +9,17 @@ Partial Class _Default
     Dim DBDate As New DBdate
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Dim strReservationID As String
-        Dim strAdvantageNum As String
 
         Session("Login") = 5000
         Session("UserSeat") = ""
-
+        Session("ReservationID") = 10001
         'write some code to pull up the advantage number we need to use to select the seats. 
-        strAdvantageNum = 5000.ToString
+
         'check session reservationID if it's empty
 
-        If Session("ReservationID") Is Nothing Then
-            Response.Redirect("HomePage.aspx")
-        Else
-            strReservationID = Session("ReservationID").ToString
-        End If
+        'If Session("ReservationID") Is Nothing Then
+        '    Response.Redirect("HomePage.aspx")
+        'End If
 
         'check to see if there is a running price subtotal on the page
         If Session("RunningSubtotal") Is Nothing Then
@@ -32,7 +28,8 @@ Partial Class _Default
         End If
 
         If IsPostBack = False Then
-            DBTickets.GetTicketsInReservation(strReservationID)
+            Session("ActiveUser") = Session("Login").ToString
+            DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
             Session("TicketCount") = DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
             If Session("TicketRecord") Is Nothing Then
                 Session("TicketRecord") = 0
@@ -41,8 +38,7 @@ Partial Class _Default
         End If
         Session("Infant") = ""
         Session("InfantID") = ""
-        Session("Login") = strAdvantageNum
-        lblReservationID.Text = strReservationID
+        
         'check customer login
 
         ''check session login if it's empty 
@@ -51,31 +47,45 @@ Partial Class _Default
         '   Response.Redirect("HomePage.aspx")
         'End If
 
-        'next, need to load all tickets dataset
         LoadTickets()
 
         SortandBind()
 
+        'next, need to load all tickets dataset
+        If IsPostBack = False Then
+            'load ddls and calendar date first time
+            LoadDDLs()
+
+        End If
+
+        'bind seats and seats w/advantage numbers
+        BindSeats()
+        'check seats to initialize them
+        CheckSeats()
+
+
+        'lblMessage.Text = Calculate.ConvertToVBDate("2014-04-16").ToShortDateString
+    End Sub
+
+    Public Sub LoadDDLs()
         'bind ddl for journeys
         ddlJourneyID.DataSource = DBTickets.MyView
         ddlJourneyID.DataValueField = "JourneyID"
         ddlJourneyID.DataBind()
 
-
-        lblMessage.Text = Calculate.ConvertToVBDate("2014-04-16").ToShortDateString
-
-        'bind seats and seats w/advantage numbers
-        'BindSeats()
-        ''check seats to initialize them
-        'CheckSeats()
+        DBTickets.GetAdvantageNumbersUsingSP(ddlJourneyID.SelectedValue, Session("ReservationID").ToString)
+        'bind ddl for advantage numbers
+        ddlAdvantageNum.DataSource = DBTickets.MyViewAdvantageNumbers
+        ddlAdvantageNum.DataValueField = "AdvantageNumber"
+        ddlAdvantageNum.DataBind()
 
     End Sub
 
     Public Sub LoadTickets()
         DBTickets.GetALLTicketsUsingSP()
         DBTickets.GetALLOthersTicketsUsingSP()
-        DBTickets.FilterYou(Session("ReservationID").ToString, Session("Login").ToString)
-        DBTickets.FilterOthers(Session("ReservationID").ToString, Session("Login").ToString)
+        DBTickets.FilterYou(Session("ReservationID").ToString, Session("ActiveUser").ToString)
+        DBTickets.FilterOthers(Session("ReservationID").ToString, Session("ActiveUser").ToString)
 
     End Sub
 
@@ -109,6 +119,13 @@ Partial Class _Default
         arlSeats.Add(btn5C)
         arlSeats.Add(btn5D)
 
+        'first we should revert all the colors to lightgray so the tests work, and text to normal seat texts
+        For i = 0 To 15
+            button = CType(arlSeats(i), Button)
+            button.BackColor = Drawing.Color.LightGray
+            button.Text = button.Text.Substring(0, 2)
+        Next
+
 
         'basically it does a test in each step
         For i = 0 To DBSeats.lblCountAdvantage - 1
@@ -137,11 +154,11 @@ Partial Class _Default
             If CInt(DBSeats.MyViewAdvantage.Table().Rows(i).Item("Status")) = 0 Then
                 button.BackColor = Drawing.Color.LightGray
                 'second test checks if the advantage dataset advantage number (should be user's advantage number)
-            ElseIf ConvertInteger(DBSeats.MyViewAdvantage.Table().Rows(i).Item("AdvantageNumber").ToString) = CInt(Session("Login")) Then
+            ElseIf ConvertInteger(DBSeats.MyViewAdvantage.Table().Rows(i).Item("AdvantageNumber").ToString) = CInt(ddlAdvantageNum.SelectedValue) Then
                 button.BackColor = Drawing.Color.Green
                 Session("UserSeat") = DBSeats.MyViewAdvantage.Table().Rows(i).Item("Seat").ToString
                 'if the user is an infant then we make the B into B*
-                If CInt(DBSeats.MyViewAdvantage.Table().Rows(i).Item("Age").ToString) < 3 Then
+                If ConvertInteger(DBSeats.MyViewAdvantage.Table().Rows(i).Item("Age").ToString) < 3 Then
                     Session("Infant") = "Yes"
                     If Len(button.Text) < 4 Then
                         button.Text += "*"
@@ -204,7 +221,7 @@ Partial Class _Default
 
         If button.BackColor = Drawing.Color.Blue And Session("Infant").ToString = "Yes" Then
             'this is a loggin in infant, change in the database
-            DBSeats.BluePress(Session("UserSeat").ToString, strNewSeat, Session("Login").ToString, ddlJourneyID.SelectedValue)
+            DBSeats.BluePress(Session("UserSeat").ToString, strNewSeat, ddlAdvantageNum.SelectedValue.ToString, ddlJourneyID.SelectedValue)
             ResetAll()
             'gotta change previous seat to blue
 
@@ -228,10 +245,10 @@ Partial Class _Default
             'gotta check if there's a baby
             If Session("InfantID").ToString <> "" Then
                 'person has a baby in their lap, run database changes for that
-                DBSeats.GreyPressBaby(Session("UserSeat").ToString, strNewSeat, Session("Login").ToString, ddlJourneyID.SelectedValue, Session("InfantID").ToString)
+                DBSeats.GreyPressBaby(Session("UserSeat").ToString, strNewSeat, ddlAdvantageNum.SelectedValue.ToString, ddlJourneyID.SelectedValue, Session("InfantID").ToString)
             Else
                 'person doesn't have baby
-                DBSeats.GreyPress(Session("UserSeat").ToString, strNewSeat, Session("Login").ToString, ddlJourneyID.SelectedValue)
+                DBSeats.GreyPress(Session("UserSeat").ToString, strNewSeat, ddlAdvantageNum.SelectedValue.ToString, ddlJourneyID.SelectedValue)
             End If
 
         End If
@@ -253,7 +270,7 @@ Partial Class _Default
         Try
             intFill = CInt(strIn)
         Catch ex As Exception
-            Return -1
+            Return 3
         End Try
         Return CInt(strIn)
     End Function
@@ -415,5 +432,12 @@ Partial Class _Default
 
     Public Sub GoToNextCustomer()
         'write some code so that we will select the next customer
+    End Sub
+
+    Protected Sub ddlAdvantageNum_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlAdvantageNum.SelectedIndexChanged
+
+        Session("ActiveUser") = ddlAdvantageNum.SelectedValue
+        LoadTickets()
+        SortandBind()
     End Sub
 End Class
