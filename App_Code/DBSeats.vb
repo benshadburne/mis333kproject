@@ -25,6 +25,7 @@ Public Class DBSeats
     Dim mdatasetSeats As New DataSet
     Dim mdatasetSeatsAdvantage As New DataSet
 
+
     Public Sub GetALLSeatsUsingSP()
         'Author: Ben Shadburne
         'Purpose: runs xxxxx procedure
@@ -139,6 +140,10 @@ Public Class DBSeats
 
         UseSPToRetrieveRecords("usp_SeatAdvantage_Get_All", mdatasetSeatsAdvantage, mMyViewAdvantage, "tblSeatsAdvantage", aryParamName, aryParamValue)
 
+    End Sub
+
+    Public Sub FilterReservationID(strReservationID As String)
+        MyViewAdvantage.RowFilter = "[ReservationID] = '" & strReservationID & "'"
     End Sub
 
     'define a public read only property
@@ -327,6 +332,10 @@ Public Class DBSeats
         End Try
     End Sub
 
+    Public Sub RemoveSeats(strJourneyID As String, strSeat As String)
 
+
+
+    End Sub
 End Class
 

@@ -5,6 +5,7 @@ Partial Class _Default
     Dim DBSeats As New DBSeats
     Dim DBTickets As New DBTickets
     Dim DBFlightSearch As New DBFlightSearch
+    Dim AddJourneyClass As New AddJourneyClass
     Dim mAdvantageNumber As Integer
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -38,7 +39,10 @@ Partial Class _Default
         SortandBind()
 
         If IsPostBack = False Then
+            'load ddls and calendar date first time
             LoadDDLs()
+            calFlightDate.SelectedDate = Now()
+
         End If
 
 
@@ -49,7 +53,9 @@ Partial Class _Default
         'check seats to initialize them
         CheckSeats()
 
-        calFlightDate.SelectedDate = Now()
+        'finally add journeys based on calendar
+        AddJourneys()
+
         lblMessage.Text = mAdvantageNumber.ToString
     End Sub
 
@@ -273,5 +279,30 @@ Partial Class _Default
 
     Protected Sub btnHideDates_Click(sender As Object, e As EventArgs) Handles btnHideDates.Click
         pnlDates.Visible = Not pnlDates.Visible
+    End Sub
+
+    Protected Sub btnReservationChange_Click(sender As Object, e As EventArgs) Handles btnReservationChange.Click
+
+        'first we gotta set all existing seats to 0
+        DBSeats.FilterReservationID(Session("ReservationID").ToString)
+        For i = 0 To DBSeats.lblCountAdvantage - 1
+            DBSeats.UpdateJourneySeatBridge(DBSeats.MyViewAdvantage.Table().Rows(i).Item("Seat").ToString, 0, ddlJourneyID.SelectedValue.ToString)
+        Next
+
+        'next we find the new journeyID and modify the tickets with it
+        'DBFlightSearch.
+    End Sub
+
+    Public Sub AddJourneys()
+        Dim strDay As String
+        Dim strDate As String
+        'put the name of the day of the week into strDay
+        strDay = WeekdayName(Weekday(calFlightDate.SelectedDate))
+
+        strDate = (DBFlightSearch.AlterDate(calFlightDate.SelectedDate.ToShortDateString))
+
+        'adds flights to the date, ensures we have flights to show
+        AddJourneyClass.AddJourney(strDay, strDate)
+
     End Sub
 End Class

@@ -129,7 +129,7 @@
                 <asp:Label CssClass="label" ID="Label4" runat="server" Text="(Making a change will require you to pick new seats and pay a $50 fee)" ForeColor="Gray" Font-Size="XX-Small"></asp:Label>
                 <br />
                 <br />
-                <asp:Button CssClass="btn" ID="Button1" runat="server" Text="Make Reservation Change" />
+                <asp:Button CssClass="btn" ID="btnReservationChange" runat="server" Text="Make Reservation Change" />
             </div>
 
         </asp:Panel>
