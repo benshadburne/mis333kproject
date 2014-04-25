@@ -1,11 +1,10 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="Res_SeatSelection.aspx.vb" Inherits="_Default" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="Res_Pay.aspx.vb" Inherits="Res_Pay" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-
-    
-    <br />
+      
+<br />
     <br />
 
     <div class="center-block">
@@ -84,7 +83,7 @@
                  
               </div> 
 
-        
+        <asp:Panel runat="server" ID="pnlSeats" Visible ="false">
         
          <div class="pull-left" style="text-align:center; width: 225px">
                 <asp:Button class="btn-seat" ID="btn1A" runat="server" Text="1A" />
@@ -121,6 +120,8 @@
                 <br />
           </div>
 
+            </asp:Panel>
+
            
         </div>
        <div />
@@ -139,7 +140,5 @@
          <li><a href="Cust_ModifyReservation.aspx">Modify Reservation</a></li>
             </ul> 
             </div>
-               
-
 </asp:Content>
 

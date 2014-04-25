@@ -1,4 +1,5 @@
-﻿Option Strict On
+﻿
+Option Strict On
 Partial Class _Default
     Inherits System.Web.UI.Page
     'declare databases
@@ -38,7 +39,7 @@ Partial Class _Default
         End If
         Session("Infant") = ""
         Session("InfantID") = ""
-        
+
         'check customer login
 
         ''check session login if it's empty 
@@ -203,9 +204,7 @@ Partial Class _Default
 
     'every time a button is clicked this happens 
     Protected Sub btn1A_Click(sender As Object, e As EventArgs) Handles btn1A.Click, btn1B.Click, _
-        btn2A.Click, btn2B.Click, btn3A.Click, btn3B.Click, btn3C.Click, btn3D.Click, btn4A.Click, btn4B.Click, _
-        btn4C.Click, btn4D.Click, btn5A.Click, btn5B.Click, btn5C.Click, btn5D.Click
-
+        btn2A.Click, btn2B.Click
 
         lblMessage.Text = ""
 
