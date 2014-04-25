@@ -13,6 +13,7 @@ Partial Class _Default
         Dim strAdvantageNum As String
 
         Session("Login") = 5000
+        Session("UserSeat") = ""
 
         'write some code to pull up the advantage number we need to use to select the seats. 
         strAdvantageNum = 5000.ToString

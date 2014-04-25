@@ -137,7 +137,7 @@ Partial Class Res_SelectCustomer
             strBaseFare = DBFlight.MyDataSet.Tables("tblFlightsClone").Rows(0).Item("BaseFare")
 
             'add the ticket
-            DBTicket.AddTicket(Session("ReservationID").ToString, strAdvantageNumber, strJourneyID, strFlightNumber, strBaseFare)
+            DBTicket.AddTicket(Session("ReservationID").ToString, strAdvantageNumber, strJourneyID, strFlightNumber, strBaseFare, intAge.ToString)
 
         Next
 

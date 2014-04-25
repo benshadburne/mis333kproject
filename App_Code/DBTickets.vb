@@ -246,7 +246,7 @@ Public Class DBTickets
         End Try
     End Sub
 
-    Public Sub AddTicket(strReservationID As String, strAdvantageNumber As String, strJourneyID As String, strFlightNumber As String, strBaseFare As String)
+    Public Sub AddTicket(strReservationID As String, strAdvantageNumber As String, strJourneyID As String, strFlightNumber As String, strBaseFare As String, strAge As String)
         'defines array to put parameter names into
         Dim aryParamNames As New ArrayList
         Dim aryParamValues As New ArrayList
@@ -257,6 +257,7 @@ Public Class DBTickets
         aryParamNames.Add("@JourneyID")
         aryParamNames.Add("@FlightNumber")
         aryParamNames.Add("@BaseFare")
+        aryParamNames.Add("@Age")
 
 
         'add values to parameter values array list
@@ -265,6 +266,7 @@ Public Class DBTickets
         aryParamValues.Add(strJourneyID)
         aryParamValues.Add(strFlightNumber)
         aryParamValues.Add(strBaseFare)
+        aryParamValues.Add(strAge)
 
         UseSPforInsertOrUpdateQuery("usp_Ticketclone_Add_New", aryParamNames, aryParamValues)
     End Sub
