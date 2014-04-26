@@ -27,7 +27,11 @@ Partial Class Res_Pay
         End If
 
         If IsPostBack = False Then
+            DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
             Session("TicketCount") = DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
+            LoadDDLs()
+            ddlJourneyID.SelectedIndex = 0
+            ddlAdvantageNum.SelectedIndex = 0
             If Session("TicketRecord") Is Nothing Then
                 Session("TicketRecord") = 0
 
@@ -35,6 +39,8 @@ Partial Class Res_Pay
         End If
         Session("Infant") = ""
         Session("InfantID") = ""
+
+        Session("ActiveUser") = ddlAdvantageNum.SelectedValue
 
         'check customer login
 
@@ -46,15 +52,7 @@ Partial Class Res_Pay
 
 
         'next, need to load all tickets dataset
-            'load ddls and calendar date first time
-        If IsPostBack = False Then
-            DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
-            LoadDDLs()
-            ddlJourneyID.SelectedIndex = 0
-            ddlAdvantageNum.SelectedIndex = 0
-            Session("ActiveUser") = ddlAdvantageNum.SelectedValue
-        End If
-
+        'load ddls and calendar date first time
 
         LoadTickets()
 
@@ -86,8 +84,8 @@ Partial Class Res_Pay
     Public Sub LoadTickets()
         DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
         DBTickets.GetTicketsInReservationOthers(Session("ReservationID").ToString)
-        DBTickets.FilterYou(ddlJourneyID.SelectedValue, Session("ActiveUser").ToString)
-        DBTickets.FilterOthers(ddlJourneyID.SelectedValue, Session("ActiveUser").ToString)
+        DBTickets.FilterToGetUniqueTicket(ddlJourneyID.SelectedValue, Session("ActiveUser").ToString)
+        DBTickets.FilterToGetOtherTickets(ddlJourneyID.SelectedValue, Session("ActiveUser").ToString)
 
     End Sub
 
@@ -191,10 +189,10 @@ Partial Class Res_Pay
         'DBTickets.DoSort()
 
         ''bind all data
-        gvYourReservation.DataSource = DBTickets.MyDataSet
+        gvYourReservation.DataSource = DBTickets.MyView
         gvYourReservation.DataBind()
-        gvOtherReservation.DataSource = DBTickets.MyDataSetOthers
-        gvOtherReservation.DataBind()
+        'gvOtherReservation.DataSource = DBTickets.MyViewOthers
+        'gvOtherReservation.DataBind()
 
     End Sub
 

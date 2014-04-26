@@ -435,7 +435,7 @@ Public Class DBTickets
     End Sub
 
     Public Sub FilterToGetOtherTickets(strJourneyID As String, strAdvantageNumber As String)
-        MyViewOthers.RowFilter = "[JourneyID] <> '" & strJourneyID & "' OR [AdvantageNumber] <> '" & strAdvantageNumber & "'"
+        MyViewOthers.RowFilter = "[JourneyID] NOT IN ( '" & strJourneyID & "') OR [AdvantageNumber] NOT IN ('" & strAdvantageNumber & "')"
     End Sub
 
     Public ReadOnly Property lblCount() As Integer
