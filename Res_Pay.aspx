@@ -16,10 +16,16 @@
         <br />
         <br />
         <asp:Label CssClass="h3" ID="Label2" runat="server" Text="Your Tickets:"></asp:Label>
-        <asp:GridView class="table" ID="gvYourReservation" runat="server"></asp:GridView>
+        <asp:GridView class="table" ID="gvYourReservation" runat="server" Visible="false"></asp:GridView>
+        <asp:GridView class="table" ID="gvTickets" runat="server" Visible="False">
+            <Columns>
+                <asp:CommandField ShowSelectButton="True" />
+            </Columns>
+        </asp:GridView>
+        
         <br />
          <asp:Label CssClass="h3" ID="Label3" runat="server" Text="Other Tickets:"></asp:Label>
-        <asp:GridView class="table" ID="gvOtherReservation" runat="server"></asp:GridView>
+        <asp:GridView class="table" ID="gvOtherReservation" runat="server" Visible="false"></asp:GridView>
         <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
    <br />
         <div style="width:100%">

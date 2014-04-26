@@ -82,10 +82,12 @@ Partial Class Res_Pay
     End Sub
 
     Public Sub LoadTickets()
+        DBTickets.GetALLTicketsUsingSP()
+        DBTickets.GetALLOthersTicketsUsingSP()
+        DBTickets.FilterYou(Session("ReservationID").ToString, Session("ActiveUser").ToString)
+        DBTickets.FilterOthers(Session("ReservationID").ToString, Session("ActiveUser").ToString)
         DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
-        DBTickets.GetTicketsInReservationOthers(Session("ReservationID").ToString)
-        DBTickets.FilterToGetUniqueTicket(ddlJourneyID.SelectedValue, Session("ActiveUser").ToString)
-        DBTickets.FilterToGetOtherTickets(ddlJourneyID.SelectedValue, Session("ActiveUser").ToString)
+
 
     End Sub
 
@@ -191,8 +193,10 @@ Partial Class Res_Pay
         ''bind all data
         gvYourReservation.DataSource = DBTickets.MyView
         gvYourReservation.DataBind()
-        'gvOtherReservation.DataSource = DBTickets.MyViewOthers
-        'gvOtherReservation.DataBind()
+        gvOtherReservation.DataSource = DBTickets.MyViewOthers
+        gvOtherReservation.DataBind()
+        gvTickets.DataSource = DBTickets.MyViewOne
+        gvTickets.DataBind()
 
     End Sub
 

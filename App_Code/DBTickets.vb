@@ -109,6 +109,20 @@ Public Class DBTickets
         End Get
     End Property
 
+    Public ReadOnly Property MyViewOne() As DataView
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: xxxxx dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mMyViewOne
+
+        End Get
+    End Property
+
+
     Public ReadOnly Property MyDataSetOthers() As DataSet
         'Author: Ben Shadburne
         'Purpose: returns read only dataview

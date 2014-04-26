@@ -29,9 +29,6 @@ Partial Class _Default
                 Session("TicketRecord") = 0
 
             End If
-        Else
-            Session("ActiveUser") = ddlAdvantageNum.SelectedValue
-            Session("ReservationID") = 10004
         End If
         Session("Infant") = ""
         Session("InfantID") = ""
