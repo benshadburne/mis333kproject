@@ -21,17 +21,11 @@ Partial Class Res_Pay
         'End If
 
         'check to see if there is a running price subtotal on the page
-        If Session("RunningSubtotal") Is Nothing Then
-            'there isn't a running price subtotal, create one
-            Session.Add("RunningSubtotal", 0)
-        End If
 
         If IsPostBack = False Then
+            Session("ActiveUser") = Session("Login").ToString
             DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
             Session("TicketCount") = DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
-            LoadDDLs()
-            ddlJourneyID.SelectedIndex = 0
-            ddlAdvantageNum.SelectedIndex = 0
             If Session("TicketRecord") Is Nothing Then
                 Session("TicketRecord") = 0
 
@@ -39,8 +33,6 @@ Partial Class Res_Pay
         End If
         Session("Infant") = ""
         Session("InfantID") = ""
-
-        Session("ActiveUser") = ddlAdvantageNum.SelectedValue
 
         'check customer login
 
@@ -50,21 +42,20 @@ Partial Class Res_Pay
         '   Response.Redirect("HomePage.aspx")
         'End If
 
-
-        'next, need to load all tickets dataset
-        'load ddls and calendar date first time
-
         LoadTickets()
 
         SortandBind()
+
+        'next, need to load all tickets dataset
+        If IsPostBack = False Then
+            'load ddls and calendar date first time
+            LoadDDLs()
+        End If
 
         'bind seats and seats w/advantage numbers
         BindSeats()
         'check seats to initialize them
         CheckSeats()
-
-
-        'lblMessage.Text = Calculate.ConvertToVBDate("2014-04-16").ToShortDateString
     End Sub
 
     Public Sub LoadDDLs()
@@ -84,7 +75,7 @@ Partial Class Res_Pay
     Public Sub LoadTickets()
         DBTickets.GetALLTicketsUsingSP()
         DBTickets.GetALLOthersTicketsUsingSP()
-        DBTickets.FilterYou(Session("ReservationID").ToString, Session("ActiveUser").ToString)
+        DBTickets.FilterYou(Session("ReservationID").ToString, (Session("ActiveUser").ToString))
         DBTickets.FilterOthers(Session("ReservationID").ToString, Session("ActiveUser").ToString)
         DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
 
@@ -446,5 +437,9 @@ Partial Class Res_Pay
 
     Protected Sub btnCalculate_Click(sender As Object, e As EventArgs) Handles btnCalculate.Click
         rblPayment.Visible = True
+    End Sub
+
+    Protected Sub gvTickets_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvTickets.SelectedIndexChanged
+        btnCalculate.Visible = True
     End Sub
 End Class

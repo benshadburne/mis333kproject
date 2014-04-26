@@ -183,7 +183,7 @@ Public Class DBTickets
             mdbDataAdapter.Fill(mdatasetOne, "tblTickets")
 
             ' copy dataset to dataview
-            mMyView.Table = mdatasetOne.Tables("tblTickets")
+            mMyViewOne.Table = mdatasetOne.Tables("tblTickets")
 
         Catch ex As Exception
             Throw New Exception("params are " & strSPName.ToString & " " & strParamName.ToString & " " & strParamValue.ToString & " error is " & ex.Message)
@@ -422,7 +422,7 @@ Public Class DBTickets
         'Author: Ben Shadburne
         'Purpose: search by state
         'Arguments: search text
-        'Return: filtered dataview by state
+        'Return: filtered dataview 
         'Date: 03/18/2014
 
         MyView.RowFilter = "[ReservationID] = '" & strRes & "' AND [AdvantageNumber] = '" & strAdvantage & "'"

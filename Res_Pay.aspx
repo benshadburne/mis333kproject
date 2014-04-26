@@ -17,7 +17,7 @@
         <br />
         <asp:Label CssClass="h3" ID="Label2" runat="server" Text="Your Tickets:"></asp:Label>
         <asp:GridView class="table" ID="gvYourReservation" runat="server" Visible="false"></asp:GridView>
-        <asp:GridView class="table" ID="gvTickets" runat="server" Visible="False">
+        <asp:GridView class="table" ID="gvTickets" runat="server">
             <Columns>
                 <asp:CommandField ShowSelectButton="True" />
             </Columns>
@@ -52,7 +52,7 @@
         <div class="pull-left" style="text-align:right; width: 200px">
                
                  
-              <asp:Button ID="btnCalculate" runat="server" Text="Calculate Cost" />
+              <asp:Button ID="btnCalculate" runat="server" Text="Calculate Cost" Visible="false"/>
               <br />
               <asp:Label ID="Label8" runat="server" Text="Pay with:"></asp:Label>
             <br />
