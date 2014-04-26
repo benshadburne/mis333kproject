@@ -153,6 +153,7 @@ Partial Class Res_SelectCustomer
             Session.Remove("Adults")
             Session.Remove("Children")
             Session.Remove("Babies")
+            Session.Add("Login", strAdvantageNumber)
             Response.Redirect("Res_SeatSelection.aspx")
         End If
 

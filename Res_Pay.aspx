@@ -50,7 +50,7 @@
               <br />
               <asp:Label ID="Label8" runat="server" Text="Pay with:"></asp:Label>
             <br />
-              <asp:RadioButtonList ID="rblPayment" runat="server" AutoPostBack="True">
+              <asp:RadioButtonList ID="rblPayment" runat="server" AutoPostBack="True" Visible="false">
                   <asp:ListItem>Miles</asp:ListItem>
                   <asp:ListItem>Money</asp:ListItem>
               </asp:RadioButtonList>
@@ -63,7 +63,7 @@
               <br />
                            
                  
-              <asp:Button ID="btnPay" runat="server" Text="Pay" />
+              <asp:Button ID="btnPay" runat="server" Text="Pay" Visible="false"/>
               
               <br />
             <br />

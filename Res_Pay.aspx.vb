@@ -1,6 +1,6 @@
 ﻿
 Option Strict On
-Partial Class _Default
+Partial Class Res_Pay
     Inherits System.Web.UI.Page
     'declare databases
     Dim DBSeats As New DBSeats
@@ -11,9 +11,7 @@ Partial Class _Default
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        Session("Login") = 5000
         Session("UserSeat") = ""
-        Session("ReservationID") = 10001
         'write some code to pull up the advantage number we need to use to select the seats. 
 
         'check session reservationID if it's empty
@@ -29,8 +27,6 @@ Partial Class _Default
         End If
 
         If IsPostBack = False Then
-            Session("ActiveUser") = Session("Login").ToString
-            DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
             Session("TicketCount") = DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
             If Session("TicketRecord") Is Nothing Then
                 Session("TicketRecord") = 0
@@ -48,16 +44,21 @@ Partial Class _Default
         '   Response.Redirect("HomePage.aspx")
         'End If
 
+
+        'next, need to load all tickets dataset
+            'load ddls and calendar date first time
+        If IsPostBack = False Then
+            DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
+            LoadDDLs()
+            ddlJourneyID.SelectedIndex = 0
+            ddlAdvantageNum.SelectedIndex = 0
+            Session("ActiveUser") = ddlAdvantageNum.SelectedValue
+        End If
+
+
         LoadTickets()
 
         SortandBind()
-
-        'next, need to load all tickets dataset
-        If IsPostBack = False Then
-            'load ddls and calendar date first time
-            LoadDDLs()
-
-        End If
 
         'bind seats and seats w/advantage numbers
         BindSeats()
@@ -83,10 +84,10 @@ Partial Class _Default
     End Sub
 
     Public Sub LoadTickets()
-        DBTickets.GetALLTicketsUsingSP()
-        DBTickets.GetALLOthersTicketsUsingSP()
-        DBTickets.FilterYou(Session("ReservationID").ToString, Session("ActiveUser").ToString)
-        DBTickets.FilterOthers(Session("ReservationID").ToString, Session("ActiveUser").ToString)
+        DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
+        DBTickets.GetTicketsInReservationOthers(Session("ReservationID").ToString)
+        DBTickets.FilterYou(ddlJourneyID.SelectedValue, Session("ActiveUser").ToString)
+        DBTickets.FilterOthers(ddlJourneyID.SelectedValue, Session("ActiveUser").ToString)
 
     End Sub
 
@@ -175,7 +176,6 @@ Partial Class _Default
                 button.BackColor = Drawing.Color.Blue
             End If
 
-
         Next
 
     End Sub
@@ -191,9 +191,9 @@ Partial Class _Default
         'DBTickets.DoSort()
 
         ''bind all data
-        gvYourReservation.DataSource = DBTickets.MyView
+        gvYourReservation.DataSource = DBTickets.MyDataSet
         gvYourReservation.DataBind()
-        gvOtherReservation.DataSource = DBTickets.MyViewOthers
+        gvOtherReservation.DataSource = DBTickets.MyDataSetOthers
         gvOtherReservation.DataBind()
 
     End Sub
@@ -289,7 +289,8 @@ Partial Class _Default
 
 
         If rblPayment.SelectedValue = "Miles" Then
-            strMiles = DBTickets.GetMileage(gvYourReservation.Columns(1).ToString)
+          
+            strMiles = DBTickets.GetMileage(gvYourReservation.Columns(3).ToString)
             lblMiles.Text = "You currently have " & strMiles & " miles in your account."
             If FirstClassSelected() = True Then
                 lblCost.Text = "The ticket costs 2000 miles."
@@ -299,8 +300,8 @@ Partial Class _Default
 
         Else
             'run all the cost calculations
-            intAge = DBTickets.GetAge(gvYourReservation.Columns(1).ToString)
-            intBaseFare = DBTickets.GetBaseFare(gvOtherReservation.Columns(1).ToString)
+            intAge = CInt(gvYourReservation.Columns(6).ToString)
+            intBaseFare = CInt((gvOtherReservation.Columns(11).ToString))
             decAgeDiscount = Calculate.CalculateAgeDiscount(intAge, intBaseFare)
             If FirstClassSelected() = True Then
                 decFirstClassPremium = Calculate.CalculateFirstClass(intBaseFare)
@@ -337,7 +338,7 @@ Partial Class _Default
         Dim strMiles As String
         Dim intMiles As Integer
 
-        strMiles = DBTickets.GetMileage(gvYourReservation.Columns(1).ToString)
+        strMiles = DBTickets.GetMileage(gvYourReservation.Columns(3).ToString)
         intMiles = CInt(strMiles)
 
         'send information to the DB
@@ -439,5 +440,9 @@ Partial Class _Default
         Session("ActiveUser") = ddlAdvantageNum.SelectedValue
         LoadTickets()
         SortandBind()
+    End Sub
+
+    Protected Sub btnCalculate_Click(sender As Object, e As EventArgs) Handles btnCalculate.Click
+        rblPayment.Visible = True
     End Sub
 End Class

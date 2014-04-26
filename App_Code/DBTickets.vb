@@ -109,6 +109,19 @@ Public Class DBTickets
         End Get
     End Property
 
+    Public ReadOnly Property MyDataSetOthers() As DataSet
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: xxxxx dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mdatasetTicketsOthers
+
+        End Get
+    End Property
+
     Public Sub RunProcedure(ByVal strName As String)
         'Author: Ben Shadburne
         'Purpose: runs procedure
@@ -157,6 +170,35 @@ Public Class DBTickets
 
             ' copy dataset to dataview
             mMyView.Table = mdatasetOne.Tables("tblTickets")
+
+        Catch ex As Exception
+            Throw New Exception("params are " & strSPName.ToString & " " & strParamName.ToString & " " & strParamValue.ToString & " error is " & ex.Message)
+        End Try
+    End Sub
+
+    Public Sub RunSPwithOneParamOthers(ByVal strSPName As String, ByVal strParamName As String, ByVal strParamValue As String)
+        ' purpose to run a stored procedure with one parameter
+        ' inputs:  stored procedure name, parameter name, parameter value
+        ' returns: dataset filled with correct records
+
+        ' CREATES INSTANCES OF THE CONNECTION AND COMMAND OBJECT
+        Dim objConnection As New SqlConnection(mstrConnection)
+        ' Tell SQL server the name of the stored procedure you will be executing
+        Dim mdbDataAdapter As New SqlDataAdapter(strSPName, objConnection)
+        Try
+            ' SETS THE COMMAND TYPE TO "STORED PROCEDURE"
+            mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
+
+            ' ADD PARAMETER(S) TO SPROC
+            mdbDataAdapter.SelectCommand.Parameters.Add(New SqlParameter(strParamName, strParamValue))
+            ' clear dataset
+            mdatasetOne.Clear()
+
+            ' OPEN CONNECTION AND FILL DATASET
+            mdbDataAdapter.Fill(mdatasetTicketsOthers, "tblTickets")
+
+            ' copy dataset to dataview
+            mMyView.Table = mdatasetTicketsOthers.Tables("tblTickets")
 
         Catch ex As Exception
             Throw New Exception("params are " & strSPName.ToString & " " & strParamName.ToString & " " & strParamValue.ToString & " error is " & ex.Message)
@@ -322,6 +364,14 @@ Public Class DBTickets
 
     End Sub
 
+    Public Sub GetTicketsInReservationOthers(strReservationID As String)
+        'returns all tickets in a reservation
+        RunSPwithOneParamOthers("usp_Tickets_Get_By_Reservation", "@ReservationID", strReservationID)
+
+    End Sub
+
+
+
     Public Sub AddTicketPrices(strSPName As String, intPricePaid As Integer, intMileagePaid As Integer, intTicketID As Integer)
         'defines array to put parameter names into
         Dim aryParamNames As New ArrayList
@@ -374,6 +424,18 @@ Public Class DBTickets
         'Date: 03/18/2014
 
         MyViewOthers.RowFilter = "[ReservationID] = '" & strRes & "' AND [AdvantageNumber] <> '" & strAdvantage & "'"
+    End Sub
+
+    Public Sub FilterByReservationID(strRes As String)
+        MyView.RowFilter = "[ReservationID] = '" & strRes & "'"
+    End Sub
+
+    Public Sub FilterToGetUniqueTicket(strJourneyID As String, strAdvantageNumber As String)
+        MyView.RowFilter = "[JourneyID] = '" & strJourneyID & "' AND [AdvantageNumber] = '" & strAdvantageNumber & "'"
+    End Sub
+
+    Public Sub FilterToGetOtherTickets(strJourneyID As String, strAdvantageNumber As String)
+        MyViewOthers.RowFilter = "[JourneyID] <> '" & strJourneyID & "' OR [AdvantageNumber] <> '" & strAdvantageNumber & "'"
     End Sub
 
     Public ReadOnly Property lblCount() As Integer
