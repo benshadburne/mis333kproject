@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="Emp_AddFlight.aspx.vb" Inherits="Emp_AddFlight" %>
+﻿<%@ Page Title="" Language="VB" MasterPageFile="~/MasterPage.master" AutoEventWireup="false" CodeFile="Emp_ModifyFlight.aspx.vb" Inherits="Emp_ModifyFlight" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
@@ -7,11 +7,15 @@
         <div class ="label-primary">
             
             <asp:ValidationSummary ID="ValidationSummary1" runat="server" /><br /><br />
-        </div><asp:Label ID="lblMessage" runat="server" Text="Welcome to the Add Flight Page!"></asp:Label>
+            <asp:Label ID="lblMessage" runat="server" Text="Welcome to the Modify Flight Page! Please select a flight to modify"></asp:Label>
+
+        </div>
         <div class ="btn">
             <br /><br />
             <br /><br />
-        </div><asp:Button ID="btnAdd" runat="server" Text="Add Flight" />
+        <asp:Button ID="btnModify" runat="server" Text="Modify Flight" /><br />
+            <asp:Button ID="btnCancel" runat="server" Text="Cancel Changes" />
+            </div>
 
     </div>
 
@@ -29,11 +33,11 @@
         </div>
         <div id ="right">
             <div class ="input-group-lg">
-                <asp:TextBox ID="txtFlightNumber" runat="server" MaxLength="3"></asp:TextBox>
-                <asp:RequiredFieldValidator ID="rfvFlightNumber" runat="server" ErrorMessage="Please enter a flight number!" ControlToValidate="txtFlightNumber" Text="*"></asp:RequiredFieldValidator><br />
-                <asp:DropDownList ID="ddlDepartureCity" runat="server"></asp:DropDownList><br />
-                <asp:DropDownList ID="ddlArrivalCity" runat="server"></asp:DropDownList><br />
-                <asp:DropDownList ID="ddlDepartureTimeHour" runat="server" AutoPostBack="True">
+                <asp:DropDownList ID="ddlFlights" runat="server" AutoPostBack="True"></asp:DropDownList>
+                <br />
+                <asp:TextBox ID="txtDepartureCity" runat="server" ReadOnly="True"></asp:TextBox><br />
+                <asp:Textbox ID="txtArrivalCity" runat="server" ReadOnly="True"></asp:Textbox><br />
+                <asp:DropDownList ID="ddlDepartureTimeHour" runat="server" AutoPostBack="True" Enabled="False">
                     <asp:ListItem>00</asp:ListItem>
                     <asp:ListItem>1</asp:ListItem>
                     <asp:ListItem>2</asp:ListItem>
@@ -60,7 +64,7 @@
                     <asp:ListItem>23</asp:ListItem>
                 </asp:DropDownList>
                 <asp:Label ID="Label1" runat="server" Text=":"></asp:Label>
-                <asp:DropDownList ID="ddlDepartureTimeMinutes" runat="server" AutoPostBack="True">
+                <asp:DropDownList ID="ddlDepartureTimeMinutes" runat="server" AutoPostBack="True" Enabled="False">
                     <asp:ListItem>00</asp:ListItem>
                     <asp:ListItem>15</asp:ListItem>
                     <asp:ListItem>30</asp:ListItem>

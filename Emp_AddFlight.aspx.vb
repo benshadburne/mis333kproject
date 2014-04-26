@@ -155,11 +155,6 @@ Partial Class Emp_AddFlight
 
 
     Protected Sub ddlDepartureTimeMinutes_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlDepartureTimeMinutes.SelectedIndexChanged, ddlDepartureTimeHour.SelectedIndexChanged
-
-
-    End Sub
-
-    Protected Sub btnCalculateArrivalTime_Click(sender As Object, e As EventArgs) Handles btnCalculateArrivalTime.Click
         'make it equal to hour and minute on ddls for departure time
         strDepartureTime = ddlDepartureTimeHour.SelectedItem.Text & ddlDepartureTimeMinutes.SelectedItem.Text
         'make intDepartureTime and intarrival time variables
@@ -196,5 +191,8 @@ Partial Class Emp_AddFlight
 
         'put it in label
         lblArrivalTime.Text = strArrivalTime
+
     End Sub
+
+
 End Class
