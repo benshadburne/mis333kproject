@@ -225,8 +225,8 @@ Public Class DBCustomersClone
 
     Public Sub UpdateMiles(strMiles As String, strAdvantageNumber As String)
         'create arrays
-        Dim aryParamNames As ArrayList
-        Dim aryParamValues As ArrayList
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
 
         aryParamNames.Add("@Miles")
         aryParamNames.Add("@AdvantageNumber")

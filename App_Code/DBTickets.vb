@@ -428,6 +428,25 @@ Public Class DBTickets
 
     End Sub
 
+    Public Sub AddTicketMiles(strMilagePaid As String, strTicketID As String)
+        'defines array to put parameter names into
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+
+        'add parameter names to names array list
+        aryParamNames.Add("@TicketID")
+        aryParamNames.Add("@MilagePaid")
+
+
+        'add values to parameter values array list
+        aryParamValues.Add(strTicketID)
+        aryParamValues.Add(strMilagePaid)
+
+
+        UseSPforInsertOrUpdateQuery("usp_TicketsClone_Update_Mileage", aryParamNames, aryParamValues)
+
+    End Sub
+
 
 
     Public Sub DoSort(ByVal intIndex As Integer)
@@ -439,7 +458,7 @@ Public Class DBTickets
 
         mMyView.Sort = "TicketID, "
 
-        
+
     End Sub
 
     Public Sub FilterYou(ByVal strRes As String, strAdvantage As String)

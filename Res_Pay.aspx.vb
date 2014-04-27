@@ -22,8 +22,8 @@ Partial Class Res_Pay
         'End If
 
         'check to see if there is a running price subtotal on the page
-        Session("Login") = 5006
-        Session("ReservationID") = 10010
+        Session("Login") = 5000
+        Session("ReservationID") = 10002
 
         If IsPostBack = False Then
             Session("ActiveUser") = Session("Login").ToString
@@ -192,6 +192,10 @@ Partial Class Res_Pay
         gvTickets.DataSource = DBTickets.MyViewOne
         gvTickets.DataBind()
 
+        If gvTickets.Rows.Count = 0 Then
+            'have them pay or something
+        End If
+
     End Sub
 
     Protected Sub ddlJourneyID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlJourneyID.SelectedIndexChanged
@@ -358,6 +362,8 @@ Partial Class Res_Pay
                     lblUpgrade.Visible = True
                     btnYes.Visible = True
                     btnNo.Visible = True
+                    'exit sub so that they must click yes/no
+                    Exit Sub
                     'must make sure we put them in a first class seat somehow...
                     'send payment information to database (miles and moneys)
                 End If
@@ -376,9 +382,9 @@ Partial Class Res_Pay
                 'check to see if they have over 2000 miles
                 If intMiles >= 2000 Then
                     intMiles -= 2000
-                    'send new mileage to the database
+                    'send new mileage to customer record to the database
                     DBCustomer.UpdateMiles(intMiles.ToString, gvTickets.SelectedRow.Cells(3).Text)
-
+                    DBTickets.AddTicketMiles("2000", gvTickets.SelectedRow.Cells(1).Text)
                 Else
                     'not enough miles
                     lblMessage.Text = "You don't have enough miles to pay for your first class ticket. Try paying with money"
@@ -390,6 +396,7 @@ Partial Class Res_Pay
                     intMiles -= 1000
                     'send new mileage to the database
                     DBCustomer.UpdateMiles(intMiles.ToString, gvTickets.SelectedRow.Cells(3).Text)
+                    DBTickets.AddTicketMiles("1000", gvTickets.SelectedRow.Cells(1).Text)
                 Else
                     'not enough miles
                     lblMessage.Text = "You don't have enough miles to pay for your economy class ticket. Please pay with money."
@@ -398,6 +405,8 @@ Partial Class Res_Pay
                 End If
             End If
         End If
+
+        ResetAll()
 
 
     End Sub
