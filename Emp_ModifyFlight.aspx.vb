@@ -289,9 +289,81 @@ Partial Class Emp_ModifyFlight
         btnAccept.Visible = False
 
         'call sub to change status of flights that conflict with new flight, and cancel stuff
+        FObject.GetALLFlightsCloneUsingSP()
+        lblMessage.Text = FObject.MyDataSet.Tables("tblFlightClone").Rows(ddlFlights.SelectedIndex).Item("Tuesday").ToString
     End Sub
 
     Public Sub FlightModificationCheck()
+        'dim Days array
+        Dim Days(6) As String
+        Dim intIndex As Integer
+        intIndex = ddlFlights.SelectedIndex
+        Dim intCount As Integer
 
+        'find out what days the flight now flies
+        FObject.GetALLFlightsCloneUsingSP()
+
+        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Monday").ToString = "Y" Then
+            intCount += 1
+            Days(0) = "Monday"
+        Else
+            Days(0) = "NULL"
+        End If
+
+        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Tuesday").ToString = "Y" Then
+            intCount += 1
+            Days(1) = "Tuesday"
+        Else
+            Days(1) = "NULL"
+        End If
+
+        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Wednesday").ToString = "Y" Then
+            intCount += 1
+            Days(2) = "Wednesday"
+        Else
+            Days(2) = "NULL"
+        End If
+
+        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Thursday").ToString = "Y" Then
+            intCount += 1
+            Days(3) = "Thursday"
+        Else
+            Days(3) = "NULL"
+        End If
+
+        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Friday").ToString = "Y" Then
+            intCount += 1
+            Days(4) = "Friday"
+        Else
+            Days(4) = "NULL"
+        End If
+
+        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Saturday").ToString = "Y" Then
+            intCount += 1
+            Days(5) = "Saturday"
+        Else
+            intCount += 1
+            Days(5) = "NULL"
+        End If
+
+        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Sunday").ToString = "Y" Then
+            intCount += 1
+            Days(6) = "Sunday"
+        Else
+            Days(6) = "NULL"
+        End If
+
+        Dim GoodDays(intCount - 1) As String
+
+        For i = 0 To 6
+            If Days(i) <> "NULL" Then
+                GoodDays(i) = Days(i)
+            End If
+        Next
+
+        'can I just check what's checked on page, and see if it's a yes in database?  
+        'No, because that would necessitate remembering what WAS checked, and I don't want to use 7 session variables
+        'so see what's not checked, then run query on database to see if there's a day present that isn't checked
+        'have 7 places where flight can be cancelled, one for each of the 7 days
     End Sub
 End Class
