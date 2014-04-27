@@ -21,11 +21,12 @@ Partial Class Res_Pay
         'If Session("ReservationID") Is Nothing Then
         '    Response.Redirect("HomePage.aspx")
         'End If
-
+        Session("ActiveUser") = 5001
+        Session("ReservationID") = 10009
         'check to see if there is a running price subtotal on the page
 
         If IsPostBack = False Then
-            Session("ActiveUser") = Session("Login").ToString
+            'Session("ActiveUser") = Session("Login").ToString
             DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
             Session("TicketCount") = DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
             If Session("TicketRecord") Is Nothing Then
@@ -525,6 +526,10 @@ Partial Class Res_Pay
             intMiles -= 500
             DBCustomer.UpdateMiles(intMiles.ToString, gvTickets.SelectedRow.Cells(3).Text)
         End If
+
+        'reset the page
+
+
     End Sub
 
     Protected Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
@@ -532,6 +537,6 @@ Partial Class Res_Pay
         DBCancel.ChangeSeatStatus(Session("ReservationID").ToString)
         DBCancel.ReturnMilesAndDeactivateTicket(Session("ReservationID").ToString)
         Session.Remove("ReservationID")
-        Response.Redirect("CreateReservationAndSelectFlight.aspx")
+        Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
     End Sub
 End Class

@@ -321,6 +321,6 @@ Partial Class _Default
         DBCancel.ChangeSeatStatus(Session("ReservationID").ToString)
         DBCancel.DeactivateTickets(Session("ReservationID").ToString)
         Session.Remove("ReservationID")
-        Response.Redirect("CreateReservationAndSelectFlight.aspx")
+        Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
     End Sub
 End Class

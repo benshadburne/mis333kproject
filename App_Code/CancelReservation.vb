@@ -166,7 +166,7 @@ Public Class CancelReservation
 
         GetTicketsInReservationOthers(strReservationID)
 
-        For i = 0 To mDatasetOne.Tables("tblTickets").Rows.Count - 1
+        For i = 0 To (mDatasetOne.Tables("tblTickets").Rows.Count - 1)
             strMiles = mDatasetOne.Tables("tblTickets").Rows(i).Item("MilagePaid").ToString
             intMiles = CInt(strMiles)
             If intMiles > 0 Then
@@ -219,15 +219,16 @@ Public Class CancelReservation
 
             UseSP("usp_Tickets_Get_By_ReservationANDJourneyID", mDatasetOne, mMyViewOne, "tblTickets", aryParamNames, aryParamValues)
 
+
             'loop thourgh each ticket with that journey in that reservation 
-            For j = 0 To mDatasetOne.Tables("tblTickets").Rows.Count - 1
-                strSeat = mDatasetOne.Tables("tblTickets").Rows(i).Item("Seat").ToString
-                If strSeat <> "" Then
+            For j = 0 To (mDatasetOne.Tables("tblTickets").Rows.Count - 1)
+                strSeat = mDatasetOne.Tables("tblTickets").Rows(j).Item("Seat").ToString
+                If strSeat = "" Then
                     'dont do anything
                 Else
                     UpdateSeatStatus(strJourneyID, strSeat)
                 End If
-                
+
             Next
             'clear arrays
             aryParamNames.Clear()
