@@ -7,6 +7,8 @@ Partial Class _Default
     Dim Calculate As New ClassCalculate
     Dim DBJourney As New DBjourneyclone
     Dim DBDate As New DBdate
+    Dim DBCancel As New CancelReservation
+
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -312,5 +314,13 @@ Partial Class _Default
             lblFinish.Text = "You have not selected seats for your entire reservation. Please do so before paying."
         End If
 
+    End Sub
+
+    Protected Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        DBCancel.CancelReservation(Session("ReservationID").ToString)
+        DBCancel.ChangeSeatStatus(Session("ReservationID").ToString)
+        DBCancel.DeactivateTickets(Session("ReservationID").ToString)
+        Session.Remove("ReservationID")
+        Response.Redirect("CreateReservationAndSelectFlight.aspx")
     End Sub
 End Class

@@ -9,6 +9,7 @@ Partial Class Res_Pay
     Dim DBJourney As New DBjourneyclone
     Dim DBDate As New DBdate
     Dim DBCustomer As New DBCustomersClone
+    Dim DBCancel As New CancelReservation
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -16,9 +17,6 @@ Partial Class Res_Pay
         'write some code to pull up the advantage number we need to use to select the seats. 
 
         'check session reservationID if it's empty
-
-        Session("ReservationID") = 10006
-        Session("ActiveUser") = 5000
 
         'If Session("ReservationID") Is Nothing Then
         '    Response.Redirect("HomePage.aspx")
@@ -527,5 +525,13 @@ Partial Class Res_Pay
             intMiles -= 500
             DBCustomer.UpdateMiles(intMiles.ToString, gvTickets.SelectedRow.Cells(3).Text)
         End If
+    End Sub
+
+    Protected Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        DBCancel.CancelReservation(Session("ReservationID").ToString)
+        DBCancel.ChangeSeatStatus(Session("ReservationID").ToString)
+        DBCancel.ReturnMilesAndDeactivateTicket(Session("ReservationID").ToString)
+        Session.Remove("ReservationID")
+        Response.Redirect("CreateReservationAndSelectFlight.aspx")
     End Sub
 End Class

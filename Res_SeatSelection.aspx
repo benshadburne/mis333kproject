@@ -121,7 +121,16 @@
         <ul>
          <li><a href="Cust_ModifyReservation.aspx">Modify Reservation</a></li>
             </ul> 
+                 <div class="center-block" style="width:100%">
+        <asp:Label CssClass="h5" ID="Label8" runat="server" Text="Need to cancel this reservation?"></asp:Label>
+       </div>
+        <ul>
+            <asp:Button ID="btnCancel" runat="server" Text="Cancel Reservation" />
+            </ul> 
             </div>
+
+   
+            
                
 
 </asp:Content>

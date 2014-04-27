@@ -212,7 +212,7 @@ Public Class CancelReservation
             strJourneyID = mdatasetCancel.Tables("tblTickets").Rows(i).Item("JourneyOne").ToString
 
             aryParamNames.Add("@ReservationID")
-            aryParamNames.Add("@TicketID")
+            aryParamNames.Add("@JourneyID")
 
             aryParamValues.Add(strReservationID)
             aryParamValues.Add(strJourneyID)
