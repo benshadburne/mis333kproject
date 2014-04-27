@@ -390,7 +390,7 @@ Public Class DBTickets
 
 
 
-    Public Sub AddTicketPricesAndMiles(strSPName As String, intPricePaid As Integer, intMileagePaid As Integer, intTicketID As Integer)
+    Public Sub AddTicketPricesAndMiles(strPricePaid As String, strMileagePaid As String, strTicketID As String)
         'defines array to put parameter names into
         Dim aryParamNames As New ArrayList
         Dim aryParamValues As New ArrayList
@@ -401,9 +401,9 @@ Public Class DBTickets
         aryParamNames.Add("@TicketID")
 
         'add values to parameter values array list
-        aryParamValues.Add(intPricePaid)
-        aryParamValues.Add(intMileagePaid)
-        aryParamValues.Add(intTicketID)
+        aryParamValues.Add(strPricePaid)
+        aryParamValues.Add(strMileagePaid)
+        aryParamValues.Add(strTicketID)
 
         UseSPforInsertOrUpdateQuery("usp_TicketClone_Add_Price", aryParamNames, aryParamValues)
 
