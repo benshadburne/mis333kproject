@@ -13,8 +13,9 @@
         <div class ="btn">
             <br /><br />
             <br /><br />
-        <asp:Button ID="btnModify" runat="server" Text="Modify Flight" /><br />
-            <asp:Button ID="btnCancel" runat="server" Text="Cancel Changes" />
+        <asp:Button ID="btnModify" runat="server" Text="Modify" /><br />
+            <asp:Button ID="btnCancel" runat="server" Text="Cancel" Visible="False" /><br />
+            <asp:Button ID="btnAccept" runat="server" Text="Accept" Visible="False" />
             </div>
 
     </div>
@@ -33,7 +34,7 @@
         </div>
         <div id ="right">
             <div class ="input-group-lg">
-                <asp:DropDownList ID="ddlFlights" runat="server" AutoPostBack="True"></asp:DropDownList>
+                <asp:DropDownList ID="ddlFlights" runat="server" AutoPostBack="True" Enabled="False"></asp:DropDownList>
                 <br />
                 <asp:TextBox ID="txtDepartureCity" runat="server" ReadOnly="True"></asp:TextBox><br />
                 <asp:Textbox ID="txtArrivalCity" runat="server" ReadOnly="True"></asp:Textbox><br />
@@ -71,9 +72,9 @@
                     <asp:ListItem>45</asp:ListItem>
                 </asp:DropDownList><br />
                 <asp:Label ID="lblArrivalTime" runat="server" Text="Arrival Time"></asp:Label><br />
-                <asp:TextBox ID="txtBaseFare" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtBaseFare" runat="server" Enabled="False"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvBaseFare" runat="server" ErrorMessage="Please enter a base fare!" ControlToValidate="txtBaseFare" Text="*"></asp:RequiredFieldValidator><br />
-                <asp:CheckBoxList ID="cblDaysToFly" runat="server">
+                <asp:CheckBoxList ID="cblDaysToFly" runat="server" Enabled="False">
                     <asp:ListItem>Monday</asp:ListItem>
                     <asp:ListItem>Tuesday</asp:ListItem>
                     <asp:ListItem>Wednesday</asp:ListItem>

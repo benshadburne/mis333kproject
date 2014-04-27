@@ -234,4 +234,9 @@ Public Class DBFlightsClone
         'Return the Base Fare
         Return decResult
     End Function
+
+    'run stored procedure to modify an employee record
+    Public Sub ModifyFlight(ByVal aryParamNames As ArrayList, ByVal aryParamValues As ArrayList)
+        UseSPforInsertOrUpdateQuery("usp_FlightClone_Modify_Flight", aryParamNames, aryParamValues)
+    End Sub
 End Class
