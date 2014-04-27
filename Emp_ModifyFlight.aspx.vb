@@ -1,4 +1,8 @@
 ﻿Option Strict On
+'author: Jace Barton
+'purpose: Allows manager to modify details of a flight, and handles changes that causes
+'date: 4/26/14
+Imports System.Net.Mail
 Partial Class Emp_ModifyFlight
     Inherits System.Web.UI.Page
 
@@ -89,6 +93,8 @@ Partial Class Emp_ModifyFlight
 
         'calculate the arrival time that needs to appear
         strArrivalTime = CObject.CalculateArrivalTime(intDepartureTime, intDuration)
+        'create session variable for arrival time
+        Session("ArrivalTime") = strArrivalTime
 
         'put it in label
         lblArrivalTime.Text = strArrivalTime
@@ -302,6 +308,10 @@ Partial Class Emp_ModifyFlight
     Public Sub FlightModificationCheck()
         FObject.GetALLFlightsCloneUsingSP()
 
+        'NEED TO CHECK IF TIME OF FLIGHT HAS CHANGED
+        If Session("ArrivalTime").ToString <> lblArrivalTime.Text Then
+            'RUN THE SUB TO CANCEL ALL FLIGHTS
+        End If
         'Monday
         If cblDaysToFly.Items(0).Selected = False Then 'Monday is not checked so...
             '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
@@ -381,13 +391,27 @@ Partial Class Emp_ModifyFlight
 
     End Sub
 
-    Public Sub IDoWorkSon(strDay As String, strFlightNumber As String)
+    Public Sub InactivateJourneysBasedOnDayChange(strDay As String, strFlightNumber As String)
         'make the journey, reservation, and all affected tickets inactive
         JObject.InactivateJourney(strDay, strFlightNumber)
 
         'find customers who need to be emailed
         CuObject.FindCustomersForEmail(strFlightNumber)
 
-        CuObject.MyView.Table("tblCustomersClone").
+        'send the email to each customer
+        For i = 0 To CuObject.MyDataset.Tables("tblCustomersClone").Rows.Count - 1
+            Dim Msg As MailMessage = New MailMessage()
+            Dim MailObj As New SmtpClient("smtp.mccombs.utexas.edu")
+            Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
+            Msg.To.Add(New MailAddress(CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("Email").ToString, CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("First Name").ToString + " " + CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("LastName").ToString))
+            Msg.IsBodyHtml = False
+            Msg.Body = "Hello " & CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on flight #" & strFlightNumber & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
+            Msg.Subject = "Flight Cancellation"
+            MailObj.Send(Msg)
+            Msg.To.Clear()
+        Next
     End Sub
+
+    'New thoughts: Why do I care what day it now flies? The journey is either active and yet to fly (so it needs to be changed regardless), inactive and in the past so we don't care, or has never been booked. So you just wasted a lot of time. Way to go Jace. Way to go. 
+    'Wait, if only the days change, then I do need to look at journeys by changed. If the time changes, all journeys need to change. I don't think my code presently does that. 
 End Class
