@@ -3,11 +3,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <asp:DropDownList ID="DropDownList1" runat="server" padding ="3px"></asp:DropDownList>
+    <asp:DropDownList ID="ddlJourneys" runat="server" padding ="3px" AutoPostBack="True"></asp:DropDownList>
      <br />
-     <asp:GridView ID="gvFlight" runat="server">
+     <asp:GridView ID="gvCustomers" runat="server">
          <Columns>
-             <asp:CheckBoxField />
+             <asp:TemplateField>
+                 <ItemTemplate>
+                     <asp:CheckBox ID="chkOnFlight" runat="server" />
+                 </ItemTemplate>
+             </asp:TemplateField>
          </Columns>
     </asp:GridView>
 

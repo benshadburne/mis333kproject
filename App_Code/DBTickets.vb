@@ -348,6 +348,17 @@ Public Class DBTickets
         End If
     End Function
 
+    Public Sub MarkOnFlight(strTicketID As String)
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+
+        aryParamNames.Add("@TicketID")
+
+        aryParamValues.Add(strTicketID)
+
+        UseSPforInsertOrUpdateQuery("usp_Tickets_Mark_On_Flight", aryParamNames, aryParamValues)
+    End Sub
+
     Public Function GetAge(strAdvantageNumber As String) As Integer
 
         RunSPwithOneParam("usp_TicketsClone_Get_One", "@AdvantageNumber", strAdvantageNumber)

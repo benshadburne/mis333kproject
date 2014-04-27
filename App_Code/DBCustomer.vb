@@ -280,6 +280,11 @@ Public Class DBCustomersClone
         End Try
     End Sub
 
+    Public Sub GetCustomersByJourney(strJourneyID As String)
+        RunSPwithOneParam("usp_Customers_Get_By_Journey", "@JourneyID", strJourneyID)
+    End Sub
+
+
 
     Public Sub FindCustomersForEmail(strFlightNumber As String)
         RunSPwithOneParam("usp_CustomersClone_Select_For_Email", "@flightnumber", strFlightNumber)
