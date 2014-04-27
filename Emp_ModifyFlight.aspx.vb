@@ -297,77 +297,84 @@ Partial Class Emp_ModifyFlight
     End Sub
 
     Public Sub FlightModificationCheck()
-        'dim Days array
-        Dim Days(6) As String
-        Dim intIndex As Integer
-        intIndex = ddlFlights.SelectedIndex
-        Dim intCount As Integer
-
-        'find out what days the flight now flies
         FObject.GetALLFlightsCloneUsingSP()
 
-        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Monday").ToString = "Y" Then
-            intCount += 1
-            Days(0) = "Monday"
-        Else
-            Days(0) = "NULL"
-        End If
-
-        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Tuesday").ToString = "Y" Then
-            intCount += 1
-            Days(1) = "Tuesday"
-        Else
-            Days(1) = "NULL"
-        End If
-
-        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Wednesday").ToString = "Y" Then
-            intCount += 1
-            Days(2) = "Wednesday"
-        Else
-            Days(2) = "NULL"
-        End If
-
-        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Thursday").ToString = "Y" Then
-            intCount += 1
-            Days(3) = "Thursday"
-        Else
-            Days(3) = "NULL"
-        End If
-
-        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Friday").ToString = "Y" Then
-            intCount += 1
-            Days(4) = "Friday"
-        Else
-            Days(4) = "NULL"
-        End If
-
-        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Saturday").ToString = "Y" Then
-            intCount += 1
-            Days(5) = "Saturday"
-        Else
-            intCount += 1
-            Days(5) = "NULL"
-        End If
-
-        If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Sunday").ToString = "Y" Then
-            intCount += 1
-            Days(6) = "Sunday"
-        Else
-            Days(6) = "NULL"
-        End If
-
-        Dim GoodDays(intCount - 1) As String
-
-        For i = 0 To 6
-            If Days(i) <> "NULL" Then
-                GoodDays(i) = Days(i)
+        'Monday
+        If cblDaysToFly.Items(0).Selected = False Then 'Monday is not checked so...
+            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Monday")
+            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+            Else
+                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
             End If
-        Next
+        End If
 
-        'can I just check what's checked on page, and see if it's a yes in database?  
-        'No, because that would necessitate remembering what WAS checked, and I don't want to use 7 session variables
-        'so see what's not checked, then run query on database to see if there's a day present that isn't checked
-        'have 7 places where flight can be cancelled, one for each of the 7 days
+        'Tuesday
+        If cblDaysToFly.Items(1).Selected = False Then 'Tuesday is not checked so...
+            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Tuesday")
+            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+            Else
+                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+            End If
+        End If
+
+        'Wednesday
+        If cblDaysToFly.Items(2).Selected = False Then 'Wednesday is not checked so...
+            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Wednesday")
+            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+            Else
+                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+            End If
+        End If
+
+        'Thursday
+        If cblDaysToFly.Items(3).Selected = False Then 'Thursday is not checked so...
+            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Thursday")
+            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+            Else
+                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+            End If
+        End If
+
+        'Friday
+        If cblDaysToFly.Items(4).Selected = False Then 'Friday is not checked so...
+            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Friday")
+            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+            Else
+                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+            End If
+        End If
+
+        'Saturday
+        If cblDaysToFly.Items(5).Selected = False Then 'Saturday is not checked so...
+            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Saturday")
+            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+            Else
+                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+            End If
+        End If
+
+        'Sunday
+        If cblDaysToFly.Items(6).Selected = False Then 'Saturday is not checked so...
+            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Sunday")
+            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+            Else
+                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+            End If
+        End If
 
     End Sub
 End Class
