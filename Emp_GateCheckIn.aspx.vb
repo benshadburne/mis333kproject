@@ -65,5 +65,9 @@ Partial Class Emp_GateCheckIn
             End If
 
         Next
+
+        ''mark journey as departed
+        ''this is commented out since we haven't done crew scheduling yet
+        'DBJourney.MarkJourneyDeparted(gvCustomers.SelectedValue.ToString)
     End Sub
 End Class

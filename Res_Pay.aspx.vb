@@ -22,8 +22,6 @@ Partial Class Res_Pay
         'End If
 
         'check to see if there is a running price subtotal on the page
-        Session("Login") = 5000
-        Session("ReservationID") = 10002
 
         If IsPostBack = False Then
             Session("ActiveUser") = Session("Login").ToString

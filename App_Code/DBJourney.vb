@@ -199,6 +199,16 @@ Public Class DBjourneyclone
         End Try
     End Sub
 
+    Public Sub MarkJourneyDeparted(strJourneyID As String)
+        Dim aryParamValues As New ArrayList
+        Dim aryParamNames As New ArrayList
+
+        aryParamNames.Add("@JourneyID")
+
+        aryParamValues.Add(strJourneyID)
+
+        UseSPforInsertOrUpdateQuery("usp_Journey_Mark_Departed", aryParamNames, aryParamValues)
+    End Sub
 
     Public Sub AddNewJourney(strUSPName As String, intFlightNumber As Integer, datSelectedDate As Date, intDepartureTime As Integer, intArrivalTime As Integer, strDay As String)
         'defines array to put parameter names into

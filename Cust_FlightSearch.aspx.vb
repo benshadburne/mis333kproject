@@ -146,7 +146,7 @@ Partial Class _Default
         'if this is the first journey they are adding, use add first Journey Function
         If intJourneyNumber = 1 Then
 
-            strDate = gvDirectFlights.Rows(gvDirectFlights.SelectedIndex).Cells(2).Text
+            strDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
 
             'add the first record of the reservation
             DBReservations.AddFirstReservationJourney("usp_ReservationsClone_Add_Journey", strJourneyNumber, intJourneyID, strDate)
