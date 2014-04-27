@@ -115,7 +115,15 @@
     
         
             
+         <br />
+        <br />
+    
+        
+            
          </div>       
-     
+    <asp:Label ID="Label2" runat="server" Text="Made a mistake? Cancel your reservation by clicking below"></asp:Label>
+    <br />
+
+    <asp:Button ID="btnCancel" runat="server" Text="Cancel Reservation" />
 </asp:Content>
 

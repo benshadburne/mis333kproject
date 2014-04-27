@@ -6,6 +6,8 @@ Partial Class _Default
     Dim DBAddJourney As New AddJourneyClass
     Dim DBReservations As New DBReservations
     Dim DBSeats As New DBJourneySeats
+    Dim DBCancel As New CancelReservation
+
 
     Dim intJourneyID As Integer
     Dim intJourneyNumber As Integer
@@ -281,6 +283,7 @@ Partial Class _Default
             'retrieve the reservationID for the reservation we just added to. Store it in a new session variable
             Session.Add("ReservationID", DBReservations.GetNewestReservationID())
 
+
             'now the Journey ID is the one from the finish gridview
             intJourneyID = CInt(gvIndirectFinish.Rows(gvIndirectFinish.SelectedIndex).Cells(1).Text)
 
@@ -354,4 +357,23 @@ Partial Class _Default
         Response.Redirect("Cust_FlightSearch.aspx")
     End Sub
 
+    Protected Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        If Session("ReservationID") Is Nothing Then
+            'dont do anything
+        Else
+            DBCancel.CancelReservation(Session("ReservationID").ToString)
+            Session.Remove("ReservationID")
+        End If
+
+        CancelReservation()
+        Response.Redirect("CreateReservationAndSelectFlight.aspx")
+    End Sub
+
+    Public Sub CancelReservation()
+        Session.Remove("StartAirport")
+        Session.Remove("EndAirport")
+        Session.Remove("Adults")
+        Session.Remove("Children")
+        Session.Remove("Babies")
+    End Sub
 End Class

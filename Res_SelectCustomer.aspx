@@ -34,12 +34,10 @@
 
         <br />
         <br />
-        <asp:Label ID="Label2" runat="server" Text="Label"></asp:Label>
+        <asp:Label ID="Label2" runat="server" Text="Made a mistake? Cancel your Reservation by clicking below"></asp:Label>
         <br />
-        <asp:Label ID="Label3" runat="server" Text="Label"></asp:Label>
         <br />
-        <asp:Label ID="Label4" runat="server" Text="Label"></asp:Label>
-
+        <asp:Button ID="btnCancel" runat="server" Text="Cancel Reservation" />
         </div>
 
         </asp:Panel>
@@ -55,7 +53,7 @@
         <br />
 
         <asp:Button ID="btnConfirm" runat="server" Text="Confirm" />
-
+        
         <br />
         <asp:Label ID="lblAgeMessage" runat="server" Text=""></asp:Label>
 

@@ -188,6 +188,15 @@ Public Class CancelReservation
 
     End Sub
 
+    Public Sub DeactivateTickets(strReservationID As String)
+        GetTicketsInReservationOthers(strReservationID)
+        For i = 0 To mDatasetOne.Tables("tblTickets").Rows.Count - 1
+            'deactivate their ticket
+            UpdateTicketActive(mDatasetOne.Tables("tblTickets").Rows(i).Item("TicketID").ToString)
+        Next
+
+    End Sub
+
     Public Sub ChangeSeatStatus(strReservationID As String)
         'this will return miles to customers and send that information to the database
         Dim strSeat As String

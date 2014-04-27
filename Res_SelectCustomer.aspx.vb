@@ -8,6 +8,7 @@ Partial Class Res_SelectCustomer
     Dim DBTicket As New DBTickets
     Dim CustomerDB As New DBCustomersClone
     Dim Validation As New ClassValidate
+    Dim DBCancel As New CancelReservation
 
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -22,9 +23,6 @@ Partial Class Res_SelectCustomer
         'Date: 02/06/2014
         'Description: A sub that gets all customers, sorts them, and then puts them on the form 
 
-        Label2.Text = Session("Adults").ToString
-        Label3.Text = Session("Children").ToString
-        Label4.Text = Session("Babies").ToString
 
     End Sub
 
@@ -172,5 +170,17 @@ Partial Class Res_SelectCustomer
             'make partial/keyword invisible
             rblSearchType.Visible = False
         End If
+    End Sub
+
+    Protected Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+
+        DBCancel.CancelReservation(Session("ReservationID").ToString)
+        DBCancel.DeactivateTickets(Session("ReservationID").ToString)
+
+        Session.Remove("Adults")
+        Session.Remove("Children")
+        Session.Remove("Babies")
+        Session.Remove("ReservationID")
+        Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
     End Sub
 End Class
