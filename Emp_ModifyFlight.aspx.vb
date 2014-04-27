@@ -311,81 +311,90 @@ Partial Class Emp_ModifyFlight
         'NEED TO CHECK IF TIME OF FLIGHT HAS CHANGED
         If Session("ArrivalTime").ToString <> lblArrivalTime.Text Then
             'RUN THE SUB TO CANCEL ALL FLIGHTS
-        End If
-        'Monday
-        If cblDaysToFly.Items(0).Selected = False Then 'Monday is not checked so...
-            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
-            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Monday")
-            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
-                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
-            Else
-                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+            InactivateJourneysRegardlessOfDay(ddlFlights.SelectedValue.ToString)
+        Else
+            'Monday
+            If cblDaysToFly.Items(0).Selected = False Then 'Monday is not checked so...
+                '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+                JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Monday")
+                If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                    'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+                Else
+                    'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+                    InactivateJourneysBasedOnDayChange("Monday", ddlFlights.SelectedValue.ToString)
+                End If
             End If
-        End If
 
-        'Tuesday
-        If cblDaysToFly.Items(1).Selected = False Then 'Tuesday is not checked so...
-            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
-            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Tuesday")
-            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
-                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
-            Else
-                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+            'Tuesday
+            If cblDaysToFly.Items(1).Selected = False Then 'Tuesday is not checked so...
+                '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+                JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Tuesday")
+                If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                    'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+                Else
+                    'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+                    InactivateJourneysBasedOnDayChange("Tuesday", ddlFlights.SelectedValue.ToString)
+                End If
             End If
-        End If
 
-        'Wednesday
-        If cblDaysToFly.Items(2).Selected = False Then 'Wednesday is not checked so...
-            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
-            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Wednesday")
-            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
-                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
-            Else
-                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+            'Wednesday
+            If cblDaysToFly.Items(2).Selected = False Then 'Wednesday is not checked so...
+                '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+                JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Wednesday")
+                If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                    'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+                Else
+                    'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+                    InactivateJourneysBasedOnDayChange("Wednesday", ddlFlights.SelectedValue.ToString)
+                End If
             End If
-        End If
 
-        'Thursday
-        If cblDaysToFly.Items(3).Selected = False Then 'Thursday is not checked so...
-            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
-            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Thursday")
-            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
-                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
-            Else
-                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+            'Thursday
+            If cblDaysToFly.Items(3).Selected = False Then 'Thursday is not checked so...
+                '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+                JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Thursday")
+                If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                    'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+                Else
+                    'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+                    InactivateJourneysBasedOnDayChange("Thursday", ddlFlights.SelectedValue.ToString)
+                End If
             End If
-        End If
 
-        'Friday
-        If cblDaysToFly.Items(4).Selected = False Then 'Friday is not checked so...
-            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
-            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Friday")
-            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
-                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
-            Else
-                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+            'Friday
+            If cblDaysToFly.Items(4).Selected = False Then 'Friday is not checked so...
+                '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+                JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Friday")
+                If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                    'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+                Else
+                    'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+                    InactivateJourneysBasedOnDayChange("Friday", ddlFlights.SelectedValue.ToString)
+                End If
             End If
-        End If
 
-        'Saturday
-        If cblDaysToFly.Items(5).Selected = False Then 'Saturday is not checked so...
-            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
-            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Saturday")
-            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
-                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
-            Else
-                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+            'Saturday
+            If cblDaysToFly.Items(5).Selected = False Then 'Saturday is not checked so...
+                '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+                JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Saturday")
+                If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                    'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+                Else
+                    'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+                    InactivateJourneysBasedOnDayChange("Saturday", ddlFlights.SelectedValue.ToString)
+                End If
             End If
-        End If
 
-        'Sunday
-        If cblDaysToFly.Items(6).Selected = False Then 'Saturday is not checked so...
-            '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
-            JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Sunday")
-            If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
-                'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
-            Else
-                'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+            'Sunday
+            If cblDaysToFly.Items(6).Selected = False Then 'Saturday is not checked so...
+                '...go see if there are any journeys of this flight number that are active and not departed yet on Monday
+                JObject.CheckJourneyDays(ddlFlights.SelectedItem.ToString, "Sunday")
+                If JObject.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+                    'there are no matching records in journey table with this flight number and this day, so we don't need to do anything 
+                Else
+                    'RUN THE SUB THAT WILL MAKE THE JOURNEY INACTIVE, CANCEL THE RESERVATION, AND SEND EMAIL
+                    InactivateJourneysBasedOnDayChange("Sunday", ddlFlights.SelectedValue.ToString)
+                End If
             End If
         End If
 
@@ -393,7 +402,7 @@ Partial Class Emp_ModifyFlight
 
     Public Sub InactivateJourneysBasedOnDayChange(strDay As String, strFlightNumber As String)
         'make the journey, reservation, and all affected tickets inactive
-        JObject.InactivateJourney(strDay, strFlightNumber)
+        JObject.InactivateJourneyWithDay(strDay, strFlightNumber)
 
         'find customers who need to be emailed
         CuObject.FindCustomersForEmail(strFlightNumber)
@@ -411,6 +420,28 @@ Partial Class Emp_ModifyFlight
             Msg.To.Clear()
         Next
     End Sub
+
+    Public Sub InactivateJourneysRegardlessOfDay(strFlightNumber As String)
+        'make the journey, reservation, and all affected tickets inactive
+        JObject.InactivateJourneyWithoutDay(strFlightNumber)
+
+        'find customers who need to be emailed
+        CuObject.FindCustomersForEmail(strFlightNumber)
+
+        'send the email to each customer
+        For i = 0 To CuObject.MyDataset.Tables("tblCustomersClone").Rows.Count - 1
+            Dim Msg As MailMessage = New MailMessage()
+            Dim MailObj As New SmtpClient("smtp.mccombs.utexas.edu")
+            Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
+            Msg.To.Add(New MailAddress(CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("Email").ToString, CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("First Name").ToString + " " + CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("LastName").ToString))
+            Msg.IsBodyHtml = False
+            Msg.Body = "Hello " & CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on flight #" & strFlightNumber & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
+            Msg.Subject = "Flight Cancellation"
+            MailObj.Send(Msg)
+            Msg.To.Clear()
+        Next
+    End Sub
+
 
     'New thoughts: Why do I care what day it now flies? The journey is either active and yet to fly (so it needs to be changed regardless), inactive and in the past so we don't care, or has never been booked. So you just wasted a lot of time. Way to go Jace. Way to go. 
     'Wait, if only the days change, then I do need to look at journeys by changed. If the time changes, all journeys need to change. I don't think my code presently does that. 
