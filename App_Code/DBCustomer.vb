@@ -72,6 +72,19 @@ Public Class DBCustomersClone
         End Get
     End Property
 
+    'define a public read only property
+    Public ReadOnly Property MyDataset() As DataSet
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: CustomersClone dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mdatasetCustomersClone
+        End Get
+    End Property
+
     Public Sub RunProcedure(ByVal strName As String)
         'Author: Ben Shadburne
         'Purpose: runs procedure

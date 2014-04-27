@@ -17,6 +17,9 @@ Partial Class Emp_ModifyFlight
     'create instance of journey class
     Dim JObject As New DBjourneyclone
 
+    'create instance of customer class
+    Dim CuObject As New DBCustomersClone
+
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         'if first time loading page, set datasource of ddlFlights
         If IsPostBack = False Then
@@ -383,6 +386,8 @@ Partial Class Emp_ModifyFlight
         JObject.InactivateJourney(strDay, strFlightNumber)
 
         'find customers who need to be emailed
+        CuObject.FindCustomersForEmail(strFlightNumber)
 
+        CuObject.MyView.Table("tblCustomersClone").
     End Sub
 End Class
