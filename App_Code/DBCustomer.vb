@@ -238,5 +238,38 @@ Public Class DBCustomersClone
 
     End Sub
 
+    Public Sub RunSPwithOneParam(ByVal strSPName As String, ByVal strParamName As String, ByVal strParamValue As String)
+        ' purpose to run a stored procedure with one parameter
+        ' inputs:  stored procedure name, parameter name, parameter value
+        ' returns: dataset filled with correct records
+
+        ' CREATES INSTANCES OF THE CONNECTION AND COMMAND OBJECT
+        Dim objConnection As New SqlConnection(mstrConnection)
+        ' Tell SQL server the name of the stored procedure you will be executing
+        Dim mdbDataAdapter As New SqlDataAdapter(strSPName, objConnection)
+        Try
+            ' SETS THE COMMAND TYPE TO "STORED PROCEDURE"
+            mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
+
+            ' ADD PARAMETER(S) TO SPROC
+            mdbDataAdapter.SelectCommand.Parameters.Add(New SqlParameter(strParamName, strParamValue))
+            ' clear dataset
+            mdatasetCustomersClone.Clear()
+
+            ' OPEN CONNECTION AND FILL DATASET
+            mdbDataAdapter.Fill(mdatasetCustomersClone, "tblCustomersClone")
+
+            ' copy dataset to dataview
+            mMyView.Table = mdatasetCustomersClone.Tables("tblCustomersClone")
+
+        Catch ex As Exception
+            Throw New Exception("params are " & strSPName.ToString & " " & strParamName.ToString & " " & strParamValue.ToString & " error is " & ex.Message)
+        End Try
+    End Sub
+
+
+    Public Sub FindCustomersForEmail(strFlightNumber As String)
+        RunSPwithOneParam("usp_CustomersClone_Select_For_Email", "@flightnumber", strFlightNumber)
+    End Sub
 End Class
 
