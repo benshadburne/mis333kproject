@@ -36,7 +36,7 @@ Partial Class Emp_AddCity
 
         'THE CITY NAME CURRENTLY DOES NOT ALLOW CITIES WITH A SPACE IN THEM TO PASS VALIDATION
         If Validations.CheckCity(txtCity.Text) = False Then
-            lblMessage.Text = "City must begin with a capital letter and only contain letters"
+            lblMessage.Text = "City must begin with a capital letter and only contain letters and spaces"
             Exit Sub
         End If
 

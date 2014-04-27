@@ -378,6 +378,10 @@ Public Class DBTickets
 
     End Sub
 
+    Public Sub FilterReservationByPaid()
+        mMyViewOne.RowFilter = "PricePaid = 0 AND MilagePaid = 0"
+    End Sub
+
     Public Sub GetTicketsInReservationOthers(strReservationID As String)
         'returns all tickets in a reservation
         RunSPwithOneParamOthers("usp_Tickets_Get_By_Reservation", "@ReservationID", strReservationID)
@@ -386,7 +390,7 @@ Public Class DBTickets
 
 
 
-    Public Sub AddTicketPrices(strSPName As String, intPricePaid As Integer, intMileagePaid As Integer, intTicketID As Integer)
+    Public Sub AddTicketPricesAndMiles(strSPName As String, intPricePaid As Integer, intMileagePaid As Integer, intTicketID As Integer)
         'defines array to put parameter names into
         Dim aryParamNames As New ArrayList
         Dim aryParamValues As New ArrayList
@@ -404,6 +408,26 @@ Public Class DBTickets
         UseSPforInsertOrUpdateQuery("usp_TicketClone_Add_Price", aryParamNames, aryParamValues)
 
     End Sub
+
+    Public Sub AddTicketPrices(strPricePaid As String, strTicketID As String)
+        'defines array to put parameter names into
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+
+        'add parameter names to names array list
+        aryParamNames.Add("@TicketID")
+        aryParamNames.Add("@PricePaid")
+
+
+        'add values to parameter values array list
+        aryParamValues.Add(strTicketID)
+        aryParamValues.Add(strPricePaid)
+
+
+        UseSPforInsertOrUpdateQuery("usp_TicketsClone_Update_Price", aryParamNames, aryParamValues)
+
+    End Sub
+
 
 
     Public Sub DoSort(ByVal intIndex As Integer)

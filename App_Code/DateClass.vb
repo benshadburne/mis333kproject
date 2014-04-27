@@ -101,10 +101,10 @@ Public Class DBdate
         End Try
     End Sub
 
-    Public Function GetCurrentDate() As Date
+    Public Function GetCurrentDate() As String
         RunProcedure("usp_Constants_Get_Date")
 
-        Return CDate(mdatasetdate.Tables("tblDate").Rows(0).ToString)
+        Return mdatasetdate.Tables("tblDate").Rows(0).Item("DateTime").ToString
 
     End Function
 

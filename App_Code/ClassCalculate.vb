@@ -133,16 +133,19 @@ Public Class ClassCalculate
 
         'Check to see if the age is a senior
         If intAge >= 65 Then
-            decAgeDiscount = decBaseFare * AGE_SeniorDiscount_Constant
+            decAgeDiscount = intBaseFare * AGE_SeniorDiscount_Constant
 
+        Else
+            If intAge <= 12 Then
+                decAgeDiscount = intBaseFare * AGE_ChildDiscount_Constant
+            Else
+                decAgeDiscount = 0
+            End If
             'Check to see if the person is 12 and under
             'Keep in mind: I need to add the part where you can multiply the whole decTotal by 0 if the kid is under 3 and has a lap to sit on
-        ElseIf intAge <= 12 Then
-            decAgeDiscount = decBaseFare * AGE_ChildDiscount_Constant
 
             'just apply the decAgeDiscount as the decBaseFare
-        Else
-            decAgeDiscount = 0
+
         End If
 
         Return decAgeDiscount

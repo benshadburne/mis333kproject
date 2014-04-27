@@ -139,16 +139,38 @@ Public Class ClassValidate
         'Arguments:  strIn
         'Return: true/false
         'Date: 04/13/2014
+        Dim strOne As String
+
+
 
         'check to see if length is 2 while seeing if it contains only letters
         Select Case strIn.Substring(0, 1)
             Case "A" To "Z"
-                Return CheckLetterWithSubstring(strIn)
+                'keep going
+
             Case Else
                 'failed first letter capital test
                 Return False
         End Select
 
+        For i = 1 To Len(strIn) - 1
+            'get one character from the string
+            strOne = strIn.Substring(i, 1)
+            Select Case strOne.ToUpper
+                'if the character is 0-9, then keep going
+                Case "A" To "Z"
+                    ' if the character is anything else, stop looking the return false
+                Case " "
+                    'this is a space, keep looking
+                Case Else
+                    'if bad data, return false
+                    Return False
+            End Select
+        Next
+
+        'we made it through the loop
+
+        Return True
     End Function
 
     Public Function CheckState(ByVal strIn As String) As Boolean

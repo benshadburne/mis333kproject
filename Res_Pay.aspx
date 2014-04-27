@@ -52,9 +52,8 @@
         <div class="pull-left" style="text-align:right; width: 200px">
                
                  
-              <asp:Button ID="btnCalculate" runat="server" Text="Calculate Cost" Visible="false"/>
-              <br />
-              <asp:Label ID="Label8" runat="server" Text="Pay with:"></asp:Label>
+          
+              <asp:Label ID="lblPay" runat="server" Text="Pay with:" Visible ="false"></asp:Label>
             <br />
               <asp:RadioButtonList ID="rblPayment" runat="server" AutoPostBack="True" Visible="false">
                   <asp:ListItem>Miles</asp:ListItem>
@@ -67,21 +66,24 @@
             <asp:Label ID="lblCost" runat="server" Text=""></asp:Label>
               <br />
               <br />
+            <asp:Label ID="lblSubtotal" runat="server" Text=""></asp:Label>
+            <br />
+            <br />
                            
                  
               <asp:Button ID="btnPay" runat="server" Text="Pay" Visible="false"/>
               
               <br />
             <br />
-            <asp:Label ID="lblUpgrade" runat="server" Text="Would you like to upgrade for 500 miles?"></asp:Label>
+            <asp:Label ID="lblUpgrade" runat="server" Text="Would you like to upgrade for 500 miles?" Visible="false"></asp:Label>
 
                                        
                  
-              <asp:Button ID="btnYes" runat="server" Text="Yes" />
+              <asp:Button ID="btnYes" runat="server" Text="Yes" visible="false"/>
               
                                          
                  
-              <asp:Button ID="btnNo" runat="server" Text="No" />
+              <asp:Button ID="btnNo" runat="server" Text="No" visible="false"/>
               
               
 

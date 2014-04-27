@@ -8,6 +8,7 @@ Partial Class Res_Pay
     Dim Calculate As New ClassCalculate
     Dim DBJourney As New DBjourneyclone
     Dim DBDate As New DBdate
+    Dim DBCustomer As New DBCustomersClone
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -21,6 +22,8 @@ Partial Class Res_Pay
         'End If
 
         'check to see if there is a running price subtotal on the page
+        Session("Login") = 5006
+        Session("ReservationID") = 10010
 
         If IsPostBack = False Then
             Session("ActiveUser") = Session("Login").ToString
@@ -78,7 +81,7 @@ Partial Class Res_Pay
         DBTickets.FilterYou(Session("ReservationID").ToString, (Session("ActiveUser").ToString))
         DBTickets.FilterOthers(Session("ReservationID").ToString, Session("ActiveUser").ToString)
         DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
-
+        DBTickets.FilterReservationByPaid()
 
     End Sub
 
@@ -272,10 +275,13 @@ Partial Class Res_Pay
         Dim strMiles As String
         Dim intAge As Integer
         Dim intBaseFare As Integer
+        Dim strAge As String
+        Dim strBaseFare As String
         Dim decAgeDiscount As Decimal
         Dim decFirstClassPremium As Decimal = 0
         Dim decInternetDiscount As Decimal = 0
         Dim decTwoWeekDiscount As Decimal
+        Dim decDiscount As Decimal
         Dim decSubtotal As Decimal
         Dim datReservation As Date
         Dim datToday As Date
@@ -283,7 +289,7 @@ Partial Class Res_Pay
 
         If rblPayment.SelectedValue = "Miles" Then
           
-            strMiles = DBTickets.GetMileage(gvYourReservation.Columns(3).ToString)
+            strMiles = DBTickets.GetMileage(gvTickets.SelectedRow.Cells(3).Text)
             lblMiles.Text = "You currently have " & strMiles & " miles in your account."
             If FirstClassSelected() = True Then
                 lblCost.Text = "The ticket costs 2000 miles."
@@ -293,16 +299,20 @@ Partial Class Res_Pay
 
         Else
             'run all the cost calculations
-            intAge = CInt(gvYourReservation.Columns(6).ToString)
-            intBaseFare = CInt((gvOtherReservation.Columns(11).ToString))
+            strAge = gvTickets.SelectedRow.Cells(6).Text
+            intAge = CInt(strAge)
+            lblMessage.Text = intAge.ToString
+            strBaseFare = (gvTickets.SelectedRow.Cells(11).Text)
+            intBaseFare = CInt(strBaseFare)
             decAgeDiscount = Calculate.CalculateAgeDiscount(intAge, intBaseFare)
             If FirstClassSelected() = True Then
                 decFirstClassPremium = Calculate.CalculateFirstClass(intBaseFare)
             End If
 
 
-            datReservation = CDate(DBJourney.GetDateByJourney(gvYourReservation.Columns(3).ToString, gvYourReservation.Columns(0).ToString))
-            datToday = DBDate.GetCurrentDate
+            datReservation = CDate(DBJourney.GetDateByJourney(gvTickets.SelectedRow.Cells(4).Text, gvTickets.SelectedRow.Cells(1).Text))
+
+            datToday = CDate(DBDate.GetCurrentDate)
 
             'use if statement to see if we should apply an internet discount
             'If Session("login") = "customer" Then
@@ -314,9 +324,13 @@ Partial Class Res_Pay
 
             decTwoWeekDiscount = Calculate.CalculateDateDiscount(intBaseFare, datReservation, datToday)
 
-            decSubtotal = Calculate.CalculateSubTotalDiscount(intBaseFare, decFirstClassPremium, decAgeDiscount, decTwoWeekDiscount, decInternetDiscount)
+            decDiscount = Calculate.CalculateSubTotalDiscount(intBaseFare, decFirstClassPremium, decAgeDiscount, decTwoWeekDiscount, decInternetDiscount)
+
+            decSubtotal = intBaseFare + decDiscount
 
             Session.Add("Subtotal", decSubtotal)
+
+            lblMiles.Text = ""
 
             lblCost.Text = "This ticket will cost you $" & decSubtotal.ToString("n2") & "."
 
@@ -331,7 +345,7 @@ Partial Class Res_Pay
         Dim strMiles As String
         Dim intMiles As Integer
 
-        strMiles = DBTickets.GetMileage(gvYourReservation.Columns(3).ToString)
+        strMiles = DBTickets.GetMileage(gvTickets.SelectedRow.Cells(3).Text)
         intMiles = CInt(strMiles)
 
         'send information to the DB
@@ -346,12 +360,16 @@ Partial Class Res_Pay
                     btnNo.Visible = True
                     'must make sure we put them in a first class seat somehow...
                     'send payment information to database (miles and moneys)
-                    Session("RunningSubtotal") = CDec(Session("RunningSubtotal")) + CDec(Session("Subtotal"))
-                    Session.Remove("Subtotal")
                 End If
             Else
                 'do nothing
             End If
+            Session("RunningSubtotal") = CDec(Session("RunningSubtotal")) + CDec(Session("Subtotal"))
+
+            'update paid on DB
+            DBTickets.AddTicketPrices(Session("Subtotal").ToString, gvTickets.SelectedRow.Cells(1).Text)
+            Session.Remove("Subtotal")
+            lblSubtotal.Text = Session("RunningSubtotal").ToString
         Else
             'they are paying by miles
             If FirstClassSelected() = True Then
@@ -359,6 +377,8 @@ Partial Class Res_Pay
                 If intMiles >= 2000 Then
                     intMiles -= 2000
                     'send new mileage to the database
+                    DBCustomer.UpdateMiles(intMiles.ToString, gvTickets.SelectedRow.Cells(3).Text)
+
                 Else
                     'not enough miles
                     lblMessage.Text = "You don't have enough miles to pay for your first class ticket. Try paying with money"
@@ -369,11 +389,11 @@ Partial Class Res_Pay
                 If intMiles >= 1000 Then
                     intMiles -= 1000
                     'send new mileage to the database
+                    DBCustomer.UpdateMiles(intMiles.ToString, gvTickets.SelectedRow.Cells(3).Text)
                 Else
                     'not enough miles
                     lblMessage.Text = "You don't have enough miles to pay for your economy class ticket. Please pay with money."
                     rblPayment.SelectedIndex = 0
-                    rblPayment.Enabled = False
                     Exit Sub
                 End If
             End If
@@ -424,10 +444,6 @@ Partial Class Res_Pay
 
     End Function
 
-    Public Sub GoToNextCustomer()
-        'write some code so that we will select the next customer
-    End Sub
-
     Protected Sub ddlAdvantageNum_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlAdvantageNum.SelectedIndexChanged
 
         Session("ActiveUser") = ddlAdvantageNum.SelectedValue
@@ -435,11 +451,21 @@ Partial Class Res_Pay
         SortandBind()
     End Sub
 
-    Protected Sub btnCalculate_Click(sender As Object, e As EventArgs) Handles btnCalculate.Click
-        rblPayment.Visible = True
-    End Sub
-
     Protected Sub gvTickets_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvTickets.SelectedIndexChanged
-        btnCalculate.Visible = True
+        gvTickets.SelectedRow.Style.Add("background-color", "#ffcccc")
+        ddlJourneyID.SelectedValue = gvTickets.SelectedRow.Cells(4).Text
+        ddlJourneyID.Enabled = False
+        ddlAdvantageNum.SelectedValue = gvTickets.SelectedRow.Cells(3).Text
+        ddlAdvantageNum.Enabled = False
+
+        rblPayment.Visible = True
+        lblPay.Visible = True
+
+        lblMiles.Text = ""
+        lblCost.Text = ""
+
+        rblPayment.SelectedIndex = -1
+
+        rblPayment.Enabled = True
     End Sub
 End Class

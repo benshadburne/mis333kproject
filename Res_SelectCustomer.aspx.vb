@@ -148,6 +148,9 @@ Partial Class Res_SelectCustomer
         pnlDoSearch.Visible = True
         pnlAddAge.Visible = False
 
+        'clear text box
+        txtAge.Text = ""
+
         If Session("Adults") = Session("Children") And Session("Adults") = Session("Babies") And Session("Adults") = 0 Then
             'remove session variables and redirect
             Session.Remove("Adults")

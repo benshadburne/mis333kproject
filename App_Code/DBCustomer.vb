@@ -223,5 +223,20 @@ Public Class DBCustomersClone
         End Try
     End Sub
 
+    Public Sub UpdateMiles(strMiles As String, strAdvantageNumber As String)
+        'create arrays
+        Dim aryParamNames As ArrayList
+        Dim aryParamValues As ArrayList
+
+        aryParamNames.Add("@Miles")
+        aryParamNames.Add("@AdvantageNumber")
+
+        aryParamValues.Add(strMiles)
+        aryParamValues.Add(strAdvantageNumber)
+
+        UseSPforInsertOrUpdateQuery("usp_Customers_UpdateMiles", aryParamNames, aryParamValues)
+
+    End Sub
+
 End Class
 
