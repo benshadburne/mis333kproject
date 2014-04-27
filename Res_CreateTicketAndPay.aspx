@@ -10,36 +10,26 @@
     <div id="gridview">
         
 
-        <asp:GridView ID="gvJourney" runat="server">
-            <Columns>
-                <asp:CommandField ShowSelectButton="True" />
-            </Columns>
-        </asp:GridView>
-
-        <asp:TextBox ID="TextBox1" runat="server"></asp:TextBox>
-
     </div>
     
     <br />
     <br />
 
-    <asp:RadioButtonList ID="radFirstClass" runat="server">
-        <asp:ListItem>Economy</asp:ListItem>
-        <asp:ListItem>First Class</asp:ListItem>
-    </asp:RadioButtonList>
-    <asp:Label ID="Label1" runat="server" Text="Flight Number"></asp:Label>
-    <asp:TextBox ID="txtFlightNumber" runat="server"></asp:TextBox>
     <br />
-    <asp:Label ID="Label2" runat="server" Text="Age"></asp:Label>
-    <asp:TextBox ID="txtAge" runat="server"></asp:TextBox>
+    
+    <asp:Label ID="lblSubTotal" runat="server" Text="Label"></asp:Label>
     
     <br />
-    <asp:Label ID="Label3" runat="server" Text="Date"></asp:Label>
-    <asp:TextBox ID="txtDate" runat="server"></asp:TextBox>
     <br />
-    <asp:Button ID="btnGetBaseFare" CssClass="btn" runat="server" Text="Get Base Fare" />
+    <asp:Button ID="btnCalculateTotal" CssClass="btn" runat="server" Text="Calculate Total" />
     <br />
-    <asp:Label ID="lblResult" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="lblTotal" runat="server" Text="Label"></asp:Label>
+
+
+
+    <br />
+    <br />
+    <asp:Button ID="btnPay" runat="server" CssClass="btn" Text="Pay" />
 
 
 

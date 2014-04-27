@@ -16,7 +16,7 @@
         <br />
         <br />
         <asp:Label CssClass="h3" ID="Label2" runat="server" Text="Your Tickets:"></asp:Label>
-        <asp:GridView class="table" ID="gvYourReservation" runat="server" Visible="false"></asp:GridView>
+        <asp:GridView class="table" ID="gvYourReservation" runat="server" ></asp:GridView>
         <asp:GridView class="table" ID="gvTickets" runat="server">
             <Columns>
                 <asp:CommandField ShowSelectButton="True" />
@@ -25,7 +25,7 @@
         
         <br />
          <asp:Label CssClass="h3" ID="Label3" runat="server" Text="Other Tickets:"></asp:Label>
-        <asp:GridView class="table" ID="gvOtherReservation" runat="server" Visible="false"></asp:GridView>
+        <asp:GridView class="table" ID="gvOtherReservation" runat="server" ></asp:GridView>
         <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
    <br />
         <div style="width:100%">
@@ -84,6 +84,8 @@
                                          
                  
               <asp:Button ID="btnNo" runat="server" Text="No" visible="false"/>
+            <br /> 
+            <asp:Button ID="btnConfirm" runat="server" Text="Confirm" visible="false"/>
               
               
 
@@ -91,21 +93,21 @@
                  
               </div> 
 
-        <asp:Panel runat="server" ID="pnlSeats" Visible ="false">
+        <asp:Panel runat="server" ID="pnlSeats">
         
          <div class="pull-left" style="text-align:center; width: 225px">
                 <asp:Button class="btn-seat" ID="btn1A" runat="server" Text="1A" />
               <br />
               <asp:Button class="btn-seat" ID="btn2A" runat="server" Text="2A" />
               <br />
-              <asp:Button class="btn-seat" ID="btn3A" runat="server" Text="3A" />
-              <asp:Button class="btn-seat" ID="btn3B" runat="server" Text="3B" />
+              <asp:Button class="btn-seat" ID="btn3A" runat="server" Text="3A" Enabled ="false"/>
+              <asp:Button class="btn-seat" ID="btn3B" runat="server" Text="3B" Enabled="false" />
               <br />
-              <asp:Button class="btn-seat" ID="btn4A" runat="server" Text="4A" />
-              <asp:Button class="btn-seat" ID="btn4B" runat="server" Text="4B" />
+              <asp:Button class="btn-seat" ID="btn4A" runat="server" Text="4A" Enabled ="false"/>
+              <asp:Button class="btn-seat" ID="btn4B" runat="server" Text="4B" Enabled ="false"/>
               <br />
-              <asp:Button class="btn-seat" ID="btn5A" runat="server" Text="5A" />
-              <asp:Button class="btn-seat" ID="btn5B" runat="server" Text="5B" />
+              <asp:Button class="btn-seat" ID="btn5A" runat="server" Text="5A" Enabled ="false" />
+              <asp:Button class="btn-seat" ID="btn5B" runat="server" Text="5B" Enabled ="false"/>
                 <br />
                  
               </div>
@@ -117,14 +119,14 @@
               <br />
               <asp:Button class="btn-seat" ID="btn2B" runat="server" Text="2B" />
               <br />
-              <asp:Button class="btn-seat" ID="btn3C" runat="server" Text="3C" />
-              <asp:Button class="btn-seat" ID="btn3D" runat="server" Text="3D" />
+              <asp:Button class="btn-seat" ID="btn3C" runat="server" Text="3C" Enabled ="false"/>
+              <asp:Button class="btn-seat" ID="btn3D" runat="server" Text="3D" Enabled ="false"/>
               <br />
-              <asp:Button class="btn-seat" ID="btn4C" runat="server" Text="4C" />
-              <asp:Button class="btn-seat" ID="btn4D" runat="server" Text="4D" />
+              <asp:Button class="btn-seat" ID="btn4C" runat="server" Text="4C" Enabled ="false"/>
+              <asp:Button class="btn-seat" ID="btn4D" runat="server" Text="4D" Enabled ="false"/>
               <br />
-              <asp:Button class="btn-seat" ID="btn5C" runat="server" Text="5C" />
-              <asp:Button class="btn-seat" ID="btn5D" runat="server" Text="5D" />
+              <asp:Button class="btn-seat" ID="btn5C" runat="server" Text="5C" Enabled ="false"/>
+              <asp:Button class="btn-seat" ID="btn5D" runat="server" Text="5D" Enabled ="false"/>
                 <br />
           </div>
 

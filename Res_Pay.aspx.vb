@@ -17,6 +17,9 @@ Partial Class Res_Pay
 
         'check session reservationID if it's empty
 
+        Session("ReservationID") = 10006
+        Session("ActiveUser") = 5000
+
         'If Session("ReservationID") Is Nothing Then
         '    Response.Redirect("HomePage.aspx")
         'End If
@@ -192,6 +195,8 @@ Partial Class Res_Pay
 
         If gvTickets.Rows.Count = 0 Then
             'have them pay or something
+            Response.Redirect("Res_CreateTicketAndPay.aspx")
+
         End If
 
     End Sub
@@ -252,6 +257,8 @@ Partial Class Res_Pay
         End If
 
         ResetAll()
+
+        rblPayment.SelectedIndex = -1
 
     End Sub
 
@@ -368,12 +375,7 @@ Partial Class Res_Pay
             Else
                 'do nothing
             End If
-            Session("RunningSubtotal") = CDec(Session("RunningSubtotal")) + CDec(Session("Subtotal"))
-
-            'update paid on DB
-            DBTickets.AddTicketPrices(Session("Subtotal").ToString, gvTickets.SelectedRow.Cells(1).Text)
-            Session.Remove("Subtotal")
-            lblSubtotal.Text = Session("RunningSubtotal").ToString
+            PriceAdd()
         Else
             'they are paying by miles
             If FirstClassSelected() = True Then
@@ -459,11 +461,11 @@ Partial Class Res_Pay
     End Sub
 
     Protected Sub gvTickets_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvTickets.SelectedIndexChanged
-        gvTickets.SelectedRow.Style.Add("background-color", "#ffcccc")
         ddlJourneyID.SelectedValue = gvTickets.SelectedRow.Cells(4).Text
-        ddlJourneyID.Enabled = False
         ddlAdvantageNum.SelectedValue = gvTickets.SelectedRow.Cells(3).Text
+        ResetAll()
         ddlAdvantageNum.Enabled = False
+        ddlJourneyID.Enabled = False
 
         rblPayment.Visible = True
         lblPay.Visible = True
@@ -474,5 +476,56 @@ Partial Class Res_Pay
         rblPayment.SelectedIndex = -1
 
         rblPayment.Enabled = True
+
+        gvTickets.SelectedRow.Style.Add("background-color", "#ffcccc")
+
+        lblUpgrade.Visible = False
+        btnYes.Visible = False
+        btnNo.Visible = False
+    End Sub
+
+    Protected Sub btnYes_Click(sender As Object, e As EventArgs) Handles btnYes.Click
+        'tell them to select their first class ticket
+        lblMessage.Text = "Please select your first class ticket."
+
+        'show them the panel with the seats
+        pnlSeats.Visible = True
+
+        btnYes.Visible = False
+        btnNo.Visible = False
+        btnConfirm.Visible = True
+    End Sub
+
+    Protected Sub btnNo_Click(sender As Object, e As EventArgs) Handles btnNo.Click
+        PriceAdd()
+    End Sub
+
+    Private Sub PriceAdd()
+        Session("RunningSubtotal") = CDec(Session("RunningSubtotal")) + CDec(Session("Subtotal"))
+
+        'update paid on DB
+        DBTickets.AddTicketPrices(Session("Subtotal").ToString, gvTickets.SelectedRow.Cells(1).Text)
+        Session.Remove("Subtotal")
+        lblSubtotal.Text = Session("RunningSubtotal").ToString
+    End Sub
+
+    Protected Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
+        Dim strMiles As String
+        Dim intMiles As Integer
+
+        strMiles = DBTickets.GetMileage(gvTickets.SelectedRow.Cells(3).Text)
+        intMiles = CInt(strMiles)
+
+        If FirstClassSelected() = False Then
+            'error message
+            lblMessage.Text = "Please click on a first class seat"
+            Exit Sub
+        Else
+            'pay for their ticket
+            DBTickets.AddTicketPricesAndMiles(Session("Subtotal").ToString, "500", gvTickets.SelectedRow.Cells(1).Text)
+            'remove miles from their account
+            intMiles -= 500
+            DBCustomer.UpdateMiles(intMiles.ToString, gvTickets.SelectedRow.Cells(3).Text)
+        End If
     End Sub
 End Class

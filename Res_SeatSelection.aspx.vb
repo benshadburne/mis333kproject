@@ -291,7 +291,7 @@ Partial Class _Default
         lblFinish.Text = ""
 
         'loop through all the tickets in this reservation to see if they have seats
-        For i = 0 To DBTickets.MyView.Count - 1
+        For i = 0 To DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
             strSeat = DBTickets.MyDataSetOne.Tables("tblTickets").Rows(i).Item("Seat").ToString
 
             Select Case strSeat
