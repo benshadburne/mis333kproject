@@ -42,6 +42,23 @@ Partial Class Cust_AddNewCustomer
     End Sub
 
     Protected Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        'Create session variables for address, city, state, zip, and last name
+        Session("Address") = 0
+        Session("City") = 0
+        Session("State") = 0
+        Session("Zip") = 0
+        Session("LastName") = 0
+
+        'Clear the message
+        lblErrorMessage.Text = ""
+        lblSuccessMessage.Text = ""
+
+        'Check for First Name, Last Name, and Phone duplicates on one add
+        If CustDB.GetFirstName(txtFName.Text) = True And CustDB.GetLastName(txtLName.Text) = True And CustDB.GetPhoneNumber(txtPhone.Text) = True Then
+            lblErrorMessage.Text = "Duplicate First Name, Last Name, and Phone Number. Please try again."
+            Exit Sub
+        End If
+
 
         'Here's where I will put all of my validations
         'Validate Phone
@@ -68,5 +85,39 @@ Partial Class Cust_AddNewCustomer
         'Outputs
         lblSuccessMessage.Text = "Profile successfully added."
 
+        'Create the values for the session variables
+        Session("Address") = txtAddress.Text
+        Session("City") = txtCity.Text
+        Session("State") = txtState.Text
+        Session("Zip") = txtZip.Text
+        Session("LastName") = txtLName.Text
+
+    End Sub
+
+    Protected Sub btnAddFamilyMember_Click(sender As Object, e As EventArgs) Handles btnAddFamilyMember.Click
+        'Fill the text boxes with the session variable values
+        txtAddress.Text = CStr(Session("Address"))
+        txtCity.Text = CStr(Session("City"))
+        txtState.Text = CStr(Session("State"))
+        txtZip.Text = CStr(Session("Zip"))
+        txtLName.Text = CStr(Session("LastName"))
+
+    End Sub
+
+    Protected Sub btnClear_Click(sender As Object, e As EventArgs) Handles btnClear.Click
+        'Clear the message
+        lblErrorMessage.Text = ""
+        lblSuccessMessage.Text = ""
+
+        txtFName.Text = ""
+        txtMI.Text = ""
+        txtLName.Text = ""
+        txtPassword.Text = ""
+        txtAddress.Text = ""
+        txtCity.Text = ""
+        txtState.Text = ""
+        txtZip.Text = ""
+        txtEmail.Text = ""
+        txtPhone.Text = ""
     End Sub
 End Class

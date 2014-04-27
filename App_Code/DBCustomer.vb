@@ -284,6 +284,70 @@ Public Class DBCustomersClone
         RunSPwithOneParam("usp_Customers_Get_By_Journey", "@JourneyID", strJourneyID)
     End Sub
 
+    'Public Function for seeing if a Username typed into the text box is actually in the Customer Table
+    Public Function GetFirstName(strFirstName As String) As Boolean
+        'Purpose: See if a username typed into the text box is actually in the Customer Table
+        'Inputs: strUsername
+        'Returns: True if there, False if nonexistent
+        'Author: Dennis Phelan
+        'Date Created: April 27, 2014
+
+        ''NEW WAY
+        RunSPwithOneParam("usp_CustomersClone_Get_FirstName", "@Firstname", strFirstName)
+
+        'Check number of rows in Data set
+        ' If zero, return False
+        ' Else return True
+        If mMyView.Table.Rows.Count = 0 Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
+
+    'Public Function for seeing if a Username typed into the text box is actually in the Customer Table
+    Public Function GetLastName(strLastName As String) As Boolean
+        'Purpose: See if a username typed into the text box is actually in the Customer Table
+        'Inputs: strUsername
+        'Returns: True if there, False if nonexistent
+        'Author: Dennis Phelan
+        'Date Created: April 27, 2014
+
+        ''NEW WAY
+        RunSPwithOneParam("usp_CustomersClone_Get_LastName", "@LastName", strLastName)
+
+        'Check number of rows in Data set
+        ' If zero, return False
+        ' Else return True
+        If mMyView.Table.Rows.Count = 0 Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
+
+    'Public Function for seeing if a Username typed into the text box is actually in the Customer Table
+    Public Function GetPhoneNumber(strPhone As String) As Boolean
+        'Purpose: See if a username typed into the text box is actually in the Customer Table
+        'Inputs: strUsername
+        'Returns: True if there, False if nonexistent
+        'Author: Dennis Phelan
+        'Date Created: April 27, 2014
+
+        ''NEW WAY
+        RunSPwithOneParam("usp_CustomersClone_Get_Phone", "@Phone", strPhone)
+
+        'Check number of rows in Data set
+        ' If zero, return False
+        ' Else return True
+        If mMyView.Table.Rows.Count = 0 Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
+
+
 
 
     Public Sub FindCustomersForEmail(strFlightNumber As String)

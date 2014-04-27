@@ -26,6 +26,9 @@
             <asp:Button class="btn" ID="btnClear" runat="server" Text="Clear" CausesValidation="False" />
             <br />
             <br />
+        <asp:Button class="btn" ID="btnAddFamilyMember" runat="server" Text="Add Family Member" CausesValidation="False" />
+        <br />
+        <br />
             <asp:Label ID="lblErrorMessage" runat="server" Text=""></asp:Label>
             <asp:Label ID="lblSuccessMessage" runat="server" Text=""></asp:Label>
             <br />
