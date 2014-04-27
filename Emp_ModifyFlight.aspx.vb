@@ -14,6 +14,9 @@ Partial Class Emp_ModifyFlight
     'create instance of validaiton class
     Dim VObject As New ClassValidate
 
+    'create instance of journey class
+    Dim JObject As New DBjourneyclone
+
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         'if first time loading page, set datasource of ddlFlights
         If IsPostBack = False Then
@@ -365,5 +368,6 @@ Partial Class Emp_ModifyFlight
         'No, because that would necessitate remembering what WAS checked, and I don't want to use 7 session variables
         'so see what's not checked, then run query on database to see if there's a day present that isn't checked
         'have 7 places where flight can be cancelled, one for each of the 7 days
+
     End Sub
 End Class

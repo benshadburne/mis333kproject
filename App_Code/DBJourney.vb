@@ -318,4 +318,17 @@ Public Class DBjourneyclone
 
     End Sub
 
+    Public Sub CheckJourneyDays(strFlightNumber As String, strDayofWeek As String)
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+
+        aryParamNames.Add("@flightnumber")
+        aryParamNames.Add("@dayofweek")
+
+        aryParamValues.Add(strFlightNumber)
+        aryParamValues.Add(strDayofWeek)
+
+        UseSPToRetrieveRecords("usp_JourneysClone_Find_By_Day", MyDataSet, mMyView, "tblJourneysClone", aryParamNames, aryParamValues)
+    End Sub
+
 End Class
