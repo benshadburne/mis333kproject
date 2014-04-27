@@ -331,4 +331,18 @@ Public Class DBjourneyclone
         UseSPToRetrieveRecords("usp_JourneysClone_Find_By_Day", MyDataSet, mMyView, "tblJourneysClone", aryParamNames, aryParamValues)
     End Sub
 
+    Public Sub InactivateJourney(strDay As String, strFlightNumber As String)
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+
+        aryParamNames.Add("@dayofweek")
+        aryParamNames.Add("@flightnumber")
+
+        aryParamValues.Add(strDay)
+        aryParamValues.Add(strFlightNumber)
+
+
+        UseSPforInsertOrUpdateQuery("usp_JourneysClone_Modify_Journey", aryParamNames, aryParamValues)
+    End Sub
+
 End Class

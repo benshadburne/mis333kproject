@@ -377,4 +377,12 @@ Partial Class Emp_ModifyFlight
         End If
 
     End Sub
+
+    Public Sub IDoWorkSon(strDay As String, strFlightNumber As String)
+        'make the journey, reservation, and all affected tickets inactive
+        JObject.InactivateJourney(strDay, strFlightNumber)
+
+        'find customers who need to be emailed
+
+    End Sub
 End Class
