@@ -665,14 +665,14 @@ Public Class DBTickets
         'Date Last Modified: April 27, 2014
 
         'Run the procedure
-        RunProcedure("usp_ShowPricePaidAndSeatNumber_Get_GrossRevenue_And_SeatCount")
+        RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_GrossRevenue_And_SeatCount")
 
     End Sub
 
-    'Filter the Gross Revenue by dates
+    'Filter the Gross Revenue and Seat Count by dates
     Public Sub RevenueFilterByDate(strLowerDate As String, strUpperDate As String)
         'Run the procedure to get the gross revenue for each flight
-        RunProcedure("usp_ShowPricePaidAndSeatNumber_Get_GrossRevenue_And_SeatCount")
+        RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_GrossRevenue_And_SeatCount")
 
         'Check to make sure if there is a lower date; if not, just filter for the upper date
         If strLowerDate = "" Then
