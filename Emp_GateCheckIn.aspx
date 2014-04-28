@@ -9,11 +9,13 @@
          <Columns>
              <asp:TemplateField>
                  <ItemTemplate>
-                     <asp:CheckBox ID="chkOnFlight" runat="server" />
+                     <asp:CheckBox ID="chkPassengers" runat="server" />
                  </ItemTemplate>
              </asp:TemplateField>
          </Columns>
     </asp:GridView>
+
+    <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
 
     <br />
     <br />
@@ -22,9 +24,14 @@
     <asp:panel id="manifest" runat="server" Visible ="false">
         <asp:DropDownList ID="DropDownList2" runat="server" padding ="3px"></asp:DropDownList>
      <br />
-     <asp:GridView ID="GridView1" runat="server">
+     <asp:GridView ID="gvCrew" runat="server" visible="false">
          <Columns>
              <asp:CheckBoxField />
+             <asp:TemplateField>
+                 <ItemTemplate>
+                     <asp:CheckBox ID="chkCrew" runat="server" />
+                 </ItemTemplate>
+             </asp:TemplateField>
          </Columns>
     </asp:GridView>
 

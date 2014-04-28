@@ -125,6 +125,32 @@ Public Class ClassCrewScheduling
         End Try
     End Sub
 
+    Public ReadOnly Property MyDataSetCoCaptain() As DataSet
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: airportclone dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mdatasetCoCaptain
+
+        End Get
+    End Property
+
+    Public ReadOnly Property MyView() As DataView
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: airportclone dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mMyView
+
+        End Get
+    End Property
+
     Public Sub RunSPwithOneParamCoCaptain(ByVal strSPName As String, ByVal strParamName As String, ByVal strParamValue As String)
         ' purpose to run a stored procedure with one parameter
         ' inputs:  stored procedure name, parameter name, parameter value
@@ -525,6 +551,10 @@ Public Class ClassCrewScheduling
 
         Return aryCabin
     End Function
+
+    Public Sub GetCrewByJourney(strJourneyID As String)
+        RunSPwithOneParamCoCaptain("usp_Journey_Get_Crew", "@JourneyID", strJourneyID)
+    End Sub
 
     Private Function EmpID() As Object
         Throw New NotImplementedException
