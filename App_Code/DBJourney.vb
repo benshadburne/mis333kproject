@@ -19,6 +19,8 @@ Public Class DBjourneyclone
     Dim mdatasetjourneyclone As New DataSet
     Dim mdatasetjourneycloneSeats As New DataSet
     Dim mQueryString As String
+    Dim mdatasettwo As New DataSet
+    Dim mMyViewtwo As New DataView
 
     Dim DBJourneySeats As New DBJourneySeats
     Dim DBFlightSearch As New DBFlightSearch
@@ -46,6 +48,18 @@ Public Class DBjourneyclone
         End Get
     End Property
 
+    Public ReadOnly Property MyView2() As DataView
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: journeyclone dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mMyViewtwo
+        End Get
+    End Property
+
     Public ReadOnly Property MyDataSet() As DataSet
         'Author: Ben Shadburne
         'Purpose: returns read only dataview
@@ -55,6 +69,18 @@ Public Class DBjourneyclone
 
         Get
             Return mdatasetjourneyclone
+        End Get
+    End Property
+
+    Public ReadOnly Property MyDataSetTwo() As DataSet
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: journeyclone dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mdatasettwo
         End Get
     End Property
 
@@ -379,5 +405,57 @@ Public Class DBjourneyclone
     Public Sub InactivateJourneyWithoutDay(strFlightNumber As String)
         RunSPwithOneParam("usp_JourneysClone_Modify_Journey_Without_Day", "@flightnumber", strFlightNumber)
     End Sub
+
+    Public Sub GetJourneysByFlightNumberAndDay(strFlightNumber As String, strDay As String)
+        Dim aryJourneyNames As New ArrayList
+        Dim aryJourneyValues As New ArrayList
+
+        aryJourneyNames.Add("@flightnumber")
+        aryJourneyNames.Add("@day")
+
+        aryJourneyValues.Add(strFlightNumber)
+        aryJourneyValues.Add(strDay)
+        UseSPToRetrieveRecords("usp_JourneysClone_Get_Active_By_Flight_Number_And_Day", mdatasetjourneyclone, mMyView, "tblJourneysClone", aryJourneyNames, aryJourneyValues)
+    End Sub
+
+    Public Sub InactivateJourneysByFlightNumberAndDay(strFlightNumber As String, strDay As String)
+        Dim aryJourneyNames As New ArrayList
+        Dim aryJourneyValues As New ArrayList
+
+        aryJourneyNames.Add("@flightnumber")
+        aryJourneyNames.Add("@day")
+
+        aryJourneyValues.Add(strFlightNumber)
+        aryJourneyValues.Add(strDay)
+
+        UseSPforInsertOrUpdateQuery("usp_JourneysClone_Inactivate_By_Flight_Number_And_Day", aryJourneyNames, aryJourneyValues)
+    End Sub
+
+    Public Sub GetJourneysByFlightNumber(strFlightNumber As String)
+        Dim aryJourneyNames As New ArrayList
+        Dim aryJourneyValues As New ArrayList
+
+        aryJourneyNames.Add("@flightnumber")
+
+
+        aryJourneyValues.Add(strFlightNumber)
+
+        UseSPToRetrieveRecords("usp_JourneysClone_Get_Active_By_Flight_Number", mdatasetjourneyclone, mMyView, "tblJourneysClone", aryJourneyNames, aryJourneyValues)
+    End Sub
+
+    Public Sub InactivateJourneysByFlightNumber(strFlightNumber As String)
+        Dim aryJourneyNames As New ArrayList
+        Dim aryJourneyValues As New ArrayList
+
+        aryJourneyNames.Add("@flightnumber")
+
+
+        aryJourneyValues.Add(strFlightNumber)
+
+
+        UseSPforInsertOrUpdateQuery("usp_JourneysClone_Inactivate_By_Flight_Number", aryJourneyNames, aryJourneyValues)
+    End Sub
+
+
 
 End Class

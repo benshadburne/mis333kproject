@@ -224,74 +224,146 @@ Public Class CancelFlight
         End Try
     End Sub
 
-    Public Sub InactivateFlight(strFlightNumber As String)
+    Public Sub InactivateFlightAllDays(strFlightNumber As String)
         'get all journeys
-        DBJourneys.GetALLjourneycloneUsingSP()
+        DBJourneys.GetJourneysByFlightNumber(strFlightNumber)
         'loop through each journey
-        For i = 0 To DBJourneys.MyDataSet.Tables("tblJourneyClone").Rows.Count - 1
+        For i = 0 To DBJourneys.MyDataSet.Tables("tblJourneysClone").Rows.Count - 1
             'check if flight number of journey matches flight number we're looking for
-            If DBJourneys.MyDataSet.Tables("tblJourneyClone").Rows(i).Item("FlightNumber").ToString = strFlightNumber Then
+            'If DBJourneys.MyDataSet.Tables("tblJourneyClone").Rows(i).Item("FlightNumber").ToString = strFlightNumber Then
 
-                'if it does, inactivate the journey
+            'if it does, inactivate the journey
+            'create variables for things
+            Dim strJourneyID As String
+            Dim aryJourneyNames As New ArrayList
+            Dim aryJourneyValues As New ArrayList
+
+            'set journey ID to the current journey ID
+            strJourneyID = DBJourneys.MyDataSet.Tables("tblJourneysClone").Rows(i).Item("FlightNumber").ToString
+            aryJourneyNames.Add("@flightnumber")
+            aryJourneyValues.Add(strFlightNumber)
+
+            'run SP to make current journey ID inactive
+            DBJourneys.InactivateJourneysByFlightNumber(strFlightNumber)
+
+            'run SP to search reservations by current journey ID
+            DBReservations.RunSPwithOneParam("usp_ReservationsClone_Find_By_Journey_ID", "@journeyid", strJourneyID)
+
+            'loop through found reservations
+            For j = 0 To DBReservations.MyDataSet.Tables("tblReservationsClone").Rows.Count - 1
+                'update found reservations to inactive
                 'create variables for things
-                Dim strJourneyID As String
-                Dim aryJourneyNames As New ArrayList
-                Dim aryJourneyValues As New ArrayList
+                Dim strReservationID As String
+                Dim aryReservationNames As New ArrayList
+                Dim aryReservationValues As New ArrayList
 
-                'set journey ID to the current journey ID
-                strJourneyID = DBJourneys.MyDataSet.Tables("tblJourneyClone").Rows(i).Item("FlightNumber").ToString
-                aryJourneyNames.Add("@flightnumber")
-                aryJourneyValues.Add(strFlightNumber)
+                'set reservation id to the current reservation id
+                strReservationID = DBReservations.MyDataSet.Tables("tblReservationsClone").Rows(j).Item("ReservationID").ToString
+                aryReservationNames.Add("@reservationid")
+                aryReservationValues.Add(strReservationID)
+                'run stored procedure to update reservation to inactive
+                UseSPforInsertOrUpdateQuery("usp_ReservationsClone_Inactivate_By_ReservationID", aryReservationNames, aryReservationValues)
 
-                'run SP to make current journey ID inactive
-                UseSPforInsertOrUpdateQuery("usp_JourneysClone_Inactivate_By_Flight_Number", aryJourneyNames, aryJourneyValues)
+                'find all journeys affected 
+                DBJourneys.RunSPwithOneParam("usp_ReservationsClone_Get_Journeys", "@ReservationID", strReservationID)
 
-                'run SP to search reservations by current journey ID
-                DBReservations.RunSPwithOneParam("usp_ReservationsClone_Find_By_Journey_ID", "@journeyid", strJourneyID)
-
-                'loop through found reservations
-                For j = 0 To DBReservations.MyDataSet.Tables("tblReservationsClone").Rows.Count - 1
-                    'update found reservations to inactive
-                    'create variables for things
-                    Dim strReservationID As String
-                    Dim aryReservationNames As New ArrayList
-                    Dim aryReservationValues As New ArrayList
-
-                    'set reservation id to the current reservation id
-                    strReservationID = DBReservations.MyDataSet.Tables("tblReservationsClone").Rows(j).Item("ReservationID").ToString
-                    aryReservationNames.Add("@reservationid")
-                    aryReservationValues.Add(strReservationID)
-                    'run stored procedure to update reservation to inactive
-                    UseSPforInsertOrUpdateQuery("usp_ReservationsClone_Inactivate_By_ReservationID", aryReservationNames, aryReservationValues)
-
-                    'find all journeys affected 
-                    DBJourneys.RunSPwithOneParam("usp_ReservationsClone_Get_Journeys", "@ReservationID", strReservationID)
-
-                    'loop thorugh affected journeys
-                    For k = 0 To DBJourneys.MyDataSet.Tables("tblJourneys").Rows.Count - 1
-                        'deactive ticket, return mileage and money for entire reservation
-                        DBCancelReservation.ReturnMilesAndDeactivateTicket(strReservationID)
-                        'make all seats on reservation 
-                        DBCancelReservation.ChangeSeatStatus(strReservationID)
-                        'find the customers on each reservation
-                        DBTickets.RunSPwithOneParam("usp_TicketsClone_Find_Customers_By_ReservationID", "@reservationid", strReservationID)
-                        For l = 0 To DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
-                            Dim Msg As MailMessage = New MailMessage()
-                            Dim MailObj As New SmtpClient("smtp.mccombs.utexas.edu")
-                            Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
-                            Msg.To.Add(New MailAddress(DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("Email").ToString, DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString + " " + DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("LastName").ToString))
-                            Msg.IsBodyHtml = False
-                            Msg.Body = "Hello " & DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on flight #" & strFlightNumber & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
-                            Msg.Subject = "Flight Cancellation"
-                            MailObj.Send(Msg)
-                            Msg.To.Clear()
-                        Next
-
+                'loop thorugh affected journeys
+                For k = 0 To DBJourneys.MyDataSet.Tables("tblJourneys").Rows.Count - 1
+                    'deactive ticket, return mileage and money for entire reservation
+                    DBCancelReservation.ReturnMilesAndDeactivateTicket(strReservationID)
+                    'make all seats on reservation 
+                    DBCancelReservation.ChangeSeatStatus(strReservationID)
+                    'find the customers on each reservation
+                    DBTickets.RunSPwithOneParam("usp_TicketsClone_Find_Customers_By_ReservationID", "@reservationid", strReservationID)
+                    For l = 0 To DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
+                        Dim Msg As MailMessage = New MailMessage()
+                        Dim MailObj As New SmtpClient("smtp.mccombs.utexas.edu")
+                        Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
+                        Msg.To.Add(New MailAddress(DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("Email").ToString, DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString + " " + DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("LastName").ToString))
+                        Msg.IsBodyHtml = False
+                        Msg.Body = "Hello " & DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on flight #" & strFlightNumber & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
+                        Msg.Subject = "Flight Cancellation"
+                        MailObj.Send(Msg)
+                        Msg.To.Clear()
                     Next
+
                 Next
+            Next
 
 
-            End If
+            'End If
+        Next
+
+    End Sub
+
+    Public Sub InactivateFlightWithDay(strFlightNumber As String, strDay As String)
+        'get all journeys
+        DBJourneys.GetJourneysByFlightNumberAndDay(strFlightNumber, strDay)
+        'loop through each journey
+        For i = 0 To DBJourneys.MyDataSet.Tables("tblJourneysClone").Rows.Count - 1
+            'check if flight number of journey matches flight number we're looking for
+            'If DBJourneys.MyDataSet.Tables("tblJourneysClone").Rows(i).Item("FlightNumber").ToString = strFlightNumber Then
+
+            'if it does, inactivate the journey
+            'create variables for things
+            Dim strJourneyID As String
+            Dim aryJourneyNames As New ArrayList
+            Dim aryJourneyValues As New ArrayList
+
+            'set journey ID to the current journey ID
+            strJourneyID = DBJourneys.MyDataSet.Tables("tblJourneysClone").Rows(i).Item("FlightNumber").ToString
+            aryJourneyNames.Add("@flightnumber")
+            aryJourneyValues.Add(strFlightNumber)
+
+            'run SP to make current journey ID inactive
+            DBJourneys.InactivateJourneysByFlightNumberAndDay(strFlightNumber, strDay)
+
+            'run SP to search reservations by current journey ID
+            DBReservations.RunSPwithOneParam("usp_ReservationsClone_Find_By_Journey_ID", "@journeyid", strJourneyID)
+
+            'loop through found reservations
+            For j = 0 To DBReservations.MyDataSet.Tables("tblReservationsClone").Rows.Count - 1
+                'update found reservations to inactive
+                'create variables for things
+                Dim strReservationID As String
+                Dim aryReservationNames As New ArrayList
+                Dim aryReservationValues As New ArrayList
+
+                'set reservation id to the current reservation id
+                strReservationID = DBReservations.MyDataSet.Tables("tblReservationsClone").Rows(j).Item("ReservationID").ToString
+                aryReservationNames.Add("@reservationid")
+                aryReservationValues.Add(strReservationID)
+                'run stored procedure to update reservation to inactive
+                UseSPforInsertOrUpdateQuery("usp_ReservationsClone_Inactivate_By_ReservationID", aryReservationNames, aryReservationValues)
+
+                'find all journeys affected 
+                DBJourneys.RunSPwithOneParam("usp_ReservationsClone_Get_Journeys", "@ReservationID", strReservationID)
+
+                'loop thorugh affected journeys
+                For k = 0 To DBJourneys.MyDataSet.Tables("tblJourneys").Rows.Count - 1
+                    'deactive ticket, return mileage and money for entire reservation
+                    DBCancelReservation.ReturnMilesAndDeactivateTicket(strReservationID)
+                    'make all seats on reservation 
+                    DBCancelReservation.ChangeSeatStatus(strReservationID)
+                    'find the customers on each reservation
+                    DBTickets.RunSPwithOneParam("usp_TicketsClone_Find_Customers_By_ReservationID", "@reservationid", strReservationID)
+                    For l = 0 To DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
+                        Dim Msg As MailMessage = New MailMessage()
+                        Dim MailObj As New SmtpClient("smtp.mccombs.utexas.edu")
+                        Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
+                        Msg.To.Add(New MailAddress(DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("Email").ToString, DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString + " " + DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("LastName").ToString))
+                        Msg.IsBodyHtml = False
+                        Msg.Body = "Hello " & DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on flight #" & strFlightNumber & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
+                        Msg.Subject = "Flight Cancellation"
+                        MailObj.Send(Msg)
+                        Msg.To.Clear()
+                    Next
+
+                Next
+            Next
+
+
+            'End If
         Next
 
     End Sub
