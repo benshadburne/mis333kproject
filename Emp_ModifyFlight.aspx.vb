@@ -408,17 +408,17 @@ Partial Class Emp_ModifyFlight
         CuObject.FindCustomersForEmail(strFlightNumber)
 
         'send the email to each customer
-        For i = 0 To CuObject.MyDataset.Tables("tblCustomersClone").Rows.Count - 1
-            Dim Msg As MailMessage = New MailMessage()
-            Dim MailObj As New SmtpClient("smtp.mccombs.utexas.edu")
-            Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
-            Msg.To.Add(New MailAddress(CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("Email").ToString, CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("First Name").ToString + " " + CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("LastName").ToString))
-            Msg.IsBodyHtml = False
-            Msg.Body = "Hello " & CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on flight #" & strFlightNumber & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
-            Msg.Subject = "Flight Cancellation"
-            MailObj.Send(Msg)
-            Msg.To.Clear()
-        Next
+        'For i = 0 To CuObject.MyDataset.Tables("tblCustomersClone").Rows.Count - 1
+        '    Dim Msg As MailMessage = New MailMessage()
+        '    Dim MailObj As New SmtpClient("smtp.mccombs.utexas.edu")
+        '    Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
+        '    Msg.To.Add(New MailAddress(CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("Email").ToString, CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("First Name").ToString + " " + CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("LastName").ToString))
+        '    Msg.IsBodyHtml = False
+        '    Msg.Body = "Hello " & CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on flight #" & strFlightNumber & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
+        '    Msg.Subject = "Flight Cancellation"
+        '    MailObj.Send(Msg)
+        '    Msg.To.Clear()
+        'Next
     End Sub
 
     Public Sub InactivateJourneysRegardlessOfDay(strFlightNumber As String)
@@ -429,17 +429,17 @@ Partial Class Emp_ModifyFlight
         CuObject.FindCustomersForEmail(strFlightNumber)
 
         'send the email to each customer
-        For i = 0 To CuObject.MyDataset.Tables("tblCustomersClone").Rows.Count - 1
-            Dim Msg As MailMessage = New MailMessage()
-            Dim MailObj As New SmtpClient("smtp.mccombs.utexas.edu")
-            Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
-            Msg.To.Add(New MailAddress(CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("Email").ToString, CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("First Name").ToString + " " + CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("LastName").ToString))
-            Msg.IsBodyHtml = False
-            Msg.Body = "Hello " & CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on flight #" & strFlightNumber & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
-            Msg.Subject = "Flight Cancellation"
-            MailObj.Send(Msg)
-            Msg.To.Clear()
-        Next
+        'For i = 0 To CuObject.MyDataset.Tables("tblCustomersClone").Rows.Count - 1
+        '    Dim Msg As MailMessage = New MailMessage()
+        '    Dim MailObj As New SmtpClient("smtp.mccombs.utexas.edu")
+        '    Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
+        '    Msg.To.Add(New MailAddress(CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("Email").ToString, CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("First Name").ToString + " " + CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("LastName").ToString))
+        '    Msg.IsBodyHtml = False
+        '    Msg.Body = "Hello " & CuObject.MyDataset.Tables("tblCustomersClone").Rows(i).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on flight #" & strFlightNumber & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
+        '    Msg.Subject = "Flight Cancellation"
+        '    MailObj.Send(Msg)
+        '    Msg.To.Clear()
+        'Next
     End Sub
 
 
