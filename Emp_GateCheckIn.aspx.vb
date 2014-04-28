@@ -14,7 +14,7 @@ Partial Class Emp_GateCheckIn
         lblMessage.Text = ""
 
         LoadCustomerGridView(ddlJourneys.SelectedValue.ToString)
-       
+
     End Sub
 
     Public Sub LoadCustomerGridView(strJourneyID As String)
