@@ -21,7 +21,7 @@
     <br />
     <asp:Button ID="btnConfirm" runat="server" text="confirm"> </asp:Button>
 
-    <asp:panel id="manifest" runat="server" Visible ="false">
+    <asp:panel id="manifest" runat="server" >
         <asp:DropDownList ID="DropDownList2" runat="server" padding ="3px"></asp:DropDownList>
      <br />
      <asp:GridView ID="gvCrew" runat="server" visible="false">
