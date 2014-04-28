@@ -655,5 +655,37 @@ Public Class DBTickets
         End Get
     End Property
 
+    'Get the Gross Revenue
+    Public Sub GetGrossRevenueAndSeatCount()
+        'Purpose: Run the stored procedure to get the gross revenue for each flight number by journey
+        'Author: Dennis Phelan
+        'Inputs: None
+        'Outputs: the gross revenue query output
+        'Date Created: April 27, 2014
+        'Date Last Modified: April 27, 2014
+
+        'Run the procedure
+        RunProcedure("usp_ShowPricePaidAndSeatNumber_Get_GrossRevenue_And_SeatCount")
+
+    End Sub
+
+    'Filter the Gross Revenue by dates
+    Public Sub RevenueFilterByDate(strLowerDate As String, strUpperDate As String)
+        'Run the procedure to get the gross revenue for each flight
+        RunProcedure("usp_ShowPricePaidAndSeatNumber_Get_GrossRevenue_And_SeatCount")
+
+        'Check to make sure if there is a lower date; if not, just filter for the upper date
+        If strLowerDate = "" Then
+            mMyView.RowFilter = "FlightDate <= '" & strUpperDate & "'"
+
+            'If lower date is there, check to make sure there is an upper date; if not, just filter for the upper date
+        ElseIf strUpperDate = "" Then
+            mMyView.RowFilter = "FlightDate >= '" & strLowerDate & "'"
+
+            'If lower and upper date are there, filter for both
+        Else
+            mMyView.RowFilter = "FlightDate >= '" & strLowerDate & "' AND FlightDate <= '" & strUpperDate & "'"
+        End If
+    End Sub
 End Class
 
