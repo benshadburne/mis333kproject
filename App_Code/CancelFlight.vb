@@ -2,6 +2,7 @@
 Imports Microsoft.VisualBasic
 Imports System.Data
 Imports System.Data.SqlClient
+Imports System.Net.Mail
 Public Class CancelFlight
 
 
@@ -22,6 +23,7 @@ Public Class CancelFlight
     Dim DBTickets As New DBTickets
     Dim DBFlights As New DBFlightsClone
     Dim DBReservations As New DBReservations
+    Dim DBCancelReservation As New CancelReservation
 
 
 
@@ -192,103 +194,6 @@ Public Class CancelFlight
 
     End Sub
 
-    Public Sub ReturnMilesAndDeactivateTicket(strReservationID As String)
-        'this will return miles to customers and send that information to the database
-        Dim strMiles As String
-        Dim intMiles As Integer
-        Dim strAdvantageNumber As String
-
-        GetTicketsInReservationOthers(strReservationID)
-
-        For i = 0 To mDatasetOne.Tables("tblTickets").Rows.Count - 1
-            strMiles = mDatasetOne.Tables("tblTickets").Rows(i).Item("MilagePaid").ToString
-            intMiles = CInt(strMiles)
-            If intMiles > 0 Then
-                'get the customer's current mileage
-                strAdvantageNumber = mDatasetOne.Tables("tblTickets").Rows(i).Item("AdvantageNumber").ToString
-                RunSPwithOneParam("usp_CustomersClone_Get_Miles", "@AdvantageNumber", strAdvantageNumber)
-                'add that mileage to the mileage from their ticket
-                intMiles += CInt(mdatasetCancel.Tables("tblTickets").Rows(0).Item("Miles").ToString)
-                'update their miles in the customer tables
-                DBCustomer.UpdateMiles(intMiles.ToString, strAdvantageNumber)
-            End If
-            'update their ticket so that pricepaid and milage paid = 0
-            DBTickets.AddTicketPricesAndMiles("0", "0", mDatasetOne.Tables("tblTickets").Rows(i).Item("TicketID").ToString)
-
-            'deactivate their ticket
-            UpdateTicketActive(mDatasetOne.Tables("tblTickets").Rows(i).Item("TicketID").ToString)
-
-        Next
-
-    End Sub
-
-    Public Sub ChangeSeatStatus(strReservationID As String)
-        'this will return miles to customers and send that information to the database
-        Dim strSeat As String
-        Dim strJourneyID As String
-        Dim aryParamNames As New ArrayList
-        Dim aryParamValues As New ArrayList
-
-        GetJourneysInReservation(strReservationID) ' this is mdatasetcancel
-
-
-        'loop through each journey
-        For i = 0 To mdatasetCancel.Tables("tblTickets").Rows.Count - 1
-            strJourneyID = mdatasetCancel.Tables("tblTickets").Rows(i).Item("JourneyOne").ToString
-
-            aryParamNames.Add("@ReservationID")
-            aryParamNames.Add("@JourneyID")
-
-            aryParamValues.Add(strReservationID)
-            aryParamValues.Add(strJourneyID)
-
-            UseSP("usp_Tickets_Get_By_ReservationANDJourneyID", mDatasetOne, mMyViewOne, "tblTickets", aryParamNames, aryParamValues)
-
-            'loop thourgh each ticket with that journey in that reservation 
-            For j = 0 To mDatasetOne.Tables("tblTickets").Rows.Count - 1
-                strSeat = mDatasetOne.Tables("tblTickets").Rows(i).Item("Seat").ToString
-                If strSeat <> "" Then
-                    'dont do anything
-                Else
-                    UpdateSeatStatus(strJourneyID, strSeat)
-                End If
-
-            Next
-            'clear arrays
-            aryParamNames.Clear()
-            aryParamValues.Clear()
-
-        Next
-
-    End Sub
-
-    Public Sub UpdateTicketActive(strTicketID As String)
-        Dim aryParamNames As New ArrayList
-        Dim aryParamValues As New ArrayList
-
-        aryParamNames.Add("@TicketID")
-
-        aryParamValues.Add(strTicketID)
-
-        UseSPforInsertOrUpdateQuery("usp_TicketsClone_Update_Active", aryParamNames, aryParamValues)
-
-
-    End Sub
-
-    Public Sub UpdateSeatStatus(strJourneyID As String, strSeat As String)
-        Dim aryParamNames As New ArrayList
-        Dim aryParamValues As New ArrayList
-
-        aryParamNames.Add("@JourneyID")
-        aryParamNames.Add("@Seat")
-
-
-        aryParamValues.Add(strJourneyID)
-        aryParamValues.Add(strSeat)
-
-        UseSPforInsertOrUpdateQuery("usp_JourneySeatBridge_OpenSeat", aryParamNames, aryParamValues)
-    End Sub
-
 
     Public Sub RunSPwithOneParamOthers(ByVal strSPName As String, ByVal strParamName As String, ByVal strParamValue As String)
         ' purpose to run a stored procedure with one parameter
@@ -362,7 +267,27 @@ Public Class CancelFlight
                     'find all journeys affected 
                     DBJourneys.RunSPwithOneParam("usp_ReservationsClone_Get_Journeys", "@ReservationID", strReservationID)
 
+                    'loop thorugh affected journeys
+                    For k = 0 To DBJourneys.MyDataSet.Tables("tblJourneys").Rows.Count - 1
+                        'deactive ticket, return mileage and money for entire reservation
+                        DBCancelReservation.ReturnMilesAndDeactivateTicket(strReservationID)
+                        'make all seats on reservation 
+                        DBCancelReservation.ChangeSeatStatus(strReservationID)
+                        'find the customers on each reservation
+                        DBTickets.RunSPwithOneParam("usp_TicketsClone_Find_Customers_By_ReservationID", "@reservationid", strReservationID)
+                        For l = 0 To DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
+                            Dim Msg As MailMessage = New MailMessage()
+                            Dim MailObj As New SmtpClient("smtp.mccombs.utexas.edu")
+                            Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
+                            Msg.To.Add(New MailAddress(DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("Email").ToString, DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString + " " + DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("LastName").ToString))
+                            Msg.IsBodyHtml = False
+                            Msg.Body = "Hello " & DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on flight #" & strFlightNumber & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
+                            Msg.Subject = "Flight Cancellation"
+                            MailObj.Send(Msg)
+                            Msg.To.Clear()
+                        Next
 
+                    Next
                 Next
 
 
