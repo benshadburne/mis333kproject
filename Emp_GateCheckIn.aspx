@@ -21,7 +21,7 @@
     <br />
     <asp:Button ID="btnConfirm" runat="server" text="confirm"> </asp:Button>
 
-    <asp:panel id="manifest" runat="server" >
+    
        
      <br />
      <asp:GridView ID="gvCrew" runat="server" visible="False">
@@ -37,6 +37,17 @@
     <br />
     <br />
     <asp:Button ID="btnDeparted" runat="server" text="Departed" Visible ="false"> </asp:Button>
+    <asp:Button ID="btnBack" runat="server" Text="Go Back" />
+&nbsp;<asp:panel id="pnlManifest" runat="server" visible ="false">
+        <asp:GridView ID="gvManifest" runat="server" visible="False">
+         <Columns>
+             
+         </Columns>
+    </asp:GridView>
+        <br />
+        <br />
+        <asp:Button ID="btnReload" runat="server" Text="Choose Another Flight" />
+
     </asp:panel>
 </asp:Content>
 

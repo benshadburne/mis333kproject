@@ -7,6 +7,7 @@ Partial Class _Default
     Dim DBReservations As New DBReservations
     Dim DBSeats As New DBJourneySeats
     Dim DBCancel As New CancelReservation
+    Dim DBDate As New DBdate
 
 
     Dim intJourneyID As Integer
@@ -66,9 +67,8 @@ Partial Class _Default
 
         'make sure a date is selected before they search, fill the dataview
         If IsPostBack = False Then
-            calFlightSearch.SelectedDate = Now()
-            DBAddJourney.AddJourney(WeekdayName(Weekday(calFlightSearch.SelectedDate)), calFlightSearch.SelectedDate.ToString)
-
+            calFlightSearch.SelectedDate = CDate(DBDate.GetCurrentDate)
+            DBAddJourney.AddJourney(WeekdayName(Weekday(calFlightSearch.SelectedDate)), DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
         End If
         ShowAll()
         SortandBind()

@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div id="header">
-        Create Ticket and Pay
+        Pay for your tickets
     </div>
 
     <div id="gridview">

@@ -110,5 +110,21 @@ Public Class DBdate
         Return strDate
     End Function
 
+    Public Function ConvertToVBDate(strDate As String) As Date
+        Dim strMonth As String
+        Dim strDay As String
+        Dim strYear As String
+        Dim strVBDate As String
+        Dim datDate As Date
+
+        strMonth = strDate.Substring(5, 2)
+        strDay = strDate.Substring(8, 2)
+        strYear = strDate.Substring(0, 4)
+
+        strVBDate = strMonth & "/" & strDay & "/" & strYear
+        datDate = CDate(strVBDate)
+        Return datDate
+    End Function
+
 End Class
 

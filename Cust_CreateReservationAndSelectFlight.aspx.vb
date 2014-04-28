@@ -2,6 +2,7 @@
 Partial Class Cust_CreateReservationAndSelectFlight
     Inherits System.Web.UI.Page
     Dim DBAirport As New DBairportclone
+    Dim DBDate As New DBdate
 
     'CREATING SOME NOTES SO THAT I CAN WRAP MY HEAD AROUND WHAT THE USER WILL NEED TO BE ABLE TO DO ON THIS PAGE
 

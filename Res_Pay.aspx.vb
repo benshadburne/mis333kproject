@@ -21,8 +21,6 @@ Partial Class Res_Pay
         'If Session("ReservationID") Is Nothing Then
         '    Response.Redirect("HomePage.aspx")
         'End If
-        Session("ActiveUser") = 5001
-        Session("ReservationID") = 10009
         'check to see if there is a running price subtotal on the page
 
         If IsPostBack = False Then
@@ -406,6 +404,7 @@ Partial Class Res_Pay
         End If
 
         ResetAll()
+        btnPay.Visible = False
 
 
     End Sub
@@ -477,7 +476,7 @@ Partial Class Res_Pay
         rblPayment.Enabled = True
 
         gvTickets.SelectedRow.Style.Add("background-color", "#ffcccc")
-
+        btnPay.Visible = False
         lblUpgrade.Visible = False
         btnYes.Visible = False
         btnNo.Visible = False

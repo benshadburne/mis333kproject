@@ -104,6 +104,17 @@ Partial Class Emp_GateCheckIn
 
 
 
+
+    End Sub
+
+    Public Sub LoadManifestGridView(strJourneyID As String)
+        pnlManifest.Visible = True
+
+        DBCrew.GetManifest(strJourneyID)
+
+        gvManifest.DataSource = DBCrew.MyDataSetCaptain
+        gvManifest.DataBind()
+
     End Sub
 
     Protected Sub btnDeparted_Click(sender As Object, e As EventArgs) Handles btnDeparted.Click
@@ -160,6 +171,9 @@ Partial Class Emp_GateCheckIn
         'this is commented out since we haven't done crew scheduling yet
         DBJourney.MarkJourneyDeparted(ddlJourneys.SelectedValue.ToString)
 
+        pnlManifest.Visible = True
+        LoadManifestGridView(ddlJourneys.SelectedValue.ToString)
+
         'load the ddl
         LoadDDL()
         LoadCustomerGridView(ddlJourneys.SelectedValue.ToString)
@@ -171,5 +185,26 @@ Partial Class Emp_GateCheckIn
         gvCrew.Visible = False
 
         'SHOW A FLIGHT MANIFEST
+    End Sub
+
+    Protected Sub btnReload_Click(sender As Object, e As EventArgs) Handles btnReload.Click
+        ResetPage()
+    End Sub
+
+    Public Sub ResetPage()
+        'load the ddl
+        LoadDDL()
+        LoadCustomerGridView(ddlJourneys.SelectedValue.ToString)
+        'fix what the user can touch on the form
+        btnConfirm.Visible = True
+        btnDeparted.Visible = False
+        ddlJourneys.Enabled = True
+        gvCustomers.Enabled = True
+        gvCrew.Visible = False
+        pnlManifest.Visible = False
+    End Sub
+
+    Protected Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
+        ResetPage()
     End Sub
 End Class

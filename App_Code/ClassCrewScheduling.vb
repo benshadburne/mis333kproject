@@ -138,6 +138,19 @@ Public Class ClassCrewScheduling
         End Get
     End Property
 
+    Public ReadOnly Property MyDataSetCaptain() As DataSet
+        'Author: Ben Shadburne
+        'Purpose: returns read only dataview
+        'Arguments: na
+        'Return: airportclone dataview
+        'Date: 03/18/2014
+
+        Get
+            Return mdatasetCaptain
+
+        End Get
+    End Property
+
     Public ReadOnly Property MyView() As DataView
         'Author: Ben Shadburne
         'Purpose: returns read only dataview
@@ -554,6 +567,10 @@ Public Class ClassCrewScheduling
 
     Public Sub GetCrewByJourney(strJourneyID As String)
         RunSPwithOneParamCoCaptain("usp_Journey_Get_Crew", "@JourneyID", strJourneyID)
+    End Sub
+
+    Public Sub GetManifest(strJourneyID As String)
+        RunSPwithOneParamCaptain("usp_Journey_Get_Manifest", "@JourneyID", strJourneyID)
     End Sub
 
     Private Function EmpID() As Object
