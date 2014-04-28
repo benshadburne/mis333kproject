@@ -5,8 +5,6 @@ Partial Class _Default
     Dim DBFlightSearch As New DBFlightSearch
 
 
-
-
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         If IsPostBack = False Then
             LoadDDL()
@@ -25,4 +23,6 @@ Partial Class _Default
     Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
         LoadDDL()
     End Sub
+
+
 End Class
