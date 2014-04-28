@@ -125,21 +125,25 @@ Partial Class Emp_CancelFlight
     End Sub
 
     Protected Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
-
+        EnterConfirmAbortMode()
     End Sub
 
     Protected Sub btnAbort_Click(sender As Object, e As EventArgs) Handles btnAbort.Click
-
+        ProtectedMode()
     End Sub
 
     Protected Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
 
+
+        lblMessage.Text = "Flight #" + ddlFlights.SelectedItem.ToString + " has been inactivated. All journeys scheduled have been cancelled."
+        ProtectedMode()
     End Sub
 
     Public Sub EnterConfirmAbortMode()
         btnCancel.Visible = False
         btnAbort.Visible = True
         btnConfirm.Visible = True
+        ddlFlights.Enabled = False
 
     End Sub
 
@@ -147,5 +151,10 @@ Partial Class Emp_CancelFlight
         btnCancel.Visible = True
         btnAbort.Visible = False
         btnConfirm.Visible = False
+        ddlFlights.Enabled = True
+    End Sub
+
+    Protected Sub ddlFlights_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlFlights.SelectedIndexChanged
+        LoadInformationFromFlight(ddlFlights.SelectedIndex)
     End Sub
 End Class
