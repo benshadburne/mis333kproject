@@ -397,11 +397,11 @@ Partial Class Emp_ModifyFlight
     End Sub
 
     Public Sub InactivateJourneysBasedOnDayChange(strDay As String, strFlightNumber As String)
+
         'call class to do work
         CaObject.InactivateFlightWithDay(strFlightNumber, strDay)
 
     End Sub
-
     Public Sub InactivateJourneysRegardlessOfDay(strFlightNumber As String)
         'call class to do work
         CaObject.InactivateFlightAllDays(strFlightNumber)
