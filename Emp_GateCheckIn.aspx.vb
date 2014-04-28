@@ -11,8 +11,10 @@ Partial Class Emp_GateCheckIn
 
 
     Protected Sub DropDownList1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlJourneys.SelectedIndexChanged
-        LoadCustomerGridView(ddlJourneys.SelectedValue.ToString)
+        lblMessage.Text = ""
 
+        LoadCustomerGridView(ddlJourneys.SelectedValue.ToString)
+       
     End Sub
 
     Public Sub LoadCustomerGridView(strJourneyID As String)
@@ -21,6 +23,13 @@ Partial Class Emp_GateCheckIn
 
         gvCustomers.DataSource = DBCustomer.MyDataset
         gvCustomers.DataBind()
+
+        If gvCustomers.Rows.Count = 0 Then
+            'throw them an error
+            lblMessage.Text = "There are no customers on this flight. Please try another."
+        Else
+            gvCustomers.Visible = True
+        End If
 
         gvCustomers.Visible = True
     End Sub
@@ -31,7 +40,16 @@ Partial Class Emp_GateCheckIn
         gvCrew.DataSource = DBCrew.MyView
         gvCrew.DataBind()
 
-        gvCrew.Visible = True
+        If gvCrew.Rows.Count = 0 Then
+            'throw them an error
+            lblMessage.Text = "There are no crew members sheduled for this flight. Please schedule crew members"
+        Else
+            gvCrew.Visible = True
+            btnDeparted.Visible = True
+        End If
+
+
+
 
     End Sub
 
@@ -40,7 +58,6 @@ Partial Class Emp_GateCheckIn
             LoadDDL()
             ddlJourneys.SelectedIndex = 0
             LoadCustomerGridView(ddlJourneys.SelectedValue.ToString)
-            LoadCrewGridView(ddlJourneys.SelectedValue.ToString)
         End If
     End Sub
 
@@ -54,11 +71,39 @@ Partial Class Emp_GateCheckIn
     End Sub
 
     Protected Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
-        btnConfirm.Visible = False
-        btnDeparted.Visible = True
-        ddlJourneys.Enabled = False
-        gvCustomers.Enabled = False
+        'check to see if any customers showed up for the flight
+        Dim chkPassengers As CheckBox
+        Dim bolOnFlight As Boolean = False
+
+        'loop through each record of gridview
+        For i = 0 To gvCustomers.Rows.Count - 1
+            'select a row
+            gvCustomers.SelectedIndex = i
+            chkPassengers = gvCustomers.SelectedRow.FindControl("chkPassengers")
+            'check to see if the customer is there
+            If chkPassengers.Checked = True Then
+                'this passenger is on the flight
+                bolOnFlight = True
+            End If
+        Next
+
+        'if no one is on the flight
+        If bolOnFlight = False Then
+            'throw them an error
+            lblMessage.Text = "We don't want to fly a plane with no customers on it."
+            Exit Sub
+        End If
+
         LoadCrewGridView(ddlJourneys.SelectedValue.ToString)
+
+        If gvCrew.Rows.Count <> 0 Then
+            btnConfirm.Visible = False
+            ddlJourneys.Enabled = False
+            gvCustomers.Enabled = False
+        End If
+
+
+
     End Sub
 
     Protected Sub btnDeparted_Click(sender As Object, e As EventArgs) Handles btnDeparted.Click
@@ -70,7 +115,7 @@ Partial Class Emp_GateCheckIn
 
         For i = 0 To gvCrew.Rows.Count - 1
             gvCrew.SelectedIndex = i
-            chkCrew = gvCustomers.SelectedRow.FindControl("chkCrew")
+            chkCrew = gvCrew.SelectedRow.FindControl("chkCrew")
 
             'if any of the crew isn't present
             If chkCrew.Checked = False Then
@@ -113,14 +158,18 @@ Partial Class Emp_GateCheckIn
 
         'mark journey as departed
         'this is commented out since we haven't done crew scheduling yet
-        DBJourney.MarkJourneyDeparted(gvCustomers.SelectedValue.ToString)
+        DBJourney.MarkJourneyDeparted(ddlJourneys.SelectedValue.ToString)
 
         'load the ddl
         LoadDDL()
+        LoadCustomerGridView(ddlJourneys.SelectedValue.ToString)
         'fix what the user can touch on the form
         btnConfirm.Visible = True
         btnDeparted.Visible = False
         ddlJourneys.Enabled = True
         gvCustomers.Enabled = True
+        gvCrew.Visible = False
+
+        'SHOW A FLIGHT MANIFEST
     End Sub
 End Class

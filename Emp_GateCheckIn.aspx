@@ -22,11 +22,10 @@
     <asp:Button ID="btnConfirm" runat="server" text="confirm"> </asp:Button>
 
     <asp:panel id="manifest" runat="server" >
-        <asp:DropDownList ID="DropDownList2" runat="server" padding ="3px"></asp:DropDownList>
+       
      <br />
-     <asp:GridView ID="gvCrew" runat="server" visible="false">
+     <asp:GridView ID="gvCrew" runat="server" visible="False">
          <Columns>
-             <asp:CheckBoxField />
              <asp:TemplateField>
                  <ItemTemplate>
                      <asp:CheckBox ID="chkCrew" runat="server" />
@@ -37,7 +36,7 @@
 
     <br />
     <br />
-    <asp:Button ID="btnDeparted" runat="server" text="Departed"> </asp:Button>
+    <asp:Button ID="btnDeparted" runat="server" text="Departed" Visible ="false"> </asp:Button>
     </asp:panel>
 </asp:Content>
 
