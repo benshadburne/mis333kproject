@@ -28,7 +28,7 @@ Public Class DBChangeDateTime
     Public Sub ChangDateTime(strDate As String, strTime As String)
 
         'first we get all journeys where departed is no and active is yes
-        GetAllJourneysJourneysBeforeDate(strDate)
+        GetAllJourneysJourneysBeforeDate(strDate, strTime)
 
         'now we have all the journeys with starting dates and times in all of them, need to loop through and make the journey departed and
         'give all customers on the journey miles from the journey
@@ -38,7 +38,8 @@ Public Class DBChangeDateTime
         Dim aryAdvantageValue As New ArrayList
         Dim aryJourneyID As New ArrayList
         Dim aryJourneyValue As New ArrayList
-        Dim strMilage As String
+        Dim intMilage As Integer
+
 
         aryParamName.Add("@JourneyID")
 
@@ -49,11 +50,11 @@ Public Class DBChangeDateTime
         'loop for each journeyid that is updated
         For i = 0 To lblCountJourneyID - 1
             'set mileage of given journeyid for customer update
-            strMilage = DBMilage.GetMilesForFlight(MyViewJourney.Table().Rows(i).Item("JourneyID").ToString)
-            aryAdvantageValue.Add(strMilage)
+            intMilage = CInt(DBMilage.GetMilesForFlight(MyViewJourney.Table().Rows(i).Item("Flight Number").ToString))
+
             'setup array lists
-            aryParamValue.Add(CInt(MyViewJourney.Table().Rows(i).Item("JourneyID")))
-            aryJourneyValue.Add(CInt(MyViewJourney.Table().Rows(i).Item("JourneyID")))
+            aryParamValue.Add(CInt(MyViewJourney.Table().Rows(i).Item("Journey ID")))
+            aryJourneyValue.Add(CInt(MyViewJourney.Table().Rows(i).Item("Journey ID")))
 
             'query Tickets Table with given journeyID to retrieve
             UseSPToRetrieveRecords("usp_Tickets_Get_By_JourneyID", mdatasetTickets, mMyViewTickets, "tblTickets", aryParamName, aryParamValue)
@@ -62,12 +63,22 @@ Public Class DBChangeDateTime
             For j = 0 To lblCountTickets - 1
 
                 'first check to see if they paid by miles, if they have then no need to update miles
-                If CInt(MyViewTickets.Table().Rows(j).Item("MilagePaid")) <> 0 Then
+                If CInt(MyViewTickets.Table().Rows(j).Item("PricePaid")) <> 0 Then
                     'this means they didn't pay by miles
 
+                    'set mileage of given journeyid for customer update
+                    intMilage = CInt(DBMilage.GetMilesForFlight(MyViewJourney.Table().Rows(i).Item("Flight Number").ToString))
+
+                    'first we gotta retrieve their existing miles
+                    DBCustomer.SearchCustomerClone(0, 1, MyViewTickets.Table().Rows(j).Item("AdvantageNumber").ToString)
+                    intMilage += CInt(DBCustomer.MyView.Table().Rows(0).Item("Miles"))
+
+
                     'update miles on customer profiles with given advantage number
-                    DBCustomer.UpdateMiles(strMilage, MyViewTickets.Table().Rows(j).Item("AdvantageNumber").ToString)
+                    DBCustomer.UpdateMiles(intMilage.ToString, MyViewTickets.Table().Rows(j).Item("AdvantageNumber").ToString)
+
                 End If
+
                 'mark that customer was on flight
                 DBTickets.MarkOnFlight(MyViewTickets.Table().Rows(j).Item("TicketID").ToString)
             Next
@@ -77,22 +88,44 @@ Public Class DBChangeDateTime
             'set departed to Y
             UseSPforInsertOrUpdateQuery("usp_Journey_Mark_Departed", aryJourneyID, aryJourneyValue)
 
-            aryAdvantageValue.Remove(strMilage)
+            aryAdvantageValue.Remove(intMilage)
             'remove value just used for next loop
-            aryParamValue.Remove(CInt(MyViewJourney.Table().Rows(i).Item("JourneyID")))
-            aryJourneyValue.Remove(CInt(MyViewJourney.Table().Rows(i).Item("JourneyID")))
+            aryParamValue.Remove(CInt(MyViewJourney.Table().Rows(i).Item("Journey ID")))
+            aryJourneyValue.Remove(CInt(MyViewJourney.Table().Rows(i).Item("Journey ID")))
         Next
 
+        Dim aryDate As New ArrayList
+        Dim aryDateValues As New ArrayList
+
+        aryDate.Add("@DateTime")
+        aryDate.Add("@TheTime")
+        aryDateValues.Add(strDate)
+        aryDateValues.Add(strTime)
+        'actually change the system date and time
+        UseSPforInsertOrUpdateQuery("usp_Constants_Insert_Date_Time", aryDate, aryDateValues)
+
+        'delete array lists
+        aryDate = Nothing
+        aryDateValues = Nothing
+
+        aryParamName = Nothing
+        aryParamValue = Nothing
+        aryAdvantageName = Nothing
+        aryAdvantageValue = Nothing
+        aryJourneyID = Nothing
+        aryJourneyValue = Nothing
 
     End Sub
 
-    Protected Sub GetAllJourneysJourneysBeforeDate(strDate As String)
+    Protected Sub GetAllJourneysJourneysBeforeDate(strDate As String, strTime As String)
 
         Dim aryParamName As New ArrayList
         Dim aryParamValue As New ArrayList
 
         aryParamName.Add("@Date")
+        aryParamName.Add("@Time")
         aryParamValue.Add(strDate)
+        aryParamValue.Add(strTime)
 
         UseSPToRetrieveRecords("usp_FlightSearch_DateTime", mdatasetJourneys, mMyViewJourneys, "tblJourneys", aryParamName, aryParamValue)
         aryParamName = Nothing
