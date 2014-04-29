@@ -20,12 +20,15 @@ Partial Class _Default
 
         lblTotal.Text = "Your total is $" & Session("RunningSubtotal").ToString & ". Please click Pay to pay."
 
+        lblTotal.Visible = True
+
         btnPay.Visible = True
 
     End Sub
 
     Protected Sub btnPay_Click(sender As Object, e As EventArgs) Handles btnPay.Click
 
+        Session.Remove("RunningSubtotal")
         Response.Redirect("Cust_ViewAndOrConfirmReservation.aspx")
 
 
