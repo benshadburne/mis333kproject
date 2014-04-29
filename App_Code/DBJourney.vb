@@ -384,7 +384,7 @@ Public Class DBjourneyclone
         UseSPToRetrieveRecords("usp_JourneysClone_Find_By_Day", MyDataSet, mMyView, "tblJourneysClone", aryParamNames, aryParamValues)
     End Sub
 
-    Public Sub GetJourneysByDate(strDate As String)
+    Public Sub GetJourneysForCrewByDate(strDate As String)
         RunSPwithOneParam("usp_Journeys_Get_By_Date", "@Date", strDate)
     End Sub
 

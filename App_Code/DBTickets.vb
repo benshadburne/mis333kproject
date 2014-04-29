@@ -370,6 +370,19 @@ Public Class DBTickets
 
     End Function
 
+    Public Sub DeactivateOneCustomersTicketsOnReservation(strReservationID As String, strAdvantageNumber As String)
+        Dim aryNames As New ArrayList
+        Dim aryValues As New ArrayList
+
+        aryNames.Add("@ReservationID")
+        aryNames.Add("@AdvantageNumber")
+
+        aryValues.Add(strReservationID)
+        aryValues.Add(strAdvantageNumber)
+
+        UseSPforInsertOrUpdateQuery("usp_Tickets_Deactivate_Missed_Journey", aryNames, aryValues)
+    End Sub
+
     Public Function GetMileage(strAdvantageNumber As String) As String
 
         RunSPwithOneParam("usp_CustomersClone_Get_Miles", "@AdvantageNumber", strAdvantageNumber)

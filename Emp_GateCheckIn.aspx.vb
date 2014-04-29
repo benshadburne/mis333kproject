@@ -67,7 +67,7 @@ Partial Class Emp_GateCheckIn
 
     Public Sub LoadDDL()
         'bind ddl for journeys
-        DBJourney.GetJourneysByDate(DBDate.GetCurrentDate())
+        DBJourney.GetJourneysForCrewByDate(DBDate.GetCurrentDate())
         ddlJourneys.DataSource = DBJourney.MyView
         ddlJourneys.DataTextField = "FlightNumber"
         ddlJourneys.DataValueField = "JourneyID"
@@ -178,6 +178,10 @@ Partial Class Emp_GateCheckIn
                 'Msg.Subject = "Flight Cancellation"
                 'MailObj.Send(Msg)
                 'Msg.To.Clear()
+
+
+                'mark all their tickets on that reservation for that customer inactive
+                DBTickets.DeactivateOneCustomersTicketsOnReservation(gvCustomers.SelectedRow.Cells(11).Text, gvCustomers.SelectedRow.Cells(1).Text)
             End If
 
         Next
@@ -186,10 +190,9 @@ Partial Class Emp_GateCheckIn
         'this is commented out since we haven't done crew scheduling yet
         DBJourney.MarkJourneyDeparted(ddlJourneys.SelectedValue.ToString)
 
+        'show a flight manifest
         pnlManifest.Visible = True
         LoadManifestGridView(ddlJourneys.SelectedValue.ToString)
-
-        'SHOW A FLIGHT MANIFEST
 
     End Sub
 

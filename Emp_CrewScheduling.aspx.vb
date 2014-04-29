@@ -14,13 +14,12 @@ Partial Class _Default
         If IsPostBack = False Then
             calFlightSearch.SelectedDate = DBDate.GetCurrentDate
             LoadFlightGridView()
-            'DBCrew.FindAvailableCaptains(strDate, gvJourneys.SelectedRow.Cells(
         End If
     End Sub
 
     Public Sub LoadFlightGridView()
         'bind ddl for journeys
-        DBJourney.GetJourneysByDate(DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
+        DBJourney.GetJourneysForCrewByDate(DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
         gvJourneys.DataSource = DBJourney.MyView
         gvJourneys.DataBind()
     End Sub
