@@ -37,6 +37,7 @@ Public Class DBChangeDateTime
         Dim aryAdvantageName As New ArrayList
         Dim aryAdvantageValue As New ArrayList
         Dim aryJourneyID As New ArrayList
+        Dim aryJourneyValue As New ArrayList
         Dim strMilage As String
 
         aryParamName.Add("@JourneyID")
@@ -52,7 +53,7 @@ Public Class DBChangeDateTime
             aryAdvantageValue.Add(strMilage)
             'setup array lists
             aryParamValue.Add(CInt(MyViewJourney.Table().Rows(i).Item("JourneyID")))
-            aryJourneyID.Add(CInt(MyViewJourney.Table().Rows(i).Item("JourneyID")))
+            aryJourneyValue.Add(CInt(MyViewJourney.Table().Rows(i).Item("JourneyID")))
 
             'query Tickets Table with given journeyID to retrieve
             UseSPToRetrieveRecords("usp_Tickets_Get_By_JourneyID", mdatasetTickets, mMyViewTickets, "tblTickets", aryParamName, aryParamValue)
@@ -73,13 +74,13 @@ Public Class DBChangeDateTime
 
 
 
-
             'set departed to Y
-
+            UseSPforInsertOrUpdateQuery("usp_Journey_Mark_Departed", aryJourneyID, aryJourneyValue)
 
             aryAdvantageValue.Remove(strMilage)
             'remove value just used for next loop
             aryParamValue.Remove(CInt(MyViewJourney.Table().Rows(i).Item("JourneyID")))
+            aryJourneyValue.Remove(CInt(MyViewJourney.Table().Rows(i).Item("JourneyID")))
         Next
 
 
