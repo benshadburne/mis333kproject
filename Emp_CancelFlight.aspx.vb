@@ -11,6 +11,8 @@ Partial Class Emp_CancelFlight
     'create instance of calculation database class
     Dim CObject As New ClassCalculate
 
+    'create instance of cancellation database class
+    Dim CaObject As New CancelFlight
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         'if first time loading page, set datasource of ddlFlights
@@ -135,8 +137,20 @@ Partial Class Emp_CancelFlight
     Protected Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
 
 
+        InactivateJourneysRegardlessOfDay(ddlFlights.SelectedItem.ToString)
+
+        'make flight invalid
+        FObject.MakeFlightInactive(ddlFlights.SelectedItem.ToString)
+
         lblMessage.Text = "Flight #" + ddlFlights.SelectedItem.ToString + " has been inactivated. All journeys scheduled have been cancelled."
+
+
+
+        'run sub to make all other things inactive
+
         ProtectedMode()
+
+
     End Sub
 
     Public Sub EnterConfirmAbortMode()
@@ -156,5 +170,12 @@ Partial Class Emp_CancelFlight
 
     Protected Sub ddlFlights_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlFlights.SelectedIndexChanged
         LoadInformationFromFlight(ddlFlights.SelectedIndex)
+    End Sub
+
+    Public Sub InactivateJourneysRegardlessOfDay(strFlightNumber As String)
+        'get all flights into dataset
+        FObject.GetALLFlightsCloneUsingSP()
+        'call class to do work
+        CaObject.InactivateFlightAllDays(strFlightNumber)
     End Sub
 End Class

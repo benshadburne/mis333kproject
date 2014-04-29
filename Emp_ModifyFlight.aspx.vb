@@ -152,50 +152,50 @@ Partial Class Emp_ModifyFlight
         btnCancel.Visible = False
     End Sub
 
-    Protected Sub ddlDepartureTimeHour_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlDepartureTimeHour.SelectedIndexChanged, ddlDepartureTimeMinutes.SelectedIndexChanged
-        'declarations
-        Dim strDepartureTime As String
-        Dim strArrivalTime As String
+    'Protected Sub ddlDepartureTimeHour_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlDepartureTimeHour.SelectedIndexChanged, ddlDepartureTimeMinutes.SelectedIndexChanged
+    '    'declarations
+    '    Dim strDepartureTime As String
+    '    Dim strArrivalTime As String
 
-        'make it equal to hour and minute on ddls for departure time
-        strDepartureTime = ddlDepartureTimeHour.SelectedItem.Text & ddlDepartureTimeMinutes.SelectedItem.Text
-        'make intDepartureTime and intarrival time variables
-        Dim intDepartureTime As Integer
+    '    'make it equal to hour and minute on ddls for departure time
+    '    strDepartureTime = ddlDepartureTimeHour.SelectedItem.Text & ddlDepartureTimeMinutes.SelectedItem.Text
+    '    'make intDepartureTime and intarrival time variables
+    '    Dim intDepartureTime As Integer
 
-        'check to see if valid integer
-        intDepartureTime = VObject.CheckInteger(strDepartureTime)
+    '    'check to see if valid integer
+    '    intDepartureTime = VObject.CheckInteger(strDepartureTime)
 
-        If intDepartureTime = -1 Then 'something went wrong
-            Exit Sub
-        End If
+    '    If intDepartureTime = -1 Then 'something went wrong
+    '        Exit Sub
+    '    End If
 
-        'create variable for duration of flight
-        Dim intDuration As Integer
+    '    'create variable for duration of flight
+    '    Dim intDuration As Integer
 
-        'find duration
-        Dim aryParamNamesMileage As New ArrayList
-        Dim aryParamValuesMileage As New ArrayList
+    '    'find duration
+    '    Dim aryParamNamesMileage As New ArrayList
+    '    Dim aryParamValuesMileage As New ArrayList
 
-        'add param names to array list
-        aryParamNamesMileage.Add("@StartAirport")
-        aryParamNamesMileage.Add("@EndAirport")
+    '    'add param names to array list
+    '    aryParamNamesMileage.Add("@StartAirport")
+    '    aryParamNamesMileage.Add("@EndAirport")
 
-        'add param values to array list
-        aryParamValuesMileage.Add(txtDepartureCity.Text)
-        aryParamValuesMileage.Add(txtArrivalCity.Text)
+    '    'add param values to array list
+    '    aryParamValuesMileage.Add(txtDepartureCity.Text)
+    '    aryParamValuesMileage.Add(txtArrivalCity.Text)
 
-        'find duration of flight
-        MObject.FindDuration(aryParamNamesMileage, aryParamValuesMileage)
-        intDuration = CInt(MObject.MyDataSet.Tables("tblMileageClone").Rows(0).Item(0))
+    '    'find duration of flight
+    '    MObject.FindDuration(aryParamNamesMileage, aryParamValuesMileage)
+    '    intDuration = CInt(MObject.MyDataSet.Tables("tblMileageClone").Rows(0).Item(0))
 
-        'calculate the arrival time that needs to appear
-        strArrivalTime = CObject.CalculateArrivalTime(intDepartureTime, intDuration)
+    '    'calculate the arrival time that needs to appear
+    '    strArrivalTime = CObject.CalculateArrivalTime(intDepartureTime, intDuration)
 
-        'put it in label
-        lblArrivalTime.Text = strArrivalTime
+    '    'put it in label
+    '    lblArrivalTime.Text = strArrivalTime
 
 
-    End Sub
+    'End Sub
 
     Protected Sub btnModify_Click(sender As Object, e As EventArgs) Handles btnModify.Click
         EnableThings()
@@ -403,6 +403,8 @@ Partial Class Emp_ModifyFlight
 
     End Sub
     Public Sub InactivateJourneysRegardlessOfDay(strFlightNumber As String)
+        'get all flights into dataset
+        FObject.GetALLFlightsCloneUsingSP()
         'call class to do work
         CaObject.InactivateFlightAllDays(strFlightNumber)
     End Sub

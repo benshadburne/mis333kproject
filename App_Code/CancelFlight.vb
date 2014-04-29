@@ -239,7 +239,7 @@ Public Class CancelFlight
             Dim aryJourneyValues As New ArrayList
 
             'set journey ID to the current journey ID
-            strJourneyID = DBJourneys.MyDataSet.Tables("tblJourneysClone").Rows(i).Item("FlightNumber").ToString
+            strJourneyID = DBJourneys.MyDataSet.Tables("tblJourneysClone").Rows(i).Item("JourneyID").ToString
             aryJourneyNames.Add("@flightnumber")
             aryJourneyValues.Add(strFlightNumber)
 
