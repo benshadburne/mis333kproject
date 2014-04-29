@@ -263,7 +263,7 @@ Public Class ClassCalculate
     End Function
 
     'Public Sub for calculating the tax
-    Public Sub CalculateTax()
+    Public Function CalculateTotal(decSubtotal As Decimal) As Decimal
         'Purpose: Calculate the tax for the final pay
         'Author: Dennis Phelan
         'Inputs: None
@@ -274,10 +274,13 @@ Public Class ClassCalculate
         ''Calculate the subtotal with discounts
         'CalculateSubTotalDiscount()
 
+        Dim decTotal As Decimal
         'Calculate the tax
-        decTax = decTentativeFinalPayBeforeTax * SALES_TAX_Constant
+        decTotal = decTentativeFinalPayBeforeTax * SALES_TAX_Constant
 
-    End Sub
+        Return decTotal
+
+    End Function
 
     Public Sub CalculateTotalDiscount()
         'Purpose: Calculate the total discount for the final pay
@@ -346,5 +349,9 @@ Public Class ClassCalculate
 
         Return strArrivalTime
     End Function
+
+    Private Sub CalculateTax()
+        Throw New NotImplementedException
+    End Sub
 
 End Class

@@ -34,6 +34,9 @@
 
         <br />
         <br />
+        <asp:Button ID="btnAddCustomer" runat="server" Text="Add Customer" />
+        <br />
+        <br />
         <asp:Label ID="Label2" runat="server" Text="Made a mistake? Cancel your Reservation by clicking below"></asp:Label>
         <br />
         <br />

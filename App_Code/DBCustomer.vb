@@ -34,6 +34,10 @@ Public Class DBCustomersClone
         RunProcedure("usp_CustomersClone_get_all")
     End Sub
 
+    Public Sub GetNewestCustomer()
+        RunProcedure("usp_Customers_Get_Newest")
+    End Sub
+
     Public Sub SearchCustomerClone(intSearchType As Integer, intSearchBy As Integer, strSearch As String)
         'Author: Aaryaman
         'Purpose: sorts data to be placed in a gridview

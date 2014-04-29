@@ -19,6 +19,30 @@ Partial Class Res_SelectCustomer
             SortAndBind()
         End If
 
+        If Session("NewCustomer") Is Nothing Then
+            'do nothing
+
+        Else
+
+            'get the new customer's information
+            CustomerDB.GetNewestCustomer()
+
+            'change what is visible
+            pnlDoSearch.Visible = False
+            pnlAddAge.Visible = True
+
+            'fill the label
+            lblAge.Text = "Please enter " & CustomerDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName") & " " & _
+            CustomerDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("LastName") & "'s age."
+
+            gvCustomers.Visible = False
+
+            gvCustomers.SelectedIndex = gvCustomers.Rows.Count - 1
+
+            Session.Remove("NewCustomer")
+
+        End If
+
         ''Author: Aaryaman Singhal
         'Date: 02/06/2014
         'Description: A sub that gets all customers, sorts them, and then puts them on the form 
@@ -182,5 +206,9 @@ Partial Class Res_SelectCustomer
         Session.Remove("Babies")
         Session.Remove("ReservationID")
         Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
+    End Sub
+
+    Protected Sub btnAddCustomer_Click(sender As Object, e As EventArgs) Handles btnAddCustomer.Click
+        Response.Redirect("Res_CreateCustProfile.aspx")
     End Sub
 End Class

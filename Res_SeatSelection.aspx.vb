@@ -12,6 +12,7 @@ Partial Class _Default
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+      
         Session("UserSeat") = ""
         'write some code to pull up the advantage number we need to use to select the seats. 
 

@@ -1,10 +1,5 @@
-﻿Option Strict On
-'Author: Dennis Phelan
-'Purpose: Make sure Save and Clear buttons know what to do to Add a Customer
-'Date Created: April 11, 2014
-'Date Last Modified: April 11, 2014
-
-Partial Class Cust_AddNewCustomer
+﻿
+Partial Class Res_CreateCustProfile
     Inherits System.Web.UI.Page
 
     'Declare instances of classes
@@ -85,8 +80,16 @@ Partial Class Cust_AddNewCustomer
 
         ClearAll()
 
-        'Outputs
-        lblSuccessMessage.Text = "Profile successfully added."
+        CustDB.GetNewestCustomer()
+        Session("NewCustomer") = CustDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("AdvantageNumber").ToString
+
+        Response.Redirect("Res_SelectCustomer.aspx")
+
+
+        'go back to reservation select customer page
+
+
+        
 
     End Sub
 
@@ -97,6 +100,8 @@ Partial Class Cust_AddNewCustomer
         txtState.Text = CStr(Session("State"))
         txtZip.Text = CStr(Session("Zip"))
         txtLName.Text = CStr(Session("LastName"))
+
+        btnAddFamilyMember.Visible = False
 
     End Sub
 
@@ -120,5 +125,7 @@ Partial Class Cust_AddNewCustomer
         txtZip.Text = ""
         txtEmail.Text = ""
         txtPhone.Text = ""
+
+        btnAddFamilyMember.Visible = True
     End Sub
 End Class

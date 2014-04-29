@@ -23,13 +23,13 @@
     <br />
     <asp:Button ID="btnCalculateTotal" CssClass="btn" runat="server" Text="Calculate Total" />
     <br />
-    <asp:Label ID="lblTotal" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="lblTotal" runat="server" Text="" Visible ="False"></asp:Label>
 
 
 
     <br />
     <br />
-    <asp:Button ID="btnPay" runat="server" CssClass="btn" Text="Pay" />
+    <asp:Button ID="btnPay" runat="server" CssClass="btn" Text="Pay" visible ="False"/>
 
 
 
