@@ -55,6 +55,12 @@ Public Class DBFlightSearch
 
     End Sub
 
+    Public Sub GetAllJourneysBySeats()
+        'this factors in number of available seats
+
+    End Sub
+
+
     'define a public read only property
     Public ReadOnly Property MyView() As DataView
         'Author: Ben Shadburne

@@ -12,7 +12,7 @@ Partial Class _Default
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load, calFlightDate.SelectionChanged
         Dim strReservationID As String
         Dim strAdvantageNum As String
-        strReservationID = CStr(10001)
+        strReservationID = CStr(10024)
         strAdvantageNum = CStr(5000)
 
         Session("Infant") = ""
@@ -213,6 +213,11 @@ Partial Class _Default
 
 
         Next
+
+        'sets session("infant") to yes when the infant isn't in a seat but the user is an infant
+        If CInt(gvYourReservation.Rows(0).Cells(5).Text) < 3 Then
+            Session("Infant") = "Yes"
+        End If
 
     End Sub
 

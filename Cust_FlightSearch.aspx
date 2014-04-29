@@ -8,7 +8,7 @@
     <div class="center-block" style="width: 90%; padding-top: 20px;">
         
         <asp:Panel ID="Panel1" runat="server" width="100%">
-        <div class="pull-left" style="width: 90px"> <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search" />
+        <div class="pull-left" style="width: 90px; height: 36px;"> <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search" />
 
        </div>
           

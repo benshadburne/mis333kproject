@@ -12,7 +12,6 @@ Partial Class _Default
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-      
         Session("UserSeat") = ""
         'write some code to pull up the advantage number we need to use to select the seats. 
 
@@ -22,7 +21,7 @@ Partial Class _Default
         '    Response.Redirect("HomePage.aspx")
         'End If
 
-        'check to see if there is a running price subtotal on the page
+        'check to see if there is a running price subtotal on the page  
 
         If IsPostBack = False Then
             Session("ActiveUser") = Session("Login").ToString
@@ -35,7 +34,7 @@ Partial Class _Default
         End If
         Session("Infant") = ""
         Session("InfantID") = ""
-        
+
         'check customer login
 
         ''check session login if it's empty 
@@ -171,6 +170,12 @@ Partial Class _Default
             End If
 
         Next
+
+        'sets session("infant") to yes when the infant isn't in a seat but the user is an infant
+        If CInt(gvYourReservation.Rows(0).Cells(5).Text) < 3 Then
+            Session("Infant") = "Yes"
+        End If
+
 
     End Sub
 
