@@ -20,8 +20,8 @@ Partial Class Emp_ViewReports
 
         'Load the DDL
         ddlCityOrRouteDepart.DataSource = TicketsDB.MyView.Table
-        ddlCityOrRouteDepart.DataTextField = "ShortenedCityName"
-        ddlCityOrRouteDepart.DataValueField = "ShortenedCityName"
+        ddlCityOrRouteDepart.DataTextField = "AirportCode"
+        ddlCityOrRouteDepart.DataValueField = "AirportCode"
         ddlCityOrRouteDepart.DataBind()
         ddlCityOrRouteDepart.Items.Insert(0, "ALL")
     End Sub
@@ -39,8 +39,8 @@ Partial Class Emp_ViewReports
 
         'Load the DDL
         ddlCityOrRouteEnd.DataSource = TicketsDB.MyView.Table
-        ddlCityOrRouteEnd.DataTextField = "ShortenedCityName"
-        ddlCityOrRouteEnd.DataValueField = "ShortenedCityName"
+        ddlCityOrRouteEnd.DataTextField = "AirportCode"
+        ddlCityOrRouteEnd.DataValueField = "AirportCode"
         ddlCityOrRouteEnd.DataBind()
         ddlCityOrRouteEnd.Items.Insert(0, "ALL")
     End Sub
@@ -71,21 +71,24 @@ Partial Class Emp_ViewReports
         TicketsDB.FilterClass(radClass.SelectedIndex, radRevenueSeatCount.SelectedIndex)
 
         'Prepare the check date function
-        'Validate that the lower date is less than the upper date
-        If calUpperDate.SelectedDate <> Nothing And valid.CheckLowerDateLessThanGreaterDate(calLowerDate.SelectedDate, calUpperDate.SelectedDate) = False Then
-            lblMessage.Text = "The Lower Date must be earlier than the Upper Date."
-            Exit Sub
-        End If
+        ''Validate that the lower date is less than the upper date
+        'If calUpperDate.SelectedDate <> Nothing And valid.CheckLowerDateLessThanGreaterDate(calLowerDate.SelectedDate, calUpperDate.SelectedDate) = False Then
+        '    lblMessage.Text = "The Lower Date must be earlier than the Upper Date."
+        '    Exit Sub
+        'End If
 
-        'Filter by date range or single date. Check to make sure that there are dates there first
-        If calLowerDate.SelectedDate <> Nothing And calUpperDate.SelectedDate <> Nothing Then
-            'If there is a date selected, filter
-            TicketsDB.RevenueSeatFilterByDate(calLowerDate.SelectedDate, calUpperDate.SelectedDate)
-        End If
+        ''Filter by date range or single date. Check to make sure that there are dates there first
+        'If calLowerDate.SelectedDate <> Nothing Or calUpperDate.SelectedDate <> Nothing Then
+        '    'If there is a date selected, filter
+        '    TicketsDB.RevenueSeatFilterByDate(calLowerDate.SelectedDate, calUpperDate.SelectedDate)
+        'End If
 
 
-        'Filter by City
+        'Filter by DepartureCity
         TicketsDB.FilterDepartureCity(ddlCityOrRouteDepart.SelectedValue)
+
+        'Filter by EndCity
+        TicketsDB.FilterEndCity(ddlCityOrRouteEnd.SelectedValue)
 
         gvReports.DataSource = TicketsDB.MyView
 

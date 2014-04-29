@@ -26,6 +26,10 @@ Public Class DBTickets
     Dim mMyViewOne As New DataView
     Dim mdatasetOne As New DataSet
 
+    'Declare views for ddls
+    Dim DepartureCityDataView As New DataView
+    Dim EndCityDataView As New DataView
+
     'Declare an instance of the classes
     Dim valid As New ClassValidate
 
@@ -73,6 +77,34 @@ Public Class DBTickets
             Return mMyView
         End Get
     End Property
+
+    'define a public read only property
+    Public ReadOnly Property DepartureCity() As DataView
+        'Author: Dennis Phelan
+        'Purpose: returns read only dataview for Departure City ddl
+        'Arguments: na
+        'Return: xxxxx dataview
+        'Date: April 29, 2014
+
+        Get
+            Return DepartureCityDataView
+        End Get
+    End Property
+
+    'define a public read only property
+    Public ReadOnly Property EndCity() As DataView
+        'Author: Dennis Phelan
+        'Purpose: returns read only dataview for Departure City ddl
+        'Arguments: na
+        'Return: xxxxx dataview
+        'Date: April 29, 2014
+
+        Get
+            Return EndCityDataView
+        End Get
+    End Property
+
+
 
     Public ReadOnly Property MyViewAdvantageNumbers() As DataView
         'Author: Ben Shadburne
@@ -697,11 +729,11 @@ Public Class DBTickets
 
 
         'Check to make sure if there is a lower date; if not, just filter for the upper date
-        If datLowerDate = Nothing Then
+        If datLowerDate = Nothing And datUpperDate <> Nothing Then
             mMyView.RowFilter = "FlightDate = '" & datUpperDate & "'"
 
             'If lower date is there, check to make sure there is an upper date; if not, just filter for the upper date
-        ElseIf datUpperDate = Nothing Then
+        ElseIf datUpperDate = Nothing And datLowerDate <> Nothing Then
             mMyView.RowFilter = "FlightDate = '" & datLowerDate & "'"
 
             'If lower and upper date are there, filter for both
@@ -797,7 +829,7 @@ Public Class DBTickets
         'Date Last Modified: April 29, 2014
 
         'Run the procedure to get all of the cities
-        RunProcedure("usp_ShortenedCityNamesClone_Get_ShortenedCityNames")
+        RunProcedure("usp_AirportClone_Get_AirportCode")
 
     End Sub
 
@@ -811,9 +843,14 @@ Public Class DBTickets
         'Date Created: April 29, 2014
         'Date Last Modified: April 29, 2014
 
+        'Check to make sure that All is not selected. If so, don't filter
+        If strCity = "ALL" Then
+            mMyView.RowFilter = Nothing
 
-        mMyView.RowFilter = "DepartureCity = '" & strCity & "'"
-
+            'If ALL is not selected, filter
+        Else
+            mMyView.RowFilter = "DepartureCity = '" & strCity & "'"
+        End If
     End Sub
 
     'Filter by city
@@ -825,10 +862,15 @@ Public Class DBTickets
         'Date Created: April 29, 2014
         'Date Last Modified: April 29, 2014
 
-        'Run the stored procedure with all of the cities
-        RunProcedure("usp_ShortenedCityNamesClone_Get_ShortenedCityNames")
+        'Check to make sure that All is not selected. If so, don't filter
+        If strCity = "ALL" Then
+            mMyView.RowFilter = Nothing
 
-        mMyView.RowFilter = "EndCity = '" & strCity & "'"
+            'If ALL is not selected, filter
+        Else
+            mMyView.RowFilter = "EndCity = '" & strCity & "'"
+        End If
+
 
     End Sub
 
