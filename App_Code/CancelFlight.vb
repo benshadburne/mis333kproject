@@ -281,7 +281,7 @@ Public Class CancelFlight
                     '    Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
                     '    Msg.To.Add(New MailAddress(DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("Email").ToString, DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString + " " + DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("LastName").ToString))
                     '    Msg.IsBodyHtml = False
-                    '    Msg.Body = "Hello " & DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on flight #" & strFlightNumber & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
+                    '    Msg.Body = "Hello " & DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on journey #" & DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("JourneyID").ToString & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
                     '    Msg.Subject = "Flight Cancellation"
                     '    MailObj.Send(Msg)
                     '    Msg.To.Clear()
@@ -353,7 +353,7 @@ Public Class CancelFlight
                     '    Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
                     '    Msg.To.Add(New MailAddress(DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("Email").ToString, DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString + " " + DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("LastName").ToString))
                     '    Msg.IsBodyHtml = False
-                    '    Msg.Body = "Hello " & DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on flight #" & strFlightNumber & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
+                    '    Msg.Body = "Hello " & DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on journey #" & DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("JourneyID").ToString & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
                     '    Msg.Subject = "Flight Cancellation"
                     '    MailObj.Send(Msg)
                     '    Msg.To.Clear()
@@ -410,7 +410,7 @@ Public Class CancelFlight
                 '    Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
                 '    Msg.To.Add(New MailAddress(DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("Email").ToString, DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString + " " + DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("LastName").ToString))
                 '    Msg.IsBodyHtml = False
-                '    Msg.Body = "Hello " & DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on flight #" & strFlightNumber & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
+                '    Msg.Body = "Hello " & DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("FirstName").ToString & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your reservation on journey #" & DBTickets.MyDataSetOne.Tables("tblTickets").Rows(l).Item("JourneyID").ToString & ". We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
                 '    Msg.Subject = "Flight Cancellation"
                 '    MailObj.Send(Msg)
                 '    Msg.To.Clear()
