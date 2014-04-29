@@ -456,6 +456,15 @@ Public Class DBjourneyclone
         UseSPforInsertOrUpdateQuery("usp_JourneysClone_Inactivate_By_Flight_Number", aryJourneyNames, aryJourneyValues)
     End Sub
 
+    Public Sub InactivateJourneyByJourneyID(strJourneyID As String)
+        Dim aryJourneyNames As New ArrayList
+        Dim aryJourneyValues As New ArrayList
+
+        aryJourneyNames.Add("@journeyid")
+        aryJourneyValues.Add(strJourneyID)
+
+        UseSPforInsertOrUpdateQuery("usp_JourneysClone_Inactivate_By_JourneyID", aryJourneyNames, aryJourneyValues)
+    End Sub
 
 
 End Class

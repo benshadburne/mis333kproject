@@ -110,6 +110,15 @@ Public Class DBdate
         Return strDate
     End Function
 
+    Public Function GetCurrentDateReturnDate() As Date
+        Dim datDate As Date
+        RunProcedure("usp_Constants_Get_Date")
+
+        datDate = CDate(mdatasetdate.Tables("tblDate").Rows(0).Item("DateTime"))
+
+        Return datDate
+    End Function
+
     Public Function ConvertToVBDate(strDate As String) As Date
         Dim strMonth As String
         Dim strDay As String
