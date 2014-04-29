@@ -55,9 +55,20 @@ Public Class DBFlightSearch
 
     End Sub
 
-    Public Sub GetAllJourneysBySeats()
+    Public Sub GetAllJourneysSeatsEmpty(intSeats As Integer)
         'this factors in number of available seats
+        Dim aryParamName As New ArrayList
+        Dim aryParamValue As New ArrayList
 
+        aryParamName.Add("@Seats")
+        aryParamValue.Add(intSeats)
+
+        UseSPToRetrieveRecords("usp_FlightSearch_EmptySeats", mdatasetFlightSearch, mMyView, "tblJourneysEmptySeats", aryParamName, aryParamValue)
+        UseSPToRetrieveRecords("usp_IndirectJourney_Get_PresentFuture", mdatasetIndirectStart, mMyViewStart, "tblJourneysEmptySeats", aryParamName, aryParamValue)
+        UseSPToRetrieveRecords("usp_IndirectJourney_Get_PresentFuture", mdatasetIndirectFinish, mMyViewFinish, "tblJourneysEmptySeats", aryParamName, aryParamValue)
+
+        aryParamName = Nothing
+        aryParamValue = Nothing
     End Sub
 
 

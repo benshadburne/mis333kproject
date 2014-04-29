@@ -73,12 +73,15 @@ Partial Class _Default
         ShowAll()
         SortandBind()
 
+        'set label to correct date
+        lblDate.Text = calFlightSearch.SelectedDate.ToShortDateString
     End Sub
 
     Public Sub ShowAll()
-        DBFlightSearch.GetALLFlightSearchUsingSP()
-        DBFlightSearch.GetALLIndirectStartUsingSP()
-        DBFlightSearch.GetALLIndirectFinishUsingSP()
+        'sets number of seats needed here
+        Dim intSeats As Integer
+        intSeats = CInt(Session("Adults")) + CInt(Session("Children"))
+        DBFlightSearch.GetAllJourneysSeatsEmpty(intSeats)
     End Sub
 
     Public Sub SortandBind()

@@ -34,7 +34,7 @@
                  <TodayDayStyle BackColor="White" />
                  <WeekendDayStyle BackColor="#CCCCFF" />
              </asp:Calendar>
-             <asp:Label ID="lblFilter" runat="server" Text="lblFilter"></asp:Label>
+             
         </div>
            
         <div class="pull-left" style="width: 20%; min-width:40px; height: 67px;">
@@ -73,14 +73,19 @@
              <asp:Label ID="lblArrival" runat="server"></asp:Label>
               <br/> 
         </div>
-
+        <div class="pull-left" style="width: 30%; min-width:40px; height: 67px;">
+             <asp:Label class="label" ID="Label7" runat="server" Text="Select Date" ForeColor="Black" Font-Size="Small"></asp:Label>
+            <br/> 
+              <br/> 
+              <asp:Label CssClass="label" ID="lblDate" runat="server"></asp:Label>
+        </div>
             </div>
             
     <br/> 
         
    
     <div class="center-block" style="width:90%; min-height:100px;">
-        <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+        <asp:Label CssClass="label-danger" ID="lblMessage" runat="server" Text=""></asp:Label>
         <br />
         <asp:Label CssClass="label" ID="Label6" runat="server" Text="Direct Flights"></asp:Label>
         <div class="pull-right">
