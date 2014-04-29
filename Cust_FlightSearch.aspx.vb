@@ -67,7 +67,7 @@ Partial Class _Default
 
         'make sure a date is selected before they search, fill the dataview
         If IsPostBack = False Then
-            calFlightSearch.SelectedDate = CDate(DBDate.GetCurrentDate)
+            calFlightSearch.SelectedDate = CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate))
             DBAddJourney.AddJourney(WeekdayName(Weekday(calFlightSearch.SelectedDate)), DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
         End If
         ShowAll()
@@ -102,6 +102,9 @@ Partial Class _Default
         gvIndirectFinish.DataSource = DBFlightSearch.MyViewFinish
         gvIndirectFinish.DataBind()
 
+        gvDirectFlights.Visible = True
+        gvIndirectStart.Visible = True
+
         ' show record count
         lblCountDirect.Text = CStr(DBFlightSearch.lblCount)
         lblCountIndirect.Text = CStr(DBFlightSearch.lblCountStart)
@@ -110,6 +113,18 @@ Partial Class _Default
     End Sub
 
     Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
+        lblMessage.Text = ""
+        'check to see if they chose a date that is earlier than sys datetime
+        If calFlightSearch.SelectedDate < CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate)) Then
+            lblMessage.Text = "You can't book flights in the past."
+            'hide gridviews
+            gvDirectFlights.Visible = False
+            gvIndirectFinish.Visible = False
+            gvIndirectStart.Visible = False
+            Exit Sub
+        End If
+
+
         'define variables for day and date
         Dim strDay As String
         Dim strDate As String
@@ -131,7 +146,7 @@ Partial Class _Default
     End Sub
 
     Protected Sub gvDirectFlights_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvDirectFlights.SelectedIndexChanged
-
+        lblMessage.Text = ""
 
         'add this flight to the reservation table
         intJourneyID = CInt(gvDirectFlights.Rows(gvDirectFlights.SelectedIndex).Cells(1).Text())
@@ -148,7 +163,7 @@ Partial Class _Default
         'if this is the first journey they are adding, use add first Journey Function
         If intJourneyNumber = 1 Then
 
-            strDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
+            strDate = calFlightSearch.SelectedDate.ToShortDateString
 
             'add the first record of the reservation
             DBReservations.AddFirstReservationJourney("usp_ReservationsClone_Add_Journey", strJourneyNumber, intJourneyID, strDate)
@@ -169,6 +184,7 @@ Partial Class _Default
             'if this is a round trip, send back the other 
             If Session("TripType").ToString = "Round Trip" Then
                 'switch begin, end airport
+                lblMessage.Text = "You have successfully added the first leg of your trip."
                 FirstHalfRoundTrip()
             End If
 
@@ -221,6 +237,8 @@ Partial Class _Default
     End Sub
 
     Protected Sub gvIndirectStart_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectStart.SelectedIndexChanged
+        lblMessage.Text = ""
+
         'need to do searchbtn b/c otherwise other gv's get reset
 
         DBFlightSearch.SearchIndirectFinish(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(6).Text, lblArrival.Text, _
@@ -229,7 +247,7 @@ Partial Class _Default
 
         'check if there's anything in second gv
         If CInt(DBFlightSearch.lblCountFinish) = 0 Then
-            lblMessage.Text = "No second leg results. Please choose a direct flight or different indirect flight"
+            lblMessage.Text = "No second leg results. Please choose a direct flight or try another indirect flight"
             Exit Sub
         End If
 
@@ -249,6 +267,8 @@ Partial Class _Default
     End Sub
 
     Protected Sub gvIndirectFinish_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectFinish.SelectedIndexChanged
+        lblMessage.Text = ""
+
         'This code binds all the gridviews. 
         'Without this code, they change on button click and the selected index has diff info in it
         'add this flight to the reservation table
@@ -271,7 +291,7 @@ Partial Class _Default
 
         If intJourneyNumber = 1 Then
             'get the date to put in as start reservation date
-            strDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
+            strDate = calFlightSearch.SelectedDate.ToShortDateString
 
             'add the first record of the reservation
             DBReservations.AddFirstReservationJourney("usp_ReservationsClone_Add_Journey", strJourneyNumber, intJourneyID, strDate)
@@ -302,6 +322,9 @@ Partial Class _Default
 
                 'get correct values for journey number
                 Session("JourneyNumber") = intJourneyNumber
+
+                'show message
+                lblMessage.Text = "You successfully added the first leg of your trip."
 
                 'switch begin, end airport, reload page
                 FirstHalfRoundTrip()

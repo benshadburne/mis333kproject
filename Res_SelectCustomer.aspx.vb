@@ -54,11 +54,34 @@ Partial Class Res_SelectCustomer
         gvCustomers.DataSource = CustomerDB.MyView
         gvCustomers.DataBind()
 
+        If gvCustomers.Rows.Count = 0 Then
+            'show all records and throw them an error
+            CustomerDB.GetAllCustomersCloneUsingSP()
 
+            SortAndBind()
+
+            lblMessage.Text = "Your search returned no records. Please try a different search."
+        End If
+
+        HideGridViewColumn(2)
+        HideGridViewColumn(6)
+        HideGridViewColumn(7)
+        HideGridViewColumn(9)
+        HideGridViewColumn(10)
+        HideGridViewColumn(11)
+
+    End Sub
+
+    Public Sub HideGridViewColumn(intColumn As Integer)
+        gvCustomers.HeaderRow.Cells(intColumn).Visible = False
+        For Each gvr As GridViewRow In gvCustomers.Rows
+            gvr.Cells(intColumn).Visible = False
+        Next
     End Sub
 
 
     Protected Sub gvCustomers_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvCustomers.SelectedIndexChanged
+        ClearMessages()
         pnlDoSearch.Visible = False
         pnlAddAge.Visible = True
 
@@ -179,20 +202,42 @@ Partial Class Res_SelectCustomer
             Session.Remove("Children")
             Session.Remove("Babies")
             Session.Add("Login", strAdvantageNumber)
+
+            If Session("Zip") Is Nothing Then
+                'dont do anything 
+            Else
+                Session.Remove("Address")
+                Session.Remove("City")
+                Session.Remove("State")
+                Session.Remove("Zip")
+                Session.Remove("LastName")
+                Session.Remove("Phone")
+            End If
             Response.Redirect("Res_SeatSelection.aspx")
         End If
 
     End Sub
 
     Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        'check to make sure a search type is selected
+        If rblSearchType.SelectedIndex = -1 Then
+            lblMessage.Text = "Please select a search type."
+            Exit Sub
+        End If
         CustomerDB.SearchCustomerClone(rblSearchType.SelectedIndex, rblSearchBy.SelectedIndex, txtSearch.Text)
+        ClearMessages()
         SortAndBind()
     End Sub
 
     Protected Sub rblSearchBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rblSearchBy.SelectedIndexChanged
+        ClearMessages()
         If rblSearchBy.SelectedIndex = 1 Then
             'make partial/keyword invisible
             rblSearchType.Visible = False
+        End If
+        If rblSearchBy.SelectedIndex = 0 Then
+            'make partial/keyword visible
+            rblSearchType.Visible = True
         End If
     End Sub
 
@@ -210,5 +255,13 @@ Partial Class Res_SelectCustomer
 
     Protected Sub btnAddCustomer_Click(sender As Object, e As EventArgs) Handles btnAddCustomer.Click
         Response.Redirect("Res_CreateCustProfile.aspx")
+    End Sub
+
+    Public Sub ClearMessages()
+        lblMessage.Text = ""
+        lblAgeMessage.Text = ""
+        lblAge.Text = ""
+        txtSearch.Text = ""
+        txtAge.Text = ""
     End Sub
 End Class

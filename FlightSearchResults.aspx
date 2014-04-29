@@ -42,7 +42,7 @@
                  <SelectedDayStyle BackColor="#009999" Font-Bold="True" ForeColor="#CCFF99" />
                  <SelectorStyle BackColor="#99CCCC" ForeColor="#336666" />
                  <TitleStyle BackColor="#003399" BorderColor="#3366CC" BorderWidth="1px" Font-Bold="True" Font-Size="10pt" ForeColor="#CCCCFF" Height="25px" />
-                 <TodayDayStyle BackColor="#99CCCC" ForeColor="White" />
+                 <TodayDayStyle BackColor="White" />
                  <WeekendDayStyle BackColor="#CCCCFF" />
              </asp:Calendar>
         </div>

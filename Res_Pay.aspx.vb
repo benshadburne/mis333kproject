@@ -452,7 +452,7 @@ Partial Class Res_Pay
     End Function
 
     Protected Sub ddlAdvantageNum_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlAdvantageNum.SelectedIndexChanged
-
+        'NEED TO PUT BABY INTO SESSION VARIABLE HERE IF THEY SELECTED A BABY??
         Session("ActiveUser") = ddlAdvantageNum.SelectedValue
         LoadTickets()
         SortandBind()
@@ -524,18 +524,24 @@ Partial Class Res_Pay
             'remove miles from their account
             intMiles -= 500
             DBCustomer.UpdateMiles(intMiles.ToString, gvTickets.SelectedRow.Cells(3).Text)
+            Session.Remove("Subtotal")
         End If
 
         'reset the page
-
+        pnlSeats.Visible = False
 
     End Sub
 
     Protected Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        'this code is necessary to cancel the reservation in the database
         DBCancel.CancelReservation(Session("ReservationID").ToString)
         DBCancel.ChangeSeatStatus(Session("ReservationID").ToString)
         DBCancel.ReturnMilesAndDeactivateTicket(Session("ReservationID").ToString)
+
+        'FIGURE OUT WHAT OTHER SESSION VARIABLES I NEED TO REMOVE
         Session.Remove("ReservationID")
+
+        'redirec the customer
         Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
     End Sub
 End Class

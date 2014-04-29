@@ -51,7 +51,7 @@ Public Class DBCustomersClone
         If intSearchBy = 0 Then
             If intSearchType = 0 Then
                 'search by last name
-                mMyView.RowFilter = "Lastname LIKe '" & strSearch & "%'"
+                mMyView.RowFilter = "Lastname LIKE '" & strSearch & "%'"
             Else
                 mMyView.RowFilter = "Lastname like '%" & strSearch & "%'"
             End If

@@ -100,8 +100,16 @@ Partial Class Res_CreateCustProfile
         txtState.Text = CStr(Session("State"))
         txtZip.Text = CStr(Session("Zip"))
         txtLName.Text = CStr(Session("LastName"))
+        txtPhone.Text = CStr(Session("Phone"))
 
         btnAddFamilyMember.Visible = False
+
+        Session.Remove("Address")
+        Session.Remove("City")
+        Session.Remove("State")
+        Session.Remove("Zip")
+        Session.Remove("LastName")
+        Session.Remove("Phone")
 
     End Sub
 
@@ -127,5 +135,14 @@ Partial Class Res_CreateCustProfile
         txtPhone.Text = ""
 
         btnAddFamilyMember.Visible = True
+    End Sub
+
+    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If Session("Zip") Is Nothing Then
+            'don't do anything
+        Else
+            'let them use session variables to fill some textboxes
+            btnAddFamilyMember.Visible = True
+        End If
     End Sub
 End Class
