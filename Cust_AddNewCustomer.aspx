@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-    <div class="center-block" style="text-align: center;">
+    <div class="header" style="text-align: center;">
 
         <h1>
             Add New Customer Page

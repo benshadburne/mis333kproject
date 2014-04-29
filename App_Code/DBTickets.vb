@@ -473,6 +473,7 @@ Public Class DBTickets
 
     End Sub
 
+
     Public Sub FilterYou(ByVal strRes As String, strAdvantage As String)
         'Author: Ben Shadburne
         'Purpose: search by state
@@ -670,9 +671,17 @@ Public Class DBTickets
     End Sub
 
     'Filter the Gross Revenue and Seat Count by dates
-    Public Sub RevenueFilterByDate(strLowerDate As String, strUpperDate As String)
-        'Run the procedure to get the gross revenue for each flight
-        RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_GrossRevenue_And_SeatCount")
+    Public Sub RevenueSeatFilterByDate(strLowerDate As String, strUpperDate As String)
+        'Purpose: Check to see if the employee wants revenue or seat count or both
+        'Author: Dennis Phelan
+        'Input: strLowerDate and strUpperDate
+        'Output: the gridview will meet the employee's requirements
+        'Date Created: April 27, 2014
+        'Date Last Modified: April 28, 2014
+
+        'Validate that the lower date is less than the upper date
+
+
 
         'Check to make sure if there is a lower date; if not, just filter for the upper date
         If strLowerDate = "" Then
@@ -687,5 +696,85 @@ Public Class DBTickets
             mMyView.RowFilter = "FlightDate >= '" & strLowerDate & "' AND FlightDate <= '" & strUpperDate & "'"
         End If
     End Sub
+
+    Public Sub GetRevenueOrSeatCountOrBoth(ByVal intIndex As Integer)
+        'Purpose: Check to see if the employee wants revenue or seat count or both
+        'Author: Dennis Phelan
+        'Input: intIndex, the index of the radio button list
+        'Output: the gridview will meet the employee's requirements
+        'Date Created: April 28, 2014
+        'Date Last Modified: April 28, 2014
+
+        'If 0, then that is just Seat Count
+        If intIndex = 0 Then
+            RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_SeatCount")
+
+            'If it is 1 then it is just Revenue
+        ElseIf intIndex = 1 Then
+            RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_GrossRevenue")
+
+            'If neither 0 or 1, then must be 2, and most be both
+        Else
+            RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_GrossRevenue_And_SeatCount")
+        End If
+    End Sub
+
+    Public Sub FilterClass(ByVal intIndexClass As Integer, ByVal intIndexSearch As Integer)
+        'Purpose: Check to see if the employee wants revenue or seat count or both
+        'Author: Dennis Phelan
+        'Input: intIndex, the index of the radio button list
+        'Output: the gridview will meet the employee's requirements
+        'Date Created: April 28, 2014
+        'Date Last Modified: April 28, 2014
+
+        'If nothing is selected, Carry on trying to figure out seat, revenue, or both
+        If intIndexClass = -1 Then
+            'If 0, then that is just Seat Count
+            If intIndexSearch = 0 Then
+                RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_SeatCount")
+
+                'If it is 1 then it is just Revenue
+            ElseIf intIndexSearch = 1 Then
+                RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_GrossRevenue")
+
+                'If neither 0 or 1, then must be 2, and most be both
+            Else
+                RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_GrossRevenue_And_SeatCount")
+            End If
+
+            'If Economy is selected, look up the economies for them all
+        ElseIf intIndexClass = 0 Then
+            'If 0, then that is just Seat Count
+            If intIndexSearch = 0 Then
+                RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_SeatCount_Economy")
+
+                'If it is 1 then it is just Revenue
+            ElseIf intIndexSearch = 1 Then
+                RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_GrossRevenue_Economy")
+
+                'If neither 0 or 1, then must be 2, and most be both
+            Else
+                RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_GrossRevenue_And_SeatCount_Economy")
+            End If
+
+            'If First Class is selected, look up the first class for them all
+        ElseIf intIndexClass = 1 Then
+            'If 0, then that is just Seat Count
+            If intIndexSearch = 0 Then
+                RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_SeatCount_FirstClass")
+
+                'If it is 1 then it is just Revenue
+            ElseIf intIndexSearch = 1 Then
+                RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_GrossRevenue_FirstClass")
+
+                'If neither 0 or 1, then must be 2, and most be both
+            Else
+                RunProcedure("usp_ShowPricePaidAndSeatNumberClone_Get_GrossRevenue_And_SeatCount_FirstClass")
+            End If
+        End If
+    End Sub
+
+    'Filter by city
+
 End Class
 

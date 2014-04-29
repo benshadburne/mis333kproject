@@ -13,4 +13,13 @@ Partial Class Emp_ViewReports
 
         gvReports.DataBind()
     End Sub
+
+    Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        'Check to see which is selected of the reports - just revenue, just seats, or both
+        TicketsDB.FilterClass(radClass.SelectedIndex, radRevenueSeatCount.SelectedIndex)
+
+        gvReports.DataSource = TicketsDB.MyView
+
+        gvReports.DataBind()
+    End Sub
 End Class
