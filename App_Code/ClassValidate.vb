@@ -398,7 +398,7 @@ Public Class ClassValidate
     End Function
 
     'Public Function for checking to make sure the lower date is less than the greater date
-    Public Function CheckLowerDateLessThanGreaterDate(strLowerDate As Date, strUpperDate As Date) As Boolean
+    Public Function CheckLowerDateLessThanGreaterDate(datLowerDate As Date, datUpperDate As Date) As Boolean
         'Purpose: Check to see if a lower date in a date range search is less than the upper date
         'Author: Dennis Phelan
         'Inputs: the lower date and the upper date
@@ -406,7 +406,7 @@ Public Class ClassValidate
         'Date Created: April 29, 2014
         'Date Last Modified: April 29, 2014
 
-        If strLowerDate > strUpperDate Then
+        If datLowerDate > datUpperDate Then
             Return False
         Else
             Return True

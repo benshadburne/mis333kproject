@@ -10,6 +10,10 @@
         <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search" />
         <br />
         <br />
+        <asp:Button class="btn" ID="btnRestartSearch" runat="server" Text="Restart Search" />
+        <br />
+        <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+        <br />
        <asp:Label ID="Label3" runat="server" Text="Search By:" CssClass="label"></asp:Label>
        <asp:RadioButtonList ID="radRevenueSeatCount" runat="server" CssClass="radio">
            <asp:ListItem Value="0">Seats</asp:ListItem>
@@ -24,14 +28,21 @@
            <asp:ListItem Value="1">1st Class</asp:ListItem>
        </asp:RadioButtonList>
        <br />
-
-       <asp:DropDownList class="dropdown" ID="ddlCityOrRoute" runat="server">
-            <asp:ListItem>Cities</asp:ListItem>
+        <asp:Label ID="Label5" CssClass="label" runat="server" Text="Departure City:"></asp:Label>
+        <br />
+       <asp:DropDownList class="dropdown" ID="ddlCityOrRouteDepart" runat="server">
+            <asp:ListItem>DepartureCities</asp:ListItem>
            
         </asp:DropDownList>
        <br />
-
-       
+        <br />
+        <asp:Label CssClass="label" ID="Label6" runat="server" Text="End City:"></asp:Label>
+        <br />
+        <asp:DropDownList Class="dropdown" ID="ddlCityOrRouteEnd" runat="server"></asp:DropDownList>
+        
+        
+       <br />
+        <br />
        <asp:Label ID="Label1" runat="server" Text="Lower Date:" CssClass="label"></asp:Label>
     <asp:Calendar ID="calLowerDate" runat="server" ></asp:Calendar>
     <br />

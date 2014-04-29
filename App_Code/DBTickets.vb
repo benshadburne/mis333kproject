@@ -26,6 +26,9 @@ Public Class DBTickets
     Dim mMyViewOne As New DataView
     Dim mdatasetOne As New DataSet
 
+    'Declare an instance of the classes
+    Dim valid As New ClassValidate
+
     Public Sub GetALLTicketsUsingSP()
         'Author: Ben Shadburne
         'Purpose: runs xxxxx procedure
@@ -671,29 +674,26 @@ Public Class DBTickets
     End Sub
 
     'Filter the Gross Revenue and Seat Count by dates
-    Public Sub RevenueSeatFilterByDate(strLowerDate As String, strUpperDate As String)
-        'Purpose: Check to see if the employee wants revenue or seat count or both
+    Public Sub RevenueSeatFilterByDate(datLowerDate As Date, datUpperDate As Date)
+        'Purpose: Check to see what dates the employee wants to look for
         'Author: Dennis Phelan
         'Input: strLowerDate and strUpperDate
         'Output: the gridview will meet the employee's requirements
         'Date Created: April 27, 2014
         'Date Last Modified: April 28, 2014
 
-        'Validate that the lower date is less than the upper date
-
-
 
         'Check to make sure if there is a lower date; if not, just filter for the upper date
-        If strLowerDate = "" Then
-            mMyView.RowFilter = "FlightDate <= '" & strUpperDate & "'"
+        If datLowerDate = Nothing Then
+            mMyView.RowFilter = "FlightDate = '" & datUpperDate & "'"
 
             'If lower date is there, check to make sure there is an upper date; if not, just filter for the upper date
-        ElseIf strUpperDate = "" Then
-            mMyView.RowFilter = "FlightDate >= '" & strLowerDate & "'"
+        ElseIf datUpperDate = Nothing Then
+            mMyView.RowFilter = "FlightDate = '" & datLowerDate & "'"
 
             'If lower and upper date are there, filter for both
         Else
-            mMyView.RowFilter = "FlightDate >= '" & strLowerDate & "' AND FlightDate <= '" & strUpperDate & "'"
+            mMyView.RowFilter = "FlightDate >= '" & datLowerDate & "' AND FlightDate <= '" & datUpperDate & "'"
         End If
     End Sub
 
@@ -774,7 +774,52 @@ Public Class DBTickets
         End If
     End Sub
 
+    'Get all of the cities
+    Public Sub GetAllCities()
+        'Purpose: Get all of the cities
+        'Author: Dennis Phelan
+        'Input: None
+        'Output: Get the values ready to load the ddl with
+        'Date Created: April 29, 2014
+        'Date Last Modified: April 29, 2014
+
+        'Run the procedure to get all of the cities
+        RunProcedure("usp_ShortenedCityNamesClone_Get_ShortenedCityNames")
+
+    End Sub
+
+
     'Filter by city
+    Public Sub FilterDepartureCity(strCity As String)
+        'Purpose: Check to see what cities the employee wants to look for
+        'Author: Dennis Phelan
+        'Input: strCity
+        'Output: the gridview will meet the employee's requirements
+        'Date Created: April 29, 2014
+        'Date Last Modified: April 29, 2014
+
+
+        mMyView.RowFilter = "DepartureCity = '" & strCity & "'"
+
+    End Sub
+
+    'Filter by city
+    Public Sub FilterEndCity(strCity As String)
+        'Purpose: Check to see what cities the employee wants to look for
+        'Author: Dennis Phelan
+        'Input: strCity
+        'Output: the gridview will meet the employee's requirements
+        'Date Created: April 29, 2014
+        'Date Last Modified: April 29, 2014
+
+        'Run the stored procedure with all of the cities
+        RunProcedure("usp_ShortenedCityNamesClone_Get_ShortenedCityNames")
+
+        mMyView.RowFilter = "EndCity = '" & strCity & "'"
+
+    End Sub
+
+
 
 End Class
 
