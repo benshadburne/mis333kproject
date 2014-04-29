@@ -21,7 +21,6 @@
        </div>
           
            <div class="pull-left" style="width: 40px; margin-left: 5px">
-                 <asp:Button class="btn" ID="btnShowAll" runat="server" Text="Show All" />
                   
         </div>
             </asp:Panel>

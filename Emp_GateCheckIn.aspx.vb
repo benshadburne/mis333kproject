@@ -207,4 +207,6 @@ Partial Class Emp_GateCheckIn
     Protected Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
         ResetPage()
     End Sub
+
+
 End Class

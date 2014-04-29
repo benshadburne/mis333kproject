@@ -3,7 +3,7 @@ Partial Class Default2
     Inherits System.Web.UI.Page
 
     Dim DBFlightSearch As New DBFlightSearch
-
+    Dim DBChangeDateTime As New DBChangeDateTime
     'to add days to a date
     'datTwoWeeks = datNow.AddDays(14) <--- this adds 14 days to the current date
 
@@ -29,7 +29,7 @@ Partial Class Default2
         strTime = ddlTimeOfDay.SelectedValue & ddl10Minutes.SelectedValue & ddlMinutes.SelectedValue
 
         'run code to change departed to yes, and change the miles of customers who were on that journey
-
+        DBChangeDateTime.ChangDateTime(strDate, strTime)
 
 
 

@@ -45,7 +45,7 @@ Partial Class _Default
         ShowAll()
         SortandBind()
 
-        lblMessage.Text = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
+        'lblMessage.Text = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
 
 
     End Sub
@@ -128,21 +128,6 @@ Partial Class _Default
         lblIndirectStartC.Visible = True
         lblCountIndirect.Visible = True
 
-    End Sub
-
-    Protected Sub btnShowAll_Click(sender As Object, e As EventArgs) Handles btnShowAll.Click
-        'just reloads dataset and binds it
-        ShowAll()
-        'also hide indirect flights
-        gvIndirectStart.Visible = False
-        lblIndirectStart.Visible = False
-        lblIndirectStartC.Visible = False
-        lblCountIndirect.Visible = False
-
-        gvIndirectFinish.Visible = False
-        lblIndirectFinish.Visible = False
-        lblIndirectFinishC.Visible = False
-        lblCountFinish.Visible = False
     End Sub
 
     Protected Sub gvIndirectStart_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectStart.SelectedIndexChanged
