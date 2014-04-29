@@ -37,9 +37,10 @@
     <br />
     <br />
     <asp:Button ID="btnDeparted" runat="server" text="Departed" Visible ="false"> </asp:Button>
-    <asp:Button ID="btnBack" runat="server" Text="Go Back" />
-&nbsp;<asp:panel id="pnlManifest" runat="server" visible ="false">
-        <asp:GridView ID="gvManifest" runat="server" visible="False">
+    <asp:Button ID="btnBack" runat="server" Text="Go Back" Visible="False" />
+&nbsp;<asp:Button ID="btnCrewScheduling" runat="server" Text="Schedule Crew" Visible="False" />
+    <asp:panel id="pnlManifest" runat="server" visible ="false">
+        <asp:GridView ID="gvManifest" runat="server">
          <Columns>
              
          </Columns>

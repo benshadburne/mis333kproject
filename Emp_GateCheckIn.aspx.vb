@@ -1,6 +1,8 @@
-﻿
+﻿Imports System.Net.Mail
 Partial Class Emp_GateCheckIn
     Inherits System.Web.UI.Page
+
+
     Dim DBJourney As New DBjourneyclone
     Dim DBCustomer As New DBCustomersClone
     Dim DBDate As New DBdate
@@ -35,6 +37,7 @@ Partial Class Emp_GateCheckIn
     End Sub
 
     Public Sub LoadCrewGridView(strJourneyID As String)
+        btnCrewScheduling.Visible = False
         DBCrew.GetCrewByJourney(strJourneyID)
 
         gvCrew.DataSource = DBCrew.MyView
@@ -43,6 +46,7 @@ Partial Class Emp_GateCheckIn
         If gvCrew.Rows.Count = 0 Then
             'throw them an error
             lblMessage.Text = "There are no crew members sheduled for this flight. Please schedule crew members"
+            btnCrewScheduling.Visible = True
         Else
             gvCrew.Visible = True
             btnDeparted.Visible = True
@@ -91,6 +95,7 @@ Partial Class Emp_GateCheckIn
         If bolOnFlight = False Then
             'throw them an error
             lblMessage.Text = "We don't want to fly a plane with no customers on it."
+            'ADD A CANCEL FLIGHT BUTTON
             Exit Sub
         End If
 
@@ -98,6 +103,7 @@ Partial Class Emp_GateCheckIn
 
         If gvCrew.Rows.Count <> 0 Then
             btnConfirm.Visible = False
+            btnBack.Visible = True
             ddlJourneys.Enabled = False
             gvCustomers.Enabled = False
         End If
@@ -161,8 +167,17 @@ Partial Class Emp_GateCheckIn
                     DBTickets.MarkOnFlight(gvCustomers.SelectedRow.Cells(7).Text)
                 End If
             Else
-                'don't add miles
-                'send them an email -- Get Jace's help
+                ''they didn 't make it to the flight
+                ''send them an email
+                'Dim Msg As MailMessage = New MailMessage()
+                'Dim MailObj As New SmtpClient("smtp.mccombs.utexas.edu")
+                'Msg.From = New MailAddress("mis333kgroup6@gmail.com", "Jace Barton")
+                'Msg.To.Add(New MailAddress(gvCustomers.SelectedRow.Cells(10).Text, gvCustomers.SelectedRow.Cells(2).Text + " " + gvCustomers.SelectedRow.Cells(3).Text))
+                'Msg.IsBodyHtml = False
+                'Msg.Body = "Hello " & gvCustomers.SelectedRow.Cells(2).Text & ", " & vbCrLf & vbCrLf & "Unfortunately, we needed to cancel your ticket on flight #" & ddlJourneys.SelectedItem.ToString & " and all other flights associated with that reservation (ReservationID:" & gvCustomers.SelectedRow.Cells(11).Text & "). We apologize for any inconvenience this may cause. Please visit our website to make a new reservation." & vbCrLf & vbCrLf & "Best," & vbCrLf & "The Penguin Air Team"
+                'Msg.Subject = "Flight Cancellation"
+                'MailObj.Send(Msg)
+                'Msg.To.Clear()
             End If
 
         Next
@@ -174,17 +189,8 @@ Partial Class Emp_GateCheckIn
         pnlManifest.Visible = True
         LoadManifestGridView(ddlJourneys.SelectedValue.ToString)
 
-        'load the ddl
-        LoadDDL()
-        LoadCustomerGridView(ddlJourneys.SelectedValue.ToString)
-        'fix what the user can touch on the form
-        btnConfirm.Visible = True
-        btnDeparted.Visible = False
-        ddlJourneys.Enabled = True
-        gvCustomers.Enabled = True
-        gvCrew.Visible = False
-
         'SHOW A FLIGHT MANIFEST
+
     End Sub
 
     Protected Sub btnReload_Click(sender As Object, e As EventArgs) Handles btnReload.Click
@@ -202,11 +208,17 @@ Partial Class Emp_GateCheckIn
         gvCustomers.Enabled = True
         gvCrew.Visible = False
         pnlManifest.Visible = False
+        btnBack.Visible = False
+        btnCrewScheduling.Visible = False
     End Sub
 
     Protected Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
         ResetPage()
     End Sub
 
+
+    Protected Sub btnCrewScheduling_Click(sender As Object, e As EventArgs) Handles btnCrewScheduling.Click
+        Response.Redirect("Emp_CrewScheduling.aspx")
+    End Sub
 
 End Class
