@@ -23,6 +23,9 @@ Partial Class Res_Pay
         'End If
         'check to see if there is a running price subtotal on the page
 
+        Session("ReservationID") = 10019
+        Session("ActiveUser") = 5000
+
         If IsPostBack = False Then
             'Session("ActiveUser") = Session("Login").ToString
             DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
@@ -332,7 +335,7 @@ Partial Class Res_Pay
 
             decDiscount = Calculate.CalculateSubTotalDiscount(intBaseFare, decFirstClassPremium, decAgeDiscount, decTwoWeekDiscount, decInternetDiscount)
 
-            decSubtotal = intBaseFare + decDiscount
+            decSubtotal = CDec(intBaseFare) + decDiscount
 
             Session.Add("Subtotal", decSubtotal)
 
@@ -480,6 +483,7 @@ Partial Class Res_Pay
         lblUpgrade.Visible = False
         btnYes.Visible = False
         btnNo.Visible = False
+        btnConfirm.Visible = False
     End Sub
 
     Protected Sub btnYes_Click(sender As Object, e As EventArgs) Handles btnYes.Click
@@ -492,6 +496,7 @@ Partial Class Res_Pay
         btnYes.Visible = False
         btnNo.Visible = False
         btnConfirm.Visible = True
+        btnPay.Visible = False
     End Sub
 
     Protected Sub btnNo_Click(sender As Object, e As EventArgs) Handles btnNo.Click
@@ -529,6 +534,10 @@ Partial Class Res_Pay
 
         'reset the page
         pnlSeats.Visible = False
+        lblCost.Visible = False
+        btnPay.Visible = False
+        btnConfirm.Visible = False
+        lblUpgrade.Visible = False
 
     End Sub
 

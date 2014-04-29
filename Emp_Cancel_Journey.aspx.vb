@@ -20,7 +20,7 @@ Partial Class Emp_Cancel_Journey
 
     Public Sub LoadFlightGridView()
         'bind ddl for journeys
-        DBJourney.GetJourneysByDate(DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
+        'DBJourney.GetJourneysByDate(DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
         gvJourneys.DataSource = DBJourney.MyView
         gvJourneys.DataBind()
     End Sub
