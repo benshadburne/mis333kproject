@@ -45,6 +45,11 @@ Partial Class _Default
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         ' lblMessage.Text = ddlTimeOfDay.SelectedValue
 
+        If Session("UserType").ToString = "Crew" Then
+            Response.Redirect("Emp_EmployeeDashboard.aspx")
+
+        End If
+
         'make sure there is an arrival, departure ciy
         If Session("StartAirport") Is Nothing Then
             Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
