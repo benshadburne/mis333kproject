@@ -134,9 +134,28 @@ Partial Class _Default
 
     Public Sub CheckSeats()
 
+        'need to enable all seats
+        btn1A.Enabled = True
+        btn1B.Enabled = True
+        btn2A.Enabled = True
+        btn2B.Enabled = True
+        btn3A.Enabled = True
+        btn3B.Enabled = True
+        btn3C.Enabled = True
+        btn3D.Enabled = True
+        btn4A.Enabled = True
+        btn4B.Enabled = True
+        btn4C.Enabled = True
+        btn4D.Enabled = True
+        btn5A.Enabled = True
+        btn5B.Enabled = True
+        btn5C.Enabled = True
+        btn5D.Enabled = True
+
         'button variable makes it so that I can give the work 'button' methods like .backcolor for each button in the arlSeats array
         Dim button As Button
         Dim arlSeats As New ArrayList
+        Dim intSeat As Integer
 
         'adding all buttons to the arraylist
         arlSeats.Add(btn1A)
@@ -218,6 +237,41 @@ Partial Class _Default
         If CInt(gvYourReservation.Rows(0).Cells(5).Text) < 3 Then
             Session("Infant") = "Yes"
         End If
+
+        'disable seats so that user cannot switch between seat classes
+        For i = 0 To 15
+            button = CType(arlSeats(i), Button)
+            If button.BackColor = Drawing.Color.Green Then
+                'sets the seat integer to reference of i, 0-3 is first class 4-15 is economy
+                intSeat = i
+                Exit For
+            End If
+        Next
+        Select Case intSeat
+            Case 0 To 3
+                'disable economy buttons since user is in first class
+                btn3A.Enabled = False
+                btn3B.Enabled = False
+                btn3C.Enabled = False
+                btn3D.Enabled = False
+                btn4A.Enabled = False
+                btn4B.Enabled = False
+                btn4C.Enabled = False
+                btn4D.Enabled = False
+                btn5A.Enabled = False
+                btn5B.Enabled = False
+                btn5C.Enabled = False
+                btn5D.Enabled = False
+            Case 4 To 15
+                'disable first class
+                btn1A.Enabled = False
+                btn1B.Enabled = False
+                btn2A.Enabled = False
+                btn2B.Enabled = False
+            Case Else
+                lblMessage.Text = "Please choose a different user, error in button load"
+        End Select
+
 
     End Sub
 
