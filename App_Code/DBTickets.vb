@@ -724,7 +724,7 @@ Public Class DBTickets
     End Sub
 
     'Filter the Gross Revenue and Seat Count by dates
-    Public Sub RevenueSeatFilterByDate(datLowerDate As Date, datUpperDate As Date)
+    Public Function RevenueSeatFilterByDate(datLowerDate As Date, datUpperDate As Date) As String
         'Purpose: Check to see what dates the employee wants to look for
         'Author: Dennis Phelan
         'Input: strLowerDate and strUpperDate
@@ -732,20 +732,24 @@ Public Class DBTickets
         'Date Created: April 27, 2014
         'Date Last Modified: April 28, 2014
 
+        'Declare strDateFilterStatement
+        Dim strDateFilterStatement As String
 
         'Check to make sure if there is a lower date; if not, just filter for the upper date
         If datLowerDate = Nothing And datUpperDate <> Nothing Then
-            mMyView.RowFilter = "FlightDate = '" & datUpperDate & "'"
+            strDateFilterStatement = "FlightDate = '" & datUpperDate & "'"
 
             'If lower date is there, check to make sure there is an upper date; if not, just filter for the upper date
         ElseIf datUpperDate = Nothing And datLowerDate <> Nothing Then
-            mMyView.RowFilter = "FlightDate = '" & datLowerDate & "'"
+            strDateFilterStatement = "FlightDate = '" & datLowerDate & "'"
 
             'If lower and upper date are there, filter for both
         Else
-            mMyView.RowFilter = "FlightDate >= '" & datLowerDate & "' AND FlightDate <= '" & datUpperDate & "'"
+            strDateFilterStatement = "FlightDate >= '" & datLowerDate & "' AND FlightDate <= '" & datUpperDate & "'"
         End If
-    End Sub
+
+        Return strDateFilterStatement
+    End Function
 
     Public Sub GetRevenueOrSeatCountOrBoth(ByVal intIndex As Integer)
         'Purpose: Check to see if the employee wants revenue or seat count or both
@@ -840,7 +844,7 @@ Public Class DBTickets
 
 
     'Filter by city
-    Public Sub FilterDepartureCity(strCity As String)
+    Public Function FilterDepartureCity(strCity As String) As String
         'Purpose: Check to see what cities the employee wants to look for
         'Author: Dennis Phelan
         'Input: strCity
@@ -848,18 +852,23 @@ Public Class DBTickets
         'Date Created: April 29, 2014
         'Date Last Modified: April 29, 2014
 
+        'Declare the filter statement
+        Dim strFilterStatement As String
+
         'Check to make sure that All is not selected. If so, don't filter
         If strCity = "ALL" Then
-            mMyView.RowFilter = Nothing
+            strFilterStatement = Nothing
 
             'If ALL is not selected, filter
         Else
-            mMyView.RowFilter = "DepartureCity = '" & strCity & "'"
+            strFilterStatement = "DepartureCity = '" & strCity & "'"
         End If
-    End Sub
+
+        Return strFilterStatement
+    End Function
 
     'Filter by city
-    Public Sub FilterEndCity(strCity As String)
+    Public Function FilterEndCity(strCity As String) As String
         'Purpose: Check to see what cities the employee wants to look for
         'Author: Dennis Phelan
         'Input: strCity
@@ -867,16 +876,38 @@ Public Class DBTickets
         'Date Created: April 29, 2014
         'Date Last Modified: April 29, 2014
 
+        'Declare the filter statement
+        Dim strFilterStatement As String
+
         'Check to make sure that All is not selected. If so, don't filter
         If strCity = "ALL" Then
-            mMyView.RowFilter = Nothing
+            strFilterStatement = ""
 
             'If ALL is not selected, filter
         Else
-            mMyView.RowFilter = "EndCity = '" & strCity & "'"
+            strFilterStatement = "EndCity = '" & strCity & "'"
         End If
 
+        'Return the filterstatement
+        Return strFilterStatement
+    End Function
 
+    Public Sub RowFilter(ByVal strFilter As String)
+        'Purpose: Take a filter statement and run it through the row filter
+        'Author: Dennis Phelan
+        'Input: strFilter
+        'Output: the gridview will meet the employee's requirements
+        'Date Created: April 29, 2014
+        'Date Last Modified: April 29, 2014
+
+        'Check to make sure that there is a string filter
+        If strFilter = "" Then
+            'Just set the row filter = to nothing
+            mMyView.RowFilter = Nothing
+        Else
+            'Filter the row
+            mMyView.RowFilter = strFilter
+        End If
     End Sub
 
 

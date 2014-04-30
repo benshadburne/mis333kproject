@@ -67,6 +67,12 @@ Partial Class Emp_ViewReports
         'Clear the error message
         lblMessage.Text = ""
 
+        'Declare the strFilterStatement
+        Dim strFilterStatement1 As String
+        Dim strFilterStatement2 As String
+        Dim strFilterStatement3 As String
+        Dim strFilterStatementOverall As String
+
         'Check to see which is selected of the reports - just revenue, just seats, or both
         TicketsDB.FilterClass(radClass.SelectedIndex, radRevenueSeatCount.SelectedIndex)
 
@@ -80,16 +86,52 @@ Partial Class Emp_ViewReports
         'Filter by date range or single date. Check to make sure that there are dates there first
         If calLowerDate.SelectedDate <> Nothing Or calUpperDate.SelectedDate <> Nothing Then
             'If there is a date selected, filter
-            TicketsDB.RevenueSeatFilterByDate(calLowerDate.SelectedDate, calUpperDate.SelectedDate)
+            strFilterStatement1 = TicketsDB.RevenueSeatFilterByDate(calLowerDate.SelectedDate, calUpperDate.SelectedDate)
         End If
 
+        'Add whatever the result is of the End City for the filter statement
+        strFilterStatement2 = TicketsDB.FilterEndCity(ddlCityOrRouteEnd.SelectedValue)
 
-        'Filter by DepartureCity
-        TicketsDB.FilterDepartureCity(ddlCityOrRouteDepart.SelectedValue)
+        'Add whatever the result is of the Departure city for the filter statement
+        strFilterStatement3 = TicketsDB.FilterDepartureCity(ddlCityOrRouteDepart.SelectedValue)
 
-        'Filter by EndCity
-        TicketsDB.FilterEndCity(ddlCityOrRouteEnd.SelectedValue)
+        'If nothing is selected for date and ALL is selected on both ddls, return Nothing for the row filter
+        If strFilterStatement1 = Nothing And strFilterStatement2 = Nothing And strFilterStatement3 = Nothing Then
+            strFilterStatementOverall = Nothing
 
+            'If there is no date and Departure city, just make strFilterStatementOverall = to End City
+        ElseIf strFilterStatement1 = Nothing And strFilterStatement3 = Nothing Then
+            strFilterStatementOverall = strFilterStatement2
+
+            'If there is no date and End city, just make strFilterStatementOverall = to Departure City
+        ElseIf strFilterStatement1 = Nothing And strFilterStatement2 = Nothing Then
+            strFilterStatementOverall = strFilterStatement3
+
+            'If there is no Departure Date and End city, just make strFilterStatementOverall = to Date
+        ElseIf strFilterStatement2 = Nothing And strFilterStatement3 = Nothing Then
+            strFilterStatementOverall = strFilterStatement1
+
+            'If there is no date, make strFilterStatementOverall = to Departure City and End City
+        ElseIf strFilterStatement1 = Nothing Then
+            strFilterStatementOverall = strFilterStatement2 + " and " + strFilterStatement3
+
+            'If there is no departure city, make strFilterStatementOverall = to Date and End City
+        ElseIf strFilterStatement3 = Nothing Then
+            strFilterStatementOverall = strFilterStatement1 + " and " + strFilterStatement2
+
+            'If there is no end city, make strFilterStatementOverall = to Date and Departure City
+        ElseIf strFilterStatement2 = Nothing Then
+            strFilterStatementOverall = strFilterStatement1 + " and " + strFilterStatement3
+
+            'If everything equals something, then make it equal to date and Departure City and End City
+        Else
+            strFilterStatementOverall = strFilterStatement1 + " and " + strFilterStatement2 + " and " + strFilterStatement3
+        End If
+
+        'Filter the statement
+        TicketsDB.RowFilter(strFilterStatementOverall)
+
+        'Bind the data
         gvReports.DataSource = TicketsDB.MyView
 
         gvReports.DataBind()
@@ -115,5 +157,9 @@ Partial Class Emp_ViewReports
         gvReports.DataSource = TicketsDB.MyView
 
         gvReports.DataBind()
+
+        'Load the DDLs
+        LoadDDLDeparture()
+        LoadDDLEnd()
     End Sub
 End Class
