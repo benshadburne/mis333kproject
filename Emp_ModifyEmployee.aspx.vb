@@ -23,7 +23,7 @@ Partial Class Emp_ModifyEmployee
             If Session("RecordID") Is Nothing Then
                 Response.Redirect("emp_SelectEmployeeToModify.aspx")
             Else
-                strEmpID = Session("UserID").ToString
+                strEmpID = Session("RecordID").ToString
             End If
 
         ElseIf Session("UserType").ToString = "Agent" Or Session("UserType").ToString = "Crew" Then
@@ -48,6 +48,7 @@ Partial Class Emp_ModifyEmployee
 
 
         End If
+
     End Sub
 
     Private Sub FillTextboxes()
