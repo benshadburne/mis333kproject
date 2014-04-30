@@ -7,23 +7,28 @@ Partial Class _Default
     Dim DBJourneySeats As New DBJourneySeats
     Dim DBFlightSearch As New DBFlightSearch
     Dim AddJourneyClass As New AddJourneyClass
+    Dim DBDate As New DBdate
     Dim mAdvantageNumber As Integer
+
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load, calFlightDate.SelectionChanged
 
-        Session("Infant") = ""
-        Session("InfantID") = ""
-        Session("UserSeat") = ""
+        'THIS PAGE IS CRASHING BECAUSE THERE IS NO INITIALIZED VALUE FOR Session("ReservationID"). 
+        'MAKE THEM CHOOSE A RESERVATION WHICH HAS ACTIVE TICKETS AND TICKETS WHICH AREN'T FLOWN YET
 
         'check if login session is empty
         If Session("UserID") Is Nothing Or Session("UserType") Is Nothing Then
             Response.Redirect("HomePage.aspx")
         End If
 
-        If Session("UserTyper").ToString <> "Customer" Then
+        If Session("UserType").ToString <> "Customer" Then
             Response.Redirect("HomePage.aspx")
         End If
 
+        Session("Infant") = ""
+        Session("InfantID") = ""
+        Session("UserSeat") = ""
+        Session("ReservationID") = 10000
 
         If IsPostBack = False Then
             Session("ActiveUser") = Session("UserID").ToString
@@ -40,9 +45,6 @@ Partial Class _Default
             calFlightDate.SelectedDate = Now()
 
         End If
-
-
-
 
         'bind seats and seats w/advantage numbers
         BindSeats()
@@ -62,7 +64,7 @@ Partial Class _Default
         'needs to check which days it is available as well!!!!!
 
         'can't change to an earlier date
-        If calFlightDate.SelectedDate < Now() Then
+        If calFlightDate.SelectedDate < CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate)) Then
             txtAvailable.Text = "Unavailable"
             Exit Sub
         End If
@@ -94,6 +96,7 @@ Partial Class _Default
     Public Sub LoadDDLs()
         'bind ddl for journeys
         ddlJourneyID.DataSource = DBTickets.MyView
+        ddlJourneyID.DataTextField = "FlightAndDate"
         ddlJourneyID.DataValueField = "JourneyID"
         ddlJourneyID.DataBind()
 
@@ -106,11 +109,10 @@ Partial Class _Default
     End Sub
 
     Public Sub LoadTickets()
-        DBTickets.GetALLTicketsUsingSP()
-        DBTickets.GetALLOthersTicketsUsingSP()
+        DBTickets.GetALLTicketsWithDateUsingSP()
+        DBTickets.GetALLOthersTicketsWithDateUsingSP()
         DBTickets.FilterYou(Session("ReservationID").ToString, Session("ActiveUser").ToString)
         DBTickets.FilterOthers(Session("ReservationID").ToString, Session("ActiveUser").ToString)
-
 
     End Sub
 

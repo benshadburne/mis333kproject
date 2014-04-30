@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-   <div class ="header" style="text-align: center;">
+    <div class ="header" style="text-align: center;">
        <h1>View Reports</h1>
    </div>
     <div class="center-block" style="float:left; width: 20%">
@@ -54,7 +54,15 @@
 
     <div class ="center-block" style="float: left; width: 70%;"> 
 
-        <asp:GridView ID="gvReports" runat="server"></asp:GridView>
+        <asp:GridView ID="gvReports" runat="server">
+           
+        </asp:GridView>
+        <br />
+        <asp:Label ID="Label7" runat="server" Text="Totals:" Font-Bold="true" padding-right ="300px"></asp:Label>
+
+    <asp:Label ID="lblRevenue" runat="server" Text="" Font-Bold="true" padding-right="30px"></asp:Label>
+        <asp:Label ID="lblSeats" runat="server" Text="" Font-Bold="true"></asp:Label>
     </div>
-</asp:Content>
+
+    </asp:Content>
 

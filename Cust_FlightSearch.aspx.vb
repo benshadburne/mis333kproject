@@ -45,9 +45,10 @@ Partial Class _Default
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
         ' lblMessage.Text = ddlTimeOfDay.SelectedValue
 
-        If Session("UserType").ToString = "Crew" Then
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        ElseIf Session("UserType").ToString = "Crew" Then
             Response.Redirect("Emp_EmployeeDashboard.aspx")
-
         End If
 
         'make sure there is an arrival, departure ciy
@@ -110,6 +111,10 @@ Partial Class _Default
         gvIndirectFinish.DataSource = DBFlightSearch.MyViewFinish
         gvIndirectFinish.DataBind()
 
+        FormatDate(gvDirectFlights, 2)
+        FormatDate(gvIndirectStart, 2)
+        FormatDate(gvIndirectFinish, 2)
+
         gvDirectFlights.Visible = True
         gvIndirectStart.Visible = True
 
@@ -118,6 +123,17 @@ Partial Class _Default
         lblCountIndirect.Text = CStr(DBFlightSearch.lblCountStart)
         lblCountFinish.Text = CStr(DBFlightSearch.lblCountFinish)
 
+    End Sub
+
+    Private Sub FormatDate(gvGridview As GridView, intColumn As Integer)
+        For i = 0 To gvGridview.Rows.Count - 1
+            Dim datDate As Date
+            Dim strDate As String
+            datDate = CDate((gvGridview.Rows(i).Cells(intColumn).Text))
+            strDate = datDate.ToShortDateString
+
+            gvGridview.Rows(i).Cells(intColumn).Text = strDate
+        Next
     End Sub
 
     Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
@@ -247,13 +263,12 @@ Partial Class _Default
     Protected Sub gvIndirectStart_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectStart.SelectedIndexChanged
         lblMessage.Text = ""
 
-
-
         'need to do searchbtn b/c otherwise other gv's get reset
 
         DBFlightSearch.SearchIndirectFinish(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(6).Text, lblArrival.Text, _
         DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString), _
         gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(4).Text)
+
 
         'check if there's anything in second gv
         If CInt(DBFlightSearch.lblCountFinish) = 0 Then

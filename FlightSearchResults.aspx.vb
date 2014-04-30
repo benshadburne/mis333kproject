@@ -86,10 +86,25 @@ Partial Class _Default
         gvIndirectFinish.DataSource = DBFlightSearch.MyViewFinish
         gvIndirectFinish.DataBind()
 
+        FormatDate(gvDirectFlights, 1)
+        FormatDate(gvIndirectStart, 2)
+        FormatDate(gvIndirectFinish, 1)
+
         ' show record count
         lblCountDirect.Text = CStr(DBFlightSearch.lblCount)
         lblCountIndirect.Text = CStr(DBFlightSearch.lblCountStart)
         lblCountFinish.Text = CStr(DBFlightSearch.lblCountFinish)
+    End Sub
+
+    Private Sub FormatDate(gvGridview As GridView, intColumn As Integer)
+        For i = 0 To gvGridview.Rows.Count - 1
+            Dim datDate As Date
+            Dim strDate As String
+            datDate = CDate((gvGridview.Rows(i).Cells(intColumn).Text))
+            strDate = datDate.ToShortDateString
+
+            gvGridview.Rows(i).Cells(intColumn).Text = strDate
+        Next
     End Sub
 
 

@@ -1,4 +1,5 @@
 ﻿Option Strict On
+Imports System.Data
 Partial Class Emp_ViewReports
     Inherits System.Web.UI.Page
 
@@ -53,15 +54,63 @@ Partial Class Emp_ViewReports
             'Load up the grid view
             TicketsDB.GetGrossRevenueAndSeatCount()
 
-            gvReports.DataSource = TicketsDB.MyView
-
-            gvReports.DataBind()
+            LoadGridView()
 
             LoadDDLDeparture()
 
             LoadDDLEnd()
         End If
     End Sub
+
+
+    Public Sub LoadGridView()
+        Dim decRevenue As Decimal = 0
+        Dim intSeats As Integer = 0
+        gvReports.DataSource = TicketsDB.MyView
+
+        gvReports.DataBind()
+
+        lblRevenue.Text = ""
+        lblSeats.Text = ""
+
+        If gvReports.Rows.Count = 0 Then
+            lblMessage.Text = "Your search returned no records"
+            Exit Sub
+        End If
+
+        For i = 0 To gvReports.Rows.Count - 1
+            Dim datDate As Date
+            Dim strDate As String
+            datDate = CDate((gvReports.Rows(i).Cells(2).Text))
+            strDate = datDate.ToShortDateString
+
+            gvReports.Rows(i).Cells(2).Text = strDate
+        Next
+
+        If radRevenueSeatCount.SelectedIndex = 0 Then
+            For i = 0 To gvReports.Rows.Count - 1
+                intSeats += CInt(gvReports.Rows(i).Cells(5).Text)
+            Next
+
+            lblSeats.Text = "Total Seats: " & intSeats.ToString
+
+        Else
+            For i = 0 To gvReports.Rows.Count - 1
+                decRevenue += CDec(gvReports.Rows(i).Cells(5).Text)
+            Next
+
+            lblRevenue.Text = "Total Revenue: " & decRevenue.ToString("c2")
+
+            If radRevenueSeatCount.SelectedIndex = 2 Then
+                For i = 0 To gvReports.Rows.Count - 1
+                    intSeats += CInt(gvReports.Rows(i).Cells(6).Text)
+                Next
+
+                lblSeats.Text = "Total Seats: " & intSeats.ToString
+            End If
+        End If
+    End Sub
+
 
     Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         'Clear the error message
@@ -132,9 +181,7 @@ Partial Class Emp_ViewReports
         TicketsDB.RowFilter(strFilterStatementOverall)
 
         'Bind the data
-        gvReports.DataSource = TicketsDB.MyView
-
-        gvReports.DataBind()
+        LoadGridView()
     End Sub
 
     Protected Sub btnRestartSearch_Click(sender As Object, e As EventArgs) Handles btnRestartSearch.Click
@@ -154,9 +201,7 @@ Partial Class Emp_ViewReports
         'Load up the grid view
         TicketsDB.GetGrossRevenueAndSeatCount()
 
-        gvReports.DataSource = TicketsDB.MyView
-
-        gvReports.DataBind()
+        LoadGridView()
 
         'Load the DDLs
         LoadDDLDeparture()

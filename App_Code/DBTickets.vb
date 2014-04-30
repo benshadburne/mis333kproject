@@ -45,6 +45,18 @@ Public Class DBTickets
 
     End Sub
 
+    Public Sub GetALLTicketsWithDateUsingSP()
+        'Author: Ben Shadburne
+        'Purpose: runs xxxxx procedure
+        'Arguments: na
+        'Return: na
+        'Date: 03/18/2014
+
+
+        RunProcedure("usp_Tickets_Get_All_With_Date")
+
+    End Sub
+
     Public Sub GetAdvantageNumbersUsingSP(strJourneyID As String, strReservationID As String)
         'Author: Ben Shadburne
         'Purpose: runs advantagenumber procedure
@@ -605,6 +617,18 @@ Public Class DBTickets
 
 
         RunProcedureOthers("usp_Tickets_Get_All")
+
+    End Sub
+
+    Public Sub GetALLOthersTicketsWithDateUsingSP()
+        'Author: Ben Shadburne
+        'Purpose: runs xxxxx procedure
+        'Arguments: na
+        'Return: na
+        'Date: 03/18/2014
+
+
+        RunProcedureOthers("usp_Tickets_Get_All_With_Date")
 
     End Sub
 
