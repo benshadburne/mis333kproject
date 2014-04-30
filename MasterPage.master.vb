@@ -93,7 +93,7 @@ Partial Class MasterPage
             lblTime.Text = "The date is " & strDate & " and the time is " & strTime.Substring(0, 1) & ":" & strTime.Substring(1, 2) & "."
         End If
 
-        If Session("User") Is Nothing Then
+        If Session("UserID") Is Nothing Then
             'no one is logged in
             btnLogout.Visible = False
         Else

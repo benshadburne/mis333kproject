@@ -5,14 +5,14 @@ Partial Class _Default
 
     Dim DBReservations As New DBReservations
 
-    
-
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
-        Dim strCheck As String
+
         'check if login session is empty
-        strCheck = Session("Login").ToString
-        'advantage number is 4 digits, so checks for that
-        If Len(strCheck) <> 4 Then
+        If Session("UserID") Is Nothing Or Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        End If
+
+        If Session("UserTyper").ToString <> "Customer" Then
             Response.Redirect("HomePage.aspx")
         End If
 
