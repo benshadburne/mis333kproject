@@ -23,7 +23,7 @@ Partial Class Emp_ModifyEmployee
             If Session("RecordID") Is Nothing Then
                 Response.Redirect("emp_SelectEmployeeToModify.aspx")
             Else
-                strEmpID = Session("RecordID").ToString
+                strEmpID = Session("UserID").ToString
             End If
 
         ElseIf Session("UserType").ToString = "Agent" Or Session("UserType").ToString = "Crew" Then
@@ -36,7 +36,7 @@ Partial Class Emp_ModifyEmployee
 
 
         'set varaible to session variable
-        strEmpID = (Session("RecordID")).ToString
+        'strEmpID = (Session("RecordID")).ToString
 
         'if first time loading, check to see if we have a record ID
         If IsPostBack = False Then
@@ -58,7 +58,13 @@ Partial Class Emp_ModifyEmployee
         'declare variable to find out if employee is active or not
         Dim strYorN As String
 
-        EObject.FindEmpID(Session("RecordID").ToString)
+        If Session("UserType").ToString = "Manager" Then
+            EObject.FindEmpID(Session("RecordID").ToString)
+        Else
+            EObject.FindEmpID(Session("UserID").ToString)
+        End If
+
+
 
         'we're only going to want the first row because there will only be one customer in dataset based on selected customer
         Dim intIndex As Integer = 0
@@ -191,20 +197,24 @@ Partial Class Emp_ModifyEmployee
         aryParamValues.Add(txtAddress.Text)
         aryParamValues.Add(txtZip.Text)
         aryParamValues.Add(txtPhoneNumber.Text)
-        aryParamValues.Add(Session("RecordID").ToString)
+        If Session("UserType").ToString = "Manager" Then
+            aryParamValues.Add(Session("RecordID").ToString)
+        Else
+            aryParamValues.Add(Session("UserID").ToString)
+        End If
         aryParamValues.Add(ddlActive.SelectedItem.ToString)
 
         'call stored procedure to modify current employee
         EObject.ModifyEmployee(aryParamNames, aryParamValues)
 
         'show success message
-        lblMessage.Text = "You have successfully updated the record for employee # " & Session("RecordID").ToString & ". You will be redirected to the select employee to modify page now."
+        lblMessage.Text = "You have successfully updated the record for the shown employee."
 
         'hide cancel and accept buttons
         btnAccept.Visible = False
         btnCancel.Visible = False
 
         'redirect to Select employee to modify 
-        Response.AddHeader("Refresh", "5; URL=Emp_SelectEmployeeToModify.aspx")
+        'Response.AddHeader("Refresh", "5; URL=Emp_SelectEmployeeToModify.aspx")
     End Sub
 End Class
