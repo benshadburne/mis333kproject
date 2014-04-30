@@ -15,9 +15,9 @@
     <link href="bootstrap-3.1.1-dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="bootstrap-3.1.1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
-<body>
+<body style="background-color:lightblue">
     <form id="form1" runat="server">
-        
+        <div class="center-block" style="width:900px">
  <nav class="navbar navbar-default" role="navigation">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
@@ -48,8 +48,7 @@
         <asp:Button class="btn" ID="btnLogout" runat="server" Text="Logout" width="86px"/> 
      </div>
       </div>
-          <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
-          <asp:Label ID="lblTime" runat="server" Text=""></asp:Label>
+          
 
           </div>
 
@@ -88,12 +87,19 @@
       
   </div><!-- /.container-fluid -->
 </nav>
-        
-    <div class="center-block">
+      </div>  
+    <div class="center-block" style="width:900px">
         <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
         
         </asp:ContentPlaceHolder>
     </div>
+        
+        <div class="center-block" style="width:900px; padding-top:150px">
+        <footer>
+        <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+          <asp:Label ID="lblTime" runat="server" Text=""></asp:Label>
+                    </footer>
+            </div>
     </form>
 
      <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
