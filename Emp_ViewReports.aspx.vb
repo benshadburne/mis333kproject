@@ -72,16 +72,16 @@ Partial Class Emp_ViewReports
 
         'Prepare the check date function
         ''Validate that the lower date is less than the upper date
-        'If calUpperDate.SelectedDate <> Nothing And valid.CheckLowerDateLessThanGreaterDate(calLowerDate.SelectedDate, calUpperDate.SelectedDate) = False Then
-        '    lblMessage.Text = "The Lower Date must be earlier than the Upper Date."
-        '    Exit Sub
-        'End If
+        If calUpperDate.SelectedDate <> Nothing And valid.CheckLowerDateLessThanGreaterDate(calLowerDate.SelectedDate, calUpperDate.SelectedDate) = False Then
+            lblMessage.Text = "The Lower Date must be earlier than the Upper Date."
+            Exit Sub
+        End If
 
-        ''Filter by date range or single date. Check to make sure that there are dates there first
-        'If calLowerDate.SelectedDate <> Nothing Or calUpperDate.SelectedDate <> Nothing Then
-        '    'If there is a date selected, filter
-        '    TicketsDB.RevenueSeatFilterByDate(calLowerDate.SelectedDate, calUpperDate.SelectedDate)
-        'End If
+        'Filter by date range or single date. Check to make sure that there are dates there first
+        If calLowerDate.SelectedDate <> Nothing Or calUpperDate.SelectedDate <> Nothing Then
+            'If there is a date selected, filter
+            TicketsDB.RevenueSeatFilterByDate(calLowerDate.SelectedDate, calUpperDate.SelectedDate)
+        End If
 
 
         'Filter by DepartureCity
