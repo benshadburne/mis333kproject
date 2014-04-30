@@ -7,6 +7,14 @@ Partial Class MasterPage
     Dim DBEmployee As New DBEmployee
     Dim DBDate As New DBdate
 
+    'If SEssion("UserType") = "Crew" Then
+    'Response.Redirect("Homepage.aspx")
+    'Elseif
+    'Session("UserType") = "Employee" Then
+    'Response.Redirect("Homepage.aspx")
+    'Else
+    'let them load the page
+    'End if
     Protected Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
         Dim strUser As String
         Dim strPassword As String
