@@ -161,6 +161,41 @@ Public Class DBEmployee
         RunSPwithOneParam("usp_EmployeeClone_Find_By_EmpID", "EmpID", strEmpID)
     End Sub
 
+    Public Function CheckEmpExists(strEmpID As String) As Boolean
+        'returns true if employee exists
+        FindEmpID(strEmpID)
+
+        If mdatasetEmployee.Tables("tblEmployeesClone").Rows.Count = 0 Then
+            Return False
+        Else
+            Return True
+        End If
+    End Function
+
+    Public Function CheckPassword(strEmpID As String, strPassword As String) As Boolean
+        'returns true if password and ID match
+        FindEmpID(strEmpID)
+
+        If mdatasetEmployee.Tables("tblEmployeesClone").Rows(0).Item("PSW").ToString = strPassword Then
+            Return True
+        Else
+            Return False
+        End If
+
+    End Function
+
+    Public Function CheckEmployeeType(strEmpID As String) As String
+        FindEmpID(strEmpID)
+
+        If mdatasetEmployee.Tables("tblEmployeesClone").Rows(0).Item("EmpType").ToString = "102" Then
+            Return "Manager"
+        ElseIf mdatasetEmployee.Tables("tblEmployeesClone").Rows(0).Item("EmpType").ToString = "101" Then
+            Return "Agent"
+        Else
+            Return "Crew"
+        End If
+    End Function
+
     Public Sub RunSPwithOneParam(ByVal strSPName As String, ByVal strParamName As String, ByVal strParamValue As String)
         ' purpose to run a stored procedure with one parameter
         ' inputs:  stored procedure name, parameter name, parameter value

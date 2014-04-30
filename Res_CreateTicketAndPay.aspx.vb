@@ -18,7 +18,9 @@ Partial Class _Default
         Dim decTotal As Decimal
         decTotal = Calculate.CalculateTotal(CDec(Session("RunningSubtotal")))
 
-        lblTotal.Text = "Your total is $" & Session("RunningSubtotal").ToString & ". Please click Pay to pay."
+        lblTotal.Text = "Your total is " & decTotal.ToString("c2") & ". Please click Pay to pay."
+
+        btnCalculateTotal.Visible = False
 
         lblTotal.Visible = True
 

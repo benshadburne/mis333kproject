@@ -292,7 +292,6 @@ Partial Class _Default
         Dim bolFinished As Boolean = True
         Dim strSeat As String
 
-
         'get all tickets in this reservation
         DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
 

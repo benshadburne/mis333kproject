@@ -25,7 +25,7 @@ Partial Class Res_Pay
 
         If IsPostBack = False Then
             'Session("ActiveUser") = Session("Login").ToString
-            DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
+            DBTickets.GetTicketsInReservationForPricing(Session("ReservationID").ToString)
             Session("TicketCount") = DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
             If Session("TicketRecord") Is Nothing Then
                 Session("TicketRecord") = 0
@@ -78,7 +78,7 @@ Partial Class Res_Pay
         DBTickets.GetALLOthersTicketsUsingSP()
         DBTickets.FilterYou(Session("ReservationID").ToString, (Session("ActiveUser").ToString))
         DBTickets.FilterOthers(Session("ReservationID").ToString, Session("ActiveUser").ToString)
-        DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
+        DBTickets.GetTicketsInReservationForPricing(Session("ReservationID").ToString)
         DBTickets.FilterReservationByPaid()
 
     End Sub
@@ -292,6 +292,8 @@ Partial Class Res_Pay
         Dim datReservation As Date
         Dim datToday As Date
 
+        MakeAllInvisible()
+        rblPayment.Visible = True
 
         If rblPayment.SelectedValue = "Miles" Then
           
@@ -314,7 +316,6 @@ Partial Class Res_Pay
             If FirstClassSelected() = True Then
                 decFirstClassPremium = Calculate.CalculateFirstClass(intBaseFare)
             End If
-
 
             datReservation = CDate(DBJourney.GetDateByJourney(gvTickets.SelectedRow.Cells(4).Text, gvTickets.SelectedRow.Cells(1).Text))
 
@@ -339,12 +340,13 @@ Partial Class Res_Pay
 
             Session.Add("Subtotal", decSubtotal)
 
+            lblMiles.Visible = True
             lblMiles.Text = ""
 
+            lblCost.Visible = True
             lblCost.Text = "This ticket will cost you $" & decSubtotal.ToString("n2") & "."
 
         End If
-
 
         btnPay.Visible = True
 
@@ -354,6 +356,8 @@ Partial Class Res_Pay
     Protected Sub btnPay_Click(sender As Object, e As EventArgs) Handles btnPay.Click
         Dim strMiles As String
         Dim intMiles As Integer
+
+        MakeAllInvisible()
 
         strMiles = DBTickets.GetMileage(gvTickets.SelectedRow.Cells(3).Text)
         intMiles = CInt(strMiles)
@@ -408,8 +412,6 @@ Partial Class Res_Pay
         End If
 
         ResetAll()
-        btnPay.Visible = False
-
 
     End Sub
 
@@ -463,45 +465,42 @@ Partial Class Res_Pay
     End Sub
 
     Protected Sub gvTickets_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvTickets.SelectedIndexChanged
-        ddlJourneyID.SelectedValue = gvTickets.SelectedRow.Cells(4).Text
-        ddlAdvantageNum.SelectedValue = gvTickets.SelectedRow.Cells(3).Text
-        ResetAll()
-        ddlAdvantageNum.Enabled = False
-        ddlJourneyID.Enabled = False
 
-        rblPayment.Visible = True
-        lblPay.Visible = True
+            ddlJourneyID.SelectedValue = gvTickets.SelectedRow.Cells(4).Text
+            ddlAdvantageNum.SelectedValue = gvTickets.SelectedRow.Cells(3).Text
+            ResetAll()
+            ddlAdvantageNum.Enabled = False
+            ddlJourneyID.Enabled = False
 
-        lblMiles.Text = ""
-        lblCost.Text = ""
+        MakeAllInvisible()
+            rblPayment.Visible = True
+            lblPay.Visible = True
 
-        rblPayment.SelectedIndex = -1
 
-        rblPayment.Enabled = True
+            rblPayment.SelectedIndex = -1
 
-        gvTickets.SelectedRow.Style.Add("background-color", "#ffcccc")
-        btnPay.Visible = False
-        lblUpgrade.Visible = False
-        btnYes.Visible = False
-        btnNo.Visible = False
-        btnConfirm.Visible = False
+            rblPayment.Enabled = True
+
+            gvTickets.SelectedRow.Style.Add("background-color", "#ffcccc")
+
     End Sub
 
     Protected Sub btnYes_Click(sender As Object, e As EventArgs) Handles btnYes.Click
+        MakeAllInvisible()
         'tell them to select their first class ticket
         lblMessage.Text = "Please select your first class ticket."
 
         'show them the panel with the seats
         pnlSeats.Visible = True
 
-        btnYes.Visible = False
-        btnNo.Visible = False
         btnConfirm.Visible = True
-        btnPay.Visible = False
+
     End Sub
 
     Protected Sub btnNo_Click(sender As Object, e As EventArgs) Handles btnNo.Click
         PriceAdd()
+        MakeAllInvisible()
+        ResetAll()
     End Sub
 
     Private Sub PriceAdd()
@@ -533,12 +532,9 @@ Partial Class Res_Pay
             Session.Remove("Subtotal")
         End If
 
-        'reset the page
-        pnlSeats.Visible = False
-        lblCost.Visible = False
-        btnPay.Visible = False
-        btnConfirm.Visible = False
-        lblUpgrade.Visible = False
+        MakeAllInvisible()
+
+        ResetAll()
 
     End Sub
 
@@ -551,16 +547,49 @@ Partial Class Res_Pay
         'FIGURE OUT WHAT OTHER SESSION VARIABLES I NEED TO REMOVE
         Session.Remove("ReservationID")
 
-        'redirec the customer
+        'redirect the customer
         Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
     End Sub
 
-    'Protected Sub btnOverride_Click(sender As Object, e As EventArgs) Handles btnOverride.Click
-    '    Dim decSubtotal
-    '    Try
+    Protected Sub btnOverride_Click(sender As Object, e As EventArgs) Handles btnOverride.Click
+        Dim decSubtotal As Decimal
+        Try
+            decSubtotal = CDec(txtOverride.Text)
+        Catch ex As Exception
+            lblMessage.Text = "Please enter a positive decimal price."
+            Exit Sub
+        End Try
 
-    '    Catch ex As Exception
+        If decSubtotal < 0 Then
+            lblMessage.Text = "Please enter a positive decimal price."
+            Exit Sub
+        End If
 
-    '    End Try
-    'End Sub
+        MakeAllInvisible()
+
+        Session.Add("Subtotal", decSubtotal)
+        PriceAdd()
+
+        ResetAll()
+
+    End Sub
+
+    Public Sub MakeAllInvisible()
+        btnPay.Visible = False
+        btnOverride.Visible = False
+        btnYes.Visible = False
+        btnNo.Visible = False
+        btnConfirm.Visible = False
+
+        lblMiles.Text = ""
+        lblCost.Text = ""
+        lblUpgrade.Visible = False
+        lblSubtotal.Text = ""
+
+        rblPayment.Visible = False
+
+        pnlSeats.Visible = False
+
+
+    End Sub
 End Class

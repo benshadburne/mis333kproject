@@ -284,6 +284,34 @@ Public Class DBCustomersClone
         End Try
     End Sub
 
+    Public Sub GetCustomerByAdvantageNumber(strAdvantageNumber As String)
+        RunSPwithOneParam("usp_CustomersClone_Get_By_Advantage_Number", "@AdvantageNumber", strAdvantageNumber)
+    End Sub
+
+    Public Function CheckCustomerExists(strAdvantageNumber As String) As Boolean
+        'returns true if that advantage number exists
+        GetCustomerByAdvantageNumber(strAdvantageNumber)
+
+        If mdatasetCustomersClone.Tables("tblCustomersClone").Rows.Count = 0 Then
+            'no customer exists
+            Return False
+        Else
+            Return True
+        End If
+    End Function
+
+    Public Function CheckPassword(strAdvantageNumber As String, strPassword As String) As Boolean
+        'Returns TRUE if the password and username combo match
+        GetCustomerByAdvantageNumber(strAdvantageNumber)
+
+        If mdatasetCustomersClone.Tables("tblCustomersClone").Rows(0).Item("Password").ToString = strPassword Then
+            'test passes
+            Return True
+        Else
+            Return False
+        End If
+    End Function
+
     Public Sub GetCustomersByJourney(strJourneyID As String)
         RunSPwithOneParam("usp_Customers_Get_By_Journey", "@JourneyID", strJourneyID)
     End Sub

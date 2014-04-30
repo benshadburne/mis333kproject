@@ -39,7 +39,7 @@
 
       <div class="pull-right" style="width: 15%; padding-right: 10px; min-width: 100px; text-align:center; padding-top: 5px; line-height:28px">
           <asp:TextBox CssClass="text-center" ID="txtUsername" runat="server" width="90%" Height="22px" Wrap="False" BorderStyle="Inset" ForeColor="Gray">Username</asp:TextBox> <br />
-          <asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="22px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray">Password</asp:TextBox>
+          <asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="22px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray" TextMode="Password">Password</asp:TextBox>
           </div>
     <div class="pull-right">
            <div class="pull-right" style="padding-right: 10px">
@@ -48,6 +48,9 @@
         <asp:Button class="btn" ID="btnLogout" runat="server" Text="Logout" width="86px"/> 
      </div>
       </div>
+          <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+          <asp:Label ID="lblTime" runat="server" Text=""></asp:Label>
+
           </div>
 
       

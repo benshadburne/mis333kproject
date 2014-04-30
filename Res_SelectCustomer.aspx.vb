@@ -250,6 +250,11 @@ Partial Class Res_SelectCustomer
         Session.Remove("Children")
         Session.Remove("Babies")
         Session.Remove("ReservationID")
+        If Session("NewCustomer") Is Nothing Then
+            'dont do anything
+        Else
+            Session.Remove("NewCustomer")
+        End If
         Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
     End Sub
 

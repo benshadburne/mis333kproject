@@ -431,6 +431,11 @@ Public Class DBTickets
 
     End Function
 
+    Public Sub GetTicketsInReservationForPricing(strReservationID As String)
+        RunSPwithOneParam("usp_Tickets_Get_By_Reservation_For_Pricing", "@ReservationID", strReservationID)
+
+    End Sub
+
     Public Sub GetTicketsInReservation(strReservationID As String)
         'returns all tickets in a reservation
         RunSPwithOneParam("usp_Tickets_Get_By_Reservation", "@ReservationID", strReservationID)

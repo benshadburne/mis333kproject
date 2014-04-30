@@ -276,7 +276,7 @@ Public Class ClassCalculate
 
         Dim decTotal As Decimal
         'Calculate the tax
-        decTotal = decSubtotal * SALES_TAX_Constant
+        decTotal = decSubtotal * (1 + SALES_TAX_Constant)
 
         Return decTotal
 

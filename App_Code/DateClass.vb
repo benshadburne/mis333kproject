@@ -110,6 +110,17 @@ Public Class DBdate
         Return strDate
     End Function
 
+    Public Function getcurrentTime() As String
+        Dim strTime As String
+
+        RunProcedure("usp_Constants_Get_Date")
+
+        strTime = mdatasetdate.Tables("tblDate").Rows(0).Item("TheTime").ToString
+
+        Return strTime
+
+    End Function
+
     Public Function GetCurrentDateReturnDate() As Date
         Dim datDate As Date
         RunProcedure("usp_Constants_Get_Date")

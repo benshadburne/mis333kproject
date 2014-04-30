@@ -242,6 +242,8 @@ Partial Class _Default
     Protected Sub gvIndirectStart_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvIndirectStart.SelectedIndexChanged
         lblMessage.Text = ""
 
+
+
         'need to do searchbtn b/c otherwise other gv's get reset
 
         DBFlightSearch.SearchIndirectFinish(gvIndirectStart.Rows(gvIndirectStart.SelectedIndex).Cells(6).Text, lblArrival.Text, _
@@ -391,6 +393,12 @@ Partial Class _Default
             Session.Remove("ReservationID")
         End If
 
+        If Session("IsFinal") Is Nothing Then
+            'dont do anything
+        Else
+            Session.Remove("IsFinal")
+        End If
+
         CancelReservation()
         Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
     End Sub
@@ -401,5 +409,6 @@ Partial Class _Default
         Session.Remove("Adults")
         Session.Remove("Children")
         Session.Remove("Babies")
+        Session.Remove("JourneyNumber")
     End Sub
 End Class

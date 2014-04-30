@@ -16,7 +16,7 @@
         <br />
         <br />
         <asp:Label CssClass="h3" ID="Label2" runat="server" Text="Your Tickets:"></asp:Label>
-        <asp:GridView class="table" ID="gvYourReservation" runat="server" visible ="False"></asp:GridView>
+        <asp:GridView class="table" ID="gvYourReservation" runat="server"></asp:GridView>
         <asp:GridView class="table" ID="gvTickets" runat="server">
             <Columns>
                 <asp:CommandField ShowSelectButton="True" />
@@ -25,7 +25,7 @@
         
         <br />
          <asp:Label CssClass="h3" ID="Label3" runat="server" Text="Other Tickets:"></asp:Label>
-        <asp:GridView class="table" ID="gvOtherReservation" runat="server" visible="False"></asp:GridView>
+        <asp:GridView class="table" ID="gvOtherReservation" runat="server"></asp:GridView>
         <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
    <br />
         <div style="width:100%">
@@ -73,10 +73,9 @@
                  
               <asp:Button ID="btnPay" runat="server" Text="Pay" Visible="false"/>
             <br />
-
               
               <br />
-              <asp:Button ID="btnOverride" runat="server" Text="Over Ride Price" />
+              <asp:Button ID="btnOverride" runat="server" Text="Over Ride Price" visible="false"/>
               
             <asp:TextBox ID="txtOverride" runat="server" Text ="" Visible ="false"></asp:TextBox>
                  

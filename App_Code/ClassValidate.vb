@@ -19,7 +19,7 @@ Public Class ClassValidate
         'Author: Ben Shadburne
         'Purpose: checks input to see if integer
         'Arguments:  strIn
-        'Return: true/false
+        'Return: true if integer
         'Date: 02/06/2014
 
         ' check to see that each character is 0-9
