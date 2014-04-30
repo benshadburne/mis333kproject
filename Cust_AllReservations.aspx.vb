@@ -12,7 +12,7 @@ Partial Class _Default
             Response.Redirect("HomePage.aspx")
         End If
 
-        If Session("UserTyper").ToString <> "Customer" Then
+        If Session("UserType").ToString <> "Customer" Then
             Response.Redirect("HomePage.aspx")
         End If
 
@@ -20,6 +20,8 @@ Partial Class _Default
         DBReservations.GetALLReservationsUsingSP()
         DBReservations.SearchByAdvantageNumber(Session("UserID").ToString)
 
+        SortandBind()
+        'lblMessage.Text = Session("UserID").ToString
     End Sub
 
     Public Sub SortandBind()
@@ -41,7 +43,7 @@ Partial Class _Default
 
     Protected Sub gvAllReservations_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvAllReservations.SelectedIndexChanged
 
-        Session("ReservationID") = gvAllReservations.SelectedIndex.ToString
+        Session.Add("ReservationID", gvAllReservations.Rows(gvAllReservations.SelectedIndex).Cells(1).Text)
 
         Response.Redirect("Cust_ReservationDetails.aspx")
 

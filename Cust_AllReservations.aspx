@@ -19,7 +19,9 @@
         <div class="pull-right">
             <asp:Label CssClass="label" ID="lblCountReservations" runat="server" Text="Count:"></asp:Label></div>
          <br />
-         <asp:GridView class="table" ID="gvAllReservations" runat="server" AutoGenerateSelectButton="True"></asp:GridView>
+         <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+         <asp:GridView class="table" ID="gvAllReservations" runat="server" AutoGenerateSelectButton="True">
+        </asp:GridView>
            
 
 

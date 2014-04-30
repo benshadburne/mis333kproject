@@ -243,7 +243,7 @@ Public Class DBReservations
         'Date: 03/18/2014
 
         'only sort should be by reservationID
-        mMyView.Sort = "[ReservationID] Ascending"
+        mMyView.Sort = "[ReservationID]"
 
     End Sub
 
@@ -254,7 +254,7 @@ Public Class DBReservations
         'Return: filtered dataview by state
         'Date: 03/18/2014
 
-        MyView.RowFilter = "[Advantage Numbers] = '&" & strIn & "&'"
+        MyView.RowFilter = "[AdvantageNumber] = '" & strIn & "'"
     End Sub
 
     Public Sub SearchByPartialLastname(ByVal strIn As String)

@@ -96,8 +96,13 @@
         
         <div class="center-block" style="width:900px; padding-top:150px">
         <footer>
+            <asp:Panel class="panel-footer" ID="Panel1" runat="server" Width="900px" Height="200px">
+            <div style="width:900px">
         <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
           <asp:Label ID="lblTime" runat="server" Text=""></asp:Label>
+                </div>
+
+            </asp:Panel>
                     </footer>
             </div>
     </form>

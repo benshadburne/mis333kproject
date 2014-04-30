@@ -25,10 +25,14 @@ Partial Class _Default
             Response.Redirect("HomePage.aspx")
         End If
 
+        If Session("ReservationID").ToString Is Nothing Then
+            Response.Redirect("Cust_AllReservations.aspx")
+        End If
+
         Session("Infant") = ""
         Session("InfantID") = ""
         Session("UserSeat") = ""
-        Session("ReservationID") = 10000
+
 
         If IsPostBack = False Then
             Session("ActiveUser") = Session("UserID").ToString
@@ -40,10 +44,8 @@ Partial Class _Default
         SortandBind()
 
         If IsPostBack = False Then
-            'load ddls and calendar date first time
             LoadDDLs()
             calFlightDate.SelectedDate = Now()
-
         End If
 
         'bind seats and seats w/advantage numbers
@@ -61,7 +63,12 @@ Partial Class _Default
 
     Public Sub FillAvailable()
 
-        'needs to check which days it is available as well!!!!!
+        'sets buttons to disabled and availabe to unavailable if journey is before this date
+        'first get date of selected journey into date format
+        Dim datJourney As Date
+        lblMessage.Text = (ddlJourneyID.SelectedItem.ToString).Substring(5, Len(ddlJourneyID.SelectedItem.ToString) - 5)
+
+        'If DBTickets.MyView.Table().Rows(ddlJourneyID.SelectedIndex).Item("FlightDate") Then
 
         'can't change to an earlier date
         If calFlightDate.SelectedDate < CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate)) Then
@@ -78,7 +85,7 @@ Partial Class _Default
             txtAvailable.Text = "Unavailable"
             Exit Sub
         End Try
-        
+
         'check how many empty seats there are
         DBSeats.GetALLSeatsUsingSP()
         DBSeats.FilterJourneyEmpty(ddlJourneyID.SelectedValue)
@@ -90,7 +97,7 @@ Partial Class _Default
         Else
             txtAvailable.Text = "Available"
         End If
-        lblMessage.Text = DBSeats.lblCount.ToString
+        
     End Sub
 
     Public Sub LoadDDLs()

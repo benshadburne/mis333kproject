@@ -7,7 +7,7 @@
     <br />
     <br />
 
-    <div class="center-block">
+   
 
         <asp:Label CssClass="h1" ID="Label1" runat="server" Text="Reservation ID: "></asp:Label>
         <asp:Label CssClass="h1" ID="lblReservationID" runat="server" Text=""></asp:Label>
@@ -20,7 +20,7 @@
             <asp:Button CssClass="btn" ID="btnHideDates" runat="server" Text="Show Dates" />
         <br />
              <div class="pull-left"  style="word-spacing: 0px">
-        <asp:Label CssClass="label" ID="Label5" runat="server" Text="Choose the JourneyID:"></asp:Label>
+        <asp:Label CssClass="label" ID="Label5" runat="server" Text="Choose the Flight/Date:"></asp:Label>
         <br />
         <asp:DropDownList CssClass="dropdown" ID="ddlJourneyID" runat="server" AutoPostBack="True"></asp:DropDownList>
             </div>
@@ -35,7 +35,7 @@
         <br />
         <br />
         <br />
-        <asp:Panel CssClass="panel" ID="pnlTickets" runat="server" Visible="false">
+        <asp:Panel CssClass="panel" ID="pnlTickets" runat="server">
             <br />
         <h2>View Reservation Tickets</h2>
             <br />
@@ -49,17 +49,17 @@
             </asp:Panel>
         
                 <br />
-        <asp:Panel CssClass="panel" ID="pnlSeats" runat="server" Visible="false" Width="100%">
+        <asp:Panel CssClass="panel" ID="pnlSeats" runat="server" Width="100%">
         
         <h2>Modify Seats</h2>
    <br />
 
-        <div class="center-block" style="text-align:center ">
-         
+        <div style="width: 100%; text-align: center" class="pull-left">
+            
             <asp:Label CssClass="label" ID="Label6" runat="server" Text="Front of Plane" ></asp:Label>
-     </div>
-      
-          <div class="pull-left" style="margin-left:25%; text-align:center">
+       </div>
+                     
+          <div class="pull-left" style="text-align:center; width: 449px">
                 <asp:Button class="btn-seat" ID="btn1A" runat="server" Text="1A" />
               <br />
               <asp:Button class="btn-seat" ID="btn2A" runat="server" Text="2A" />
@@ -77,9 +77,8 @@
               </div>
 
 
-      <div class="pull-left" style="text-align: center">
-                     
-              <asp:Button class="btn-seat" ID="btn1B" runat="server" Text="1B" />
+      <div class="pull-right" style="text-align: center; width: 449px">
+          <asp:Button class="btn-seat" ID="btn1B" runat="server" Text="1B" />
               <br />
               <asp:Button class="btn-seat" ID="btn2B" runat="server" Text="2B" />
               <br />
@@ -93,17 +92,18 @@
               <asp:Button class="btn-seat" ID="btn5D" runat="server" Text="5D" />
                 <br />
           </div>
-        
-       
+      
+     
       
         
             <div style="width: 100%; text-align: center" class="pull-left">
             
             <asp:Label CssClass="label" ID="Label7" runat="server" Text="Rear of Plane" ></asp:Label>
        </div>
+
       </asp:Panel>
         <div class="pull-left" style="width:100%">
-        <asp:Panel CssClass="panel" ID="pnlDates" runat="server" Width="100%" Visible="false">
+        <asp:Panel CssClass="panel" ID="pnlDates" runat="server" Width="100%">
             
             <h2>Modify Journey Date</h2>
             <br />
@@ -134,6 +134,6 @@
 
         </asp:Panel>
         </div>
-        </div>
+        
 </asp:Content>
 
