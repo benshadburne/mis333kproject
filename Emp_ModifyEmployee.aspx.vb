@@ -36,6 +36,11 @@ Partial Class Emp_ModifyEmployee
         'arguments: none
         'returns: nothing
 
+        'declare variable to find out if employee is active or not
+        Dim strYorN As String
+
+        EObject.FindEmpID(Session("RecordID").ToString)
+
         'we're only going to want the first row because there will only be one customer in dataset based on selected customer
         Dim intIndex As Integer = 0
 
@@ -50,6 +55,13 @@ Partial Class Emp_ModifyEmployee
         txtZip.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("Zip").ToString
         txtPhoneNumber.Text = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("Phone").ToString
 
+        strYorN = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("Active").ToString
+
+        If strYorN = "y" Then
+            ddlActive.SelectedIndex = 0
+        Else
+            ddlActive.SelectedIndex = 1
+        End If
     End Sub
 
     Protected Sub btnModify_Click(sender As Object, e As EventArgs) Handles btnModify.Click
@@ -70,6 +82,7 @@ Partial Class Emp_ModifyEmployee
         txtEmpType.ReadOnly = False
         txtZip.ReadOnly = False
         txtPhoneNumber.ReadOnly = False
+        ddlActive.Enabled = True
     End Sub
 
     Protected Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
@@ -94,6 +107,7 @@ Partial Class Emp_ModifyEmployee
         txtEmpType.ReadOnly = True
         txtZip.ReadOnly = True
         txtPhoneNumber.ReadOnly = True
+        ddlActive.Enabled = False
     End Sub
 
     Protected Sub btnAccept_Click(sender As Object, e As EventArgs) Handles btnAccept.Click
@@ -143,6 +157,7 @@ Partial Class Emp_ModifyEmployee
         aryParamNames.Add("@Zip")
         aryParamNames.Add("@Phone")
         aryParamNames.Add("@EmpID")
+        aryParamNames.Add("@active")
 
         'create array list for parameter values
         Dim aryParamValues As New ArrayList
@@ -158,6 +173,7 @@ Partial Class Emp_ModifyEmployee
         aryParamValues.Add(txtZip.Text)
         aryParamValues.Add(txtPhoneNumber.Text)
         aryParamValues.Add(Session("RecordID").ToString)
+        aryParamValues.Add(ddlActive.SelectedItem.ToString)
 
         'call stored procedure to modify current employee
         EObject.ModifyEmployee(aryParamNames, aryParamValues)

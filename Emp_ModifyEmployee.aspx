@@ -29,6 +29,7 @@
             <asp:Label ID="Label8" runat="server" Text="Address"></asp:Label><br />
         <asp:Label ID="Label9" runat="server" Text="Zip"></asp:Label><br />
         <asp:Label ID="Label10" runat="server" Text="Phone"></asp:Label><br />
+        <asp:Label ID="Label1" runat="server" Text="Active"></asp:Label><br />
         
         </div>
         <div id ="right">
@@ -50,6 +51,10 @@
                 <asp:RequiredFieldValidator ID="rfvZip" runat="server" ErrorMessage="Please enter a zip code!" ControlToValidate="txtZip" Text="*"></asp:RequiredFieldValidator><br />
                 <asp:TextBox ID="txtPhoneNumber" runat="server" MaxLength="10" ReadOnly="True"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvPhoneNumber" runat="server" ErrorMessage="Please enter a phone number!" ControlToValidate="txtPhoneNumber" Text="*"></asp:RequiredFieldValidator><br />
+                <asp:DropDownList ID="ddlActive" runat="server" Enabled="False">
+                    <asp:ListItem>Y</asp:ListItem>
+                    <asp:ListItem>N</asp:ListItem>
+                </asp:DropDownList>
             </div>
         </div>
         
