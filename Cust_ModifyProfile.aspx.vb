@@ -49,6 +49,15 @@ Partial Class _Default
             End If
         End If
 
+        If valid.CheckIntegerWithSubstring(txtMiles.Text) = False Then
+            lblErrorMessage.Text = "Please enter a positive integer (or 0) for miles!"
+            Exit Sub
+        End If
+
+        If CInt(txtMiles.Text) < 0 Then
+            lblErrorMessage.Text = "Please enter a positive integer (or 0) for miles!"
+            Exit Sub
+        End If
 
         'Here's where I will put all of my validations
         'Validate Phone
