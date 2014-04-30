@@ -21,7 +21,7 @@
             <asp:Button class="btn" ID="btnModify" runat="server" Text="Modify Customer" />
         <br />
             <br />
-        <asp:Button class="btn" ID="btnAbort" runat="server" Text="Abort Modification" />
+        <asp:Button class="btn" ID="btnAbort" runat="server" Text="Abort Modification" CausesValidation="False" />
             <br />
         <br />
         <asp:Button class="btn" ID="btnSave" runat="server" Text="Save Modification" />
@@ -56,6 +56,8 @@
                 <asp:Label ID="lblPhone" runat="server" Text="Phone:"></asp:Label>
                 <br />
                 <asp:Label ID="lblMiles" runat="server" Text="Miles"></asp:Label>
+                <br />
+                <asp:Label ID="lblActive" runat="server" Text="Active"></asp:Label>
             </div>
             <div id ="pull-left" style="width: 70%; float: left; line-height: 160%">
                 <asp:TextBox ID="txtFName" class="text-left" runat="server"></asp:TextBox>
@@ -81,6 +83,10 @@
                 
                 <asp:TextBox ID="txtMiles" runat="server"></asp:TextBox>
                 <br />
+                <asp:DropDownList ID="ddlActive" runat="server">
+                    <asp:ListItem>Y</asp:ListItem>
+                    <asp:ListItem>N</asp:ListItem>
+                </asp:DropDownList>
             </div>
             </div>
         </div>
