@@ -22,6 +22,7 @@ Partial Class _Default
 
         If IsPostBack = False Then
             LoadTextboxes(intAdvantageNumber)
+            MakeThingsInactive()
         End If
 
 
@@ -29,7 +30,7 @@ Partial Class _Default
 
     Protected Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
 
-        'Dim strAdvantageNumber As String
+        'Dim strAdvantageNumber As Stringa
         'strAdvantageNumber = Session(
         'Clear the message
         lblErrorMessage.Text = ""
@@ -63,13 +64,17 @@ Partial Class _Default
         End If
 
         'Try modifying customer using an SP
-        CustDB.ModifyEmployeeRecord(Session("AdvantageNumber_Selected_By_Manager").ToString, txtPassword.Text, txtLName.Text, txtFName.Text, txtMI.Text, txtAddress.Text, txtZip.Text, txtPhone.Text, txtEmail.Text, txtMiles.Text)
+        CustDB.ModifyEmployeeRecord(Session("AdvantageNumber_Selected_By_Manager").ToString, txtPassword.Text, txtLName.Text, txtFName.Text, txtMI.Text, txtAddress.Text, txtZip.Text, txtPhone.Text, txtEmail.Text, txtMiles.Text, ddlActive.SelectedValue.ToString)
 
         'Outputs
         lblSuccessMessage.Text = "Profile successfully modified."
+
+        MakeThingsInactive()
     End Sub
 
     Public Sub LoadTextboxes(intAdvantageNumber As Integer)
+
+        Dim strYorN As String
         CustDB.FindCustomersByAdvantageNumber(intAdvantageNumber)
 
         If CustDB.MyDataset.Tables("tblCustomersClone").Rows.Count = 0 Then
@@ -87,6 +92,12 @@ Partial Class _Default
         txtPhone.Text = CustDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Phone").ToString
         txtZip.Text = CustDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Zip").ToString
         txtMiles.Text = CustDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Miles").ToString
+        strYorN = CustDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Active").ToString
+        If strYorN = "y" Then
+            ddlActive.SelectedIndex = 0
+        Else
+            ddlActive.SelectedIndex = 1
+        End If
 
         Session("CheckFirstName") = txtFName.Text
         Session("CheckLastName") = txtLName.Text
@@ -94,5 +105,45 @@ Partial Class _Default
 
     End Sub
 
+    Public Sub MakeThingsInactive()
+        txtAddress.Enabled = False
+        txtEmail.Enabled = False
+        txtFName.Enabled = False
+        txtLName.Enabled = False
+        txtMI.Enabled = False
+        txtMiles.Enabled = False
+        txtPassword.Enabled = False
+        txtPhone.Enabled = False
+        txtZip.Enabled = False
+        btnModify.Visible = True
+        btnAbort.Visible = False
+        btnSave.Visible = False
+        ddlActive.Enabled = False
+    End Sub
 
+    Public Sub MakeThingsActive()
+        txtAddress.Enabled = True
+        txtEmail.Enabled = True
+        txtFName.Enabled = True
+        txtLName.Enabled = True
+        txtMI.Enabled = True
+        txtMiles.Enabled = True
+        txtPassword.Enabled = True
+        txtPhone.Enabled = True
+        txtZip.Enabled = True
+        btnModify.Visible = False
+        btnAbort.Visible = True
+        btnSave.Visible = True
+        ddlActive.Enabled = True
+    End Sub
+
+    Protected Sub btnModify_Click(sender As Object, e As EventArgs) Handles btnModify.Click
+        MakeThingsActive()
+    End Sub
+
+
+    Protected Sub btnAbort_Click(sender As Object, e As EventArgs) Handles btnAbort.Click
+        LoadTextboxes(CInt(Session("AdvantageNumber_Selected_By_Manager")))
+        MakeThingsInactive()
+    End Sub
 End Class

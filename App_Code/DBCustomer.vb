@@ -379,7 +379,7 @@ Public Class DBCustomersClone
         End If
     End Function
 
-    Public Sub ModifyEmployeeRecord(strAdvantageNumber As String, strPassword As String, strLastName As String, strFirstName As String, strMI As String, strAddress As String, strZip As String, strPhone As String, strEmail As String, strMiles As String)
+    Public Sub ModifyEmployeeRecord(strAdvantageNumber As String, strPassword As String, strLastName As String, strFirstName As String, strMI As String, strAddress As String, strZip As String, strPhone As String, strEmail As String, strMiles As String, strActive As String)
         Dim aryEmployeeNames As New ArrayList
         Dim aryEmployeeValues As New ArrayList
 
@@ -393,6 +393,7 @@ Public Class DBCustomersClone
         aryEmployeeNames.Add("@Phone")
         aryEmployeeNames.Add("@Email")
         aryEmployeeNames.Add("@Miles")
+        aryEmployeeNames.Add("@active")
 
         aryEmployeeValues.Add(strAdvantageNumber)
         aryEmployeeValues.Add(strPassword)
@@ -404,6 +405,7 @@ Public Class DBCustomersClone
         aryEmployeeValues.Add(strPhone)
         aryEmployeeValues.Add(strEmail)
         aryEmployeeValues.Add(strMiles)
+        aryEmployeeValues.Add(strActive)
 
 
         UseSPforInsertOrUpdateQuery("usp_CustomersClone_Modify_By_Advantage_Number", aryEmployeeNames, aryEmployeeValues)
