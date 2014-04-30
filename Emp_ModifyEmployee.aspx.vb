@@ -11,23 +11,42 @@ Partial Class Emp_ModifyEmployee
     Dim VObject As New ClassValidate
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+
         'create variable for EmpID
-        Dim intEmpID As Integer
+        Dim strEmpID As String
+
+        'check for session variables
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        ElseIf Session("UserType").ToString = "Manager" Then
+            'they're logged in as a manager, and have selected an employee to modify
+            If Session("RecordID") Is Nothing Then
+                Response.Redirect("emp_SelectEmployeeToModify.aspx")
+            Else
+                strEmpID = Session("RecordID").ToString
+            End If
+
+        ElseIf Session("UserType").ToString = "Agent" Or Session("UserType").ToString = "Crew" Then
+            strEmpID = Session("UserID").ToString
+        Else
+            'they are a customer trying to access this page
+            Response.Redirect("HomePage.aspx")
+        End If
+
+
 
         'set varaible to session variable
-        intEmpID = CInt(Session("RecordID"))
+        strEmpID = (Session("RecordID")).ToString
 
         'if first time loading, check to see if we have a record ID
         If IsPostBack = False Then
-            If Session("RecordID") Is Nothing Then 'we don't have a record ID
-                Response.Redirect("emp_SelectEmployeeToModify.aspx")
-            Else
-                'get record from last page into dataset
-                EObject.FindEmpID(Session("RecordID").ToString)
-                FillTextboxes()
-            End If
 
-            
+            'get record from last page or current empID into dataset
+            EObject.FindEmpID(strEmpID)
+            FillTextboxes()
+
+
+
         End If
     End Sub
 

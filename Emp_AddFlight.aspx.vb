@@ -24,6 +24,16 @@ Partial Class Emp_AddFlight
     Dim strArrivalTime As String
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        'check for session variables
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        ElseIf Session("UserType").ToString = "Manager" Then
+            'everything's good, they're logged in as a manager
+        Else
+            Response.Redirect("HomePage.aspx")
+        End If
+
+
         'if first time loading page, load drop down lists
         If IsPostBack = False Then
             'get all airports

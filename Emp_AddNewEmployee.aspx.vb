@@ -80,6 +80,15 @@ Partial Class Emp_AddNewEmployee
     End Sub
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        'check for session variables
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        ElseIf Session("UserType").ToString = "Manager" Then
+            'everything's good, they're logged in as a manager
+        Else
+            Response.Redirect("HomePage.aspx")
+        End If
+
         ''create variables for biggest empID and new empID
         'Dim intMaxEmpID As Integer
         'Dim intNewEmpID As Integer

@@ -15,6 +15,15 @@ Partial Class Emp_CancelFlight
     Dim CaObject As New CancelFlight
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        'check for session variables
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        ElseIf Session("UserType").ToString = "Manager" Then
+            'everything's good, they're logged in as a manager
+        Else
+            Response.Redirect("HomePage.aspx")
+        End If
+
         'if first time loading page, set datasource of ddlFlights
         If IsPostBack = False Then
             'get all flights into database

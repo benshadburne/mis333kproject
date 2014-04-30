@@ -9,6 +9,20 @@ Partial Class _Default
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
         Dim intAdvantageNumber As Integer
+
+        'check for session variables
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        Else
+            If Session("UserType").ToString = "Customer" Then
+                intAdvantageNumber = CInt(Session("UserID"))
+            ElseIf Session("UserType").ToString = "Manager" Or Session("UserType").ToString = "Agent" Or Session("UserType").ToString = "Crew" Then
+                intAdvantageNumber = CInt(Session("AdvantageNumber_Selected_By_Manager"))
+            Else
+                Response.Redirect("HomePage.aspx")
+            End If
+        End If
+
         'Dim strAdvantageNumber As String
 
         'if logged in as employee then

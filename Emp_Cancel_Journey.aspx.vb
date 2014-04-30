@@ -11,6 +11,15 @@ Partial Class Emp_Cancel_Journey
     Dim CaObject As New CancelFlight
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        'check for session variables
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        ElseIf Session("UserType").ToString = "Manager" Then
+            'everything's good, they're logged in as a manager
+        Else
+            Response.Redirect("HomePage.aspx")
+        End If
+
         If IsPostBack = False Then
             calFlightSearch.SelectedDate = DBDate.GetCurrentDateReturnDate
             LoadFlightGridView()
