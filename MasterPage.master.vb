@@ -15,6 +15,9 @@ Partial Class MasterPage
     'Else
     'let them load the page
     'End if
+
+    'Session("UserType") holds either "Customer" , "Manager" , "Agent" (for gate agent), and "Crew" for crew
+    'SEssion("UserID") hold the advantage number of the EmpID depending on the employee type. 
     Protected Sub btnLogin_Click(sender As Object, e As EventArgs) Handles btnLogin.Click
         Dim strUser As String
         Dim strPassword As String
