@@ -104,8 +104,7 @@ Partial Class MasterPage
     
     Protected Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
         lblMessage.Text = ""
-        Session.Remove("UserID")
-        Session.Remove("UserType")
+        Session.RemoveAll()
         Response.Redirect("HomePage.aspx")
     End Sub
 End Class
