@@ -7,6 +7,15 @@ Partial Class Emp_AddCity
     'define a counter variable
     Dim i As Integer
 
+    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        'NEED TO CHECK IF GATE AGENTS CAN ADD CITIES
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        ElseIf Session("UserType").ToString = "Crew" Then
+            Response.Redirect("Emp_EmployeeDashboard.aspx")
+        End If
+    End Sub
+
     Protected Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
         'Run a validation to make sure airport code is the right length
         If Validations.CheckAirportCode(txtAirport.Text) = False Then
@@ -126,4 +135,6 @@ Partial Class Emp_AddCity
         ddlMinutes.SelectedIndex = 0
 
     End Sub
+
+
 End Class

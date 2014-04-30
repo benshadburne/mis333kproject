@@ -84,7 +84,9 @@ Partial Class Cust_CreateReservationAndSelectFlight
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        If Session("UserType").ToString = "Crew" Then
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        ElseIf Session("UserType").ToString = "Crew" Then
             Response.Redirect("Emp_EmployeeDashboard.aspx")
         End If
 

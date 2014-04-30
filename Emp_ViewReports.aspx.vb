@@ -48,6 +48,12 @@ Partial Class Emp_ViewReports
 
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        'NEED TO CHECK IF GATE AGENTS CAN ADD CITIES
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        ElseIf Session("UserType").ToString <> "Manager" Then
+            Response.Redirect("Emp_EmployeeDashboard.aspx")
+        End If
 
         'Make sure pressing buttons does not keep reloading the page
         If IsPostBack = False Then

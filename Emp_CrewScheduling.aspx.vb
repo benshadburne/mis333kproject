@@ -10,7 +10,14 @@ Partial Class _Default
 
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
-       
+
+        'NEED TO CHECK IF GATE AGENTS CAN SCHEDULE CREWS
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        ElseIf Session("UserType").ToString = "Crew" Or Session("UserType") = "Agent" Then
+            Response.Redirect("Emp_EmployeeDashboard.aspx")
+        End If
+
         If IsPostBack = False Then
             calFlightSearch.SelectedDate = DBDate.GetCurrentDate
             LoadFlightGridView()
