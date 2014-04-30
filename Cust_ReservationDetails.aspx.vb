@@ -10,35 +10,23 @@ Partial Class _Default
     Dim mAdvantageNumber As Integer
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load, calFlightDate.SelectionChanged
-        Dim strReservationID As String
-        Dim strAdvantageNum As String
-        strReservationID = CStr(10024)
-        strAdvantageNum = CStr(5000)
 
         Session("Infant") = ""
         Session("InfantID") = ""
         Session("UserSeat") = ""
-        Session("Login") = strAdvantageNum
-        Session("ReservationID") = strReservationID
 
+        'check if login session is empty
+        If Session("UserID") Is Nothing Or Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        End If
 
+        If Session("UserTyper").ToString <> "Customer" Then
+            Response.Redirect("HomePage.aspx")
+        End If
 
-        'check customer login
-
-        ''check session reservationID if it's empty
-        'strReservationID = Session("ReservationID").ToString
-        'If strReservationID = "" Then
-        '    Response.Redirect("HomePage.aspx")
-        'End If
-
-        ''check session login if it's empty
-        'strAdvantageNum = Session("Login").ToString
-        'If strAdvantageNum = "" then
-        '   Response.Redirect("HomePage.aspx")
-        'End If
 
         If IsPostBack = False Then
-            Session("ActiveUser") = Session("Login").ToString
+            Session("ActiveUser") = Session("UserID").ToString
         End If
 
         'next, need to load all tickets dataset

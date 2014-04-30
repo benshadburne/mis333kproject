@@ -18,7 +18,7 @@ Partial Class _Default
 
         'load gv based on advantage number (strCheck should have advantage number
         DBReservations.GetALLReservationsUsingSP()
-        DBReservations.SearchByAdvantageNumber(Session("Login").ToString)
+        DBReservations.SearchByAdvantageNumber(Session("UserID").ToString)
 
     End Sub
 
