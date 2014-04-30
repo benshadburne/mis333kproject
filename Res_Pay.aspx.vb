@@ -23,9 +23,6 @@ Partial Class Res_Pay
         'End If
         'check to see if there is a running price subtotal on the page
 
-        Session("ReservationID") = 10019
-        Session("ActiveUser") = 5000
-
         If IsPostBack = False Then
             'Session("ActiveUser") = Session("Login").ToString
             DBTickets.GetTicketsInReservation(Session("ReservationID").ToString)
@@ -328,6 +325,9 @@ Partial Class Res_Pay
             '    'internet reservation
             '    decInternetDiscount = Calculate.CalculateInternetPurchaseDiscount(intBaseFare)
             'Else
+            '    'this is over the phone, an employee is logged in
+            '    btnOverride.Visible = True
+            '    txtOverride.Visible = True
             '    decInternetDiscount = 0
             'End If
 
@@ -344,6 +344,7 @@ Partial Class Res_Pay
             lblCost.Text = "This ticket will cost you $" & decSubtotal.ToString("n2") & "."
 
         End If
+
 
         btnPay.Visible = True
 
@@ -553,4 +554,13 @@ Partial Class Res_Pay
         'redirec the customer
         Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
     End Sub
+
+    'Protected Sub btnOverride_Click(sender As Object, e As EventArgs) Handles btnOverride.Click
+    '    Dim decSubtotal
+    '    Try
+
+    '    Catch ex As Exception
+
+    '    End Try
+    'End Sub
 End Class

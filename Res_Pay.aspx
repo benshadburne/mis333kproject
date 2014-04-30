@@ -72,8 +72,14 @@
                            
                  
               <asp:Button ID="btnPay" runat="server" Text="Pay" Visible="false"/>
+            <br />
+
               
               <br />
+              <asp:Button ID="btnOverride" runat="server" Text="Over Ride Price" />
+              
+            <asp:TextBox ID="txtOverride" runat="server" Text ="" Visible ="false"></asp:TextBox>
+                 
             <br />
             <asp:Label ID="lblUpgrade" runat="server" Text="Would you like to upgrade for 500 miles?" Visible="false"></asp:Label>
 
@@ -81,8 +87,6 @@
                  
               <asp:Button ID="btnYes" runat="server" Text="Yes" visible="false"/>
               
-                                         
-                 
               <asp:Button ID="btnNo" runat="server" Text="No" visible="false"/>
             <br /> 
             <asp:Button ID="btnConfirm" runat="server" Text="Confirm" visible="false"/>
