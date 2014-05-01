@@ -260,6 +260,35 @@ Public Class DBTickets
         End Try
     End Sub
 
+    Public Sub RunSPwithOneParamReservation(ByVal strSPName As String, ByVal strParamName As String, ByVal strParamValue As String)
+        ' purpose to run a stored procedure with one parameter
+        ' inputs:  stored procedure name, parameter name, parameter value
+        ' returns: dataset filled with correct records
+
+        ' CREATES INSTANCES OF THE CONNECTION AND COMMAND OBJECT
+        Dim objConnection As New SqlConnection(mstrConnection)
+        ' Tell SQL server the name of the stored procedure you will be executing
+        Dim mdbDataAdapter As New SqlDataAdapter(strSPName, objConnection)
+        Try
+            ' SETS THE COMMAND TYPE TO "STORED PROCEDURE"
+            mdbDataAdapter.SelectCommand.CommandType = CommandType.StoredProcedure
+
+            ' ADD PARAMETER(S) TO SPROC
+            mdbDataAdapter.SelectCommand.Parameters.Add(New SqlParameter(strParamName, strParamValue))
+            ' clear dataset
+            mdatasetTickets.Clear()
+
+            ' OPEN CONNECTION AND FILL DATASET
+            mdbDataAdapter.Fill(mdatasetTickets, "tblTickets")
+
+            ' copy dataset to dataview
+            mMyViewOne.Table = mdatasetTickets.Tables("tblTickets")
+
+        Catch ex As Exception
+            Throw New Exception("params are " & strSPName.ToString & " " & strParamName.ToString & " " & strParamValue.ToString & " error is " & ex.Message)
+        End Try
+    End Sub
+
     Public Sub RunSPwithOneParamOthers(ByVal strSPName As String, ByVal strParamName As String, ByVal strParamValue As String)
         ' purpose to run a stored procedure with one parameter
         ' inputs:  stored procedure name, parameter name, parameter value
@@ -955,6 +984,24 @@ Public Class DBTickets
             'Filter the row
             mMyView.RowFilter = strFilter
         End If
+    End Sub
+
+    Public Sub FindTicketsByAdvantageNumber(strAdvantageNumber As String)
+        RunSPwithOneParam("usp_TicketsClone_Find_By_AdvantageNumber", "@advantagenumber", strAdvantageNumber)
+    End Sub
+
+    Public Sub FindTicketsByReservationID(strReservationID As String)
+        RunSPwithOneParamReservation("usp_TicketsClone_Find_Customers_By_ReservationID", "@reservationid", strReservationID)
+    End Sub
+
+    Public Sub InactivateTicketsByAdvantageNumber(strAdvantageNumber As String)
+        Dim aryTicketNames As New ArrayList
+        Dim aryTicketValues As New ArrayList
+
+        aryTicketNames.Add("@advantagenumber")
+        aryTicketValues.Add(strAdvantageNumber)
+
+        UseSPforInsertOrUpdateQuery("usp_Inactivate_By_AdvantageNumber", aryTicketNames, aryTicketValues)
     End Sub
 
 

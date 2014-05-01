@@ -11,10 +11,14 @@
 'when making a new db class, just copy this one
 
 
+
 Option Strict On
 Imports Microsoft.VisualBasic
 Imports System.Data
 Imports System.Data.SqlClient
+
+
+
 Public Class DBCustomersClone
     'setting up db, dim connection, adapter, query, dataset
     Dim mMyView As New DataView
@@ -491,5 +495,40 @@ Public Class DBCustomersClone
             Throw New Exception(strError & " error message is " & ex.Message)
         End Try
     End Sub
+
+    Public Sub InactivateTicketsOfACustomer(strCustomerID As String)
+        'I need to run [ticketsclone_find_by_advantage number to see what reservations they're on.
+        Dim TObject As New DBTickets
+        Dim CObject As New CancelReservation
+        Dim strReservationID As String
+
+        TObject.FindTicketsByAdvantageNumber(strCustomerID)
+        If TObject.MyDataSetOne.Tables("tblTickets").Rows.Count = 0 Then
+            'they aren't on any reservations, so I don't need to go check reservations and make tickets inactive
+        Else
+            For i = 0 To TObject.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
+                'set reservationID to the reservationID on that row of the database
+                strReservationID = TObject.MyDataSetOne.Tables("tblTickets").Rows(i).Item("ReservationID").ToString
+                'run stored procedure to find all tickets on a reservation
+                TObject.FindTicketsByReservationID(strReservationID)
+                'see how many customers are on selected reservation
+                If TObject.MyDataSet.Tables("tblTickets").Rows.Count = 1 Then
+                    'customer is the only one on the reservation, so invalidate the reservation
+                    CObject.CancelReservation(strReservationID)
+                Else 'there are 0 (shouldn't happen) or multiple customers, so we don't want to inactivate reservation
+                End If
+            Next
+
+            'now inactivate all tickets of the selected customer
+            TObject.InactivateTicketsByAdvantageNumber(strCustomerID)
+        End If
+
+        'Then I need to check those reservations to see if there is anyone else on the reservation
+        'If yes, then don't make the reservation inactive
+        'If no, then make the reservation inactive
+        'then, at very end, inactivate all tickets of customer
+
+    End Sub
+
 End Class
 
