@@ -326,7 +326,6 @@ Partial Class Res_Pay
             'run all the cost calculations
             strAge = gvTickets.SelectedRow.Cells(6).Text
             intAge = CInt(strAge)
-            lblMessage.Text = intAge.ToString
             strBaseFare = (gvTickets.SelectedRow.Cells(11).Text)
             intBaseFare = CInt(strBaseFare)
             decAgeDiscount = Calculate.CalculateAgeDiscount(intAge, intBaseFare)
@@ -361,7 +360,7 @@ Partial Class Res_Pay
             lblMiles.Text = ""
 
             lblCost.Visible = True
-            lblCost.Text = "This ticket will cost you $" & decSubtotal.ToString("n2") & "."
+            lblCost.Text = "This ticket will cost you " & FormatCurrency(decSubtotal.ToString, 2) & "."
 
         End If
 
@@ -521,12 +520,14 @@ Partial Class Res_Pay
     End Sub
 
     Private Sub PriceAdd()
+        Dim decSubtotal As Decimal
+        decSubtotal = CDec(Session("Subtotal"))
         Session("RunningSubtotal") = CDec(Session("RunningSubtotal")) + CDec(Session("Subtotal"))
 
         'update paid on DB
-        DBTickets.AddTicketPrices(Session("Subtotal").ToString, gvTickets.SelectedRow.Cells(1).Text)
+        DBTickets.AddTicketPrices(decSubtotal.ToString("n2"), gvTickets.SelectedRow.Cells(1).Text)
         Session.Remove("Subtotal")
-        lblSubtotal.Text = Session("RunningSubtotal").ToString
+        lblSubtotal.Text = "Your tickets currently cost " & FormatCurrency(Session("RunningSubtotal").ToString, 2) & "."
     End Sub
 
     Protected Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click

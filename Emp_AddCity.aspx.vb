@@ -11,7 +11,7 @@ Partial Class Emp_AddCity
         'NEED TO CHECK IF GATE AGENTS CAN ADD CITIES
         If Session("UserType") Is Nothing Then
             Response.Redirect("HomePage.aspx")
-        ElseIf Session("UserType").ToString = "Crew" Then
+        ElseIf Session("UserType").ToString = "Crew" Or Session("UserType").ToString = "Agent" Then
             Response.Redirect("Emp_EmployeeDashboard.aspx")
         End If
     End Sub

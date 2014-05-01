@@ -37,10 +37,8 @@
         <asp:Button ID="btnAddCustomer" runat="server" Text="Add Customer" />
         <br />
         <br />
-        <asp:Label ID="Label2" runat="server" Text="Made a mistake? Cancel your Reservation by clicking below"></asp:Label>
         <br />
         <br />
-        <asp:Button ID="btnCancel" runat="server" Text="Cancel Reservation" />
         </div>
 
         </asp:Panel>
@@ -71,6 +69,14 @@
             <asp:CommandField ShowSelectButton="True" />
         </Columns>
     </asp:GridView>
+    <div>
+    <div class="center-block" style="width:100%">
+        <asp:Label CssClass="h5" ID="Label8" runat="server" Text="Need to cancel this reservation?"></asp:Label>
+       </div>
+        <ul>
+            <asp:Button ID="btnCancel" runat="server" Text="Cancel Reservation" />
+            </ul> 
+            </div>
 
 </asp:Content>
 

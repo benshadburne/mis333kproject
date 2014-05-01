@@ -253,7 +253,7 @@ Public Class ClassCalculate
         'Get the first class premium
 
         'Add up all of the discounts
-        decTentativeFinalPayBeforeTax = decBaseFare + decFirstClassPremium - decAgeDiscount - decTwoWeeksDiscount - decInternetDiscount
+        decTentativeFinalPayBeforeTax = decFirstClassPremium - decAgeDiscount - decTwoWeeksDiscount - decInternetDiscount
 
         'Put all of the subs in here
         'Add up all of the outputs and have it equal decTentativeFinalPayBeforeTax

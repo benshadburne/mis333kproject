@@ -12,6 +12,16 @@ Partial Class Default2
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("Homepage.aspx")
+        Else
+            If Session("UserType").ToString = "Customer" Then
+                Response.Redirect("Cust_CustomerDashboard.aspx")
+            ElseIf Session("UserType").ToString <> "Manager" Then
+                Response.Redirect("Emp_EmployeeDashboard.aspx")
+            End If
+        End If
+
         If IsPostBack = False Then
             'initializes the calendar to select tomorrow, only when page loads, it just doens't show it
             calDate.SelectedDate = Now().AddDays(1)

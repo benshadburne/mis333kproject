@@ -111,10 +111,12 @@ Partial Class MasterPage
             btnLogout.Visible = False
             txtUsername.Visible = True
             txtPassword.Visible = True
+
         Else
             btnLogin.Visible = False
             txtUsername.Visible = False
             txtPassword.Visible = False
+            btnCreateProfile.Visible = False
         End If
 
     End Sub

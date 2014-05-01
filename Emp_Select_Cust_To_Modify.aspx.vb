@@ -27,7 +27,8 @@ Partial Class Emp_Select_Cust_To_Modify
         End If
     End Sub
     Public Sub LoadGridView()
-        gvCustomers.DataSource = CObject.MyDataset.Tables("tblCustomersClone")
+        CObject.SearchCustomerClone(rblSearchType.SelectedIndex, rblSearchBy.SelectedIndex, txtSearch.Text)
+        gvCustomers.DataSource = CObject.MyView
         gvCustomers.DataBind()
 
         If gvCustomers.Rows.Count = 0 Then
@@ -47,7 +48,6 @@ Partial Class Emp_Select_Cust_To_Modify
             Exit Sub
         End If
 
-        CObject.SearchCustomerClone(rblSearchType.SelectedIndex, rblSearchBy.SelectedIndex, txtSearch.Text)
         LoadGridView()
     End Sub
 
