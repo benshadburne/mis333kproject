@@ -1,4 +1,4 @@
-﻿
+﻿Option Strict On
 Partial Class _Default
     Inherits System.Web.UI.Page
     Dim DBJourney As New DBjourneyclone
@@ -19,7 +19,7 @@ Partial Class _Default
         End If
 
         If IsPostBack = False Then
-            calFlightSearch.SelectedDate = DBDate.GetCurrentDate
+            calFlightSearch.SelectedDate = CDate(DBDate.GetCurrentDate)
             LoadFlightGridView()
         End If
     End Sub
@@ -38,9 +38,9 @@ Partial Class _Default
 
         lblMessage.Text = ""
 
-        If calFlightSearch.SelectedDate < DBDate.GetCurrentDate Then
+        If calFlightSearch.SelectedDate < CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate)) Then
             lblMessage.Text = "You cannot schedule crew for past flights"
-            calFlightSearch.SelectedDate = DBDate.GetCurrentDate
+            calFlightSearch.SelectedDate = CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate))
             LoadFlightGridView()
             Exit Sub
         End If
