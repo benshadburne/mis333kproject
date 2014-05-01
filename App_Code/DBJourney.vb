@@ -470,4 +470,13 @@ Public Class DBjourneyclone
         RunProcedure("usp_JourneyClone_Select_Inactive")
     End Sub
 
+    Public Sub ActivateJourneyByJourneyID(strJourneyID As String)
+        Dim aryJourneyNames As New ArrayList
+        Dim aryJourneyValues As New ArrayList
+
+        aryJourneyNames.Add("@journeyid")
+        aryJourneyValues.Add(strJourneyID)
+        UseSPforInsertOrUpdateQuery("usp_JourneysClone_Activate_By_JourneyID", aryJourneyNames, aryJourneyValues)
+    End Sub
+
 End Class

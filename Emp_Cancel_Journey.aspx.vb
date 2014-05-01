@@ -29,9 +29,21 @@ Partial Class Emp_Cancel_Journey
 
     Public Sub LoadFlightGridView()
         'bind ddl for journeys
-        'DBJourney.GetJourneysByDate(DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
+        DBJourney.GetJourneysForCrewByDate(DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
         gvJourneys.DataSource = DBJourney.MyView
         gvJourneys.DataBind()
+        FormatDate(gvJourneys, 3)
+    End Sub
+
+    Private Sub FormatDate(gvGridview As GridView, intColumn As Integer)
+        For i = 0 To gvGridview.Rows.Count - 1
+            Dim datDate As Date
+            Dim strDate As String
+            datDate = CDate((gvGridview.Rows(i).Cells(intColumn).Text))
+            strDate = datDate.ToShortDateString
+
+            gvGridview.Rows(i).Cells(intColumn).Text = strDate
+        Next
     End Sub
 
 
@@ -94,5 +106,8 @@ Partial Class Emp_Cancel_Journey
             Exit Sub
         End If
         CaObject.InactivateSpecificJourney(Session("RecordID").ToString)
+        NormalMode()
     End Sub
+
+
 End Class
