@@ -21,17 +21,22 @@ Partial Class Emp_Select_Cust_To_Modify
         End If
 
 
-        CObject.GetAllCustomersCloneUsingSP()
         If IsPostBack = False Then
+            CObject.GetAllCustomersCloneUsingSP()
             LoadGridView()
         End If
     End Sub
     Public Sub LoadGridView()
         gvCustomers.DataSource = CObject.MyDataset.Tables("tblCustomersClone")
         gvCustomers.DataBind()
+
+        If gvCustomers.Rows.Count = 0 Then
+            lblMessage.Text = "Your search returned no records. Please try again."
+        End If
     End Sub
 
     Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        lblMessage.Text = ""
         'check to make sure a search type is selected
         If rblSearchType.SelectedIndex = -1 Then
             lblMessage.Text = "Please select a search type."
@@ -39,9 +44,12 @@ Partial Class Emp_Select_Cust_To_Modify
         End If
 
         CObject.SearchCustomerClone(rblSearchType.SelectedIndex, rblSearchBy.SelectedIndex, txtSearch.Text)
+        LoadGridView()
     End Sub
 
     Protected Sub rblSearchBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rblSearchBy.SelectedIndexChanged
+        lblMessage.Text = ""
+
         If rblSearchBy.SelectedIndex = 1 Then
             'make partial/keyword invisible
             rblSearchType.Visible = False
