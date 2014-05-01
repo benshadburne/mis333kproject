@@ -14,8 +14,15 @@ Partial Class _Default
         'NEED TO CHECK IF GATE AGENTS CAN SCHEDULE CREWS
         If Session("UserType") Is Nothing Then
             Response.Redirect("HomePage.aspx")
-        ElseIf Session("UserType").ToString = "Crew" Or Session("UserType") = "Agent" Then
-            Response.Redirect("Emp_EmployeeDashboard.aspx")
+        End If
+        If Session("UserType").ToString <> "Manager" Then
+            'they don't belong on this page
+            If Session("UserType").ToString = "Customer" Then
+                Response.Redirect("Cust_CustomerDashboard.aspx")
+            Else
+                Response.Redirect("Emp_EmployeeDashboard.aspx")
+            End If
+        Else
         End If
 
         If IsPostBack = False Then
@@ -29,6 +36,7 @@ Partial Class _Default
         DBJourney.GetJourneysForCrewByDate(DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString))
         gvJourneys.DataSource = DBJourney.MyView
         gvJourneys.DataBind()
+        FormatDate(gvJourneys, 3)
     End Sub
 
     Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
@@ -55,6 +63,16 @@ Partial Class _Default
 
     End Sub
 
+    Private Sub FormatDate(gvGridview As GridView, intColumn As Integer)
+        For i = 0 To gvGridview.Rows.Count - 1
+            Dim datDate As Date
+            Dim strDate As String
+            datDate = CDate((gvGridview.Rows(i).Cells(intColumn).Text))
+            strDate = datDate.ToShortDateString
+
+            gvGridview.Rows(i).Cells(intColumn).Text = strDate
+        Next
+    End Sub
 
     Protected Sub gvJourneys_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvJourneys.SelectedIndexChanged
         lblMessage.Text = ""
@@ -65,26 +83,27 @@ Partial Class _Default
     Protected Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
         lblMessage.Text = ""
         'check to make sure the DDL Value isn't blank
-        If ddlCaptains.SelectedValue = "" Then
-            lblMessage.Text = "You don't have a captain available at this time. Consider hiring one."
-            LoadFlightGridView()
-            LoadDDLs()
-            Exit Sub
-        End If
-        If ddlCoCaptains.SelectedValue = "" Then
-            lblMessage.Text = "You don't have a cocaptain available at this time. Consider hiring one."
-            LoadFlightGridView()
-            LoadDDLs()
-            Exit Sub
-        End If
-        If ddlCabins.SelectedValue = "" Then
-            lblMessage.Text = "You don't have a cabin member available at this time. Consider hiring one."
-            LoadFlightGridView()
-            LoadDDLs()
-            Exit Sub
+        'check to make sure a Captain was added
+
+        If ddlCaptains.SelectedIndex = 0 Then
+            'don't do anything
+            lblMessage.Text = "If no crew members are available for scheduling, hire some employees."
+        Else
+            DBJourney.AddCaptain(ddlCaptains.SelectedValue.ToString, gvJourneys.SelectedRow.Cells(1).Text)
         End If
 
-        DBCrew.AddCrew(ddlCaptains.SelectedValue.ToString, ddlCoCaptains.SelectedValue.ToString, ddlCabins.SelectedValue.ToString, gvJourneys.SelectedRow.Cells(1).Text)
+        If ddlCoCaptains.SelectedIndex = 0 Then
+            lblMessage.Text = "If no crew members are available for scheduling, hire some employees."
+        Else
+            DBJourney.AddCoCaptain(ddlCoCaptains.SelectedValue.ToString, gvJourneys.SelectedRow.Cells(1).Text)
+        End If
+
+        If ddlCabins.SelectedIndex = 0 Then
+            lblMessage.Text = "If no crew members are available for scheduling, hire some employees."
+        Else
+            DBJourney.AddCabin(ddlCabins.SelectedValue.ToString, gvJourneys.SelectedRow.Cells(1).Text)
+        End If
+
         LoadFlightGridView()
         LoadDDLs()
 
@@ -105,11 +124,18 @@ Partial Class _Default
 
         ddlCaptains.DataSource = aryCaptains
         ddlCaptains.DataBind()
+        ddlCaptains.Items.Insert(0, "None")
 
         ddlCoCaptains.DataSource = aryCoCaptains
         ddlCoCaptains.DataBind()
+        ddlCoCaptains.Items.Insert(0, "None")
 
         ddlCabins.DataSource = aryCabin
         ddlCabins.DataBind()
+        ddlCabins.Items.Insert(0, "None")
+    End Sub
+
+    Protected Sub btnAddEmployee_Click(sender As Object, e As EventArgs) Handles btnAddEmployee.Click
+        Response.Redirect("Emp_AddNewEmployee.aspx")
     End Sub
 End Class

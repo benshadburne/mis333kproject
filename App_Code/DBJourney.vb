@@ -242,6 +242,55 @@ Public Class DBjourneyclone
         UseSPforInsertOrUpdateQuery("usp_Journey_Add_Crew", aryNames, aryvalues)
     End Sub
 
+    Public Sub AddCaptain(strCaptain As String, strJourneyID As String)
+        Dim aryNames As New ArrayList
+        Dim aryvalues As New ArrayList
+
+        aryNames.Add("@Captain")
+
+        aryNames.Add("@JourneyID")
+
+        aryvalues.Add(strCaptain)
+
+        aryvalues.Add(strJourneyID)
+
+        UseSPforInsertOrUpdateQuery("usp_Journey_Add_Captain", aryNames, aryvalues)
+    End Sub
+
+    Public Sub AddCoCaptain(strCoCaptain As String, strJourneyID As String)
+        Dim aryNames As New ArrayList
+        Dim aryvalues As New ArrayList
+
+
+        aryNames.Add("@CoCaptain")
+
+        aryNames.Add("@JourneyID")
+
+
+        aryvalues.Add(strCoCaptain)
+
+        aryvalues.Add(strJourneyID)
+
+        UseSPforInsertOrUpdateQuery("usp_Journey_Add_CoCaptain", aryNames, aryvalues)
+    End Sub
+
+    Public Sub AddCabin(strCabin As String, strJourneyID As String)
+        Dim aryNames As New ArrayList
+        Dim aryvalues As New ArrayList
+
+
+        aryNames.Add("@Cabin")
+        aryNames.Add("@JourneyID")
+
+
+        aryvalues.Add(strCabin)
+        aryvalues.Add(strJourneyID)
+
+        UseSPforInsertOrUpdateQuery("usp_Journey_Add_Cabin", aryNames, aryvalues)
+    End Sub
+
+
+
     Public Sub MarkJourneyDeparted(strJourneyID As String)
         Dim aryParamValues As New ArrayList
         Dim aryParamNames As New ArrayList

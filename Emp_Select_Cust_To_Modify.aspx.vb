@@ -38,6 +38,10 @@ Partial Class Emp_Select_Cust_To_Modify
     Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
         lblMessage.Text = ""
         'check to make sure a search type is selected
+        If txtSearch.Text = "" Then
+            lblMessage.Text = "Please enter a search term."
+            Exit Sub
+        End If
         If rblSearchType.SelectedIndex = -1 Then
             lblMessage.Text = "Please select a search type."
             Exit Sub

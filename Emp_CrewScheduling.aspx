@@ -21,15 +21,23 @@
     <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
     <br />
     <br />
-    <asp:DropDownList ID="ddlCaptains" runat="server" padding ="3px" ></asp:DropDownList>
+    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    <br />
+    <asp:DropDownList ID="ddlCaptains" runat="server" padding ="3px" >
+
+    </asp:DropDownList>
     <asp:DropDownList ID="ddlCoCaptains" runat="server" padding ="3px" ></asp:DropDownList>
     <asp:DropDownList ID="ddlCabins" runat="server" padding ="3px" ></asp:DropDownList>
 
 
 
+    
+
+
+
     <br />
     <br />
-    <asp:Button ID="btnConfirm" runat="server" Text="Confirm Crew" />
+    <asp:Button ID="btnConfirm" runat="server" Text="Confirm Crew" />  <asp:Button ID="btnAddEmployee" runat="server" Text="Add Employee" />
 
 
 
