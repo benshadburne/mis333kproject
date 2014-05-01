@@ -8,5 +8,12 @@ Partial Class _Default
             Response.Redirect("HomePage.aspx")
         End If
 
+        If Session("JustLogged") Is Nothing Then
+        Else
+            Dim lblMessage As Label = CType(Master.FindControl("lblMessage"), Label)
+            lblMessage.Text = "Log in successful"
+            Session("JustLogged") = Nothing
+        End If
+
     End Sub
 End Class

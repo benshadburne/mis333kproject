@@ -39,7 +39,9 @@
      <%-- <div class="pull-right" style="padding-right: 10px" >
           <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search Page" Width="116px" />  
      </div>--%>
-
+           <div class="pull-right" style="padding-left:10px; padding-top: 10px">
+<asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+      </div>
       <div class="pull-right" style="width: 15%; padding-right: 10px; min-width: 100px; text-align:center; padding-top: 5px; line-height:28px">
           <asp:TextBox CssClass="text-center" ID="txtUsername" runat="server" width="90%" Height="23px" Wrap="False" BorderStyle="Inset" ForeColor="Gray">Username</asp:TextBox> <br />
           <asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="23px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray" TextMode="Password">Password</asp:TextBox>
@@ -52,15 +54,13 @@
                </div>
         
         <asp:Button class="btn btn-warning" ID="btnLogout" runat="server" Text="Logout" width="86px"/> 
-     </div><asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+     </div>
       </div>
           
           <div class="pull-right" style="padding-right:10px; padding-top: 10px">
                <asp:Button class="btn btn-warning" ID="btnCreateProfile" runat="server" Text="Create New Profile" width="160px"/> 
           </div>
-          
-
-      
+         
          <div class="pull-left" style="width: auto; min-width: 50px;">
       <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">

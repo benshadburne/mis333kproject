@@ -46,6 +46,7 @@ Partial Class MasterPage
                     'check to see if they are a manager or employee
                     Session.Add("UserType", DBEmployee.CheckEmployeeType(strUser))
                     ToggleLoginButton()
+                    Session.Add("JustLogged", "Yes")
                     Response.Redirect("Emp_EmployeeDashboard.aspx")
                 End If
 
@@ -64,6 +65,7 @@ Partial Class MasterPage
                     Session.Add("UserType", "Customer")
                     lblMessage.Text = "Login Successful"
                     ToggleLoginButton()
+                    Session.Add("JustLogged", "Yes")
                     Response.Redirect("Cust_CustomerDashboard.aspx")
                 Else
                     lblMessage.Text = "The username and password combination is incorrect."
