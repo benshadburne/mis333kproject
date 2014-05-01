@@ -23,7 +23,6 @@ Partial Class Emp_SearchCustomer
         gvCustomers.DataSource = CustomerDB.MyView
         gvCustomers.DataBind()
 
-
     End Sub
 
 
