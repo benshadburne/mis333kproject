@@ -16,6 +16,7 @@
 
             <ul class="list-group">
                <li><a href="Emp_ModifyEmployee.aspx">Modify Employee</a>  </li> 
+                <li><a href="Emp_ViewSchedule.aspx">View Crew Schedule</a></li>
             </ul>
 
         </asp:Panel>
