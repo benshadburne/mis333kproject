@@ -227,6 +227,9 @@ Public Class CancelFlight
     Public Sub InactivateFlightAllDays(strFlightNumber As String)
         'get all journeys
         DBJourneys.GetJourneysByFlightNumber(strFlightNumber)
+        If DBJourneys.MyDataSet.Tables("tblJourneysClone").Rows.Count = 0 Then
+            'there are no active journeys of this flight number 
+        End If
         'loop through each journey
         For i = 0 To DBJourneys.MyDataSet.Tables("tblJourneysClone").Rows.Count - 1
             'check if flight number of journey matches flight number we're looking for
@@ -243,8 +246,8 @@ Public Class CancelFlight
             aryJourneyNames.Add("@flightnumber")
             aryJourneyValues.Add(strFlightNumber)
 
-            'run SP to make current journey ID inactive
-            DBJourneys.InactivateJourneysByFlightNumber(strFlightNumber)
+            'run SP to make current journey ID inactive ***THIS NOW INACTIVATES IT BY JOURNEYID
+            DBJourneys.InactivateJourneysByFlightNumber(strJourneyID)
 
             'run SP to search reservations by current journey ID
             DBReservations.RunSPwithOneParam("usp_ReservationsClone_Find_By_Journey_ID", "@journeyid", strJourneyID)

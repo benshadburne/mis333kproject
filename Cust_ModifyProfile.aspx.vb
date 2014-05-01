@@ -129,7 +129,7 @@ Partial Class _Default
         txtZip.Text = CustDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Zip").ToString
         txtMiles.Text = CustDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Miles").ToString
         strYorN = CustDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Active").ToString
-        If strYorN = "Y" Then
+        If strYorN.ToUpper = "Y" Then
             ddlActive.SelectedIndex = 0
         Else
             ddlActive.SelectedIndex = 1

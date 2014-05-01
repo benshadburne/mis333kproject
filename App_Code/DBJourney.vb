@@ -492,14 +492,15 @@ Public Class DBjourneyclone
         UseSPToRetrieveRecords("usp_JourneysClone_Get_Active_By_Flight_Number", mdatasetjourneyclone, mMyView, "tblJourneysClone", aryJourneyNames, aryJourneyValues)
     End Sub
 
-    Public Sub InactivateJourneysByFlightNumber(strFlightNumber As String)
+    Public Sub InactivateJourneysByFlightNumber(strJourneyID As String)
+        'THIS ACTUALLY INACTIVATES BY JOURNEYID
         Dim aryJourneyNames As New ArrayList
         Dim aryJourneyValues As New ArrayList
 
-        aryJourneyNames.Add("@flightnumber")
+        aryJourneyNames.Add("@journeyid")
 
 
-        aryJourneyValues.Add(strFlightNumber)
+        aryJourneyValues.Add(strJourneyID)
 
 
         UseSPforInsertOrUpdateQuery("usp_JourneysClone_Inactivate_By_Flight_Number", aryJourneyNames, aryJourneyValues)

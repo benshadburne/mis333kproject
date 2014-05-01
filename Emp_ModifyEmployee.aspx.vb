@@ -76,7 +76,7 @@ Partial Class Emp_ModifyEmployee
 
         strYorN = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("Active").ToString
 
-        If strYorN = "Y" Then
+        If strYorN.ToUpper = "Y" Then
             ddlActive.SelectedIndex = 0
         Else
             ddlActive.SelectedIndex = 1
