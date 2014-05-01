@@ -184,7 +184,7 @@ Public Class ClassCalculate
     End Function
 
     'Calculate the discount related to the date
-    Public Function CalculateDateDiscount(intBaseFare As Integer, datReservation As Date, datToday As Date) As Decimal
+    Public Function CalculateDateDiscount(intBaseFare As Integer) As Decimal
         'Purpose: Take the value from the CalculateTimeOfFlight to decide if it is 14 days, and then apply the discount if it is 14 days or more
         'Author: Dennis Phelan
         'Inputs: None
@@ -193,13 +193,10 @@ Public Class ClassCalculate
         'Date Last Modified: April 21, 2014
 
 
-        'Check to see if there is a discount or not
-        If CalculateTimeBeforeFlight(datReservation, datToday) = True Then
-            decTwoWeeksDiscount = intBaseFare * TIME_TwoWeeksDiscount_Constant
-        Else
-            'If not 14 days or more out, the discount is 0
-            decTwoWeeksDiscount = 0
-        End If
+        'WE checked to see if they should get a discount on the form. 
+
+        decTwoWeeksDiscount = intBaseFare * TIME_TwoWeeksDiscount_Constant
+        'If not 14 days or more out, the discount is 0
 
         Return decTwoWeeksDiscount
     End Function

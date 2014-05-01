@@ -8,6 +8,8 @@ Partial Class _Default
     Dim DBSeats As New DBJourneySeats
     Dim DBCancel As New CancelReservation
     Dim DBDate As New DBdate
+    Dim Calculate As New ClassCalculate
+
 
 
     Dim intJourneyID As Integer
@@ -189,6 +191,9 @@ Partial Class _Default
 
             strDate = calFlightSearch.SelectedDate.ToShortDateString
 
+
+            Session.Add("TwoWeek", Calculate.CalculateTimeBeforeFlight(CDate(strDate), DBDate.ConvertToVBDate(DBDate.GetCurrentDate)))
+
             'add the first record of the reservation
             DBReservations.AddFirstReservationJourney("usp_ReservationsClone_Add_Journey", strJourneyNumber, intJourneyID, strDate)
 
@@ -318,6 +323,8 @@ Partial Class _Default
         If intJourneyNumber = 1 Then
             'get the date to put in as start reservation date
             strDate = calFlightSearch.SelectedDate.ToShortDateString
+
+            Session.Add("TwoWeek", Calculate.CalculateTimeBeforeFlight(CDate(strDate), DBDate.ConvertToVBDate(DBDate.GetCurrentDate)))
 
             'add the first record of the reservation
             DBReservations.AddFirstReservationJourney("usp_ReservationsClone_Add_Journey", strJourneyNumber, intJourneyID, strDate)

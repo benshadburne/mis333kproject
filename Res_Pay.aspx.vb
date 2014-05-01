@@ -359,13 +359,18 @@ Partial Class Res_Pay
                 decInternetDiscount = 0
             End If
 
-            decTwoWeekDiscount = Calculate.CalculateDateDiscount(intBaseFare, datReservation, datToday)
+            If CBool(Session("TwoWeek")) = True Then
+                'apply internet discount
+                decTwoWeekDiscount = Calculate.CalculateDateDiscount(intBaseFare)
+            Else
+                decTwoWeekDiscount = 0
+            End If
 
             decDiscount = Calculate.CalculateSubTotalDiscount(intBaseFare, decFirstClassPremium, decAgeDiscount, decTwoWeekDiscount, decInternetDiscount)
 
             decSubtotal = CDec(intBaseFare) + decDiscount
 
-            Session.Add("Subtotal", decSubtotal)
+            lblPrice.Text = decSubtotal.ToString("n2")
 
             lblMiles.Visible = True
             lblMiles.Text = ""
