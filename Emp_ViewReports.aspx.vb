@@ -107,7 +107,7 @@ Partial Class Emp_ViewReports
                 decRevenue += CDec(gvReports.Rows(i).Cells(5).Text)
             Next
 
-            
+
 
             lblRevenue.Text = "Total Revenue: " & decRevenue.ToString("c2")
             'start Jace code
