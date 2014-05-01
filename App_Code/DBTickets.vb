@@ -738,7 +738,7 @@ Public Class DBTickets
         aryParamValue.Add(strReservationID)
         aryParamValue.Add(strJourneyID)
 
-        UseSP("usp_Tickets_Get_FlightNumber", mdatasetFlight, mMyViewFlight, "tblFlightNumber", aryParamName, aryParamValue)
+        UseSP("usp_Tickets_Get_FlightNumber_Active", mdatasetFlight, mMyViewFlight, "tblFlightNumber", aryParamName, aryParamValue)
 
 
     End Sub

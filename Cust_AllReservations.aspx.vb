@@ -49,7 +49,7 @@ Partial Class _Default
     Protected Sub gvAllReservations_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvAllReservations.SelectedIndexChanged
 
         Session.Add("ReservationID", gvAllReservations.Rows(gvAllReservations.SelectedIndex).Cells(1).Text)
-
+        Session.Add("FromReservation", "Yes")
         Response.Redirect("Cust_ReservationDetails.aspx")
 
     End Sub

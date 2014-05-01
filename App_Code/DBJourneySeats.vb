@@ -96,7 +96,7 @@ Public Class DBJourneySeats
         aryParamValues.Add(strFlight)
         aryParamValues.Add(strDate)
 
-        UseSPToRetrieveRecords("usp_JourneySeats_Get_ID", mdatasetJourneySeats, mMyViewSeats, "tblJourneySeats", aryParamNames, aryParamValues)
+        UseSPToRetrieveRecords("usp_JourneySeats_Get_ID_Active", mdatasetJourneySeats, mMyViewSeats, "tblJourneySeats", aryParamNames, aryParamValues)
 
     End Sub
 

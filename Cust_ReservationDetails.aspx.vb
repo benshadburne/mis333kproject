@@ -19,6 +19,12 @@ Partial Class _Default
         'THIS PAGE IS CRASHING BECAUSE THERE IS NO INITIALIZED VALUE FOR Session("ReservationID"). 
         'MAKE THEM CHOOSE A RESERVATION WHICH HAS ACTIVE TICKETS AND TICKETS WHICH AREN'T FLOWN YET
 
+        If Session("FromReservation") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        Else
+            Session.Remove("FromReservation")
+        End If
+
         'check if login session is empty
         If Session("UserID") Is Nothing Or Session("UserType") Is Nothing Then
             Response.Redirect("HomePage.aspx")
@@ -431,8 +437,13 @@ Partial Class _Default
         'next we find the new journeyID and modify the tickets with it
         DBJourneySeats.GetJourneyIDUsingSP(DBTickets.MyViewFlight.Table.Rows(0).Item(0).ToString, DBFlightSearch.AlterDate(calFlightDate.SelectedDate.ToShortDateString))
 
-        'run code to update tickets with new journeyID
-        DBTickets.ModifyTicketJourneyID(DBJourneySeats.MyViewSeats.Table().Rows(0).Item("JourneyID").ToString, ddlJourneyID.SelectedValue, Session("ReservationID").ToString)
+        Try
+            'run code to update tickets with new journeyID
+            DBTickets.ModifyTicketJourneyID(DBJourneySeats.MyViewSeats.Table().Rows(0).Item("JourneyID").ToString, ddlJourneyID.SelectedValue, Session("ReservationID").ToString)
+        Catch ex As Exception
+            lblMessage.Text = "Error in modifying reservation, make sure date is after the current date and that it is active"
+            Exit Sub
+        End Try
 
         'charge them $50, idk?!?!?!??
         DBReservations.AddFee(Session("ReservationID").ToString)

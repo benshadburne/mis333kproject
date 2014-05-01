@@ -20,7 +20,7 @@
             <asp:Label CssClass="label" ID="lblCountReservations" runat="server" Text="Count:"></asp:Label></div>
          <br />
          <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
-         <asp:GridView class="table" ID="gvAllReservations" runat="server" AutoGenerateSelectButton="True">
+         <asp:GridView class="table" ID="gvAllReservations" runat="server" AutoGenerateSelectButton="True" EmptyDataText="No Results Found">
         </asp:GridView>
            
 
