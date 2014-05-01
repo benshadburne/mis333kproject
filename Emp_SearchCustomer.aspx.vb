@@ -6,6 +6,16 @@ Partial Class Emp_SearchCustomer
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        'Check to see if anyone is logged in
+        If Session("UserID") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        End If
+
+        'Check to see if person logged in is an Employee; if customer, redirect to home page
+        If Session("UserType").ToString = "Customer" Then
+            Response.Redirect("HomePage.aspx")
+        End If
+
         If IsPostBack = False Then
             CustomerDB.GetAllCustomersCloneUsingSP()
 

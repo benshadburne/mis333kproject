@@ -127,9 +127,11 @@ Partial Class MasterPage
         Response.Redirect("HomePage.aspx")
     End Sub
 
+
     Protected Sub btnCreateProfile_Click(sender As Object, e As EventArgs) Handles btnCreateProfile.Click
         Response.Redirect("Cust_AddNewCustomer.aspx")
     End Sub
+   
 
 
 End Class
