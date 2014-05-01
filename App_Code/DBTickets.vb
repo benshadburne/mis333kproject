@@ -45,6 +45,29 @@ Public Class DBTickets
 
     End Sub
 
+    Public Sub GetALLTicketsForResUsingSP()
+        'Author: Ben Shadburne
+        'Purpose: runs xxxxx procedure
+        'Arguments: na
+        'Return: na
+        'Date: 03/18/2014
+
+
+        RunProcedure("usp_Tickets_Get_All_For_Reservations")
+
+    End Sub
+
+    Public Sub GetALLOthersTicketsForResUsingSP()
+        'Author: Ben Shadburne
+        'Purpose: runs xxxxx procedure
+        'Arguments: na
+        'Return: na
+        'Date: 03/18/2014
+
+        RunProcedureOthers("usp_Tickets_Get_All_For_Reservations")
+
+    End Sub
+
     Public Sub GetALLTicketsWithDateUsingSP()
         'Author: Ben Shadburne
         'Purpose: runs xxxxx procedure

@@ -73,7 +73,6 @@ Partial Class _Default
         strDate = (ddlJourneyID.SelectedItem.ToString).Substring(5, Len(ddlJourneyID.SelectedItem.ToString) - 5)
         datCurrentDate = CDate(CDate(DBDate.GetCurrentDate()).ToShortDateString)
 
-
         If Date.Parse(strDate) < datCurrentDate Then
             'the journey took off before the currect datetime in database, set buttons to disable and unavailable
             btn1A.Enabled = False

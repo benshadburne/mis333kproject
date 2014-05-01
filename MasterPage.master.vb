@@ -7,7 +7,7 @@ Partial Class MasterPage
     Dim DBEmployee As New DBEmployee
     Dim DBDate As New DBdate
 
-    'If SEssion("UserType") = "Crew" Then
+    'If Session("UserType") = "Crew" Then
     'Response.Redirect("Homepage.aspx")
     'Elseif
     'Session("UserType") = "Employee" Then
