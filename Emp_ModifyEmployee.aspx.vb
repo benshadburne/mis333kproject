@@ -105,8 +105,8 @@ Partial Class Emp_ModifyEmployee
     End Sub
 
     Protected Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
-        'get record id that they wanted, and refill the info from the dataset
-        EObject.FindEmpID(Session("RecordID").ToString)
+        'get current user's ID, and refill the info from the dataset
+        EObject.FindEmpID(Session("UserID").ToString)
         FillTextboxes()
 
         'hide cancel and accept buttons

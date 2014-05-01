@@ -323,5 +323,9 @@ Public Class DBReservations
         UseSPforInsertOrUpdateQuery("usp_Reservation_Add_Fee", aryParamName, aryParamValue)
     End Sub
 
+    Public Sub GetNumberOfModifications()
+        RunProcedure("usp_ReservationsClone_Calc_Number_Of_Modifications")
+    End Sub
+
 End Class
 
