@@ -42,6 +42,7 @@
 
         
             </div>
+            <asp:Label ID="Label15" runat="server" Text="To pay, please select a ticket and then indicate if you would prefer to pay with miles or money"></asp:Label>
         </div>
         <br />
         <div class="center-block" style="text-align:center ">
@@ -97,6 +98,27 @@
               </div> 
 
         <asp:Panel runat="server" ID="pnlSeats" Visible="False">
+            <div class="center-block">
+                <h6>Legend:</h6> 
+               <div class="pull-left" style="padding-right:20px">
+                   <asp:Label CssClass="h6" ID="Label4" runat="server" Text="Active Seat"></asp:Label><asp:Button CssClass="btn-sm" ID="Button1" runat="server" Text="XX" BackColor="Green" />
+               </div>
+                <div class="pull-left" style="padding-right:20px">
+                   <asp:Label CssClass="h6" ID="Label10" runat="server" Text="On Reservation"></asp:Label><asp:Button CssClass="btn-sm" ID="Button2" runat="server" Text="XX" BackColor="Blue" />
+               </div>
+                <div class="pull-left" style="padding-right:20px">
+                   <asp:Label CssClass="h6" ID="Label11" runat="server" Text="Not on Reservation"></asp:Label><asp:Button CssClass="btn-sm" ID="Button3" runat="server" Text="XX" BackColor="Coral" />
+               </div>
+                <div class="pull-left" style="padding-right:20px">
+                   <asp:Label CssClass="h6" ID="Label12" runat="server" Text="Empty Seat"></asp:Label><asp:Button CssClass="btn-sm" ID="Button4" runat="server" Text="XX" BackColor="LightGrey" />
+               </div>
+                <div class="pull-left" style="padding-right:20px">
+                   <asp:Label CssClass="h6" ID="Label13" runat="server" Text="Infant in Seat"></asp:Label><asp:Button CssClass="btn-sm" ID="Button5" runat="server" Text="XXi" BackColor="LightGrey" />
+               </div>
+                <div class="pull-left">
+                   <asp:Label CssClass="h6" ID="Label14" runat="server" Text="Infant is user"></asp:Label><asp:Button CssClass="btn-sm" ID="Button6" runat="server" Text="XXi*" BackColor="Green" />
+               </div> 
+            </div>
         
          <div class="pull-left" style="text-align:center; width: 225px">
                 <asp:Button class="btn-seat" ID="btn1A" runat="server" Text="1A" />

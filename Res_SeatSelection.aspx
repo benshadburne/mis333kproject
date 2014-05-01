@@ -43,6 +43,27 @@
          
             <asp:Label CssClass="label" ID="Label6" runat="server" Text="Front of Plane" ></asp:Label>
      </div>
+        <div class="center-block">
+                <h6>Legend:</h6> 
+               <div class="pull-left" style="padding-right:20px">
+                   <asp:Label CssClass="h6" ID="Label4" runat="server" Text="Active Seat"></asp:Label><asp:Button CssClass="btn-sm" ID="Button1" runat="server" Text="XX" BackColor="Green" />
+               </div>
+                <div class="pull-left" style="padding-right:20px">
+                   <asp:Label CssClass="h6" ID="Label10" runat="server" Text="On Reservation"></asp:Label><asp:Button CssClass="btn-sm" ID="Button2" runat="server" Text="XX" BackColor="Blue" />
+               </div>
+                <div class="pull-left" style="padding-right:20px">
+                   <asp:Label CssClass="h6" ID="Label11" runat="server" Text="Not on Reservation"></asp:Label><asp:Button CssClass="btn-sm" ID="Button3" runat="server" Text="XX" BackColor="Coral" />
+               </div>
+                <div class="pull-left" style="padding-right:20px">
+                   <asp:Label CssClass="h6" ID="Label12" runat="server" Text="Empty Seat"></asp:Label><asp:Button CssClass="btn-sm" ID="Button4" runat="server" Text="XX" BackColor="LightGrey" />
+               </div>
+                <div class="pull-left" style="padding-right:20px">
+                   <asp:Label CssClass="h6" ID="Label13" runat="server" Text="Infant in Seat"></asp:Label><asp:Button CssClass="btn-sm" ID="Button5" runat="server" Text="XXi" BackColor="LightGrey" />
+               </div>
+                <div class="pull-left">
+                   <asp:Label CssClass="h6" ID="Label14" runat="server" Text="Infant is user"></asp:Label><asp:Button CssClass="btn-sm" ID="Button6" runat="server" Text="XXi*" BackColor="Green" />
+               </div> 
+            </div>
       
         <div class="pull-left" style="text-align:right; width: 200px">
                

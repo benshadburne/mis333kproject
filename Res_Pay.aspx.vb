@@ -322,7 +322,7 @@ Partial Class Res_Pay
             datToday = CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate))
 
             'use if statement to see if we should apply an internet discount
-            If Session("UserType").ToString = "customer" Then
+            If Session("UserType").ToString = "Customer" Then
                 'internet reservation
                 decInternetDiscount = Calculate.CalculateInternetPurchaseDiscount(intBaseFare)
             Else
@@ -591,7 +591,6 @@ Partial Class Res_Pay
         rblPayment.Visible = False
 
         pnlSeats.Visible = False
-
 
     End Sub
 End Class

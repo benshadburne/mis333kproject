@@ -286,6 +286,21 @@ Partial Class _Default
 
     Public Sub GoToNextCustomer()
         'write some code so that we will select the next customer
+        Dim bolSeatsLeft As Boolean = True
+        Try
+            ddlAdvantageNum.SelectedIndex += 1
+        Catch ex As Exception
+            bolSeatsLeft = False
+        End Try
+
+        If bolSeatsLeft = False Then
+            Try
+                ddlJourneyID.SelectedIndex += 1
+            Catch ex As Exception
+
+            End Try
+        End If
+
     End Sub
 
     Protected Sub ddlAdvantageNum_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlAdvantageNum.SelectedIndexChanged
@@ -308,13 +323,10 @@ Partial Class _Default
         For i = 0 To DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
             strSeat = DBTickets.MyDataSetOne.Tables("tblTickets").Rows(i).Item("Seat").ToString
 
-            Select Case strSeat
-                Case ""
-                    'no seat selected, make them finish selecting seats
-                    bolFinished = False
-                Case Else
-                    'keep going in the loop
-            End Select
+            If strSeat = "" Then
+                bolFinished = False
+                Exit For
+            End If
 
         Next
 
