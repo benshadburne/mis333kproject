@@ -1,0 +1,69 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Search Flights</title>
+    <meta name="viewport" content ="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
+    <script src ="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src ="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="jquery.jsonp-2.1.4.min.js"></script>
+    <script src ="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+    <script type="text/javascript">
+        function getDataf() {
+            var reservationid = document.getElementById("txtInput").value;
+
+            $.ajax({
+                type: "POST",
+                url: "/MIS333K/msbcf819/GoMavs/WebServiceTry.asmx/SearchReservations",
+                data: "{'reservationid': '" + escape(reservationid) + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var data = response.d;
+                    var tableContent = "";
+                    $('#output').empty();
+                    $('#output').append('<th>Flight Number</th>     <th data-priority="1">Ticket ID</th>     <th data-priority="2">Departure City</th> <th data-priority="4">Arrival City</th> <th data-priority="5">Flight Date</th> <th data-priority="3">Departure Time</th> <th data-priority="6">Arrival Time</th> <th data-priority="7">Advantage Number</th> <th data-priority="8">First Name</th> <th data-priority="9">Last Name</th> <th data-priority="10">Phone Number</th>');
+                    $.each(data, function (index, item) {
+                        $('#output').append('<tr>' + '<td>' + item.ReservationID + '</td>' + '<td>' + item.Active + '</td>' +'<td>' + item.FlightNumber + '</td>' + '<td>' + item.TicketID + '</td>' + '<td>' + item.DepartureCity + '</td>' + '<td>' + item.EndCity + '</td>' + '<td>' + item.FlightDate + '</td>' + '<td>' + item.DepartureTime + '</td>' + '<td>' + item.ArrivalTime + '</td>' + '<td>' + item.AdvantageNumber + '</td>' + '<td>' + item.FirstName + '</td>' + '<td>' + item.LastName + '</td>' + '<td>' + item.Phone + '</td>' + '</tr>');
+                    });
+                },
+                failure: function (msg) {
+                    $('#output').text(msg);
+                }
+            });
+        }
+    </script>
+
+</head>
+
+    
+<body>
+    <div data-role="page" style="width:auto">
+        <div data-role="header">
+             <h1>Penguin Air</h1>
+            <h3>See Reservation Details</h3>
+        </div>
+        <div data-role="content">
+            <p>Please enter your reservation ID in the textbox, then press the button to search!</p>
+            <input type="text" id="txtInput" /><br />
+            <input type ="button" id="Button1" value="Search By Reservation ID Number" onclick="getDataf();"/>
+            <br />
+            <br />
+
+                 <table data-role ="table" data-mode="columntoggle" class="ui-responsive table-stroke" id="output" ></table>
+
+               
+            <br />
+            <br />
+            <br />
+            <a href ="testHomePage.html">Home</a><br />
+            Times listed are in military time format.
+        </div>
+        
+    </div>
+
+
+</body>
+</html>

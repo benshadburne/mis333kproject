@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Home Page</title>
+    <meta name="viewport" content ="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.css" />
+    <script src ="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <script src ="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+    <script src="jquery.min.js"></script>
+    <script src="jquery.jsonp-2.1.4.min.js"></script>
+    <script src ="http://code.jquery.com/mobile/1.1.0-rc.1/jquery.mobile-1.1.0-rc.1.min.js"></script>
+    <script type="text/javascript">
+        function getData() {
+            var departurecity = document.getElementById("txtInput").value;
+
+            $.ajax({
+                type: "POST",
+                url: "/MIS333K/msbcf819/GoMavs/WebServiceTry.asmx/SearchFlights",
+                data: "{'departurecity': '" + escape(departurecity) + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var data = response.d;
+                    var tableContent = "";
+                    $('#output').empty();
+                    $('#output').append('<th>Flight Number</th>     <th data-priority="1">Departure City</th>     <th data-priority="2">Arrival City</th> <th data-priority="4">Departure Time</th> <th data-priority="5">Arrival Time</th> <th data-priority="3">Base Fare</th> <th data-priority="6">Monday</th> <th data-priority="7">Tuesday</th> <th data-priority="8">Wednesday</th> <th data-priority="9">Thursday</th> <th data-priority="10">Friday</th> <th data-priority="11">Saturday</th> <th data-priority="12">Sunday</th>');
+                    $.each(data, function (index, item) {
+                        $('#output').append('<tr>' + '<td>' + item.FlightNumber + '</td>' + '<td>' + item.DepartureCity + '</td>' + '<td>' + item.ArrivalCity + '</td>' + '<td>' + item.DepartureTime + '</td>' + '<td>' + item.ArrivalTime + '</td>' + '<td>' + item.BaseFare + '</td>' + '<td>' + item.Monday + '</td>' + '<td>' + item.Tuesday + '</td>' + '<td>' + item.Wednesday + '</td>' + '<td>' + item.Thursday + '</td>' + '<td>' + item.Friday + '</td>' + '<td>' + item.Saturday + '</td>' + '<td>' + item.Sunday + '</td>' + '</tr>');
+                    });
+                },
+                failure: function (msg) {
+                    $('#output').text(msg);
+                }
+            });
+        }
+        function getDatas() {
+            //var flightnumber = document.getElementById("ID").value;
+
+            $.ajax({
+                type: "POST",
+                url: "/MIS333K/msbcf819/GoMavs/WebServiceTry.asmx/getFlights",
+                //data: "{'flightnumber': '" + escape(flightnumber) + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var data = response.d;
+                    var tableContent = "";
+                    $('#output').empty();
+                    $('#output').append('<th>Flight Number</th>     <th data-priority="1">Departure City</th>     <th data-priority="2">Arrival City</th> <th data-priority="4">Departure Time</th> <th data-priority="5">Arrival Time</th> <th data-priority="3">Base Fare</th> <th data-priority="6">Monday</th> <th data-priority="7">Tuesday</th> <th data-priority="8">Wednesday</th> <th data-priority="9">Thursday</th> <th data-priority="10">Friday</th> <th data-priority="11">Saturday</th> <th data-priority="12">Sunday</th>');
+                    $.each(data, function (index, item) {
+                        $('#output').append('<tr>' + '<td>' + item.FlightNumber + '</td>' + '<td>' + item.DepartureCity + '</td>' + '<td>' + item.ArrivalCity + '</td>' + '<td>' + item.DepartureTime + '</td>' + '<td>' + item.ArrivalTime + '</td>' + '<td>' + item.BaseFare + '</td>' + '<td>' + item.Monday + '</td>' + '<td>' + item.Tuesday + '</td>' + '<td>' + item.Wednesday + '</td>' + '<td>' + item.Thursday + '</td>' + '<td>' + item.Friday + '</td>' + '<td>' + item.Saturday + '</td>' + '<td>' + item.Sunday + '</td>' + '</tr>');
+                    });
+                },
+                failure: function (msg) {
+                    $('#output').text(msg);
+                }
+            });
+        }
+        function getDataf() {
+            var reservationid = document.getElementById("txtInput").value;
+
+            $.ajax({
+                type: "POST",
+                url: "/MIS333K/msbcf819/GoMavs/WebServiceTry.asmx/SearchReservations",
+                data: "{'reservationid': '" + escape(reservationid) + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    var data = response.d;
+                    var tableContent = "";
+                    $('#output').empty();
+                    $('#output').append('<th>Flight Number</th>     <th data-priority="1">Ticket ID</th>     <th data-priority="2">Departure City</th> <th data-priority="4">Arrival City</th> <th data-priority="5">Flight Date</th> <th data-priority="3">Departure Time</th> <th data-priority="6">Arrival Time</th> <th data-priority="7">Advantage Number</th> <th data-priority="8">First Name</th> <th data-priority="9">Last Name</th> <th data-priority="10">Phone Number</th>');
+                    $.each(data, function (index, item) {
+                        $('#output').append('<tr>' + '<td>' + item.FlightNumber + '</td>' + '<td>' + item.TicketID + '</td>' + '<td>' + item.DepartureCity + '</td>' + '<td>' + item.EndCity + '</td>' + '<td>' + item.FlightDate + '</td>' + '<td>' + item.DepartureTime + '</td>' + '<td>' + item.ArrivalTime + '</td>' + '<td>' + item.AdvantageNumber + '</td>' + '<td>' + item.FirstName + '</td>' + '<td>' + item.LastName + '</td>' + '<td>' + item.Phone + '</td>' + '</tr>');
+                    });
+                },
+                failure: function (msg) {
+                    $('#output').text(msg);
+                }
+            });
+        }
+    </script>
+
+</head>
+
+    
+<body>
+    <div data-role="page">
+        <div data-role="header">
+            <h1>Penguin Air</h1>
+            <h3>Home Page</h3>
+        </div>
+        <div data-role="content">
+            <a href ="testGetFlights.html">See All Flights We Offer</a><br /><br />
+            <a href="testSearchFlights.html">Search Our Flights by City of Departure</a><br /><br />
+            <a href="testGetReservationInfo.html">See Your Reservation Information</a>
+
+        </div>
+    </div>
+
+
+</body>
+</html>

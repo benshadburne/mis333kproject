@@ -21,7 +21,8 @@
         <asp:Button ID="btnReactivate" runat="server" Text="Reactivate" /><br />
         <asp:Button ID="btnAbort" runat="server" Text="Abort" /><br />
         <asp:Button ID="btnAccept" runat="server" Text="Accept" /><br />
-           
+        <asp:Label ID="lblMessage" runat="server" Text="You currently do not have a selected journey."></asp:Label><br />
+        <asp:Label ID="lblID" runat="server" Text=""></asp:Label>
     </div>
    
         <div class ="center-block" style="width: 70%;">

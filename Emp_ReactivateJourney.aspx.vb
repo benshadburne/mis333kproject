@@ -8,4 +8,9 @@ Partial Class Emp_ReactivateJourney
         gvJourneys.DataSource = JObject.MyDataSet.Tables("tblJourneyClone")
         gvJourneys.DataBind()
     End Sub
+
+    Protected Sub gvJourneys_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvJourneys.SelectedIndexChanged
+        lblMessage.Text = "You have selected the following record to modify:"
+        lblID.Text = gvJourneys.SelectedRow.Cells(1).Text
+    End Sub
 End Class
