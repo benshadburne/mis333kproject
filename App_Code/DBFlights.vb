@@ -249,4 +249,18 @@ Public Class DBFlightsClone
         aryParamValues.Add(strFlightNumber)
         UseSPforInsertOrUpdateQuery("usp_FlightClone_Invalidate_By_Flight#", aryParamNames, aryParamValues)
     End Sub
+
+    Public Sub MakeFlightActive(strFlightNumber As String)
+        Dim aryFlightNames As New ArrayList
+        Dim aryFlightValues As New ArrayList
+
+        aryFlightNames.Add("@flightnumber")
+        aryFlightValues.Add(strFlightNumber)
+
+        UseSPforInsertOrUpdateQuery("usp_FlightClone_Activate_By_FlightNumber", aryFlightNames, aryFlightValues)
+    End Sub
+
+    Public Sub GetAllInactive()
+        RunProcedure("usp_FlightClone_Get_All_Inactive")
+    End Sub
 End Class
