@@ -19,6 +19,12 @@ Partial Class _Default
             Response.Redirect("Emp_EmployeeDashboard.aspx")
         End If
 
+        If Session("ReservationID") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        Else
+            lblReservationID.Text = Session("ReservationID").ToString
+        End If
+
         Session("UserSeat") = ""
         'write some code to pull up the advantage number we need to use to select the seats. 
 
@@ -263,6 +269,8 @@ Partial Class _Default
         End If
 
         ResetAll()
+
+        GoToNextCustomer()
 
     End Sub
 

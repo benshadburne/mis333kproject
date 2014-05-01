@@ -12,11 +12,11 @@
             </asp:RadioButtonList>
             <br />
             <br />
-            <asp:Button CssClass="btn" ID="btnFinalLeg" runat="server" Text="Add as Final Leg" style="height: 26px" visible="false"/>
+            <asp:Button CssClass="btn" ID="btnFinalLeg" runat="server" Text="Add Last Leg" visible="false" Width="97px"/>
             <br />
             <br />
             <br />
-            <asp:Button ID="btnAddJourney" runat="server" Text="Add this leg" />
+            <asp:Button ID="btnAddJourney" cssclass="btn" runat="server" Text="Add this leg" />
             <br />
             <br />
             <br />

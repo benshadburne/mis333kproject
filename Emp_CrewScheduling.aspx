@@ -21,13 +21,13 @@
     <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
     <br />
     <br />
-    <asp:Label ID="Label1" runat="server" Text="Label"></asp:Label>
+    <asp:Label ID="Label1" runat="server" Text="Captains "></asp:Label> <asp:Label ID="Label2" runat="server" Text="Copilots "></asp:Label><asp:Label ID="Label3" runat="server" Text="Cabin"></asp:Label>
     <br />
-    <asp:DropDownList ID="ddlCaptains" runat="server" padding ="3px" >
+    <asp:DropDownList ID="ddlCaptains" runat="server" padding ="3px" visible ="false">
 
     </asp:DropDownList>
-    <asp:DropDownList ID="ddlCoCaptains" runat="server" padding ="3px" ></asp:DropDownList>
-    <asp:DropDownList ID="ddlCabins" runat="server" padding ="3px" ></asp:DropDownList>
+    <asp:DropDownList ID="ddlCoCaptains" runat="server" padding ="3px" visible="false"></asp:DropDownList>
+    <asp:DropDownList ID="ddlCabins" runat="server" padding ="3px" visible="false"></asp:DropDownList>
 
 
 

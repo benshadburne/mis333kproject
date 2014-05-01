@@ -48,6 +48,9 @@ Partial Class MasterPage
                     ToggleLoginButton()
                     Session.Add("JustLogged", "Yes")
                     Response.Redirect("Emp_EmployeeDashboard.aspx")
+                Else
+                    lblMessage.Text = "Username password combination is incorrect."
+                    Exit Sub
                 End If
 
             End If
@@ -93,7 +96,7 @@ Partial Class MasterPage
 
         strDate = DBDate.GetCurrentDate()
 
-        strDate = DBDate.ConvertToVBDate(strDate).ToString
+        strDate = DBDate.ConvertToVBDate(strDate).ToShortDateString
         strTime = DBDate.getcurrentTime()
 
         'check time length
@@ -106,12 +109,16 @@ Partial Class MasterPage
         If Session("UserID") Is Nothing Then
             'no one is logged in
             btnLogout.Visible = False
+            txtUsername.Visible = True
+            txtPassword.Visible = True
         Else
             btnLogin.Visible = False
+            txtUsername.Visible = False
+            txtPassword.Visible = False
         End If
 
     End Sub
-    
+
     Protected Sub btnLogout_Click(sender As Object, e As EventArgs) Handles btnLogout.Click
         lblMessage.Text = ""
         Session.RemoveAll()
@@ -121,5 +128,7 @@ Partial Class MasterPage
     Protected Sub btnCreateProfile_Click(sender As Object, e As EventArgs) Handles btnCreateProfile.Click
         Response.Redirect("Cust_AddNewCustomer.aspx")
     End Sub
+
+
 End Class
 

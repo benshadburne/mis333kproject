@@ -209,6 +209,7 @@ Partial Class _Default
             If Session("TripType").ToString = "Round Trip" Then
                 'switch begin, end airport
                 lblMessage.Text = "You have successfully added the first leg of your trip."
+                DBReservations.MakeRoundTrip(Session("ReservationID").ToString)
                 FirstHalfRoundTrip()
             End If
 

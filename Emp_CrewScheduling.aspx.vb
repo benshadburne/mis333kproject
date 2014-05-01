@@ -29,6 +29,7 @@ Partial Class _Default
             calFlightSearch.SelectedDate = CDate(DBDate.GetCurrentDate)
             LoadFlightGridView()
         End If
+
     End Sub
 
     Public Sub LoadFlightGridView()
@@ -61,6 +62,7 @@ Partial Class _Default
 
         LoadFlightGridView()
 
+
     End Sub
 
     Private Sub FormatDate(gvGridview As GridView, intColumn As Integer)
@@ -74,6 +76,12 @@ Partial Class _Default
         Next
     End Sub
 
+    Public Sub ShowDDLs()
+        ddlCabins.Visible = True
+        ddlCoCaptains.Visible = True
+        ddlCaptains.Visible = True
+    End Sub
+
     Protected Sub gvJourneys_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvJourneys.SelectedIndexChanged
         lblMessage.Text = ""
         gvJourneys.SelectedRow.Style.Add("background-color", "#ffcccc")
@@ -81,6 +89,7 @@ Partial Class _Default
     End Sub
 
     Protected Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
+        Dim bolAdded As Boolean = False
         lblMessage.Text = ""
         'check to make sure the DDL Value isn't blank
         'check to make sure a Captain was added
@@ -90,24 +99,29 @@ Partial Class _Default
             lblMessage.Text = "If no crew members are available for scheduling, hire some employees."
         Else
             DBJourney.AddCaptain(ddlCaptains.SelectedValue.ToString, gvJourneys.SelectedRow.Cells(1).Text)
+            bolAdded = True
         End If
 
         If ddlCoCaptains.SelectedIndex = 0 Then
             lblMessage.Text = "If no crew members are available for scheduling, hire some employees."
         Else
             DBJourney.AddCoCaptain(ddlCoCaptains.SelectedValue.ToString, gvJourneys.SelectedRow.Cells(1).Text)
+            bolAdded = True
         End If
 
         If ddlCabins.SelectedIndex = 0 Then
             lblMessage.Text = "If no crew members are available for scheduling, hire some employees."
         Else
             DBJourney.AddCabin(ddlCabins.SelectedValue.ToString, gvJourneys.SelectedRow.Cells(1).Text)
+            bolAdded = True
         End If
 
         LoadFlightGridView()
         LoadDDLs()
+        If bolAdded = True Then
+            lblMessage.Text = "You successfully scheduled a crew."
+        End If
 
-        lblMessage.Text = "You successfully scheduled a crew."
     End Sub
 
     Public Sub LoadDDLs()
@@ -133,6 +147,7 @@ Partial Class _Default
         ddlCabins.DataSource = aryCabin
         ddlCabins.DataBind()
         ddlCabins.Items.Insert(0, "None")
+        ShowDDLs()
     End Sub
 
     Protected Sub btnAddEmployee_Click(sender As Object, e As EventArgs) Handles btnAddEmployee.Click

@@ -12,6 +12,9 @@ Partial Class Res_SelectCustomer
 
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If Session("ReservationID") Is Nothing Then
+            Response.Redirect("Homepage.aspx")
+        End If
 
         If Session("UserType") Is Nothing Then
             Response.Redirect("HomePage.aspx")
@@ -37,7 +40,7 @@ Partial Class Res_SelectCustomer
                         pnlAddAge.Visible = True
 
                         'fill the label
-                        lblAge.Text = "Please enter your age to add your ticket. You will add other customers next"
+                        lblAge.Text = "Please enter your age to add your ticket. You will add other customers next."
 
                         gvCustomers.Visible = False
 

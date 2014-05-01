@@ -31,6 +31,18 @@ Public Class DBReservations
 
     End Sub
 
+    Public Sub MakeRoundTrip(strReservationID As String)
+        Dim aryNames As New ArrayList
+        Dim aryValues As New ArrayList
+
+        aryNames.Add("@ReservationID")
+
+        aryValues.Add(strReservationID)
+
+        UseSPforInsertOrUpdateQuery("usp_Reservation_Make_RoundTrip", aryNames, aryValues)
+    End Sub
+
+
 
 
     'define a public read only property

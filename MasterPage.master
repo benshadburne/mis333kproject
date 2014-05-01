@@ -43,9 +43,10 @@
 <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
       </div>
       <div class="pull-right" style="width: 15%; padding-right: 10px; min-width: 100px; text-align:center; padding-top: 5px; line-height:28px">
-          <asp:TextBox CssClass="text-center" ID="txtUsername" runat="server" width="90%" Height="23px" Wrap="False" BorderStyle="Inset" ForeColor="Gray">Username</asp:TextBox> <br />
-          <asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="23px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray" TextMode="Password">Password</asp:TextBox>
+          <asp:Label ID="Label1" runat="server" Text="ID:"></asp:Label><asp:TextBox CssClass="text-center" ID="txtUsername" runat="server" width="90%" Height="23px" Wrap="False" BorderStyle="Inset" ForeColor="Gray"></asp:TextBox> <br />
+           <asp:Label ID="Label2" runat="server" Text="Password:"></asp:Label><asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="23px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray" TextMode="Password">Password</asp:TextBox>
           </div>
+          
     <div class="pull-right">
            <div class="pull-right" style="padding-right: 10px;">
                <div style="padding-top:10px">
