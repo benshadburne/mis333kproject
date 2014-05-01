@@ -17,6 +17,29 @@
 
     <div class ="center-block">
     <div class ="pull-left" style="width:20%;">
+        <asp:Label ID="Label1" runat="server" padding="3px" Text="Select a Filter:"></asp:Label>
+
+        <asp:RadioButtonList ID="rblSearchBy" runat="server" AutoPostBack="True">
+            <asp:ListItem Selected="True" Value="0">Lastname</asp:ListItem>
+            <asp:ListItem Value="1">Advantage Number (must be exact)</asp:ListItem>
+        </asp:RadioButtonList>
+
+        <br />
+        <asp:RadioButtonList ID="rblSearchType" runat="server" >
+            <asp:ListItem Value="0">Partial</asp:ListItem>
+            <asp:ListItem Value="1" Selected="True">Keyword</asp:ListItem>
+        </asp:RadioButtonList>
+        <br />
+
+        <br />
+        
+
+        <asp:TextBox ID="txtSearch" runat="server"></asp:TextBox>
+
+        <br />
+        <br />
+
+        <asp:Button ID="btnSearch" runat="server" Text="Search" />
            
     </div>
    
