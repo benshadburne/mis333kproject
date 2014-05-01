@@ -351,6 +351,9 @@ Partial Class _Default
                 'show message
                 lblMessage.Text = "You successfully added the first leg of your trip."
 
+                'show round trip on reservation
+                DBReservations.MakeRoundTrip(Session("ReservationID").ToString)
+
                 'switch begin, end airport, reload page
                 FirstHalfRoundTrip()
                 Exit Sub

@@ -208,6 +208,33 @@ Partial Class _Default
         gvOtherReservation.DataSource = DBTickets.MyViewOthers
         gvOtherReservation.DataBind()
 
+        Try
+            HideGridViewColumn(gvYourReservation, 4)
+            HideGridViewColumn(gvYourReservation, 6)
+            HideGridViewColumn(gvYourReservation, 8)
+            HideGridViewColumn(gvYourReservation, 9)
+        Catch ex As Exception
+
+        End Try
+
+        Try
+            HideGridViewColumn(gvOtherReservation, 5)
+            HideGridViewColumn(gvOtherReservation, 7)
+            HideGridViewColumn(gvOtherReservation, 9)
+            HideGridViewColumn(gvOtherReservation, 10)
+        Catch ex As Exception
+
+        End Try
+
+
+
+    End Sub
+
+    Private Sub HideGridViewColumn(gvName As GridView, intColumn As Integer)
+        gvName.HeaderRow.Cells(intColumn).Visible = False
+        For Each gvr As GridViewRow In gvName.Rows
+            gvr.Cells(intColumn).Visible = False
+        Next
     End Sub
 
     Protected Sub ddlJourneyID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlJourneyID.SelectedIndexChanged
@@ -270,7 +297,7 @@ Partial Class _Default
 
         ResetAll()
 
-        GoToNextCustomer()
+
 
     End Sub
 

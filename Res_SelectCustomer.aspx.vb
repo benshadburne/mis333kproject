@@ -249,6 +249,7 @@ Partial Class Res_SelectCustomer
             Session.Remove("Adults")
             Session.Remove("Children")
             Session.Remove("Babies")
+            Session.Remove("FirstTicket")
             Session.Add("Login", strAdvantageNumber)
 
             If Session("Zip") Is Nothing Then
@@ -260,7 +261,6 @@ Partial Class Res_SelectCustomer
                 Session.Remove("Zip")
                 Session.Remove("LastName")
                 Session.Remove("Phone")
-                Session.Remove("FirstTicket")
             End If
             Response.Redirect("Res_SeatSelection.aspx")
         End If

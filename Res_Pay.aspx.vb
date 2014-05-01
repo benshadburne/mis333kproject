@@ -202,6 +202,17 @@ Partial Class Res_Pay
 
         End If
 
+        HideGridViewColumn(gvTickets, 5)
+        HideGridViewColumn(gvTickets, 7)
+        HideGridViewColumn(gvTickets, 9)
+        HideGridViewColumn(gvTickets, 10)
+    End Sub
+
+    Private Sub HideGridViewColumn(gvName As GridView, intColumn As Integer)
+        gvName.HeaderRow.Cells(intColumn).Visible = False
+        For Each gvr As GridViewRow In gvName.Rows
+            gvr.Cells(intColumn).Visible = False
+        Next
     End Sub
 
     Protected Sub ddlJourneyID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlJourneyID.SelectedIndexChanged
@@ -302,7 +313,7 @@ Partial Class Res_Pay
         rblPayment.Visible = True
 
         If rblPayment.SelectedValue = "Miles" Then
-          
+
             strMiles = DBTickets.GetMileage(gvTickets.SelectedRow.Cells(3).Text)
             lblMiles.Text = "You currently have " & strMiles & " miles in your account."
             If FirstClassSelected() = True Then
@@ -472,22 +483,22 @@ Partial Class Res_Pay
 
     Protected Sub gvTickets_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvTickets.SelectedIndexChanged
 
-            ddlJourneyID.SelectedValue = gvTickets.SelectedRow.Cells(4).Text
-            ddlAdvantageNum.SelectedValue = gvTickets.SelectedRow.Cells(3).Text
-            ResetAll()
-            ddlAdvantageNum.Enabled = False
-            ddlJourneyID.Enabled = False
+        ddlJourneyID.SelectedValue = gvTickets.SelectedRow.Cells(4).Text
+        ddlAdvantageNum.SelectedValue = gvTickets.SelectedRow.Cells(3).Text
+        ResetAll()
+        ddlAdvantageNum.Enabled = False
+        ddlJourneyID.Enabled = False
 
         MakeAllInvisible()
-            rblPayment.Visible = True
-            lblPay.Visible = True
+        rblPayment.Visible = True
+        lblPay.Visible = True
 
 
-            rblPayment.SelectedIndex = -1
+        rblPayment.SelectedIndex = -1
 
-            rblPayment.Enabled = True
+        rblPayment.Enabled = True
 
-            gvTickets.SelectedRow.Style.Add("background-color", "#ffcccc")
+        gvTickets.SelectedRow.Style.Add("background-color", "#ffcccc")
 
     End Sub
 
@@ -591,6 +602,7 @@ Partial Class Res_Pay
         lblCost.Text = ""
         lblUpgrade.Visible = False
         lblSubtotal.Text = ""
+        txtOverride.Text = ""
 
         txtOverride.Visible = False
 

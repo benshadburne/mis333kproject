@@ -28,6 +28,7 @@
                 <li><a href="Emp_SearchCustomer.aspx">Search Customer</a> </li>               
                  <li><a href="Emp_Select_Cust_To_Modify.aspx">Modify Customer</a> </li>
                 <li><a href="Cust_AddNewCustomer.aspx">Create Customer Profile</a></li>
+                <li><a href ="Cust_CreateReservationAndSelectFlight.aspx">Create Customer Reservation</a></li>
           </ul>
 
         </asp:Panel>
@@ -47,6 +48,8 @@
                 <li><a href="Emp_ModifyFlight.aspx">Modify Flight</a> </li>
                 <li><a href="Emp_SelectEmployeeToModify.aspx">Select Employee to Modify</a> </li>
                 <li> <a href="Emp_ViewReports.aspx">View Reports</a></li>
+                <li><a href ="Emp_ReactivateJourney.aspx">Activate Cancelled Journey</a></li>
+                <li><a href="Emp_ReactivateFlight.aspx">Activate Cancelled Flight</a></li>
             </ul>
         </asp:Panel>
 
