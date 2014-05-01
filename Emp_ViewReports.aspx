@@ -22,6 +22,12 @@
        </asp:RadioButtonList>
        <br />
 
+        <asp:RadioButtonList ID="rblShowRevenueFromModifications" runat="server" CssClass="radio">
+           <asp:ListItem Value="0" Selected ="True">Include Revenue From Modifications</asp:ListItem>
+           <asp:ListItem Value="1">Don't Include Revenue From Modifications</asp:ListItem>
+       </asp:RadioButtonList>
+       <br />
+
        <asp:Label ID="Label4" runat="server" Text="Filter by:" CssClass="label"></asp:Label>
        <asp:RadioButtonList ID="radClass" runat="server" CssClass="radio">
            <asp:ListItem Value="0">Economy</asp:ListItem>
@@ -61,6 +67,7 @@
         <asp:Label ID="Label7" runat="server" Text="Totals:" Font-Bold="true" padding-right ="300px"></asp:Label>
 
     <asp:Label ID="lblRevenue" runat="server" Text="" Font-Bold="true" padding-right="30px"></asp:Label>
+        <asp:Label ID="lblModificationRevenue" runat="server" Text="" Font-Bold="true" padding-right="30px"></asp:Label>
         <asp:Label ID="lblSeats" runat="server" Text="" Font-Bold="true"></asp:Label>
     </div>
 

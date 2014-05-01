@@ -6,6 +6,7 @@ Partial Class Emp_ViewReports
     'Declare an instance of Tickets DB
     Dim TicketsDB As New DBTickets
     Dim valid As New ClassValidate
+    Dim RObject As New DBReservations
 
     'Create a sub for loading the DDL
     Private Sub LoadDDLDeparture()
@@ -78,6 +79,7 @@ Partial Class Emp_ViewReports
 
         lblRevenue.Text = ""
         lblSeats.Text = ""
+        lblModificationRevenue.Text = ""
 
         If gvReports.Rows.Count = 0 Then
             lblMessage.Text = "Your search returned no records"
@@ -105,7 +107,27 @@ Partial Class Emp_ViewReports
                 decRevenue += CDec(gvReports.Rows(i).Cells(5).Text)
             Next
 
+            
+
             lblRevenue.Text = "Total Revenue: " & decRevenue.ToString("c2")
+            'start Jace code
+            Dim intNumberofModifications As Integer
+            Dim decModificationRevenue As Decimal
+            RObject.GetNumberOfModifications()
+            intNumberofModifications = CInt(RObject.MyDataSet.Tables("tblReservationsClone").Rows(0).Item("NumberOfModifications").ToString)
+            decModificationRevenue = intNumberofModifications * 50
+            lblModificationRevenue.Text = "Total Revenue from Modifications: " & decModificationRevenue.ToString("c2")
+            If rblShowRevenueFromModifications.SelectedIndex = 0 Then
+                'user wants to see total revenue with modifications
+                decRevenue += decModificationRevenue
+                lblRevenue.Text = "Total Revenue: " & decRevenue.ToString("c2")
+            Else
+                'user doesn't want to see total revenue with modifications
+                lblModificationRevenue.Visible = False
+            End If
+
+
+            'end Jace code
 
             If radRevenueSeatCount.SelectedIndex = 2 Then
                 For i = 0 To gvReports.Rows.Count - 1
@@ -188,6 +210,30 @@ Partial Class Emp_ViewReports
 
         'Bind the data
         LoadGridView()
+
+        'start Jace code
+        Dim intNumberofModifications As Integer
+        Dim decModificationRevenue As Decimal
+        Dim decRevenue As Decimal
+        RObject.GetNumberOfModifications()
+        intNumberofModifications = CInt(RObject.MyDataSet.Tables("tblReservationsClone").Rows(0).Item("NumberOfModifications").ToString)
+        decModificationRevenue = intNumberofModifications * 50
+        'lblModificationRevenue.Text = "Total Revenue from Modifications: " & decModificationRevenue.ToString("c2")
+        For i = 0 To gvReports.Rows.Count - 1
+            decRevenue += CDec(gvReports.Rows(i).Cells(5).Text)
+        Next
+        If rblShowRevenueFromModifications.SelectedIndex = 0 Then
+            'user wants to see total revenue with modifications
+            decRevenue += decModificationRevenue
+            lblRevenue.Text = "Total Revenue: " & decRevenue.ToString("c2")
+            lblModificationRevenue.Text = "Total Revenue from Modifications: " & decModificationRevenue.ToString("c2")
+        Else
+            'user doesn't want to see total revenue with modifications
+            lblModificationRevenue.Visible = False
+        End If
+
+
+        'end Jace code
     End Sub
 
     Protected Sub btnRestartSearch_Click(sender As Object, e As EventArgs) Handles btnRestartSearch.Click
