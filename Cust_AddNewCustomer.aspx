@@ -16,28 +16,18 @@
     <br />
 
     <div class ="center-block">
-    <div class ="pull-left" style="width:20%;">
-            <br />
-            <br />
-            <br />
-            <asp:Button class="btn" ID="btnSave" runat="server" Text="Save" />
-            <br />
-            <br />
-            <asp:Button class="btn" ID="btnClear" runat="server" Text="Clear" CausesValidation="False" />
-            <br />
-            <br />
-        <asp:Button class="btn" ID="btnAddFamilyMember" runat="server" Text="Add Family Member" CausesValidation="False" />
-        <br />
-        <br />
-            <asp:Label CssClass="h6" ID="lblErrorMessage" runat="server" Text=""></asp:Label>
-            <asp:Label CssClass="h6" ID="lblSuccessMessage" runat="server" Text=""></asp:Label>
-            <br />
-            <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
-            <br />
+        <div style="text-align:center; word-spacing:30px;padding-bottom:20px">
+            <asp:Button class="btn btn-primary" ID="btnSave" runat="server" Text="Save" />
+           
+            <asp:Button class="btn btn-primary" ID="btnClear" runat="server" Text="Clear" CausesValidation="False" />
+            
+        <asp:Button class="btn btn-primary" ID="btnAddFamilyMember" runat="server" Text="Add Family Member" CausesValidation="False" />
+       
+
         </div>
    
         <div class ="center-block" style="width: 70%;">
-            <div id ="pull-right" style="width: 15%; float:left; text-align: right; line-height: 200%">
+            <div id ="pull-right" style="width: 15%; float:left; text-align: right; line-height: 28px">
                 <asp:Label CssClass="h6" ID="lblFName" runat="server" Text="First Name:"></asp:Label>
                 <br />
                 <asp:Label CssClass="h6" ID="lblMI" runat="server" Text="Middle Initial:"></asp:Label>
@@ -58,7 +48,7 @@
                 <br />
                 <asp:Label class="h6" ID="lblPhone" runat="server" Text="Phone:"></asp:Label>
             </div>
-            <div id ="pull-left" style="width: 70%; float: left; line-height: 160%">
+            <div id ="center-block" style="text-align:center">
                 <asp:TextBox ID="txtFName" class="text-left" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtFName" ErrorMessage="First name required." ForeColor="Red">*</asp:RequiredFieldValidator>
                 <br />
@@ -86,6 +76,16 @@
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="txtPhone" ErrorMessage="Phone number required." ForeColor="Red">*</asp:RequiredFieldValidator>
                 <br />
             </div>
+    <div class ="center-block">
+           
+            
+            <asp:Label CssClass="h6" ID="lblErrorMessage" runat="server" Text=""></asp:Label>
+            <asp:Label CssClass="h6" ID="lblSuccessMessage" runat="server" Text=""></asp:Label>
+            <br />
+            <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
+            <br />
+        </div>
+   
             </div>
         </div>
 </asp:Content>

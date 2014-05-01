@@ -60,7 +60,7 @@
        </div>
                      
           <div class="pull-left" style="text-align:center; width: 449px">
-                <asp:Button class="btn-seat" ID="btn1A" runat="server" Text="1A" />
+              <asp:Button class="btn-seat" ID="btn1A" runat="server" Text="1A" />
               <br />
               <asp:Button class="btn-seat" ID="btn2A" runat="server" Text="2A" />
               <br />
@@ -112,7 +112,7 @@
                    <asp:Label CssClass="h6" ID="Label12" runat="server" Text="Empty Seat"></asp:Label><asp:Button CssClass="btn-sm" ID="Button4" runat="server" Text="XX" BackColor="LightGrey" />
                </div>
                 <div class="pull-left" style="padding-right:20px">
-                   <asp:Label CssClass="h6" ID="Label13" runat="server" Text="Infant in Seat"></asp:Label><asp:Button CssClass="btn-sm" ID="Button5" runat="server" Text="XXi" BackColor="LightGrey" />
+                   <asp:Label CssClass="h6" ID="Label13" runat="server" Text="Infant in Seat"></asp:Label><asp:Button CssClass="btn-sm" ID="Button5" runat="server" Text="XXi" BackColor="Green" />
                </div>
                 <div class="pull-left">
                    <asp:Label CssClass="h6" ID="Label14" runat="server" Text="Infant is user"></asp:Label><asp:Button CssClass="btn-sm" ID="Button6" runat="server" Text="XXi*" BackColor="Green" />
