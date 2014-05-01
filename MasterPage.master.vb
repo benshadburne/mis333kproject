@@ -1,4 +1,4 @@
-﻿
+﻿Option Strict On
 Partial Class MasterPage
     Inherits System.Web.UI.MasterPage
 
@@ -86,7 +86,7 @@ Partial Class MasterPage
 
         strDate = DBDate.GetCurrentDate()
 
-        strDate = DBDate.ConvertToVBDate(strDate)
+        strDate = DBDate.ConvertToVBDate(strDate).ToString
         strTime = DBDate.getcurrentTime()
 
         'check time length

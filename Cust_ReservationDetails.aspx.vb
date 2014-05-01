@@ -7,8 +7,11 @@ Partial Class _Default
     Dim DBJourneySeats As New DBJourneySeats
     Dim DBFlightSearch As New DBFlightSearch
     Dim AddJourneyClass As New AddJourneyClass
+    Dim DBReservations As New DBReservations
     Dim DBDate As New DBdate
     Dim mAdvantageNumber As Integer
+
+
 
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load, calFlightDate.SelectionChanged
@@ -66,9 +69,35 @@ Partial Class _Default
         'sets buttons to disabled and availabe to unavailable if journey is before this date
         'first get date of selected journey into date format
         Dim datJourney As Date
-        lblMessage.Text = (ddlJourneyID.SelectedItem.ToString).Substring(5, Len(ddlJourneyID.SelectedItem.ToString) - 5)
+        Dim strDate As String
+        Dim datCurrentDate As Date
+        strDate = (ddlJourneyID.SelectedItem.ToString).Substring(5, Len(ddlJourneyID.SelectedItem.ToString) - 5)
+        datJourney = Date.Parse(strDate.Substring(5, 2) & "/" & strDate.Substring(8, 2) & "/" & strDate.Substring(0, 4))
+        datCurrentDate = CDate(DBDate.GetCurrentDate())
+        datCurrentDate = DBDate.ConvertToVBDate(CStr(datCurrentDate))
 
-        'If DBTickets.MyView.Table().Rows(ddlJourneyID.SelectedIndex).Item("FlightDate") Then
+        If datJourney < datCurrentDate Then
+            'the journey took off before the currect datetime in database, set buttons to disable and unavailable
+            btn1A.Enabled = False
+            btn1B.Enabled = False
+            btn2A.Enabled = False
+            btn2B.Enabled = False
+            btn3A.Enabled = False
+            btn3B.Enabled = False
+            btn3C.Enabled = False
+            btn3D.Enabled = False
+            btn4A.Enabled = False
+            btn4B.Enabled = False
+            btn4C.Enabled = False
+            btn4D.Enabled = False
+            btn5A.Enabled = False
+            btn5B.Enabled = False
+            btn5C.Enabled = False
+            btn5D.Enabled = False
+
+            txtAvailable.Text = "Unavailable"
+            Exit Sub
+        End If
 
         'can't change to an earlier date
         If calFlightDate.SelectedDate < CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate)) Then
@@ -407,6 +436,8 @@ Partial Class _Default
         DBTickets.ModifyTicketJourneyID(DBJourneySeats.MyViewSeats.Table().Rows(0).Item("JourneyID").ToString, ddlJourneyID.SelectedValue, Session("ReservationID").ToString)
 
         'charge them $50, idk?!?!?!??
+        DBReservations.AddFee(Session("ReservationID").ToString)
+
 
         'also load ddls so that they represent new journeyID, and fill available so that it responds to new ddls
         LoadDDLs()

@@ -300,5 +300,16 @@ Public Class DBReservations
         End Get
     End Property
 
+    Public Sub AddFee(strReservationID As String)
+
+        Dim aryParamName As New ArrayList
+        Dim aryParamValue As New ArrayList
+
+        aryParamName.Add("@ReservationID")
+        aryParamValue.Add(strReservationID)
+
+        UseSPforInsertOrUpdateQuery("usp_Reservation_Add_Fee", aryParamName, aryParamValue)
+    End Sub
+
 End Class
 
