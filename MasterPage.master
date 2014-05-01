@@ -29,7 +29,7 @@
         
         
     </div>
-      <div style="min-width: 600px">
+     
       <%--<div class="pull-right" min-width: 40px>
           
           <input type="text" class="form-control" placeholder="Search" aria-flowto="right"/> 
@@ -55,8 +55,10 @@
      </div><asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
       </div>
           
-          
+          <div class="pull-right" style="padding-right:10px; padding-top: 10px">
+               <asp:Button class="btn btn-warning" ID="btnCreateProfile" runat="server" Text="Create New Profile" width="160px"/> 
           </div>
+          
 
       
          <div class="pull-left" style="width: auto; min-width: 50px;">
