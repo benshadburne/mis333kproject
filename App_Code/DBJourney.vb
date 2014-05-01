@@ -466,5 +466,8 @@ Public Class DBjourneyclone
         UseSPforInsertOrUpdateQuery("usp_JourneysClone_Inactivate_By_JourneyID", aryJourneyNames, aryJourneyValues)
     End Sub
 
+    Public Sub GetAllInactiveJourneys()
+        RunProcedure("usp_JourneyClone_Select_Inactive")
+    End Sub
 
 End Class
