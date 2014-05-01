@@ -21,7 +21,7 @@ Partial Class Emp_GateCheckIn
 
     Public Sub LoadCustomerGridView(strJourneyID As String)
         'run stored procedure to get all customers and their miles and stuff
-        DBCustomer.GetCustomersByJourney(strJourneyID)
+        DBCustomer.GetActiveCustomersByJourney(strJourneyID)
 
         gvCustomers.DataSource = DBCustomer.MyDataset
         gvCustomers.DataBind()

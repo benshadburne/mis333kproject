@@ -57,7 +57,7 @@ Public Class DBChangeDateTime
             aryJourneyValue.Add(CInt(MyViewJourney.Table().Rows(i).Item("Journey ID")))
 
             'query Tickets Table with given journeyID to retrieve
-            UseSPToRetrieveRecords("usp_Tickets_Get_By_JourneyID", mdatasetTickets, mMyViewTickets, "tblTickets", aryParamName, aryParamValue)
+            UseSPToRetrieveRecords("usp_Tickets_Get_Active_By_JourneyID", mdatasetTickets, mMyViewTickets, "tblTickets", aryParamName, aryParamValue)
 
             'loop through the tickets
             For j = 0 To lblCountTickets - 1

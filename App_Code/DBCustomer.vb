@@ -326,6 +326,11 @@ Public Class DBCustomersClone
         RunSPwithOneParam("usp_Customers_Get_By_Journey", "@JourneyID", strJourneyID)
     End Sub
 
+    Public Sub GetActiveCustomersByJourney(strJourneyID As String)
+        RunSPwithOneParam("usp_Customers_Get_Active_By_Journey", "@JourneyID", strJourneyID)
+    End Sub
+
+
     'Public Function for seeing if a Username typed into the text box is actually in the Customer Table
     Public Function GetFirstName(strFirstName As String) As Boolean
         'Purpose: See if a username typed into the text box is actually in the Customer Table
