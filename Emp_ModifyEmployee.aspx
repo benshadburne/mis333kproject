@@ -25,11 +25,11 @@
             <asp:Label ID="Label4" runat="server" Text="MI"></asp:Label><br />
             <asp:Label ID="Label5" runat="server" Text="Password"></asp:Label><br />
             <asp:Label ID="Label6" runat="server" Text="Social Security Number"></asp:Label><br />
-            <asp:Label ID="Label7" runat="server" Text="Employee Type"></asp:Label><br />
+            <asp:Label ID="Label7" runat="server" Text="Employee Type" Visible="False"></asp:Label><br />
             <asp:Label ID="Label8" runat="server" Text="Address"></asp:Label><br />
         <asp:Label ID="Label9" runat="server" Text="Zip"></asp:Label><br />
         <asp:Label ID="Label10" runat="server" Text="Phone"></asp:Label><br />
-        <asp:Label ID="Label1" runat="server" Text="Active"></asp:Label><br />
+        <asp:Label ID="Label1" runat="server" Text="Active" Visible="False"></asp:Label><br />
         
         </div>
         <div id ="right">
@@ -43,7 +43,7 @@
                 <asp:RequiredFieldValidator ID="rfvPassword" runat="server" ErrorMessage="Please enter a password!" ControlToValidate="txtPassword" Text="*"></asp:RequiredFieldValidator><br />
                 <asp:TextBox ID="txtSSN" runat="server" MaxLength="9" ReadOnly="True"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvSSN" runat="server" ErrorMessage="Please enter a Social Security Number!" ControlToValidate="txtLastName" Text="*"></asp:RequiredFieldValidator><br />
-                <asp:TextBox ID="txtEmpType" runat="server" ReadOnly="True"></asp:TextBox>
+                <asp:TextBox ID="txtEmpType" runat="server" ReadOnly="True" Visible="False"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvEmpType" runat="server" ErrorMessage="Please enter an employee type!" ControlToValidate="txtEmpType" Text="*"></asp:RequiredFieldValidator><br />
                 <asp:TextBox ID="txtAddress" runat="server" ReadOnly="True"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvAddress" runat="server" ErrorMessage="Please enter an address!" ControlToValidate="txtAddress" Text="*"></asp:RequiredFieldValidator><br />
@@ -51,7 +51,7 @@
                 <asp:RequiredFieldValidator ID="rfvZip" runat="server" ErrorMessage="Please enter a zip code!" ControlToValidate="txtZip" Text="*"></asp:RequiredFieldValidator><br />
                 <asp:TextBox ID="txtPhoneNumber" runat="server" MaxLength="10" ReadOnly="True"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvPhoneNumber" runat="server" ErrorMessage="Please enter a phone number!" ControlToValidate="txtPhoneNumber" Text="*"></asp:RequiredFieldValidator><br />
-                <asp:DropDownList ID="ddlActive" runat="server" Enabled="False">
+                <asp:DropDownList ID="ddlActive" runat="server" Enabled="False" Visible="False">
                     <asp:ListItem>Y</asp:ListItem>
                     <asp:ListItem>N</asp:ListItem>
                 </asp:DropDownList>

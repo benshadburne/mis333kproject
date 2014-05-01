@@ -31,6 +31,6 @@ Partial Class Emp_SelectEmployeeToModify
         Session("RecordID") = gvEmployees.SelectedRow.Cells(1).Text
 
         'fire up next form
-        Response.Redirect("Emp_ModifyEmployee.aspx")
+        Response.Redirect("Emp_ModifyEmployeeManager.aspx")
     End Sub
 End Class

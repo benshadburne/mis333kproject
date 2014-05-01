@@ -16,17 +16,30 @@ Partial Class _Default
         Else
             If Session("UserType").ToString = "Customer" Then
                 intAdvantageNumber = CInt(Session("UserID"))
-            ElseIf Session("UserType").ToString = "Manager" Or Session("UserType").ToString = "Agent" Or Session("UserType").ToString = "Crew" Then
-                intAdvantageNumber = CInt(Session("AdvantageNumber_Selected_By_Manager"))
+            ElseIf Session("UserType").ToString = "Manager" Or Session("UserType").ToString = "Agent" Then
+                If Session("AdvantageNumber_Selected_By_Manager") Is Nothing Then
+                    Response.Redirect("Emp_Select_Cust_To_Modify.aspx")
+                Else
+                    intAdvantageNumber = CInt(Session("AdvantageNumber_Selected_By_Manager"))
+                End If
             Else
-                Response.Redirect("HomePage.aspx")
+                    Response.Redirect("HomePage.aspx")
             End If
         End If
+
+        If Session("UserType").ToString = "Customer" Then
+            ddlActive.Visible = False
+            lblActive.Visible = False
+            txtMiles.Visible = False
+            lblMiles.Visible = False
+        End If
+
+
 
         'Dim strAdvantageNumber As String
 
         'if logged in as employee then
-        intAdvantageNumber = CInt(Session("AdvantageNumber_Selected_By_Manager"))
+
 
 
         'elseif logged in as customer
@@ -116,7 +129,7 @@ Partial Class _Default
         txtZip.Text = CustDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Zip").ToString
         txtMiles.Text = CustDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Miles").ToString
         strYorN = CustDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Active").ToString
-        If strYorN = "y" Then
+        If strYorN = "Y" Then
             ddlActive.SelectedIndex = 0
         Else
             ddlActive.SelectedIndex = 1

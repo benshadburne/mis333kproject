@@ -18,15 +18,8 @@ Partial Class Emp_ModifyEmployee
         'check for session variables
         If Session("UserType") Is Nothing Then
             Response.Redirect("HomePage.aspx")
-        ElseIf Session("UserType").ToString = "Manager" Then
-            'they're logged in as a manager, and have selected an employee to modify
-            If Session("RecordID") Is Nothing Then
-                Response.Redirect("emp_SelectEmployeeToModify.aspx")
-            Else
-                strEmpID = Session("RecordID").ToString
-            End If
 
-        ElseIf Session("UserType").ToString = "Agent" Or Session("UserType").ToString = "Crew" Then
+        ElseIf Session("UserType").ToString = "Agent" Or Session("UserType").ToString = "Crew" Or Session("UserType").ToString = "Manager" Then
             strEmpID = Session("UserID").ToString
         Else
             'they are a customer trying to access this page
@@ -60,7 +53,7 @@ Partial Class Emp_ModifyEmployee
         Dim strYorN As String
 
         If Session("UserType").ToString = "Manager" Then
-            EObject.FindEmpID(Session("RecordID").ToString)
+            EObject.FindEmpID(Session("UserID").ToString)
         Else
             EObject.FindEmpID(Session("UserID").ToString)
         End If
@@ -83,7 +76,7 @@ Partial Class Emp_ModifyEmployee
 
         strYorN = EObject.dsEmployees.Tables("tblEmployeesClone").Rows(intIndex).Item("Active").ToString
 
-        If strYorN = "y" Then
+        If strYorN = "Y" Then
             ddlActive.SelectedIndex = 0
         Else
             ddlActive.SelectedIndex = 1
@@ -209,13 +202,10 @@ Partial Class Emp_ModifyEmployee
         EObject.ModifyEmployee(aryParamNames, aryParamValues)
 
         'show success message
-        lblMessage.Text = "You have successfully updated the record for the shown employee."
+        lblMessage.Text = "You have successfully updated your record."
 
         'hide cancel and accept buttons
         btnAccept.Visible = False
         btnCancel.Visible = False
-
-        'redirect to Select employee to modify 
-        'Response.AddHeader("Refresh", "5; URL=Emp_SelectEmployeeToModify.aspx")
     End Sub
 End Class
