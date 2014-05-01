@@ -55,6 +55,11 @@
           
               <asp:Label ID="lblPay" runat="server" Text="Pay with:" Visible ="false"></asp:Label>
             <br />
+
+            <asp:Label ID="lblJourneys" runat="server" Text=""></asp:Label>
+            <br />
+            <asp:Label ID="lblActive" runat="server" Text=""></asp:Label>
+            <br />
               <asp:RadioButtonList ID="rblPayment" runat="server" AutoPostBack="True" Visible="false">
                   <asp:ListItem>Miles</asp:ListItem>
                   <asp:ListItem>Money</asp:ListItem>
@@ -171,6 +176,8 @@
       
        </div>
         <ul>
+         
+            <asp:Label ID="lblPrice" runat="server" Text="" visible ="false"></asp:Label>
          
             </ul> 
 

@@ -21,7 +21,7 @@
         <br />
          <asp:Label CssClass="h3" ID="Label3" runat="server" Text="Other Tickets:"></asp:Label>
         <asp:GridView class="table" ID="gvOtherReservation" runat="server"></asp:GridView>
-        <asp:Label ID="lblMessage" runat="server" class="label-danger" Text=""></asp:Label>
+        <asp:Label ID="lblMessage" runat="server" class="h6" Text=""></asp:Label>
    <br />
         <div style="width:100%">
         <div class="pull-left">
@@ -73,8 +73,10 @@
             <br />
               <asp:Label ID="lblFinish" runat="server"></asp:Label>
             <br />
+            <asp:Label ID="lblActive" runat="server" text=""></asp:Label>
               <br />
               <br />
+            <asp:Label ID="lblJourney" runat="server" text=""></asp:Label>
               <br />
               <br />
                            

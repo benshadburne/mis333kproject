@@ -8,6 +8,7 @@ Partial Class _Default
     Dim DBJourney As New DBjourneyclone
     Dim DBDate As New DBdate
     Dim DBCancel As New CancelReservation
+    Dim DBCustomer As New DBCustomersClone
 
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -80,12 +81,21 @@ Partial Class _Default
         ddlJourneyID.DataSource = DBTickets.MyView
         ddlJourneyID.DataValueField = "JourneyID"
         ddlJourneyID.DataBind()
+        'get message on form about journey ID
+        DBJourney.GetOneJourney(CInt(ddlJourneyID.SelectedValue))
+        lblJourney.Text = "You are selecting a seat for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
+            " that flies on " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString
 
         DBTickets.GetAdvantageNumbersUsingSP(ddlJourneyID.SelectedValue, Session("ReservationID").ToString)
         'bind ddl for advantage numbers
         ddlAdvantageNum.DataSource = DBTickets.MyViewAdvantageNumbers
         ddlAdvantageNum.DataValueField = "AdvantageNumber"
         ddlAdvantageNum.DataBind()
+
+        DBCustomer.GetCustomerByAdvantageNumber(ddlAdvantageNum.SelectedValue)
+        lblActive.Text = "Select seat for " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName").ToString & " " & _
+        DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("LastName").ToString & " with phone Number " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Phone").ToString
+
 
     End Sub
 
@@ -239,6 +249,9 @@ Partial Class _Default
 
     Protected Sub ddlJourneyID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlJourneyID.SelectedIndexChanged
         lblFinish.Text = ""
+        DBJourney.GetOneJourney(CInt(ddlJourneyID.SelectedValue))
+        lblJourney.Text = "You are selecting a seat for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
+            " that flies on " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString
         CheckSeats()
     End Sub
 
@@ -297,8 +310,6 @@ Partial Class _Default
 
         ResetAll()
 
-
-
     End Sub
 
     Public Sub ResetAll()
@@ -341,6 +352,9 @@ Partial Class _Default
     Protected Sub ddlAdvantageNum_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlAdvantageNum.SelectedIndexChanged
         lblFinish.Text = ""
         Session("ActiveUser") = ddlAdvantageNum.SelectedValue
+        DBCustomer.GetCustomerByAdvantageNumber(ddlAdvantageNum.SelectedValue)
+        lblActive.Text = "Select seat for " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName").ToString & " " & _
+        DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("LastName").ToString & " with phone Number " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Phone").ToString
         LoadTickets()
         SortandBind()
     End Sub

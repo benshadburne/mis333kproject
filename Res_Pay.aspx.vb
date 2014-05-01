@@ -71,11 +71,19 @@ Partial Class Res_Pay
         ddlJourneyID.DataValueField = "JourneyID"
         ddlJourneyID.DataBind()
 
+        lblJourneys.Text = "You are choosing payment for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
+            "that flies on " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString
+
+
         DBTickets.GetAdvantageNumbersUsingSP(ddlJourneyID.SelectedValue, Session("ReservationID").ToString)
         'bind ddl for advantage numbers
         ddlAdvantageNum.DataSource = DBTickets.MyViewAdvantageNumbers
         ddlAdvantageNum.DataValueField = "AdvantageNumber"
         ddlAdvantageNum.DataBind()
+
+        DBCustomer.GetCustomerByAdvantageNumber(ddlAdvantageNum.SelectedValue)
+        lblActive.Text = "Select seat for " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName").ToString & " " & _
+        DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("LastName").ToString & " with phone Number " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Phone").ToString
 
     End Sub
 
@@ -216,6 +224,9 @@ Partial Class Res_Pay
     End Sub
 
     Protected Sub ddlJourneyID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlJourneyID.SelectedIndexChanged
+        DBJourney.GetOneJourney(CInt(ddlJourneyID.SelectedValue))
+        lblJourneys.Text = "You are choosing payment for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
+            "that flies on " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString
         CheckSeats()
     End Sub
 
@@ -476,6 +487,9 @@ Partial Class Res_Pay
     Protected Sub ddlAdvantageNum_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlAdvantageNum.SelectedIndexChanged
         'NEED TO PUT BABY INTO SESSION VARIABLE HERE IF THEY SELECTED A BABY??
         Session("ActiveUser") = ddlAdvantageNum.SelectedValue
+        DBCustomer.GetCustomerByAdvantageNumber(ddlAdvantageNum.SelectedValue)
+        lblActive.Text = "Select seat for " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName").ToString & " " & _
+        DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("LastName").ToString & "Phone Number" & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Phone").ToString
         LoadTickets()
         SortandBind()
     End Sub
@@ -521,12 +535,12 @@ Partial Class Res_Pay
 
     Private Sub PriceAdd()
         Dim decSubtotal As Decimal
-        decSubtotal = CDec(Session("Subtotal"))
-        Session("RunningSubtotal") = CDec(Session("RunningSubtotal")) + CDec(Session("Subtotal"))
+        decSubtotal = CDec(lblPrice.Text)
+        Session("RunningSubtotal") = CDec(Session("RunningSubtotal")) + decSubtotal
 
         'update paid on DB
         DBTickets.AddTicketPrices(decSubtotal.ToString("n2"), gvTickets.SelectedRow.Cells(1).Text)
-        Session.Remove("Subtotal")
+        lblPrice.Text = ""
         lblSubtotal.Text = "Your tickets currently cost " & FormatCurrency(Session("RunningSubtotal").ToString, 2) & "."
     End Sub
 
@@ -543,11 +557,11 @@ Partial Class Res_Pay
             Exit Sub
         Else
             'pay for their ticket
-            DBTickets.AddTicketPricesAndMiles(Session("Subtotal").ToString, "500", gvTickets.SelectedRow.Cells(1).Text)
+            DBTickets.AddTicketPricesAndMiles(lblPrice.Text.ToString, "500", gvTickets.SelectedRow.Cells(1).Text)
             'remove miles from their account
             intMiles -= 500
             DBCustomer.UpdateMiles(intMiles.ToString, gvTickets.SelectedRow.Cells(3).Text)
-            Session.Remove("Subtotal")
+            lblPrice.Text = ""
         End If
 
         MakeAllInvisible()
@@ -585,7 +599,7 @@ Partial Class Res_Pay
 
         MakeAllInvisible()
 
-        Session.Add("Subtotal", decSubtotal)
+        lblPrice.Text = decSubtotal.ToString("n2")
         PriceAdd()
 
         ResetAll()

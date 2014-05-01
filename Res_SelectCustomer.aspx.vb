@@ -250,7 +250,11 @@ Partial Class Res_SelectCustomer
             Session.Remove("Children")
             Session.Remove("Babies")
             Session.Remove("FirstTicket")
-            Session.Add("Login", strAdvantageNumber)
+            If Session("UserType") = "Customer" Then
+                Session.Add("Login", Session("UserID").ToString)
+            Else
+                Session.Add("Login", strAdvantageNumber)
+            End If
 
             If Session("Zip") Is Nothing Then
                 'dont do anything 
