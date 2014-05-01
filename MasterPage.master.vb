@@ -115,5 +115,6 @@ Partial Class MasterPage
         Session.RemoveAll()
         Response.Redirect("HomePage.aspx")
     End Sub
+
 End Class
 

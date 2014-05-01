@@ -64,9 +64,10 @@
           <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Helpful Links <b class="caret"></b></a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="">
-            <li><a href="FlightSearchResults.aspx">Flight Search Results</a></li>
-            <li><a href="Cust_CreateProfile.aspx">Create New Profile</a></li>
             <li><a href="HomePage.aspx">Home Page</a></li>
+              <li><a href="FlightSearchResults.aspx">Flight Search Results</a></li>
+            <li><a href="Cust_CreateProfile.aspx">Create New Profile</a></li>
+            
           </ul>
         </li>
         <li class="dropdown">

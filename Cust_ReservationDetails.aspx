@@ -19,18 +19,18 @@
         <asp:Button CssClass="btn" ID="btnHideSeats" runat="server" Text="Show Seats" />
             <asp:Button CssClass="btn" ID="btnHideDates" runat="server" Text="Show Dates" />
         <br />
-             <div class="pull-left"  style="word-spacing: 0px">
-        <asp:Label CssClass="label" ID="Label5" runat="server" Text="Choose the Flight/Date:"></asp:Label>
+             <div class="pull-left"  style="word-spacing: 0px; width:150px">
+        <asp:Label CssClass="h6" ID="Label5" runat="server" Text="Choose the Flight/Date:"></asp:Label>
         <br />
         <asp:DropDownList CssClass="dropdown" ID="ddlJourneyID" runat="server" AutoPostBack="True"></asp:DropDownList>
             </div>
-        <div class="pull-left" style="word-spacing: 0px" >
-             <asp:Label CssClass="label" ID="Label8" runat="server" Text="Choose the Advantage Number:"></asp:Label>
+        <div class="pull-left" style="word-spacing: 0px; width:200px" >
+             <asp:Label CssClass="h6" ID="Label8" runat="server" Text="Choose the Advantage Number:"></asp:Label>
         <br />
         <asp:DropDownList CssClass="dropdown" ID="ddlAdvantageNum" runat="server" AutoPostBack="True"></asp:DropDownList>
 
         </div>
-        <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+        <asp:Label CssClass="h6" ID="lblMessage" runat="server" Text=""></asp:Label>
         </div>
         <br />
         <br />

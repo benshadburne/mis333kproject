@@ -68,15 +68,13 @@ Partial Class _Default
 
         'sets buttons to disabled and availabe to unavailable if journey is before this date
         'first get date of selected journey into date format
-        Dim datJourney As Date
         Dim strDate As String
         Dim datCurrentDate As Date
         strDate = (ddlJourneyID.SelectedItem.ToString).Substring(5, Len(ddlJourneyID.SelectedItem.ToString) - 5)
-        datJourney = Date.Parse(strDate.Substring(5, 2) & "/" & strDate.Substring(strDate.Length - 2, 2) & "/" & strDate.Substring(0, 4))
-        datCurrentDate = CDate(DBDate.GetCurrentDate())
-        datCurrentDate = DBDate.ConvertToVBDate(CStr(datCurrentDate))
+        datCurrentDate = CDate(CDate(DBDate.GetCurrentDate()).ToShortDateString)
 
-        If datJourney < datCurrentDate Then
+
+        If Date.Parse(strDate) < datCurrentDate Then
             'the journey took off before the currect datetime in database, set buttons to disable and unavailable
             btn1A.Enabled = False
             btn1B.Enabled = False
@@ -100,7 +98,7 @@ Partial Class _Default
         End If
 
         'can't change to an earlier date
-        If calFlightDate.SelectedDate < CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate)) Then
+        If calFlightDate.SelectedDate < datCurrentDate Then
             txtAvailable.Text = "Unavailable"
             Exit Sub
         End If
