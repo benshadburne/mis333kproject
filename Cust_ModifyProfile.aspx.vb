@@ -30,8 +30,8 @@ Partial Class _Default
         If Session("UserType").ToString = "Customer" Then
             ddlActive.Visible = False
             lblActive.Visible = False
-            txtMiles.Visible = False
-            lblMiles.Visible = False
+            txtMiles.ReadOnly = True
+            lblMiles.Visible = True
         End If
 
 
