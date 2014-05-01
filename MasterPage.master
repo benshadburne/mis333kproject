@@ -21,7 +21,7 @@
         <div style="background-color: royalblue; width:100%">
  <nav class="navbar navbar-default" role="navigation" style="background-color:royalblue; width:100%">
      
-      <div class="container-fluid" style="width:900px;background-color: royalblue"> 
+      <div class="container-fluid" style="background-color: royalblue;padding-right: 200px"> 
         <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
           
@@ -41,8 +41,8 @@
      </div>--%>
 
       <div class="pull-right" style="width: 15%; padding-right: 10px; min-width: 100px; text-align:center; padding-top: 5px; line-height:28px">
-          <asp:TextBox CssClass="text-center" ID="txtUsername" runat="server" width="90%" Height="22px" Wrap="False" BorderStyle="Inset" ForeColor="Gray">Username</asp:TextBox> <br />
-          <asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="22px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray" TextMode="Password">Password</asp:TextBox>
+          <asp:TextBox CssClass="text-center" ID="txtUsername" runat="server" width="90%" Height="23px" Wrap="False" BorderStyle="Inset" ForeColor="Gray">Username</asp:TextBox> <br />
+          <asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="23px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray" TextMode="Password">Password</asp:TextBox>
           </div>
     <div class="pull-right">
            <div class="pull-right" style="padding-right: 10px;">
@@ -52,10 +52,10 @@
                </div>
         
         <asp:Button class="btn btn-warning" ID="btnLogout" runat="server" Text="Logout" width="86px"/> 
-     </div>
+     </div><asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
       </div>
           
-
+          
           </div>
 
       
@@ -66,8 +66,8 @@
           <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="">
             <li><a href="FlightSearchResults.aspx">Flight Search Results</a></li>
             <li><a href="Cust_CreateProfile.aspx">Create New Profile</a></li>
-            <%--<li><a href="Login.aspx">Login Page</a></li>--%>
-            </ul>
+            <li><a href="HomePage.aspx">Home Page</a></li>
+          </ul>
         </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Customer <b class="caret"></b></a>
@@ -94,7 +94,7 @@
   <!-- /.container-fluid -->
 </nav>
        </div>
-    <div class="center-block" style="width:900px; background-color:lightgray">
+    <div class="center-block" style="width:900px">
         <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server" >
         
         </asp:ContentPlaceHolder>
@@ -104,7 +104,7 @@
         <footer>
             <asp:Panel class="panel-footer" ID="Panel1" runat="server" Width="900px" Height="200px">
             <div style="width:900px">
-        <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+        
           <asp:Label ID="lblTime" runat="server" Text=""></asp:Label>
                 </div>
 

@@ -72,7 +72,7 @@ Partial Class _Default
         Dim strDate As String
         Dim datCurrentDate As Date
         strDate = (ddlJourneyID.SelectedItem.ToString).Substring(5, Len(ddlJourneyID.SelectedItem.ToString) - 5)
-        datJourney = Date.Parse(strDate.Substring(5, 2) & "/" & strDate.Substring(8, 2) & "/" & strDate.Substring(0, 4))
+        datJourney = Date.Parse(strDate.Substring(5, 2) & "/" & strDate.Substring(strDate.Length - 2, 2) & "/" & strDate.Substring(0, 4))
         datCurrentDate = CDate(DBDate.GetCurrentDate())
         datCurrentDate = DBDate.ConvertToVBDate(CStr(datCurrentDate))
 
@@ -411,6 +411,8 @@ Partial Class _Default
 
     Protected Sub btnReservationChange_Click(sender As Object, e As EventArgs) Handles btnReservationChange.Click
 
+        lblMessage.Text = ""
+
         'will only run if textbox says available
         If txtAvailable.Text <> "Available" Then
             lblMessage.Text = "Journey is either full or unavailable for selected date"
@@ -438,6 +440,7 @@ Partial Class _Default
         'charge them $50, idk?!?!?!??
         DBReservations.AddFee(Session("ReservationID").ToString)
 
+        lblMessage.Text = "Payment made!"
 
         'also load ddls so that they represent new journeyID, and fill available so that it responds to new ddls
         LoadDDLs()

@@ -16,9 +16,13 @@ Partial Class _Default
             Response.Redirect("HomePage.aspx")
         End If
 
-        'load gv based on advantage number (strCheck should have advantage number
-        DBReservations.GetALLReservationsUsingSP()
-        DBReservations.SearchByAdvantageNumber(Session("UserID").ToString)
+        'trys to lead database and do a search on the datafield, if there's an error  (they don't have reservations) it sends them back to customer dash
+        Try
+            DBReservations.GetALLReservationsUsingSP()
+            DBReservations.SearchByAdvantageNumber(Session("UserID").ToString)
+        Catch ex As Exception
+            Response.Redirect("Cust_CustomerDashboard.aspx")
+        End Try
 
         SortandBind()
         'lblMessage.Text = Session("UserID").ToString

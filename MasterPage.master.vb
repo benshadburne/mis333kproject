@@ -45,8 +45,8 @@ Partial Class MasterPage
                     Session.Add("UserID", strUser)
                     'check to see if they are a manager or employee
                     Session.Add("UserType", DBEmployee.CheckEmployeeType(strUser))
-
-
+                    ToggleLoginButton()
+                    Response.Redirect("Emp_EmployeeDashboard.aspx")
                 End If
 
             End If
@@ -62,6 +62,9 @@ Partial Class MasterPage
                 If DBCustomer.CheckPassword(strUser, strPassword) = True Then
                     Session.Add("UserID", strUser)
                     Session.Add("UserType", "Customer")
+                    lblMessage.Text = "Login Successful"
+                    ToggleLoginButton()
+                    Response.Redirect("Cust_CustomerDashboard.aspx")
                 Else
                     lblMessage.Text = "The username and password combination is incorrect."
                     Exit Sub
@@ -72,12 +75,14 @@ Partial Class MasterPage
             Exit Sub
         End If
 
-        btnLogin.Visible = False
-        btnLogout.Visible = True
-
         txtPassword.Text = ""
         txtUsername.Text = ""
 
+    End Sub
+
+    Public Sub ToggleLoginButton()
+        btnLogin.Visible = Not btnLogin.Visible
+        btnLogout.Visible = Not btnLogout.Visible
     End Sub
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
