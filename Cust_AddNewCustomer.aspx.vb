@@ -42,6 +42,8 @@ Partial Class Cust_AddNewCustomer
     End Sub
 
     Protected Sub btnSave_Click(sender As Object, e As EventArgs) Handles btnSave.Click
+        Dim strAdvantageNumber As String
+
         'Clear the message
         lblErrorMessage.Text = ""
         lblSuccessMessage.Text = ""
@@ -85,8 +87,13 @@ Partial Class Cust_AddNewCustomer
 
         ClearAll()
 
+        CustDB.GetNewestCustomer()
+
+        strAdvantageNumber = CustDB.MyDataset.Tables("tblCustomersClone").Rows(0).Item("AdvantageNumber").ToString
+
         'Outputs
-        lblSuccessMessage.Text = "Profile successfully added."
+        lblSuccessMessage.Text = "Profile successfully added. Your Advantage Number is " & strAdvantageNumber & "." & _
+        "please use it to login above."
 
     End Sub
 

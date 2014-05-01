@@ -115,7 +115,9 @@ Partial Class Cust_CreateReservationAndSelectFlight
             ddlBabies.Visible = False
 
             'make the add as final leg button visisble
-            btnFinalLeg.Visible = True
+            If CInt(Session("JourneyNumber")) <> 0 Then
+                btnFinalLeg.Visible = True
+            End If
 
             'remove add journey button 
             If Session("JourneyNumber") >= 7 Then

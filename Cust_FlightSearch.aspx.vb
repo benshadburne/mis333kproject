@@ -402,6 +402,8 @@ Partial Class _Default
         strTempAirport = Session("EndAirport").ToString
         Session("EndAirport") = Session("StartAirport")
         Session("StartAirport") = strTempAirport
+        btnBack.Visible = False
+        lblBack.Visible = False
         'reload the page and exit sub
         ShowAll()
         lblReturn.Visible = True
@@ -433,5 +435,9 @@ Partial Class _Default
         Session.Remove("Children")
         Session.Remove("Babies")
         Session.Remove("JourneyNumber")
+    End Sub
+
+    Protected Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
+        Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
     End Sub
 End Class

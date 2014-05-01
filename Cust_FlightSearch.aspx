@@ -85,7 +85,7 @@
         
    
     <div class="center-block" style="width:90%; min-height:100px;">
-        <asp:Label CssClass="label-danger" ID="lblMessage" runat="server" Text=""></asp:Label>
+        <asp:Label Class="h6" ID="lblMessage" runat="server" Text=""></asp:Label>
         <br />
         <asp:Label CssClass="label" ID="Label6" runat="server" Text="Direct Flights"></asp:Label>
         <div class="pull-right">
@@ -126,6 +126,13 @@
         
             
          </div>       
+    <asp:Label ID="lblBack" runat="server" Text="Can't find a flight?"></asp:Label>
+    <br />
+
+    <asp:Button ID="btnBack" runat="server" Text="Choose Different Route" />
+    <br />
+    <br />
+
     <asp:Label ID="Label2" runat="server" Text="Made a mistake? Cancel your reservation by clicking below"></asp:Label>
     <br />
 
