@@ -79,7 +79,7 @@ Partial Class Emp_ViewReports
 
         lblRevenue.Text = ""
         lblSeats.Text = ""
-        lblModificationRevenue.Text = ""
+        'lblModificationRevenue.Text = ""
 
         If gvReports.Rows.Count = 0 Then
             lblMessage.Text = "Your search returned no records"
@@ -123,7 +123,7 @@ Partial Class Emp_ViewReports
                 lblRevenue.Text = "Total Revenue: " & decRevenue.ToString("c2")
             Else
                 'user doesn't want to see total revenue with modifications
-                lblModificationRevenue.Visible = False
+                'lblModificationRevenue.Visible = False
             End If
 
 
@@ -211,29 +211,11 @@ Partial Class Emp_ViewReports
         'Bind the data
         LoadGridView()
 
-        'start Jace code
-        Dim intNumberofModifications As Integer
-        Dim decModificationRevenue As Decimal
-        Dim decRevenue As Decimal
-        RObject.GetNumberOfModifications()
-        intNumberofModifications = CInt(RObject.MyDataSet.Tables("tblReservationsClone").Rows(0).Item("NumberOfModifications").ToString)
-        decModificationRevenue = intNumberofModifications * 50
-        'lblModificationRevenue.Text = "Total Revenue from Modifications: " & decModificationRevenue.ToString("c2")
-        For i = 0 To gvReports.Rows.Count - 1
-            decRevenue += CDec(gvReports.Rows(i).Cells(5).Text)
-        Next
-        If rblShowRevenueFromModifications.SelectedIndex = 0 Then
-            'user wants to see total revenue with modifications
-            decRevenue += decModificationRevenue
-            lblRevenue.Text = "Total Revenue: " & decRevenue.ToString("c2")
-            lblModificationRevenue.Text = "Total Revenue from Modifications: " & decModificationRevenue.ToString("c2")
-        Else
-            'user doesn't want to see total revenue with modifications
-            lblModificationRevenue.Visible = False
-        End If
+        'display modification stuff
+        DealingWithModificationRevenue()
 
 
-        'end Jace code
+
     End Sub
 
     Protected Sub btnRestartSearch_Click(sender As Object, e As EventArgs) Handles btnRestartSearch.Click
@@ -258,5 +240,53 @@ Partial Class Emp_ViewReports
         'Load the DDLs
         LoadDDLDeparture()
         LoadDDLEnd()
+    End Sub
+
+    Public Sub DealingWithModificationRevenue()
+        'author: Jace Barton
+
+        Dim intNumberofModifications As Integer
+        Dim decModificationRevenue As Decimal
+        Dim decRevenue As Decimal
+        RObject.GetNumberOfModifications()
+        intNumberofModifications = CInt(RObject.MyDataSet.Tables("tblReservationsClone").Rows(0).Item("NumberOfModifications").ToString)
+        decModificationRevenue = intNumberofModifications * 50
+        lblModificationRevenue.Text = "Total Revenue from Modifications: " & decModificationRevenue.ToString("c2")
+        For i = 0 To gvReports.Rows.Count - 1
+            decRevenue += CDec(gvReports.Rows(i).Cells(5).Text)
+        Next
+
+        'check seats selected and include revenue from modification selected
+        If radRevenueSeatCount.SelectedIndex = 0 And rblShowRevenueFromModifications.SelectedIndex = 0 Then
+            lblModificationRevenue.Text = ""
+            lblRevenue.Text = ""
+        End If
+        'check seats selected and include revenue from modification not selected
+        If radRevenueSeatCount.SelectedIndex = 0 And rblShowRevenueFromModifications.SelectedIndex = 1 Then
+            lblModificationRevenue.Text = ""
+            lblRevenue.Text = ""
+        End If
+        'check revenue selected and include revenue from modification selected - not working
+        If radRevenueSeatCount.SelectedIndex = 1 And rblShowRevenueFromModifications.SelectedIndex = 0 Then
+            decRevenue += decModificationRevenue
+            lblRevenue.Text = "Total Revenue: " & decRevenue.ToString("c2")
+            lblModificationRevenue.Text = "Total Revenue from Modifications: " & decModificationRevenue.ToString("c2")
+        End If
+        'check revenue selected and include revenue form modification not selected
+        If radRevenueSeatCount.SelectedIndex = 1 And rblShowRevenueFromModifications.SelectedIndex = 1 Then
+            lblModificationRevenue.Text = ""
+            lblRevenue.Text = "Total Revenue: " & decRevenue.ToString("c2")
+        End If
+        'check both selected and include revenue from modification selected ' not working
+        If radRevenueSeatCount.SelectedIndex = 2 And rblShowRevenueFromModifications.SelectedIndex = 0 Then
+            decRevenue += decModificationRevenue
+            lblRevenue.Text = "Total Revenue: " & decRevenue.ToString("c2")
+            lblModificationRevenue.Text = "Total Revenue from Modifications: " & decModificationRevenue.ToString("c2")
+        End If
+        'check both selected and include revenue from modification not selected
+        If radRevenueSeatCount.SelectedIndex = 2 And rblShowRevenueFromModifications.SelectedIndex = 1 Then
+            lblModificationRevenue.Text = ""
+            lblRevenue.Text = "Total Revenue: " & decRevenue.ToString("c2")
+        End If
     End Sub
 End Class
