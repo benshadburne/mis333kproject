@@ -109,13 +109,13 @@ Partial Class MasterPage
         If Session("UserID") Is Nothing Then
             'no one is logged in
             btnLogout.Visible = False
-            txtUsername.Visible = True
-            txtPassword.Visible = True
+            pnlID.Visible = True
+            pnlPassword.Visible = True
 
         Else
             btnLogin.Visible = False
-            txtUsername.Visible = False
-            txtPassword.Visible = False
+            pnlID.Visible = False
+            pnlPassword.Visible = False
             btnCreateProfile.Visible = False
         End If
 

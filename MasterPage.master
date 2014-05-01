@@ -21,7 +21,7 @@
         <div style="background-color: royalblue; width:100%">
  <nav class="navbar navbar-default" role="navigation" style="background-color:royalblue; width:100%">
      
-      <div class="container-fluid" style="background-color: royalblue;padding-right: 200px"> 
+      <div class="container-fluid" style="background-color: royalblue"> 
         <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
           
@@ -30,31 +30,27 @@
         
     </div>
      
-      <%--<div class="pull-right" min-width: 40px>
-          
-          <input type="text" class="form-control" placeholder="Search" aria-flowto="right"/> 
-         
-                </div>--%>
-
-     <%-- <div class="pull-right" style="padding-right: 10px" >
-          <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search Page" Width="116px" />  
-     </div>--%>
+      
            <div class="pull-right" style="padding-left:10px; padding-top: 10px">
 <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
       </div>
-      <div class="pull-right" style="width: 15%; padding-right: 10px; min-width: 100px; text-align:center; padding-top: 5px; line-height:28px">
-          <asp:Label ID="Label1" runat="server" Text="ID:"></asp:Label><asp:TextBox CssClass="text-center" ID="txtUsername" runat="server" width="90%" Height="23px" Wrap="False" BorderStyle="Inset" ForeColor="Gray"></asp:TextBox> <br />
-           <asp:Label ID="Label2" runat="server" Text="Password:"></asp:Label><asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="23px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray" TextMode="Password">Password</asp:TextBox>
-          </div>
+          <asp:Panel CssClass="pull-right panel" ID="pnlPassword" runat="server" style="width: 15%;  min-width: 100px; text-align:center; padding-top: 5px; line-height:22px;background-color:inherit; margin-bottom:5px">
+             <asp:Label ID="Label2" runat="server" Text="Password:"></asp:Label><asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="23px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray" TextMode="Password">Password</asp:TextBox>
+          </asp:Panel>
+          <asp:Panel CssClass="pull-right panel" ID="pnlID" runat="server" style="width: 15%;  min-width: 100px; text-align:center; padding-top: 5px; line-height:22px;background-color:inherit; margin-bottom:5px">
+                    <asp:Label ID="Label1" runat="server" Text="ID:"></asp:Label>
+          <asp:TextBox CssClass="text-center" ID="txtUsername" runat="server" width="90%" Height="23px" Wrap="False" BorderStyle="Inset" ForeColor="Gray"></asp:TextBox> 
+         </asp:Panel>
+          
           
     <div class="pull-right">
-           <div class="pull-right" style="padding-right: 10px;">
+           <div class="pull-right" style="padding-right: 10px;padding-bottom:5px">
                <div style="padding-top:10px">
          <asp:Button class="btn btn-warning" ID="btnLogin" runat="server" Text="Login" width="86px" CausesValidation="False" /> 
 
                </div>
         
-        <asp:Button class="btn btn-warning" ID="btnLogout" runat="server" Text="Logout" width="86px" CausesValidation="False"/> 
+        <asp:Button class="btn btn-warning" ID="btnLogout" runat="server" Text="Logout" width="86px" CausesValidation="False" /> 
      </div>
       </div>
           
