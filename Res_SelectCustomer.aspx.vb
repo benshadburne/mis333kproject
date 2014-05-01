@@ -17,12 +17,51 @@ Partial Class Res_SelectCustomer
             Response.Redirect("HomePage.aspx")
         ElseIf Session("UserType").ToString = "Crew" Then
             Response.Redirect("Emp_EmployeeDashboard.aspx")
+        ElseIf Session("UserType").ToString = "Customer" Then
+            If Session("FirstTicket") Is Nothing Then
+                'this is the first time the user is accessing this page
+                CustomerDB.GetAllActiveCustomersCloneUsingSP()
+                SortAndBind()
+
+                'loop through the records in the DB 
+                For i = 0 To gvCustomers.Rows.Count - 1
+                    'set selected row
+                    gvCustomers.SelectedIndex = i
+
+                    'Check if userID is equal to customer logged in
+                    If Session("UserID").ToString = gvCustomers.SelectedRow.Cells(1).Text Then
+                        'this is the user we are looking for
+
+                        'change what is visible
+                        pnlDoSearch.Visible = False
+                        pnlAddAge.Visible = True
+
+                        'fill the label
+                        lblAge.Text = "Please enter your age to add your ticket. You will add other customers next"
+
+                        gvCustomers.Visible = False
+
+                        Session.Add("FirstTicket", "Yes")
+
+                        Exit Sub
+
+
+                    End If
+
+                Next
+            End If
+
         End If
 
         If IsPostBack = False Then
-            CustomerDB.GetAllCustomersCloneUsingSP()
+            CustomerDB.GetAllActiveCustomersCloneUsingSP()
 
             SortAndBind()
+        End If
+
+        If Session("UserType").ToString = "Customer" Then
+            'this customer must be added to the reservatoin
+
         End If
 
         If Session("NewCustomer") Is Nothing Then

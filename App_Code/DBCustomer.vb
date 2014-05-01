@@ -34,6 +34,16 @@ Public Class DBCustomersClone
         RunProcedure("usp_CustomersClone_get_all")
     End Sub
 
+    Public Sub GetAllActiveCustomersCloneUsingSP()
+        'Author: Ben Shadburne
+        'Purpose: runs CustomersClone procedure
+        'Arguments: na
+        'Return: na
+        'Date: 03/18/2014
+
+        RunProcedure("usp_CustomersClone_get_all_active")
+    End Sub
+
     Public Sub GetNewestCustomer()
         RunProcedure("usp_Customers_Get_Newest")
     End Sub

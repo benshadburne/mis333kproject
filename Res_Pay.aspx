@@ -147,10 +147,10 @@
         <br />
         <br />
             <div class="center-block" style="width:100%">
-        <asp:Label CssClass="h5" ID="Label4" runat="server" Text="Need to make changes?"></asp:Label>
+      
        </div>
         <ul>
-         <li><a href="Cust_ModifyReservation.aspx">Modify Reservation</a></li>
+         
             </ul> 
 
                  <div class="center-block" style="width:100%">

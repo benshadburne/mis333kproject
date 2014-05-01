@@ -25,7 +25,7 @@ Partial Class _Default
         Dim decTotal As Decimal
         decTotal = Calculate.CalculateTotal(CDec(Session("RunningSubtotal")))
 
-        lblTotal.Text = "Your total is " & decTotal.ToString("c2") & ". Please click Pay to pay."
+        lblTotal.Text = "Your total with tax is " & decTotal.ToString("c2") & ". Please click Pay to pay."
 
         btnCalculateTotal.Visible = False
 
@@ -38,8 +38,7 @@ Partial Class _Default
     Protected Sub btnPay_Click(sender As Object, e As EventArgs) Handles btnPay.Click
 
         Session.Remove("RunningSubtotal")
-        Response.Redirect("Cust_ViewAndOrConfirmReservation.aspx")
-
+        Response.Redirect("Cust_AllReservations.aspx")
 
     End Sub
 End Class

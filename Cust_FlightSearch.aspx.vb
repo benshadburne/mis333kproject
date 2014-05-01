@@ -328,7 +328,6 @@ Partial Class _Default
             'retrieve the reservationID for the reservation we just added to. Store it in a new session variable
             Session.Add("ReservationID", DBReservations.GetNewestReservationID())
 
-
             'now the Journey ID is the one from the finish gridview
             intJourneyID = CInt(gvIndirectFinish.Rows(gvIndirectFinish.SelectedIndex).Cells(1).Text)
 

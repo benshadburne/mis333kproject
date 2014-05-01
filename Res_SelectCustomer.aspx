@@ -25,7 +25,7 @@
         <br />
         
 
-        <asp:TextBox ID="txtSearch" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtSearch" runat="server" Width ="100px"></asp:TextBox>
 
         <br />
         <br />
