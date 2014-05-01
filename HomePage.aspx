@@ -5,7 +5,9 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
     <div class="center-block" style="width:900px">
-        
+        <div style="align-content:center; text-align:center; width:100%;padding-top:5px;padding-bottom:20px">
+        <h1>Welcome to Penguin United Airlines</h1>
+        </div>
     <div id="myCarousel" class="carousel slide" data-ride="carousel">
       <!-- Indicators -->
       <ol class="carousel-indicators">
@@ -20,7 +22,7 @@
           <div class="container">
             <div class="carousel-caption">
              <p>
-                 <asp:Button CssClass="btn-primary btn-lg" ID="btn1" runat="server" Text="Log in Now" /></p>
+                 <asp:Button CssClass="btn-primary " ID="btn1" runat="server" Text="Log in Now" /></p>
             </div>
           </div>
         </div>
@@ -29,7 +31,7 @@
           <div class="container">
             <div class="carousel-caption">
              <p>
-                 <asp:Button CssClass="btn-primary btn-lg" ID="btn2" runat="server" Text="Log in Now" /></p>
+                 <asp:Button CssClass="btn-primary " ID="btn2" runat="server" Text="Log in Now" /></p>
             </div>
           </div>
         </div>
@@ -39,7 +41,7 @@
           <div class="container">
             <div class="carousel-caption">
              <p>
-                 <asp:Button CssClass="btn-primary btn-lg" ID="btn3" runat="server" Text="Log in Now" /></p>
+                 <asp:Button CssClass="btn-primary " ID="btn3" runat="server" Text="Log in Now" /></p>
             </div>
           </div>
         </div>
@@ -48,7 +50,7 @@
           <div class="container">
             <div class="carousel-caption">
              <p>
-                 <asp:Button CssClass="btn-primary btn-lg" ID="btn4" runat="server" Text="Log in Now" /></p>
+                 <asp:Button CssClass="btn-primary " ID="btn4" runat="server" Text="Log in Now" /></p>
             </div>
           </div>
         </div>
