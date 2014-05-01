@@ -84,8 +84,8 @@ Partial Class _Default
     End Sub
 
     Public Sub LoadTickets()
-        DBTickets.GetALLTicketsUsingSP()
-        DBTickets.GetALLOthersTicketsUsingSP()
+        DBTickets.GetALLTicketsForResUsingSP()
+        DBTickets.GetALLOthersTicketsForResUsingSP()
         DBTickets.FilterYou(Session("ReservationID").ToString, Session("ActiveUser").ToString)
         DBTickets.FilterOthers(Session("ReservationID").ToString, Session("ActiveUser").ToString)
 
