@@ -6,41 +6,26 @@ Partial Class _Default
     Dim DBJourney As New DBjourneyclone
     Dim AddJourneyClass As New AddJourneyClass
     Dim DBJourneySeats As New DBJourneySeats
+    Dim DBDate As New DBdate
 
     Dim DBFlightSearch As New DBFlightSearch
 
    
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
+        Dim strDate As String
+
+        strDate = DBDate.GetCurrentDate()
+
+        strDate = DBDate.ConvertToVBDate(strDate).ToString
+
         'makes sure selected date for first time is today
         If IsPostBack = False Then
-            calFlightSearch.SelectedDate = Now()
+            calFlightSearch.SelectedDate = Date.Parse(strDate).AddDays(1)
         End If
         'need to add flights before datasets are loaded
         'define variables
         AddJourneys()
-
-
-
-        'make sure a date is selected before they search
-
-
-        'Dim strLogin As String
-        'strLogin = Session("Login").ToString
-        ''checks login session variable 
-        ''if empty, neither select nor edit show up
-        ''if it's a customer id then select shows up
-        'If strLogin = "???????????" Then
-        '    gvDirectFlights.AutoGenerateSelectButton = True
-        '    gvIndirectFlights.AutoGenerateSelectButton = True
-        'End If
-        ''if it's an employee id then select and edit show up
-        'If strLogin = "??????Employee" Then
-        '    gvDirectFlights.AutoGenerateSelectButton = True
-        '    gvDirectFlights.AutoGenerateEditButton = True
-        '    gvIndirectFlights.AutoGenerateSelectButton = True
-        '    gvIndirectFlights.AutoGenerateEditButton = True
-        'End If
 
         ShowAll()
         SortandBind()
@@ -63,9 +48,9 @@ Partial Class _Default
     End Sub
 
     Public Sub ShowAll()
-        DBFlightSearch.GetALLFlightSearchUsingSP()
-        DBFlightSearch.GetALLIndirectStartUsingSP()
-        DBFlightSearch.GetALLIndirectFinishUsingSP()
+
+        DBFlightSearch.GetAllJourneysSeatsEmpty(1)
+
     End Sub
 
     Public Sub SortandBind()

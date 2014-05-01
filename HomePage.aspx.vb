@@ -15,7 +15,7 @@ Partial Class _Default
                 FindControl("txtUsername"), TextBox)
             If Not mpTextBox Is Nothing Then
                 mpTextBox.Focus()
-                lblMessage.Text = "hi"
+
             End If
         End If
 

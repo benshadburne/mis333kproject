@@ -13,16 +13,19 @@
     <link href="bootstrap-3.1.1-dist/css/bootstrap-theme.css" rel="stylesheet" type="text/css" />
     <link href="bootstrap-3.1.1-dist/css/bootstrap-theme.min.css" rel="stylesheet" type="text/css" />
     <link href="bootstrap-3.1.1-dist/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <link href="bootstrap-3.1.1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="bootstrap-3.1.1-dist/css/bootstrap.min.new.css" rel="stylesheet" />
+   <%-- <link href="bootstrap-3.1.1-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css" />--%>
 </head>
-<body style="background-color:lightblue">
+<body>
     <form id="form1" runat="server">
-        <div class="center-block" style="width:900px">
- <nav class="navbar navbar-default" role="navigation">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
+        <div style="background-color: royalblue; width:100%">
+ <nav class="navbar navbar-default" role="navigation" style="background-color:royalblue; width:100%">
+     
+      <div class="container-fluid" style="width:900px;background-color: royalblue"> 
+        <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
-           <a class="navbar-brand" href="#">Penguin United Airlines</a>  
+          
+              <a class="navbar-brand" href="HomePage.aspx">Penguin United Airlines</a>  
         
         
     </div>
@@ -42,10 +45,13 @@
           <asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="22px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray" TextMode="Password">Password</asp:TextBox>
           </div>
     <div class="pull-right">
-           <div class="pull-right" style="padding-right: 10px">
-         <asp:Button class="btn" ID="btnLogin" runat="server" Text="Login" width="86px" /> 
-         <br />
-        <asp:Button class="btn" ID="btnLogout" runat="server" Text="Logout" width="86px"/> 
+           <div class="pull-right" style="padding-right: 10px;">
+               <div style="padding-top:10px">
+         <asp:Button class="btn btn-warning" ID="btnLogin" runat="server" Text="Login" width="86px" /> 
+
+               </div>
+        
+        <asp:Button class="btn btn-warning" ID="btnLogout" runat="server" Text="Logout" width="86px"/> 
      </div>
       </div>
           
@@ -57,7 +63,7 @@
       <ul class="nav navbar-nav navbar-right">
           <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Helpful Links <b class="caret"></b></a>
-          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+          <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" style="">
             <li><a href="FlightSearchResults.aspx">Flight Search Results</a></li>
             <li><a href="Cust_CreateProfile.aspx">Create New Profile</a></li>
             <%--<li><a href="Login.aspx">Login Page</a></li>--%>
@@ -84,12 +90,12 @@
         </li>
       </ul>
              </div>
-      
-  </div><!-- /.container-fluid -->
+      </div> 
+  <!-- /.container-fluid -->
 </nav>
-      </div>  
-    <div class="center-block" style="width:900px">
-        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+       </div>
+    <div class="center-block" style="width:900px; background-color:lightgray">
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server" >
         
         </asp:ContentPlaceHolder>
     </div>
