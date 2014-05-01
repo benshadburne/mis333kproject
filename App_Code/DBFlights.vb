@@ -34,6 +34,10 @@ Public Class DBFlightsClone
         RunProcedure("usp_FlightsClone_get_all")
     End Sub
 
+    Public Sub GetAllActiveFlightsUsingSP()
+        RunProcedure("usp_FlightsClone_get_all_active")
+    End Sub
+
     'define a public read only property
     Public ReadOnly Property MyView() As DataView
         'Author: Ben Shadburne

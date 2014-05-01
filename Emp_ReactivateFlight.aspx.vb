@@ -20,19 +20,34 @@ Partial Class Emp_ReactivateFlight
         btnReactivate.Visible = False
         btnAbort.Visible = True
         btnAccept.Visible = True
+        gvFlights.Enabled = False
     End Sub
 
 
     Protected Sub btnAbort_Click(sender As Object, e As EventArgs) Handles btnAbort.Click
         btnReactivate.Visible = True
         btnAbort.Visible = False
-        btnAccept.Visible = True
+        btnAccept.Visible = False
+        gvFlights.Enabled = True
     End Sub
 
     Protected Sub btnAccept_Click(sender As Object, e As EventArgs) Handles btnAccept.Click
+        If lblID.Text = "" Then
+            lblMessage.Text = "Please select a flight to activate!"
+            btnReactivate.Visible = True
+            btnAbort.Visible = False
+            btnAccept.Visible = False
+            gvFlights.Enabled = True
+            Exit Sub
+        End If
         FObject.MakeFlightActive(lblID.Text)
 
         lblMessage.Text = "You have successfully re-activated the following flight number:"
+
+        btnReactivate.Visible = True
+        btnAbort.Visible = False
+        btnAccept.Visible = False
+        gvFlights.Enabled = True
     End Sub
 
 End Class

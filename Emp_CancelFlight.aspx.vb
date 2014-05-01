@@ -27,7 +27,7 @@ Partial Class Emp_CancelFlight
         'if first time loading page, set datasource of ddlFlights
         If IsPostBack = False Then
             'get all flights into database
-            FObject.GetALLFlightsCloneUsingSP()
+            FObject.GetAllActiveFlightsUsingSP()
             ddlFlights.DataSource = FObject.MyDataSet.Tables("tblFlightClone")
             ddlFlights.DataTextField = "FlightNumber"
             ddlFlights.DataBind()

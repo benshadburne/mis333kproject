@@ -50,16 +50,16 @@
     <div class="pull-right">
            <div class="pull-right" style="padding-right: 10px;">
                <div style="padding-top:10px">
-         <asp:Button class="btn btn-warning" ID="btnLogin" runat="server" Text="Login" width="86px" /> 
+         <asp:Button class="btn btn-warning" ID="btnLogin" runat="server" Text="Login" width="86px" CausesValidation="False" /> 
 
                </div>
         
-        <asp:Button class="btn btn-warning" ID="btnLogout" runat="server" Text="Logout" width="86px"/> 
+        <asp:Button class="btn btn-warning" ID="btnLogout" runat="server" Text="Logout" width="86px" CausesValidation="False"/> 
      </div>
       </div>
           
           <div class="pull-right" style="padding-right:10px; padding-top: 10px">
-               <asp:Button class="btn btn-warning" ID="btnCreateProfile" runat="server" Text="Create New Profile" width="160px"/> 
+               <asp:Button class="btn btn-warning" ID="btnCreateProfile" runat="server" Text="Create New Profile" width="160px" CausesValidation="False"/> 
           </div>
          
          <div class="pull-left" style="width: auto; min-width: 50px;">

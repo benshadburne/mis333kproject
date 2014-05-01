@@ -25,6 +25,8 @@ Partial Class Emp_Cancel_Journey
             LoadFlightGridView()
 
         End If
+
+        LoadFlightGridView()
     End Sub
 
     Public Sub LoadFlightGridView()

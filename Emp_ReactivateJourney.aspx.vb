@@ -20,18 +20,25 @@ Partial Class Emp_ReactivateJourney
         btnReactivate.Visible = False
         btnAbort.Visible = True
         btnAccept.Visible = True
+        gvJourneys.Enabled = False
     End Sub
 
 
     Protected Sub btnAbort_Click(sender As Object, e As EventArgs) Handles btnAbort.Click
         btnReactivate.Visible = True
         btnAbort.Visible = False
-        btnAccept.Visible = True
+        btnAccept.Visible = False
+        gvJourneys.Enabled = True
     End Sub
 
     Protected Sub btnAccept_Click(sender As Object, e As EventArgs) Handles btnAccept.Click
         JObject.ActivateJourneyByJourneyID(lblID.Text)
 
         lblMessage.Text = "You have successfully re-activated the following journey number:"
+
+        btnReactivate.Visible = True
+        btnAbort.Visible = False
+        btnAccept.Visible = False
+        gvJourneys.Enabled = False
     End Sub
 End Class

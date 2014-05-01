@@ -19,8 +19,8 @@
     <div class ="pull-left" style="width:20%;">
            
         <asp:Button ID="btnReactivate" runat="server" Text="Reactivate" /><br />
-        <asp:Button ID="btnAbort" runat="server" Text="Abort" /><br />
-        <asp:Button ID="btnAccept" runat="server" Text="Accept" /><br />
+        <asp:Button ID="btnAbort" runat="server" Text="Abort" Visible="False" /><br />
+        <asp:Button ID="btnAccept" runat="server" Text="Accept" Visible="False" /><br />
         <asp:Label ID="lblMessage" runat="server" Text="You currently do not have a selected journey."></asp:Label><br />
         <asp:Label ID="lblID" runat="server" Text=""></asp:Label>
     </div>
