@@ -43,12 +43,6 @@ Partial Class Res_Pay
 
         'check customer login
 
-        ''check session login if it's empty 
-        'strAdvantageNum = Session("Login").ToString
-        'If strAdvantageNum = "" then
-        '   Response.Redirect("HomePage.aspx")
-        'End If
-
         LoadTickets()
 
         SortandBind()
@@ -325,18 +319,18 @@ Partial Class Res_Pay
 
             datReservation = CDate(DBJourney.GetDateByJourney(gvTickets.SelectedRow.Cells(4).Text, gvTickets.SelectedRow.Cells(1).Text))
 
-            datToday = CDate(DBDate.GetCurrentDate)
+            datToday = CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate))
 
             'use if statement to see if we should apply an internet discount
-            'If Session("login") = "customer" Then
-            '    'internet reservation
-            '    decInternetDiscount = Calculate.CalculateInternetPurchaseDiscount(intBaseFare)
-            'Else
-            '    'this is over the phone, an employee is logged in
-            '    btnOverride.Visible = True
-            '    txtOverride.Visible = True
-            '    decInternetDiscount = 0
-            'End If
+            If Session("UserType").ToString = "customer" Then
+                'internet reservation
+                decInternetDiscount = Calculate.CalculateInternetPurchaseDiscount(intBaseFare)
+            Else
+                'this is over the phone, an employee is logged in
+                btnOverride.Visible = True
+                txtOverride.Visible = True
+                decInternetDiscount = 0
+            End If
 
             decTwoWeekDiscount = Calculate.CalculateDateDiscount(intBaseFare, datReservation, datToday)
 
@@ -591,6 +585,8 @@ Partial Class Res_Pay
         lblCost.Text = ""
         lblUpgrade.Visible = False
         lblSubtotal.Text = ""
+
+        txtOverride.Visible = False
 
         rblPayment.Visible = False
 

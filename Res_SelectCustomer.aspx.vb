@@ -257,6 +257,7 @@ Partial Class Res_SelectCustomer
                 Session.Remove("Zip")
                 Session.Remove("LastName")
                 Session.Remove("Phone")
+                Session.Remove("FirstTicket")
             End If
             Response.Redirect("Res_SeatSelection.aspx")
         End If
@@ -270,8 +271,6 @@ Partial Class Res_SelectCustomer
             Exit Sub
         End If
         CustomerDB.SearchCustomerClone(rblSearchType.SelectedIndex, rblSearchBy.SelectedIndex, txtSearch.Text)
-        ClearMessages()
-        SortAndBind()
     End Sub
 
     Protected Sub rblSearchBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rblSearchBy.SelectedIndexChanged

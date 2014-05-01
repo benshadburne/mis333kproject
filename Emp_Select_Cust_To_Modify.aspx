@@ -32,6 +32,9 @@
         <br />
 
         <br />
+        <asp:Label class="h6" ID="lblMessage" runat="server" Text=""></asp:Label>
+        <br />
+        <br />
         
 
         <asp:TextBox ID="txtSearch" runat="server"></asp:TextBox>

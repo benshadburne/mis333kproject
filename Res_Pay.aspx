@@ -75,7 +75,7 @@
             <br />
               
               <br />
-              <asp:Button ID="btnOverride" runat="server" Text="Over Ride Price" visible="false"/>
+              <asp:Button ID="btnOverride" runat="server" Text="Override Price" visible="false"/>
               
             <asp:TextBox ID="txtOverride" runat="server" Text ="" Visible ="false"></asp:TextBox>
                  
