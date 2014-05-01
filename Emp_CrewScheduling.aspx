@@ -37,7 +37,11 @@
 
     <br />
     <br />
-    <asp:Button ID="btnConfirm" runat="server" Text="Confirm Crew" />  <asp:Button ID="btnAddEmployee" runat="server" Text="Add Employee" />
+    <asp:Button ID="btnConfirm" runat="server" Text="Confirm Crew" />  <asp:Button ID="btnAddEmployee" runat="server" Text="Add Employee" /> <asp:Button ID="btnGateCheckin" runat="server" Text="Gate Checkin" />
+
+
+
+
 
 
 

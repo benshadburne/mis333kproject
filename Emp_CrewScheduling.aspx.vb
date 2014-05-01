@@ -153,4 +153,8 @@ Partial Class _Default
     Protected Sub btnAddEmployee_Click(sender As Object, e As EventArgs) Handles btnAddEmployee.Click
         Response.Redirect("Emp_AddNewEmployee.aspx")
     End Sub
+
+    Protected Sub btnGateCheckin_Click(sender As Object, e As EventArgs) Handles btnGateCheckin.Click
+        Response.Redirect("Emp_GateCheckIn.aspx")
+    End Sub
 End Class

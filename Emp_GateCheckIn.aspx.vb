@@ -43,10 +43,16 @@ Partial Class Emp_GateCheckIn
         gvCrew.DataSource = DBCrew.MyView
         gvCrew.DataBind()
 
-        If gvCrew.Rows.Count = 0 Then
+        If gvCrew.Rows.Count <> 3 Then
             'throw them an error
-            lblMessage.Text = "There are no crew members sheduled for this flight. Please schedule crew members"
-            btnCrewScheduling.Visible = True
+            lblMessage.Text = "There are not crew members sheduled for this flight. Please schedule crew members"
+            If Session("UserType").ToString = "Manager" Then
+                'let them schedule crew
+                btnCrewScheduling.Visible = True
+            Else
+                'they are a gate agent
+                lblMessage.Text = "Crew members have not been scheduled for this flight. Have a manager schedule them."
+            End If
         Else
             gvCrew.Visible = True
             btnDeparted.Visible = True
@@ -61,7 +67,7 @@ Partial Class Emp_GateCheckIn
 
         If Session("UserType") Is Nothing Then
             Response.Redirect("HomePage.aspx")
-        ElseIf Session("UserType").ToString = "Crew" Then
+        ElseIf Session("UserType").ToString = "Crew" Or Session("UserType").ToString = "Customer" Then
             Response.Redirect("Emp_EmployeeDashboard.aspx")
         End If
 
@@ -75,7 +81,7 @@ Partial Class Emp_GateCheckIn
 
     Public Sub LoadDDL()
         'bind ddl for journeys
-        DBJourney.GetJourneysForCrewByDate(DBDate.GetCurrentDate())
+        DBJourney.GetActiveJourneysForCrewByDate(DBDate.GetCurrentDate())
         ddlJourneys.DataSource = DBJourney.MyView
         ddlJourneys.DataTextField = "FlightNumber"
         ddlJourneys.DataValueField = "JourneyID"
@@ -83,6 +89,7 @@ Partial Class Emp_GateCheckIn
     End Sub
 
     Protected Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
+        lblMessage.Text = ""
         'check to see if any customers showed up for the flight
         Dim chkPassengers As CheckBox
         Dim bolOnFlight As Boolean = False
@@ -109,13 +116,26 @@ Partial Class Emp_GateCheckIn
 
         LoadCrewGridView(ddlJourneys.SelectedValue.ToString)
 
-        If gvCrew.Rows.Count <> 0 Then
-            btnConfirm.Visible = False
+        'check to see that three crew members are scheduled for this flight
+        If gvCrew.Rows.Count = 3 Then
             btnBack.Visible = True
+            btnConfirm.Visible = False
             ddlJourneys.Enabled = False
             gvCustomers.Enabled = False
-        End If
+        Else
+            'there aren't three crew members
+            If Session("UserType").ToString = "Manager" Then
+                'if this is a manager
+                btnCrewScheduling.Visible = True
+                lblMessage.Text = "You must schedule all the crew members before this flight can take off."
+            Else
+                'this flight doesn't have 3 crew members on it
+                lblMessage.Text = "This flight doesn't have three crew members on it. Please have a manager schedule them."
+                Exit Sub
+            End If
 
+
+        End If
 
 
 
@@ -132,6 +152,7 @@ Partial Class Emp_GateCheckIn
     End Sub
 
     Protected Sub btnDeparted_Click(sender As Object, e As EventArgs) Handles btnDeparted.Click
+        lblMessage.Text = ""
         Dim chkPassengers As CheckBox
         Dim chkCrew As CheckBox
         Dim strMiles As String
@@ -201,6 +222,9 @@ Partial Class Emp_GateCheckIn
         'show a flight manifest
         pnlManifest.Visible = True
         LoadManifestGridView(ddlJourneys.SelectedValue.ToString)
+
+        btnBack.Visible = False
+        btnDeparted.Visible = False
 
     End Sub
 

@@ -437,6 +437,10 @@ Public Class DBjourneyclone
         RunSPwithOneParam("usp_Journeys_Get_By_Date", "@Date", strDate)
     End Sub
 
+    Public Sub GetActiveJourneysForCrewByDate(strDate As String)
+        RunSPwithOneParam("usp_Journeys_Get_By_Date_Checkin", "@Date", strDate)
+    End Sub
+
     Public Sub InactivateJourneyWithDay(strDay As String, strFlightNumber As String)
         Dim aryParamNames As New ArrayList
         Dim aryParamValues As New ArrayList
