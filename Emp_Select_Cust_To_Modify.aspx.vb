@@ -27,4 +27,13 @@ Partial Class Emp_Select_Cust_To_Modify
             gvCustomers.DataBind()
         End If
     End Sub
+
+    Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        'check to make sure a search type is selected
+        If rblSearchType.SelectedIndex = -1 Then
+            lblMessage.Text = "Please select a search type."
+            Exit Sub
+        End If
+        CustomerDB.SearchCustomerClone(rblSearchType.SelectedIndex, rblSearchBy.SelectedIndex, txtSearch.Text)
+    End Sub
 End Class
