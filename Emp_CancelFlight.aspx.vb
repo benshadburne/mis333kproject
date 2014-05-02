@@ -46,7 +46,8 @@ Partial Class Emp_CancelFlight
         Dim intDepartureTime As Integer
         Dim strArrivalTime As String
 
-        FObject.GetALLFlightsCloneUsingSP()
+        FObject.GetAllActiveFlightsUsingSP()
+
         'load departure city
         txtDepartureCity.Text = FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("DepartureCity").ToString
         'load arrival city
