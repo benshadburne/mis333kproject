@@ -117,36 +117,50 @@ Partial Class Emp_ModifyFlight
         'load Monday
         If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Monday").ToString = "Y" Then
             cblDaysToFly.Items(0).Selected = True
+        Else
+            cblDaysToFly.Items(0).Selected = False
         End If
 
         'load Tuesday
         If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Tuesday").ToString = "Y" Then
             cblDaysToFly.Items(1).Selected = True
+        Else
+            cblDaysToFly.Items(1).Selected = False
         End If
 
         'load Wednesday
         If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Wednesday").ToString = "Y" Then
             cblDaysToFly.Items(2).Selected = True
+        Else
+            cblDaysToFly.Items(2).Selected = False
         End If
 
         'load Thursday
         If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Thursday").ToString = "Y" Then
             cblDaysToFly.Items(3).Selected = True
+        Else
+            cblDaysToFly.Items(3).Selected = False
         End If
 
         'load Friday
         If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Friday").ToString = "Y" Then
             cblDaysToFly.Items(4).Selected = True
+        Else
+            cblDaysToFly.Items(4).Selected = False
         End If
 
         'load Saturday
         If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Saturday").ToString = "Y" Then
             cblDaysToFly.Items(5).Selected = True
+        Else
+            cblDaysToFly.Items(5).Selected = False
         End If
 
         'load Sunday 
         If FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("Sunday").ToString = "Y" Then
             cblDaysToFly.Items(6).Selected = True
+        Else
+            cblDaysToFly.Items(6).Selected = False
         End If
 
     End Sub
