@@ -275,10 +275,16 @@ Partial Class _Default
         End If
 
         If button.BackColor = Drawing.Color.Blue And Session("Infant").ToString = "Yes" Then
+            'is there a baby already in the lap?
+            If button.Text.Length >= 3 Then
+                'baby already in that lap
+                lblMessage.Text = "A baby already occupys that lap"
+                Exit Sub
+            End If
+
             'this is a loggin in infant, change in the database
             DBSeats.BluePress(Session("UserSeat").ToString, strNewSeat, ddlAdvantageNum.SelectedValue.ToString, ddlJourneyID.SelectedValue)
             ResetAll()
-            'gotta change previous seat to blue
 
             Exit Sub
         End If
