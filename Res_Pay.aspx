@@ -74,6 +74,19 @@
              <br />
            <asp:Button CssClass="btn btn-primary" ID="btnOverride" runat="server" Text="Override Price" visible="false"/>
              <br />
+            
+            <asp:Panel CssClass="panel center-align" ID="pnlLogin" runat="server" Width="310px">
+            <asp:Panel CssClass="pull-left panel" ID="pnlID" runat="server" style="width:150px;min-width: 100px; text-align:center; padding-top: 5px; line-height:22px;background-color:inherit; margin-bottom:5px">
+                    <asp:Label ID="Label6" runat="server" Text="ID:"></asp:Label>
+          <asp:TextBox CssClass="pull-left text-center" ID="txtUsername" runat="server" width="90%" Height="23px" Wrap="False" BorderStyle="Inset" ForeColor="Gray"></asp:TextBox> 
+         </asp:Panel>
+             <asp:Panel CssClass="panel" ID="pnlPassword" runat="server" style="width:150px;min-width: 100px; text-align:center; padding-top: 5px; line-height:22px;background-color:inherit; margin-bottom:5px">
+             <asp:Label ID="Label5" runat="server" Text="Password:"></asp:Label><asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="23px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray" TextMode="Password">Password</asp:TextBox>
+          </asp:Panel><br />
+                <asp:Button CssClass="btn btn-primary" ID="btnLogin" runat="server" Text="Login" />
+          </asp:Panel>
+            
+             <br />
             <asp:Label ID="lblUpgrade" runat="server" Text="Would you like to upgrade for 500 miles?" Visible="false"></asp:Label>
                             <br /> 
               <asp:Button class="btn-primary btn-sm" ID="btnYes" runat="server" Text="Yes" visible="false"/>
