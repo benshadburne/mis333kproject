@@ -283,6 +283,7 @@ Partial Class Res_SelectCustomer
             Exit Sub
         End If
         CustomerDB.SearchCustomerClone(rblSearchType.SelectedIndex, rblSearchBy.SelectedIndex, txtSearch.Text)
+        SortAndBind()
     End Sub
 
     Protected Sub rblSearchBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rblSearchBy.SelectedIndexChanged

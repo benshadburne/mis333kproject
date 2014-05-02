@@ -445,6 +445,9 @@ Partial Class _Default
     End Sub
 
     Protected Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
+        If CInt(Session("JourneyNumber")) = 0 Then
+            Session.Remove("StartAirport")
+        End If
         Response.Redirect("Cust_CreateReservationAndSelectFlight.aspx")
     End Sub
 End Class
