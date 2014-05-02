@@ -84,6 +84,9 @@ Partial Class _Default
 
     Protected Sub gvJourneys_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvJourneys.SelectedIndexChanged
         lblMessage.Text = ""
+        For i = 0 To gvJourneys.Rows.Count - 1
+            gvJourneys.Rows(i).Style.Add("background-color", "#ffffff")
+        Next
         gvJourneys.SelectedRow.Style.Add("background-color", "#ffcccc")
         LoadDDLs()
     End Sub

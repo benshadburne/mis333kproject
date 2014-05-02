@@ -397,18 +397,18 @@ Public Class ClassCrewScheduling
                 'run a loop to see if they are busy at the times we are looking for
                 For j = 0 To (mdatasetCaptainBusy.Tables("tblCaptain").Rows.Count - 1)
                     'checks to see if inputted departure is between start and end of journey they are on
-                    If CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) <= intDepartureTime And _
+                    If CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) <= intDepartureTime Or _
                         intDepartureTime <= CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("ArriveTime")) Then
                         'the captain is busy at this time don't add them to the array of available captains
                     Else
                         'check to see if inputted arrive time is between start and end of journey we are looping through
-                        If CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) <= intArriveTime And _
+                        If CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) <= intArriveTime Or _
                         intArriveTime <= CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("ArriveTime")) Then
                             'the captain is busy, don't add them to the arraylist
                         Else
                             'captain is not busy during arrival or departure, check to see if would take off before journey 
                             'and would land after journey we are looking at
-                            If intDepartureTime <= CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) And _
+                            If intDepartureTime <= CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) Or _
                                 intArriveTime >= CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("ArriveTime")) Then
                                 'captain is airborne during another flight he/she is on
                             Else
@@ -460,18 +460,18 @@ Public Class ClassCrewScheduling
                 'run a loop to see if they are busy at the times we are looking for
                 For j = 0 To (mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows.Count - 1)
                     'checks to see if inputted departure is between start and end of journey they are on
-                    If CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("DepartureTime")) <= intDepartureTime And _
+                    If CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("DepartureTime")) <= intDepartureTime Or _
                         intDepartureTime <= CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("ArriveTime")) Then
                         'the CoCaptain is busy at this time don't add them to the array of available CoCaptains
                     Else
                         'check to see if inputted arrive time is between start and end of journey we are looping through
-                        If CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("DepartureTime")) <= intArriveTime And _
+                        If CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("DepartureTime")) <= intArriveTime Or _
                         intArriveTime <= CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("ArriveTime")) Then
                             'the CoCaptain is busy, don't add them to the arraylist
                         Else
                             'CoCaptain is not busy during arrival or departure, check to see if would take off before journey 
                             'and would land after journey we are looking at
-                            If intDepartureTime <= CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("DepartureTime")) And _
+                            If intDepartureTime <= CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("DepartureTime")) Or _
                                 intArriveTime >= CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("ArriveTime")) Then
                                 'CoCaptain is airborne during another flight he/she is on
                             Else
@@ -523,18 +523,18 @@ Public Class ClassCrewScheduling
                 'run a loop to see if they are busy at the times we are looking for
                 For j = 0 To (mdatasetCabinBusy.Tables("tblCabin").Rows.Count - 1)
                     'checks to see if inputted departure is between start and end of journey they are on
-                    If CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("DepartureTime")) <= intDepartureTime And _
+                    If CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("DepartureTime")) <= intDepartureTime Or _
                         intDepartureTime <= CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("ArriveTime")) Then
                         'the Cabin is busy at this time don't add them to the array of available Cabin
                     Else
                         'check to see if inputted arrive time is between start and end of journey we are looping through
-                        If CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("DepartureTime")) <= intArriveTime And _
+                        If CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("DepartureTime")) <= intArriveTime Or _
                         intArriveTime <= CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("ArriveTime")) Then
                             'the Cabin is busy, don't add them to the arraylist
                         Else
                             'Cabin is not busy during arrival or departure, check to see if would take off before journey 
                             'and would land after journey we are looking at
-                            If intDepartureTime <= CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("DepartureTime")) And _
+                            If intDepartureTime <= CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("DepartureTime")) Or _
                                 intArriveTime >= CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("ArriveTime")) Then
                                 'Cabin is airborne during another flight he/she is on
                             Else
