@@ -28,8 +28,8 @@ Partial Class _Default
         End If
 
         If Session("UserType").ToString = "Customer" Then
-            ddlActive.Visible = False
-            lblActive.Visible = False
+            ddlActive.Visible = True
+            lblActive.Visible = True
             txtMiles.ReadOnly = True
             lblMiles.Visible = True
         End If
@@ -100,11 +100,39 @@ Partial Class _Default
         End If
 
         'Try modifying customer using an SP
-        CustDB.ModifyEmployeeRecord(Session("AdvantageNumber_Selected_By_Manager").ToString, txtPassword.Text, txtLName.Text, txtFName.Text, txtMI.Text, txtAddress.Text, txtZip.Text, txtPhone.Text, txtEmail.Text, txtMiles.Text, ddlActive.SelectedValue.ToString)
+        Dim strCustomerID As String
+
+        If Session("UserType").ToString = "Customer" Then
+            strCustomerID = Session("UserID").ToString
+        Else
+            strCustomerID = Session("AdvantageNumber_Selected_By_Manager").ToString
+        End If
+
+        If ddlActive.SelectedIndex = 1 Then ' customer needs to be made inactive, and records need to reflect that
+            CustDB.InactivateTicketsOfACustomer(strCustomerID)
+        End If
+
+        'modify the record
+        CustDB.ModifyEmployeeRecord(strCustomerID, txtPassword.Text, txtLName.Text, txtFName.Text, txtMI.Text, txtAddress.Text, txtZip.Text, txtPhone.Text, txtEmail.Text, txtMiles.Text, ddlActive.SelectedValue.ToString)
 
         'Outputs
-        lblSuccessMessage.Text = "Profile successfully modified."
+        'customer has chosen to inactivate own profile
+        If ddlActive.SelectedIndex = 1 And Session("UserType").ToString = "Customer" Then
+            lblSuccessMessage.Text = "You have inactivated your profile. You will now be logged out. You must call a Penguin Air representative if you wish to reactivate your profile."
+            Session.Clear()
+            Response.AddHeader("Refresh", "10; URL=HomePage.aspx")
+        End If
 
+        'employee has inactivated customer
+        If ddlActive.SelectedIndex = 1 And Session("UserType").ToString <> "Customer" Then
+            lblSuccessMessage.Text = "You have inactivated the selected customer. You will now be redirected to the page to select a customer to modify."
+            Response.AddHeader("Refresh", "10, URL=Emp_Select_Cust_To_Modify.aspx")
+        End If
+
+        'customer or employee has modified record but kept record active
+        If ddlActive.SelectedIndex = 0 Then
+            lblSuccessMessage.Text = "You have successfully modified the above user's record."
+        End If
         MakeThingsInactive()
     End Sub
 
