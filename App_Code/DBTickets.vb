@@ -991,7 +991,7 @@ Public Class DBTickets
     End Sub
 
     Public Sub FindTicketsByReservationID(strReservationID As String)
-        RunSPwithOneParamReservation("usp_TicketsClone_Find_Customers_By_ReservationID", "@reservationid", strReservationID)
+        RunSPwithOneParamReservation("usp_TicketsClone_Select_Distinct_Customers", "@reservationid", strReservationID)
     End Sub
 
     Public Sub InactivateTicketsByAdvantageNumber(strAdvantageNumber As String)
