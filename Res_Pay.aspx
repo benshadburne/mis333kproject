@@ -83,7 +83,8 @@
              <asp:Panel CssClass="panel" ID="pnlPassword" runat="server" style="width:150px;min-width: 100px; text-align:center; padding-top: 5px; line-height:22px;background-color:inherit; margin-bottom:5px">
              <asp:Label ID="Label5" runat="server" Text="Password:"></asp:Label><asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="23px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray" TextMode="Password">Password</asp:TextBox>
           </asp:Panel><br />
-                <asp:Button CssClass="btn btn-primary" ID="btnLogin" runat="server" Text="Login" />
+                <asp:Button CssClass="btn btn-primary" ID="btnOverridePrice" runat="server" Text="Confirm" />
+                <asp:Button CssClass="btn btn-primary" ID="btnBack" runat="server" Text="Confirm" />
           </asp:Panel>
             
              <br />

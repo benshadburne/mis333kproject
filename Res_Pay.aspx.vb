@@ -589,6 +589,10 @@ Partial Class Res_Pay
     End Sub
 
     Protected Sub btnOverride_Click(sender As Object, e As EventArgs) Handles btnOverride.Click
+        MakeAllInvisible()
+        pnlID.Visible = False
+        Exit Sub
+
         Dim decSubtotal As Decimal
         Try
             decSubtotal = CDec(txtOverride.Text)
@@ -629,6 +633,15 @@ Partial Class Res_Pay
         rblPayment.Visible = False
 
         pnlSeats.Visible = False
+
+        pnlLogin.Visible = False
+
+    End Sub
+
+    Protected Sub btnOverridePrice_Click(sender As Object, e As EventArgs) Handles btnOverridePrice.Click
+        MakeAllInvisible()
+
+        'check to see if this case passes
 
     End Sub
 End Class

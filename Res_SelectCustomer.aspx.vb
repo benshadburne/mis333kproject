@@ -157,6 +157,11 @@ Partial Class Res_SelectCustomer
         lblMessage.Text = ""
         'run the validation before doing anything else
 
+        If txtAge.Text = "" Then
+            lblMessage.Text = "Please enter an appropriate age."
+            Exit Sub
+        End If
+
         If Validation.CheckIntegerWithSubstring(txtAge.Text) = False Then
             'bad data
             lblAgeMessage.Text = "Please enter a positive integer age."
@@ -300,15 +305,14 @@ Partial Class Res_SelectCustomer
             lblMessage.Text = "Please select a search type."
             Exit Sub
         End If
-<<<<<<< HEAD
+
         CustomerDB.SearchCustomerClone(rblSearchType.SelectedIndex, rblSearchBy.SelectedIndex, txtSearch.Text)
         SortAndBind()
-=======
+
 
         'Load the gridview
         LoadGridView()
 
->>>>>>> cabe3af70ea12a14e7b043c71e5f3f11f053e6f5
     End Sub
 
     Protected Sub rblSearchBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rblSearchBy.SelectedIndexChanged
