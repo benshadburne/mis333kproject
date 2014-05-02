@@ -9,20 +9,20 @@
     </div>
     
     <div style="line-height:28px">
-    <asp:Panel CssClass="panel" ID="Panel1" runat="server">
-        <div class="pull-left" style="text-align:right">
-            <asp:Label ID="Label2" runat="server" Text="Flight Number"></asp:Label><br />
-            <asp:Label ID="Label3" runat="server" Text="Departure City"></asp:Label><br />
-            <asp:Label ID="Label4" runat="server" Text="Arrival City"></asp:Label><br />
-            <asp:Label ID="Label5" runat="server" Text="Departure Time"></asp:Label><br />
-            <asp:Label ID="Label6" runat="server" Text="Arrival Time"></asp:Label><br />
-            <asp:Label ID="Label7" runat="server" Text="Base Fare"></asp:Label><br />
-        <asp:Label ID="Label9" runat="server" Text="Days Flown"></asp:Label><br />
+    <asp:Panel CssClass="panel" ID="Panel1" Width="900px" runat="server">
+        <div class="pull-left" style="text-align:right;width:350px; padding-right:5px">
+            <asp:Label ID="Label2" runat="server" Text="Flight Number:"></asp:Label><br />
+            <asp:Label ID="Label3" runat="server" Text="Departure City:"></asp:Label><br />
+            <asp:Label ID="Label4" runat="server" Text="Arrival City:"></asp:Label><br />
+            <asp:Label ID="Label5" runat="server" Text="Departure Time:"></asp:Label><br />
+            <asp:Label ID="Label6" runat="server" Text="Arrival Time:"></asp:Label><br />
+            <asp:Label ID="Label7" runat="server" Text="Base Fare:"></asp:Label><br />
+        <asp:Label ID="Label9" runat="server" Text="Days Flown:"></asp:Label><br />
 
         
         </div>
        
-            <div class="pull-left" style="text-align:left">
+            <div class="pull-left" style="text-align:left;width:540px">
                 <asp:TextBox ID="txtFlightNumber" runat="server" MaxLength="3"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvFlightNumber" runat="server" ErrorMessage="Please enter a flight number!" ControlToValidate="txtFlightNumber" Text="*"></asp:RequiredFieldValidator><br />
                 <asp:DropDownList ID="ddlDepartureCity" runat="server"></asp:DropDownList><br />
@@ -76,7 +76,8 @@
           
     </asp:Panel>
         </div>
-    <div class="center-align">
+    <br />
+    <div class="center-align" style="width:900px;padding-top:20px">
          <asp:Button CssClass="btn btn-primary" ID="btnAdd" runat="server" Text="Add Flight" />
            <br />
         <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>

@@ -4,37 +4,25 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-
-    <div id ="left">
-        <div class ="label-primary">
-            <asp:Label ID="lblMessage" runat="server" Text="Welcome to the Add New Employee Page!"></asp:Label>
-            <asp:ValidationSummary ID="ValidationSummary1" runat="server" /><br /><br />
-        </div>
-        <div class ="btn">
-            <asp:Button ID="btnSubmit" runat="server" Text="Submit" /><br /><br />
-            <asp:Label ID="Label11" runat="server" Text="Label"></asp:Label>
+    <div class="center-align" style="padding-bottom:20px">
+        <h1>Add New Employee</h1>
         </div>
 
-    </div>
-
-    <div id ="middle">
-
-        
-            <br />
-            <asp:Label ID="Label2" runat="server" Text="Last Name"></asp:Label><br />
-            <asp:Label ID="Label3" runat="server" Text="First Name"></asp:Label><br />
-            <asp:Label ID="Label4" runat="server" Text="MI"></asp:Label><br />
-            <asp:Label ID="Label5" runat="server" Text="Password"></asp:Label><br />
-            <asp:Label ID="Label6" runat="server" Text="Social Security Number"></asp:Label><br />
-            <asp:Label ID="Label7" runat="server" Text="Employee Type"></asp:Label><br />
-            <asp:Label ID="Label8" runat="server" Text="Address"></asp:Label><br />
-        <asp:Label ID="Label9" runat="server" Text="Zip"></asp:Label><br />
-        <asp:Label ID="Label10" runat="server" Text="Phone"></asp:Label><br />
+    <div style="line-height:28px">
+    <asp:Panel CssClass="panel" ID="Panel1" Width="900px" runat="server">
+        <div class="pull-left" style="text-align:right;width:350px; padding-right:5px">
+ <asp:Label ID="Label2" runat="server" Text="Last Name"></asp:Label><br />
+            <asp:Label ID="Label3" runat="server" Text="First Name:"></asp:Label><br />
+            <asp:Label ID="Label4" runat="server" Text="MI:"></asp:Label><br />
+            <asp:Label ID="Label5" runat="server" Text="Password:"></asp:Label><br />
+            <asp:Label ID="Label6" runat="server" Text="Social Security Number:"></asp:Label><br />
+            <asp:Label ID="Label7" runat="server" Text="Employee Type:"></asp:Label><br />
+            <asp:Label ID="Label8" runat="server" Text="Address:"></asp:Label><br />
+            <asp:Label ID="Label9" runat="server" Text="Zip:"></asp:Label><br />
+            <asp:Label ID="Label10" runat="server" Text="Phone:"></asp:Label><br />
         </div>
-        <div id ="right">
-            <div class ="input-group-lg">
-                <br />
-                <asp:TextBox ID="txtLastName" runat="server"></asp:TextBox>
+        <div class="pull-left" style="text-align:left;width:540px">
+              <asp:TextBox ID="txtLastName" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvLastName" runat="server" ErrorMessage="Please enter a last name!" ControlToValidate="txtLastName" Text="*"></asp:RequiredFieldValidator><br />
                 <asp:TextBox ID="txtFirstName" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvFirstName" runat="server" ErrorMessage="Please enter a first name!" ControlToValidate="txtFirstName" Text="*"></asp:RequiredFieldValidator><br />
@@ -52,8 +40,13 @@
                 <asp:TextBox ID="txtPhoneNumber" runat="server" MaxLength="10"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvPhoneNumber" runat="server" ErrorMessage="Please enter a phone number!" ControlToValidate="txtPhoneNumber" Text="*"></asp:RequiredFieldValidator><br />
             </div>
-        </div>
-        
-    
+    </asp:Panel></div>
+             
+    <div class="center-align">
+        <asp:Button CssClass="btn btn-primary" ID="btnSubmit" runat="server" Text="Submit" /><br />
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
+        <asp:Label CssClass="h6" ID="lblMessage" runat="server" Text=""></asp:Label>
+    </div>
+
 </asp:Content>
 

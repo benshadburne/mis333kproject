@@ -75,7 +75,7 @@ Partial Class Emp_AddNewEmployee
 
         EObject.AddEmployee("tblEmployeesClone", aryParamNames, aryParamValues)
 
-        Label11.Text = "You have added the record!"
+        lblMessage.Text = "You have added the record!"
 
     End Sub
 
