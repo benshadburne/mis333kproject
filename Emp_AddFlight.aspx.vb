@@ -301,6 +301,42 @@ Partial Class Emp_AddFlight
             txtBaseFare.ReadOnly = False
             cblDaysToFly.Enabled = True
             lblMessage.Text = ""
+            'make it equal to hour and minute on ddls for departure time
+            strDepartureTime = ddlDepartureTimeHour.SelectedItem.Text & ddlDepartureTimeMinutes.SelectedItem.Text
+            'make intDepartureTime and intarrival time variables
+            Dim intDepartureTime As Integer
+
+            'check to see if valid integer
+            intDepartureTime = VObject.CheckInteger(strDepartureTime)
+
+            If intDepartureTime = -1 Then 'something went wrong
+                Exit Sub
+            End If
+
+            'create variable for duration of flight
+            Dim intDuration As Integer
+
+            'find duration
+            Dim aryParamNamesMileage As New ArrayList
+            Dim aryParamValuesMileage As New ArrayList
+
+            'add param names to array list
+            aryParamNamesMileage.Add("@StartAirport")
+            aryParamNamesMileage.Add("@EndAirport")
+
+            'add param values to array list
+            aryParamValuesMileage.Add(ddlDepartureCity.SelectedValue)
+            aryParamValuesMileage.Add(ddlArrivalCity.SelectedValue)
+
+            'find duration of flight
+            MObject.FindDuration(aryParamNamesMileage, aryParamValuesMileage)
+            intDuration = CInt(MObject.MyDataSet.Tables("tblMileageClone").Rows(0).Item(0))
+
+            'calculate the arrival time that needs to appear
+            strArrivalTime = CObject.CalculateArrivalTime(intDepartureTime, intDuration)
+
+            'put it in label
+            lblArrivalTime.Text = strArrivalTime
         End If
     End Sub
 End Class

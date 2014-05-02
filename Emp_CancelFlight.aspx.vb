@@ -166,6 +166,8 @@ Partial Class Emp_CancelFlight
 
         LoadDDL()
 
+        Response.Redirect("Emp_CancelFlight.aspx")
+
 
     End Sub
 

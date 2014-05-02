@@ -58,6 +58,8 @@ Partial Class Emp_ReactivateFlight
         btnAbort.Visible = False
         btnAccept.Visible = False
         gvFlights.Enabled = True
+
+        Response.Redirect("Emp_ReactivateFlight.aspx")
     End Sub
 
 End Class
