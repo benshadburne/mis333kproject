@@ -26,7 +26,6 @@
 
             <ul class="list-group">
                <li> <a href="Emp_GateCheckIn.aspx">Gate Check In</a> </li> 
-                <li><a href="Emp_SearchCustomer.aspx">Search Customer</a> </li>               
                  <li><a href="Emp_Select_Cust_To_Modify.aspx">Modify Customer</a> </li>
                 <li><a href="Cust_AddNewCustomer.aspx">Create Customer Profile</a></li>
                 <li><a href ="Cust_CreateReservationAndSelectFlight.aspx">Create Customer Reservation</a></li>
