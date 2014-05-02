@@ -149,15 +149,12 @@ Partial Class Emp_CancelFlight
 
     Protected Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
 
-
         InactivateJourneysRegardlessOfDay(ddlFlights.SelectedItem.ToString)
 
         'make flight invalid
         FObject.MakeFlightInactive(ddlFlights.SelectedItem.ToString)
 
         lblMessage.Text = "Flight #" + ddlFlights.SelectedItem.ToString + " has been inactivated. All journeys scheduled have been cancelled."
-
-
 
         'run sub to make all other things inactive
 
@@ -187,7 +184,7 @@ Partial Class Emp_CancelFlight
 
     Public Sub InactivateJourneysRegardlessOfDay(strFlightNumber As String)
         'get all flights into dataset
-        FObject.GetALLFlightsCloneUsingSP()
+        FObject.GetAllActiveFlightsUsingSP()
         'call class to do work
         CaObject.InactivateFlightAllDays(strFlightNumber)
     End Sub
