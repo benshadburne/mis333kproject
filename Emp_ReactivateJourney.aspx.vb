@@ -49,6 +49,8 @@ Partial Class Emp_ReactivateJourney
         btnReactivate.Visible = True
         btnAbort.Visible = False
         btnAccept.Visible = False
-        gvJourneys.Enabled = False
+        gvJourneys.Enabled = True
+
+        Response.Redirect("Emp_ReactivateJourney.aspx")
     End Sub
 End Class
