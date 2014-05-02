@@ -46,6 +46,8 @@ Partial Class Emp_AddFlight
             ddlDepartureCity.DataValueField = "AirportCode"
             'bind ddl
             ddlDepartureCity.DataBind()
+            'set selected index
+            ddlDepartureCity.SelectedIndex = 0
 
             'do same as above, but for arrival city
             'set datasource to all airports
@@ -56,6 +58,45 @@ Partial Class Emp_AddFlight
             ddlArrivalCity.DataValueField = "AirportCode"
             'bind ddl
             ddlArrivalCity.DataBind()
+            'set selected index
+            ddlArrivalCity.SelectedIndex = 1
+
+            'make it equal to hour and minute on ddls for departure time
+            strDepartureTime = ddlDepartureTimeHour.SelectedItem.Text & ddlDepartureTimeMinutes.SelectedItem.Text
+            'make intDepartureTime and intarrival time variables
+            Dim intDepartureTime As Integer
+
+            'check to see if valid integer
+            intDepartureTime = VObject.CheckInteger(strDepartureTime)
+
+            If intDepartureTime = -1 Then 'something went wrong
+                Exit Sub
+            End If
+
+            'create variable for duration of flight
+            Dim intDuration As Integer
+
+            'find duration
+            Dim aryParamNamesMileage As New ArrayList
+            Dim aryParamValuesMileage As New ArrayList
+
+            'add param names to array list
+            aryParamNamesMileage.Add("@StartAirport")
+            aryParamNamesMileage.Add("@EndAirport")
+
+            'add param values to array list
+            aryParamValuesMileage.Add(ddlDepartureCity.SelectedValue)
+            aryParamValuesMileage.Add(ddlArrivalCity.SelectedValue)
+
+            'find duration of flight
+            MObject.FindDuration(aryParamNamesMileage, aryParamValuesMileage)
+            intDuration = CInt(MObject.MyDataSet.Tables("tblMileageClone").Rows(0).Item(0))
+
+            'calculate the arrival time that needs to appear
+            strArrivalTime = CObject.CalculateArrivalTime(intDepartureTime, intDuration)
+
+            'put it in label
+            lblArrivalTime.Text = strArrivalTime
 
         End If
     End Sub
@@ -221,4 +262,24 @@ Partial Class Emp_AddFlight
     End Sub
 
 
+    Protected Sub ddlDepartureCity_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlDepartureCity.SelectedIndexChanged, ddlArrivalCity.SelectedIndexChanged
+        'check if selected indexes match
+        If ddlArrivalCity.SelectedIndex = ddlDepartureCity.SelectedIndex Then
+            'disable everything else, and give message that they can't select same city
+            txtFlightNumber.ReadOnly = True
+            ddlDepartureTimeHour.Enabled = False
+            ddlDepartureTimeMinutes.Enabled = False
+            txtBaseFare.ReadOnly = True
+            cblDaysToFly.Enabled = False
+            lblMessage.Text = "Please select different departure and arrival cities!"
+        Else
+            'they don't equal eachother, and everything should be active
+            txtFlightNumber.ReadOnly = False
+            ddlDepartureTimeHour.Enabled = True
+            ddlDepartureTimeMinutes.Enabled = True
+            txtBaseFare.ReadOnly = False
+            cblDaysToFly.Enabled = True
+            lblMessage.Text = ""
+        End If
+    End Sub
 End Class

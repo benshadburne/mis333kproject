@@ -25,8 +25,8 @@
             <div class="pull-left" style="text-align:left;width:540px">
                 <asp:TextBox ID="txtFlightNumber" runat="server" MaxLength="3"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvFlightNumber" runat="server" ErrorMessage="Please enter a flight number!" ControlToValidate="txtFlightNumber" Text="*"></asp:RequiredFieldValidator><br />
-                <asp:DropDownList ID="ddlDepartureCity" runat="server"></asp:DropDownList><br />
-                <asp:DropDownList ID="ddlArrivalCity" runat="server"></asp:DropDownList><br />
+                <asp:DropDownList ID="ddlDepartureCity" runat="server" AutoPostBack="True"></asp:DropDownList><br />
+                <asp:DropDownList ID="ddlArrivalCity" runat="server" AutoPostBack="True"></asp:DropDownList><br />
                 <asp:DropDownList ID="ddlDepartureTimeHour" runat="server" AutoPostBack="True">
                     <asp:ListItem>00</asp:ListItem>
                     <asp:ListItem>1</asp:ListItem>
