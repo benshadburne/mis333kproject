@@ -76,7 +76,7 @@
              <br />
             
             <asp:Panel CssClass="panel center-align" ID="pnlLogin" runat="server" Width="310px" Visible="false">
-            <asp:Panel visible="false" cssclass="pull-left panel" ID="pnlID" runat="server" style="width:150px;min-width: 100px; text-align:center; padding-top: 5px; line-height:22px;background-color:inherit; margin-bottom:5px">
+            <asp:Panel cssclass="pull-left panel" ID="pnlID" runat="server" style="width:150px;min-width: 100px; text-align:center; padding-top: 5px; line-height:22px;background-color:inherit; margin-bottom:5px">
                     <asp:Label ID="Label6" runat="server" Text="ID:"></asp:Label>
           <asp:TextBox CssClass="pull-left text-center" ID="txtUsername" runat="server" width="90%" Height="23px" Wrap="False" BorderStyle="Inset" ForeColor="Gray"></asp:TextBox> 
          </asp:Panel>
