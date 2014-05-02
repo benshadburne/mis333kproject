@@ -128,4 +128,10 @@ Partial Class Cust_AddNewCustomer
         txtEmail.Text = ""
         txtPhone.Text = ""
     End Sub
+
+    Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        If Session("Zip") Is Nothing Then
+            btnAddFamilyMember.Visible = False
+        End If
+    End Sub
 End Class
