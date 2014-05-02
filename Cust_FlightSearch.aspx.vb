@@ -19,23 +19,7 @@ Partial Class _Default
     Dim strTempAirport As String
 
 
-    'Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
-    '    Dim strDay As String
-    '    Dim strDate As String
-
-    '    'populate those variables
-    '    strDay = WeekdayName(Weekday(calFlightSearch.SelectedDate))
-    '    strDate = calFlightSearch.SelectedDate.ToString
-
-    '    'add journeys for those days if they aren't added already
-    '    DBAddJourney.AddJourney(strDay, strDate)
-
-    '    'show flights available
-    '    ShowAll()
-    '    SortandBind()
-
-    '    MakeIndirectInvisible()
-    'End Sub
+  
 
     Private Sub MakeIndirectInvisible()
         gvIndirectFinish.Visible = False

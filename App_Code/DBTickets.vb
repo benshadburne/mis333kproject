@@ -100,6 +100,26 @@ Public Class DBTickets
 
     End Sub
 
+    Public Sub GetActiveAdvantageNumbersUsingSP(strJourneyID As String, strReservationID As String)
+        'Author: Ben Shadburne
+        'Purpose: runs advantagenumber procedure
+        'Arguments: journeyid and reservationid
+        'Return: na
+        'Date: 04/23/2014
+
+        Dim aryParamName As New ArrayList
+        Dim aryParamValue As New ArrayList
+
+        aryParamName.Add("@JourneyID")
+        aryParamName.Add("@ReservationID")
+        aryParamValue.Add(strJourneyID)
+        aryParamValue.Add(strReservationID)
+
+        UseSP("usp_Tickets_Get_Active_Advantage", mdatasetAdvantageNumbers, mMyViewAdvantageNumbers, "tblAdvantageNumbers", aryParamName, aryParamValue)
+
+
+    End Sub
+
     'define a public read only property
     Public ReadOnly Property MyView() As DataView
         'Author: Ben Shadburne

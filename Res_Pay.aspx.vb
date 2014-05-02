@@ -363,7 +363,7 @@ Partial Class Res_Pay
 
             decDiscount = Calculate.CalculateSubTotalDiscount(decBaseFare, decFirstClassPremium, decAgeDiscount, decTwoWeekDiscount, decInternetDiscount)
 
-            decSubtotal = decBaseFare + decDiscount
+            decSubtotal = decBaseFare - decDiscount
 
             lblPrice.Text = decSubtotal.ToString("n2")
 
@@ -572,6 +572,7 @@ Partial Class Res_Pay
             'remove miles from their account
             intMiles -= 500
             DBCustomer.UpdateMiles(intMiles.ToString, gvTickets.SelectedRow.Cells(3).Text)
+            Session("RunningSubtotal") = CDec(Session("RunningSubtotal")) + CDec(lblPrice.Text)
             lblPrice.Text = ""
         End If
 

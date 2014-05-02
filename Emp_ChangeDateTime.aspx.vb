@@ -41,6 +41,8 @@ Partial Class Default2
         'run code to change departed to yes, and change the miles of customers who were on that journey
         DBChangeDateTime.ChangDateTime(strDate, strTime)
 
+        lblMessage.Text = "You have successfully moved the date and time forward."
+
 
 
     End Sub

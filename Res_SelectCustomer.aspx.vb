@@ -116,9 +116,9 @@ Partial Class Res_SelectCustomer
 
         If gvCustomers.Rows.Count = 0 Then
             'show all records and throw them an error
-            CustomerDB.GetAllCustomersCloneUsingSP()
-
-            SortAndBind()
+            CustomerDB.GetAllActiveCustomersCloneUsingSP()
+            gvCustomers.DataSource = CustomerDB.MyView
+            gvCustomers.DataBind()
 
             lblMessage.Text = "Your search returned no records. Please try a different search."
         End If
@@ -357,5 +357,10 @@ Partial Class Res_SelectCustomer
         lblAge.Text = ""
         txtSearch.Text = ""
         txtAge.Text = ""
+    End Sub
+
+    Protected Sub btnSearchAll_Click(sender As Object, e As EventArgs) Handles btnSearchAll.Click
+        CustomerDB.GetAllCustomersCloneUsingSP()
+        SortAndBind()
     End Sub
 End Class

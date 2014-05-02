@@ -34,6 +34,9 @@
 
         <br />
         <br />
+          <asp:Button ID="btnSearchAll" runat="server" Text="Search All" />
+        <br />
+        <br />
         <asp:Button ID="btnAddCustomer" runat="server" Text="Add Customer" />
         <br />
         <br />

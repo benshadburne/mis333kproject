@@ -17,7 +17,7 @@
         <TodayDayStyle BackColor="#99CCCC" ForeColor="White" />
         <WeekendDayStyle BackColor="#CCCCFF" />
     </asp:Calendar>
-     <asp:Label CssClass="label" ID="lblMessage" runat="server" Text=""></asp:Label>
+     <asp:Label CssClass="h6" ID="lblMessage" runat="server" Text=""></asp:Label>
      <br />
 <asp:Label CssClass="label" ID="Label2" runat="server" Text="Select time"></asp:Label>
     <br />

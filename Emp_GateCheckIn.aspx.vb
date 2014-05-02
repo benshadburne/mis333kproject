@@ -181,14 +181,15 @@ Partial Class Emp_GateCheckIn
                 If gvCustomers.SelectedRow.Cells(9).Text = "0" Then
                     'they have not paid any real money for their ticket
                     'they do not get miles
+
                 Else
                     'give them miles
                     intMiles = CInt(gvCustomers.SelectedRow.Cells(5).Text)
                     intMiles += CInt(strMiles)
                     DBCustomer.UpdateMiles(intMiles.ToString, gvCustomers.SelectedRow.Cells(1).Text)
                     'run code to indicate they were on the flight
-                    DBTickets.MarkOnFlight(gvCustomers.SelectedRow.Cells(7).Text)
                 End If
+                DBTickets.MarkOnFlight(gvCustomers.SelectedRow.Cells(7).Text)
             Else
                 ''they didn 't make it to the flight
                 ''send them an email

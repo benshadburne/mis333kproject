@@ -67,6 +67,10 @@ Public Class DBFlightSearch
         UseSPToRetrieveRecords("usp_IndirectJourney_Get_PresentFuture", mdatasetIndirectStart, mMyViewStart, "tblJourneysEmptySeats", aryParamName, aryParamValue)
         UseSPToRetrieveRecords("usp_IndirectJourney_Get_PresentFuture", mdatasetIndirectFinish, mMyViewFinish, "tblJourneysEmptySeats", aryParamName, aryParamValue)
 
+        MyViewStart.RowFilter = "Departed = 'N'"
+        MyView.RowFilter = "Departed = 'N'"
+        MyViewFinish.RowFilter = "Departed = 'N'"
+
         aryParamName = Nothing
         aryParamValue = Nothing
     End Sub
@@ -112,19 +116,19 @@ Public Class DBFlightSearch
 
     Public Sub SearchDirect(strDeparture As String, strEnd As String, strDate As String)
         'everything we'll need for this
-        MyView.RowFilter = "[Departure City] = '" & strDeparture & "' AND [End City] = '" & strEnd & "' AND [Flight Date] = '" & strDate & "'"
+        MyView.RowFilter = "[Departure City] = '" & strDeparture & "' AND [End City] = '" & strEnd & "' AND [Flight Date] = '" & strDate & "' AND Departed = 'N'"
         'for departure time ( AND [Departure Time] >= '" & intTime & "')
     End Sub
 
     Public Sub SearchIndirectStart(strDeparture As String, strEnd As String, strDate As String)
         'everything we'll need for this
-        MyViewStart.RowFilter = "[Departure City] = '" & strDeparture & "' AND [End City] <> '" & strEnd & "' AND [Flight Date] = '" & strDate & "'"
+        MyViewStart.RowFilter = "[Departure City] = '" & strDeparture & "' AND [End City] <> '" & strEnd & "' AND [Flight Date] = '" & strDate & "' AND Departed = 'N'"
     End Sub
 
     Public Sub SearchIndirectFinish(strDeparture As String, strEnd As String, strDate As String, strTime As String)
         'indirect flights have to happen all in one day, or not at all
         MyViewFinish.RowFilter = "[Departure City] = '" & strDeparture & "' AND [End City] = '" & strEnd & "' AND [Flight Date] = '" _
-         & strDate & "' AND [Departure Time] > '" & strTime & "'"
+         & strDate & "' AND [Departure Time] > '" & strTime & "' And Departed = 'N'"
 
     End Sub
 

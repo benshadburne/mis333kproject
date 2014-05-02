@@ -145,7 +145,7 @@ Partial Class _Default
         ddlJourneyID.DataValueField = "JourneyID"
         ddlJourneyID.DataBind()
 
-        DBTickets.GetAdvantageNumbersUsingSP(ddlJourneyID.SelectedValue, Session("ReservationID").ToString)
+        DBTickets.GetActiveAdvantageNumbersUsingSP(ddlJourneyID.SelectedValue, Session("ReservationID").ToString)
         'bind ddl for advantage numbers
         ddlAdvantageNum.DataSource = DBTickets.MyViewAdvantageNumbers
         ddlAdvantageNum.DataValueField = "AdvantageNumber"
@@ -269,9 +269,14 @@ Partial Class _Default
         Next
 
         'sets session("infant") to yes when the infant isn't in a seat but the user is an infant
+        'Try
         If CInt(gvYourReservation.Rows(0).Cells(5).Text) < 3 Then
             Session("Infant") = "Yes"
         End If
+        'Catch ex As Exception
+
+        'End Try
+
 
         'disable seats so that user cannot switch between seat classes
         For i = 0 To 15

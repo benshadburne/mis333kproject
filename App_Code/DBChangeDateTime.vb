@@ -39,6 +39,7 @@ Public Class DBChangeDateTime
         Dim aryJourneyID As New ArrayList
         Dim aryJourneyValue As New ArrayList
         Dim intMilage As Integer
+        Dim intMiles As Integer
 
 
         aryParamName.Add("@JourneyID")
@@ -71,11 +72,10 @@ Public Class DBChangeDateTime
 
                     'first we gotta retrieve their existing miles
                     DBCustomer.SearchCustomerClone(0, 1, MyViewTickets.Table().Rows(j).Item("AdvantageNumber").ToString)
-                    intMilage += CInt(DBCustomer.MyView.Table().Rows(0).Item("Miles"))
-
+                    intMilage += CInt(DBCustomer.MyView.Table().Rows(0).Item("Miles").ToString)
 
                     'update miles on customer profiles with given advantage number
-                    DBCustomer.UpdateMiles(intMilage.ToString, MyViewTickets.Table().Rows(j).Item("AdvantageNumber").ToString)
+                    DBCustomer.UpdateDateTimeMiles(intMilage.ToString, MyViewTickets.Table().Rows(j).Item("AdvantageNumber").ToString)
 
                 End If
 

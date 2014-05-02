@@ -59,7 +59,7 @@ Public Class DBCustomersClone
         'Return: none, but sorts data in the dataview
         'Date: 4/18/2014
 
-        GetAllCustomersCloneUsingSP()
+        GetAllActiveCustomersCloneUsingSP()
 
         'we are doing a partial search
         If intSearchBy = 0 Then
@@ -266,6 +266,21 @@ Public Class DBCustomersClone
         aryParamValues.Add(strAdvantageNumber)
 
         UseSPforInsertOrUpdateQuery("usp_Customers_UpdateMiles", aryParamNames, aryParamValues)
+
+    End Sub
+
+    Public Sub UpdateDateTimeMiles(strMiles As String, strAdvantageNumber As String)
+        'create arrays
+        Dim aryParamNames As New ArrayList
+        Dim aryParamValues As New ArrayList
+
+        aryParamNames.Add("@Miles")
+        aryParamNames.Add("@AdvantageNumber")
+
+        aryParamValues.Add(strMiles)
+        aryParamValues.Add(strAdvantageNumber)
+
+        UseSPforInsertOrUpdateQuery("usp_Customers_UpdateMiles_PlusEqual", aryParamNames, aryParamValues)
 
     End Sub
 

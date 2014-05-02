@@ -24,7 +24,7 @@ Partial Class _Default
 
         'makes sure selected date for first time is today
         If IsPostBack = False Then
-            calFlightSearch.SelectedDate = Date.Parse(strDate).AddDays(1)
+            calFlightSearch.SelectedDate = CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate()))
         End If
         'need to add flights before datasets are loaded
         'define variables
@@ -168,4 +168,17 @@ Partial Class _Default
 
     End Sub
 
+    Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
+        lblMessage.Text = ""
+        AddJourneys()
+        SearchBtn()
+
+        SortandBind()
+
+        'also gotta make second leg stuff invisible
+        gvIndirectFinish.Visible = False
+        lblIndirectFinishC.Visible = False
+        lblIndirectFinish.Visible = False
+        lblCountFinish.Visible = False
+    End Sub
 End Class
