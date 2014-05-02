@@ -71,7 +71,7 @@ Partial Class MasterPage
                     Session.Add("JustLogged", "Yes")
                     Response.Redirect("Cust_CustomerDashboard.aspx")
                 Else
-                    lblMessage.Text = "The username and password combination is incorrect."
+                    lblMessage.Text = "Login Failure."
                     Exit Sub
                 End If
             End If

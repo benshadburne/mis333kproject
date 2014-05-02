@@ -3,21 +3,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-        <div id ="left">
-        <div class ="label-primary">
-            
-            <asp:ValidationSummary ID="ValidationSummary1" runat="server" /><br /><br />
-        </div><asp:Label ID="lblMessage" runat="server" Text="Welcome to the Add Flight Page!"></asp:Label>
-        <div class ="btn">
-            <br /><br />
-            <br /><br />
-        </div><asp:Button ID="btnAdd" runat="server" Text="Add Flight" />
-
+    
+    <div class="center-align">
+        <h1>Add Flight</h1>
     </div>
-
-    <div id ="middle">
-
-<asp:Label ID="Label2" runat="server" Text="Flight Number"></asp:Label><br />
+    
+    <div style="line-height:28px">
+    <asp:Panel CssClass="panel" ID="Panel1" runat="server">
+        <div class="pull-left" style="text-align:right">
+            <asp:Label ID="Label2" runat="server" Text="Flight Number"></asp:Label><br />
             <asp:Label ID="Label3" runat="server" Text="Departure City"></asp:Label><br />
             <asp:Label ID="Label4" runat="server" Text="Arrival City"></asp:Label><br />
             <asp:Label ID="Label5" runat="server" Text="Departure Time"></asp:Label><br />
@@ -27,8 +21,8 @@
 
         
         </div>
-        <div id ="right">
-            <div class ="input-group-lg">
+       
+            <div class="pull-left" style="text-align:left">
                 <asp:TextBox ID="txtFlightNumber" runat="server" MaxLength="3"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="rfvFlightNumber" runat="server" ErrorMessage="Please enter a flight number!" ControlToValidate="txtFlightNumber" Text="*"></asp:RequiredFieldValidator><br />
                 <asp:DropDownList ID="ddlDepartureCity" runat="server"></asp:DropDownList><br />
@@ -79,6 +73,13 @@
                     <asp:ListItem>Sunday</asp:ListItem>
                 </asp:CheckBoxList>
         </div>
-            </div>
+          
+    </asp:Panel>
+        </div>
+    <div class="center-align">
+         <asp:Button CssClass="btn btn-primary" ID="btnAdd" runat="server" Text="Add Flight" />
+           <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
+           
+    </div>
 </asp:Content>
 
