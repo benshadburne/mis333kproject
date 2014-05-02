@@ -311,6 +311,8 @@ Partial Class Emp_ModifyFlight
 
         'call sub to change status of flights that conflict with new flight, and cancel stuff
         FlightModificationCheck()
+
+
     End Sub
 
     Public Sub FlightModificationCheck()
