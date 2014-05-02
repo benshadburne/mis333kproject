@@ -12,6 +12,8 @@ Partial Class _Default
     Dim mAdvantageNumber As Integer
 
 
+
+
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load, calFlightDate.SelectionChanged
 
         'THIS PAGE IS CRASHING BECAUSE THERE IS NO INITIALIZED VALUE FOR Session("ReservationID"). 
@@ -66,7 +68,6 @@ Partial Class _Default
         'fill available textbox
         FillAvailable()
 
-        btn1A.CssClass = "btn-seat.disabled"
     End Sub
 
     Public Sub FillAvailable()
@@ -128,7 +129,7 @@ Partial Class _Default
         Else
             txtAvailable.Text = "Available"
         End If
-        
+
     End Sub
 
     Public Sub LoadDDLs()

@@ -4,6 +4,7 @@ Partial Class Emp_Select_Cust_To_Modify
     Inherits System.Web.UI.Page
 
     Dim CObject As New DBCustomersClone
+    Dim valid As New ClassValidate
 
     Protected Sub gvCustomers_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvCustomers.SelectedIndexChanged
         Session("AdvantageNumber_Selected_By_Manager") = gvCustomers.SelectedRow.Cells(1).Text
@@ -42,6 +43,11 @@ Partial Class Emp_Select_Cust_To_Modify
         'check to make sure a search type is selected
         If txtSearch.Text = "" Then
             lblMessage.Text = "Please enter a search term."
+            Exit Sub
+        End If
+
+        If rblSearchBy.SelectedIndex = 1 And valid.CheckInteger(txtSearch.Text) = -1 Then
+            lblMessage.Text = "Please enter an integer for the advantage number."
             Exit Sub
         End If
 
