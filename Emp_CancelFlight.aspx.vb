@@ -28,14 +28,18 @@ Partial Class Emp_CancelFlight
         If IsPostBack = False Then
             'get all flights into database
             FObject.GetAllActiveFlightsUsingSP()
-            ddlFlights.DataSource = FObject.MyDataSet.Tables("tblFlightClone")
-            ddlFlights.DataTextField = "FlightNumber"
-            ddlFlights.DataBind()
+            LoadDDL()
             ddlFlights.SelectedIndex = 0
             LoadInformationFromFlight(ddlFlights.SelectedIndex)
         End If
 
     End Sub
+    Public Sub LoadDDL()
+        ddlFlights.DataSource = FObject.MyDataSet.Tables("tblFlightClone")
+        ddlFlights.DataTextField = "FlightNumber"
+        ddlFlights.DataBind()
+    End Sub
+
 
     'sub will load all needed information into rest of fields once user enters flight number
     Public Sub LoadInformationFromFlight(intIndex As Integer)
@@ -140,15 +144,17 @@ Partial Class Emp_CancelFlight
     End Sub
 
     Protected Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        lblMessage.Text = ""
         EnterConfirmAbortMode()
     End Sub
 
     Protected Sub btnAbort_Click(sender As Object, e As EventArgs) Handles btnAbort.Click
+        lblMessage.Text = ""
         ProtectedMode()
     End Sub
 
     Protected Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
-
+        lblMessage.Text = ""
         InactivateJourneysRegardlessOfDay(ddlFlights.SelectedItem.ToString)
 
         'make flight invalid
@@ -158,7 +164,7 @@ Partial Class Emp_CancelFlight
 
         'run sub to make all other things inactive
 
-        Response.Redirect("Emp_CancelFlight.aspx")
+        LoadDDL()
 
 
     End Sub
@@ -179,6 +185,7 @@ Partial Class Emp_CancelFlight
     End Sub
 
     Protected Sub ddlFlights_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlFlights.SelectedIndexChanged
+        lblMessage.Text = ""
         LoadInformationFromFlight(ddlFlights.SelectedIndex)
     End Sub
 
