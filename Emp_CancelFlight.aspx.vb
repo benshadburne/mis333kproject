@@ -53,7 +53,10 @@ Partial Class Emp_CancelFlight
         txtArrivalCity.Text = FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("EndCity").ToString
         'load departure time
         strDepartureTimeRaw = FObject.MyDataSet.Tables("tblFlightClone").Rows(intIndex).Item("DepartureTime").ToString
-        If strDepartureTimeRaw.Length = 3 Then
+        If strDepartureTimeRaw = "0" Then
+            strDepartureTimeHour = "00"
+            strDepartureTimeMinute = "00"
+        ElseIf strDepartureTimeRaw.Length = 3 Then
             strDepartureTimeHour = strDepartureTimeRaw.Substring(0, 1)
             strDepartureTimeMinute = strDepartureTimeRaw.Substring(1, 2)
         ElseIf strDepartureTimeRaw.Length = 4 Then

@@ -108,7 +108,9 @@ Partial Class Emp_Cancel_Journey
             Exit Sub
         End If
         CaObject.InactivateSpecificJourney(Session("RecordID").ToString)
+        lblMessage.Text = "You have inactivated Journey #" & Session("RecordID").ToString
         NormalMode()
+        LoadFlightGridView()
     End Sub
 
 
