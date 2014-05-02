@@ -37,6 +37,20 @@ Public Class DBairportclone
 
     End Sub
 
+    Public Function CheckUniqueCity(strCity As String) As Boolean
+        'returns true if input is unique
+        GetALLairportcloneUsingSP()
+
+        For i = 0 To mdatasetairportclone.Tables("tblAirportClone").Rows.Count - 1
+            If strCity.ToUpper = mdatasetairportclone.Tables("tblAirportClone").Rows(i).Item("CityName").ToString.ToUpper Then
+                Return False
+
+            End If
+        Next
+
+        Return True
+    End Function
+
     Public Sub GetTwoairportcloneUsingSP()
         'Author: Aaryaman Singhal
         'Purpose: runs airportclone get all twice -- one for each DDL
@@ -191,7 +205,7 @@ Public Class DBairportclone
     End Sub
 
 
-    Public Sub AddAirport(strSPName As String, strAirportCode As String, strCityName As String)
+    Public Sub AddAirport(strSPName As String, strAirportCode As String, strCityName As String, strState As String)
         'defines array to put parameter names into
         Dim aryParamNames As New ArrayList
         Dim aryParamValues As New ArrayList
@@ -199,11 +213,13 @@ Public Class DBairportclone
         'add parameter names to names array list
         aryParamNames.Add("@AirportCode")
         aryParamNames.Add("@CityName")
+        aryParamNames.Add("@State")
 
 
         'add values to parameter values array list
         aryParamValues.Add(strAirportCode)
         aryParamValues.Add(strCityName)
+        aryParamValues.Add(strState.ToUpper)
 
         UseSPforInsertOrUpdateQuery(strSPName, aryParamNames, aryParamValues)
     End Sub

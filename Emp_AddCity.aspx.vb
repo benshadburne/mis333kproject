@@ -3,6 +3,7 @@ Partial Class Emp_AddCity
     Inherits System.Web.UI.Page
     Dim DBAirport As New DBairportclone
     Dim Validations As New ClassValidate
+    Dim DBZip As New DBZip
 
     'define a counter variable
     Dim i As Integer
@@ -43,14 +44,25 @@ Partial Class Emp_AddCity
             'the record didn't match the one in that row of the database, go to next record
         Next
 
-        'THE CITY NAME CURRENTLY DOES NOT ALLOW CITIES WITH A SPACE IN THEM TO PASS VALIDATION
+        'validate city name
         If Validations.CheckCity(txtCity.Text) = False Then
             lblMessage.Text = "City must begin with a capital letter and only contain letters and spaces"
             Exit Sub
         End If
 
+        'check city unique 
+        If DBAirport.CheckUniqueCity(txtCity.Text) = False Then
+            lblMessage.Text = "That city already has an airport."
+            Exit Sub
+        End If
+
+        'check state
+        If Len(txtState.Text) <> 2 Then
+            lblMessage.Text = "Please enter a two letter US State abbreviation."
+        End If
+
         'add record
-        DBAirport.AddAirport("usp_AirportClone_Add_New", txtAirport.Text.ToUpper, txtCity.Text)
+        DBAirport.AddAirport("usp_AirportClone_Add_New", txtAirport.Text.ToUpper, txtCity.Text, txtState.Text)
 
         'create session variable to track new airport through while we add flight time and mileage to other airports
         Session.Add("NewAirport", txtAirport.Text.ToUpper)

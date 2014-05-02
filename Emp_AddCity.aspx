@@ -23,6 +23,9 @@
         <asp:TextBox ID="txtAirport" runat="server"></asp:TextBox>
         <asp:RequiredFieldValidator ID="rfvAirport" runat="server" ErrorMessage="The airport code must be 3 letters." Text="*" ControlToValidate="txtAirport" ForeColor="Red"></asp:RequiredFieldValidator>
         <br /> 
+        <asp:TextBox ID="txtState" runat="server"></asp:TextBox>
+        <asp:RequiredFieldValidator ID="rfvState" runat="server" ErrorMessage="Enter a 2 letter US State Abbreviation" Text="*" ControlToValidate="txtState" ForeColor="Red"></asp:RequiredFieldValidator>
+        <br /> 
         </div>
             <asp:Label CssClass="h6" ID="lblMessage" runat="server" Text="" ForeColor="Red"></asp:Label>
    <br />
