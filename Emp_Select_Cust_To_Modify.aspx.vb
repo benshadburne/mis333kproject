@@ -46,7 +46,7 @@ Partial Class Emp_Select_Cust_To_Modify
             Exit Sub
         End If
 
-        If rblSearchBy.SelectedIndex = 1 And valid.CheckInteger(txtSearch.Text) = -1 Then
+        If rblSearchBy.SelectedIndex = 1 And valid.CheckIntegerWithSubstring(txtSearch.Text) = False Then
             lblMessage.Text = "Please enter an integer for the advantage number."
             Exit Sub
         End If
