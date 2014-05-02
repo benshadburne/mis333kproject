@@ -239,9 +239,6 @@ Partial Class Emp_ModifyFlight
             intBaseFare = CInt(txtBaseFare.Text)
         End If
 
-
-
-
         'create array list for parameter names
         Dim aryParamNames As New ArrayList
 
