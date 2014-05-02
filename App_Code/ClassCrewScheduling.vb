@@ -379,13 +379,13 @@ Public Class ClassCrewScheduling
     Public Function FindAvailableCaptains(strDate As String, intDepartureTime As Integer, intArriveTime As Integer) As ArrayList
         Dim intCaptains As Integer
         Dim aryCaptains As New ArrayList
-        Dim intCounter As Integer
+        Dim bolAvailable As Boolean
         'get all captains who are active employees
         GetCaptains()
         'this is the number of captains there are
         intCaptains = mdatasetCaptain.Tables("tblCaptain").Rows.Count - 1
 
-        intCounter = 0
+        bolAvailable = True
 
         'leep through all captains
         For i = 0 To intCaptains
@@ -397,43 +397,39 @@ Public Class ClassCrewScheduling
                 'run a loop to see if they are busy at the times we are looking for
                 For j = 0 To (mdatasetCaptainBusy.Tables("tblCaptain").Rows.Count - 1)
                     'checks to see if inputted departure is between start and end of journey they are on
-                    If CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) <= intDepartureTime Or _
-                        intDepartureTime <= CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("ArriveTime")) Then
-                        'the captain is busy at this time don't add them to the array of available captains
-                    Else
-                        'check to see if inputted arrive time is between start and end of journey we are looping through
-                        If CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) <= intArriveTime Or _
-                        intArriveTime <= CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("ArriveTime")) Then
-                            'the captain is busy, don't add them to the arraylist
-                        Else
-                            'captain is not busy during arrival or departure, check to see if would take off before journey 
-                            'and would land after journey we are looking at
-                            If intDepartureTime <= CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) Or _
-                                intArriveTime >= CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("ArriveTime")) Then
-                                'captain is airborne during another flight he/she is on
-                            Else
-                                'captain is free to be on this flight, add them to arraylist
-                                intCounter += 1
-                            End If
+                    'if inputtedd departure is less than departure AND inputted arrival is less than departure
+                    If intDepartureTime < CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) And _
+                        intArriveTime <= CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) Then
+                        'the captain is free at this time
+                        'dont do anything
 
-                        End If
+                        'check if inputted departure is after departure on other flight AND inputted departure
+                        'check to see if inputted arrive time is between start and end of journey we are looping through
+                    ElseIf intDepartureTime > CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) And _
+                        intDepartureTime > CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("ArriveTime")) Then
+                        
+                        'the captain is free
+                    Else
+                        'captain is busy, don't add them. 
+                        bolAvailable = False
 
                     End If
 
                 Next
-                ' check if intcounter is equal to the number of times we looped
-                If intCounter = mdatasetCaptainBusy.Tables("tblCaptain").Rows.Count Then
+                ' check if bolAvailable is still true after going through all journeys
+                If bolAvailable = True Then
                     'captain is free despite all other journeys they are one
                     aryCaptains.Add(mdatasetCaptain.Tables("tblCaptain").Rows(i).Item("EmpID").ToString)
                 Else
                     'one of the captain's journeys conflicted with the times we needed
+                    'dont add them
                 End If
             Else
                 'Captain is free all day
                 aryCaptains.Add(mdatasetCaptain.Tables("tblCaptain").Rows(i).Item("EmpID").ToString)
             End If
             'reset the counter
-            intCounter = 0
+            bolAvailable = True
         Next
 
         Return aryCaptains
@@ -442,80 +438,76 @@ Public Class ClassCrewScheduling
     Public Function FindAvailableCoCaptains(strDate As String, intDepartureTime As Integer, intArriveTime As Integer) As ArrayList
         Dim intCoCaptains As Integer
         Dim aryCoCaptains As New ArrayList
-        Dim intCounter As Integer
+        Dim bolAvailable As Boolean
         'get all CoCaptains who are active employees
         GetCoCaptains()
         'this is the number of CoCaptains there are
-        intCoCaptains = mdatasetCoCaptain.Tables("tblCoCaptain").Rows.Count - 1
+        intCoCaptains = mdatasetCaptain.Tables("tblCaptain").Rows.Count - 1
 
-        intCounter = 0
+        bolAvailable = True
 
         'leep through all CoCaptains
         For i = 0 To intCoCaptains
-            'check to see if CoCoCaptain is on any journeys on that date
-            GetCoCaptainBusy(mdatasetCoCaptain.Tables("tblCoCaptain").Rows(i).Item("EmpID").ToString, strDate)
+            'check to see if captain is on any journeys on that date
+            GetCaptainBusy(mdatasetCaptain.Tables("tblCaptain").Rows(i).Item("EmpID").ToString, strDate)
             'if there are no records returned for that date
-            If mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows.Count <> 0 Then
-                'CoCaptain has other flights that day 
+            If mdatasetCaptainBusy.Tables("tblCaptain").Rows.Count <> 0 Then
+                'captain has other flights that day 
                 'run a loop to see if they are busy at the times we are looking for
-                For j = 0 To (mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows.Count - 1)
+                For j = 0 To (mdatasetCaptainBusy.Tables("tblCaptain").Rows.Count - 1)
                     'checks to see if inputted departure is between start and end of journey they are on
-                    If CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("DepartureTime")) <= intDepartureTime Or _
-                        intDepartureTime <= CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("ArriveTime")) Then
-                        'the CoCaptain is busy at this time don't add them to the array of available CoCaptains
-                    Else
-                        'check to see if inputted arrive time is between start and end of journey we are looping through
-                        If CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("DepartureTime")) <= intArriveTime Or _
-                        intArriveTime <= CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("ArriveTime")) Then
-                            'the CoCaptain is busy, don't add them to the arraylist
-                        Else
-                            'CoCaptain is not busy during arrival or departure, check to see if would take off before journey 
-                            'and would land after journey we are looking at
-                            If intDepartureTime <= CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("DepartureTime")) Or _
-                                intArriveTime >= CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("ArriveTime")) Then
-                                'CoCaptain is airborne during another flight he/she is on
-                            Else
-                                'CoCaptain is free to be on this flight, add them to arraylist
-                                intCounter += 1
-                            End If
+                    'if inputtedd departure is less than departure AND inputted arrival is less than departure
+                    If intDepartureTime < CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) And _
+                        intArriveTime <= CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) Then
+                        'the captain is free at this time
+                        'dont do anything
 
-                        End If
+                        'check if inputted departure is after departure on other flight AND inputted departure
+                        'check to see if inputted arrive time is between start and end of journey we are looping through
+                    ElseIf intDepartureTime > CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) And _
+                        intDepartureTime > CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("ArriveTime")) Then
+
+                        'the captain is free
+                    Else
+                        'captain is busy, don't add them. 
+                        bolAvailable = False
 
                     End If
 
                 Next
-                ' check if intcounter is equal to the number of times we looped
-                If intCounter = mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows.Count Then
-                    'CoCaptain is free despite all other journeys they are one
-                    aryCoCaptains.Add(mdatasetCoCaptain.Tables("tblCoCaptain").Rows(i).Item("EmpID").ToString)
+                ' check if bolAvailable is still true after going through all journeys
+                If bolAvailable = True Then
+                    'captain is free despite all other journeys they are one
+                    aryCoCaptains.Add(mdatasetCaptain.Tables("tblCaptain").Rows(i).Item("EmpID").ToString)
                 Else
-                    'one of the CoCaptain's journeys conflicted with the times we needed
+                    'one of the captain's journeys conflicted with the times we needed
+                    'dont add them
                 End If
             Else
-                'CoCaptain is free all day
-                aryCoCaptains.Add(mdatasetCoCaptain.Tables("tblCoCaptain").Rows(i).Item("EmpID").ToString)
+                'Captain is free all day
+                aryCoCaptains.Add(mdatasetCaptain.Tables("tblCaptain").Rows(i).Item("EmpID").ToString)
             End If
             'reset the counter
-            intCounter = 0
+            bolAvailable = True
         Next
 
         Return aryCoCaptains
     End Function
 
-    Public Function FindAvailableCabin(strDate As String, intDepartureTime As Integer, intArriveTime As Integer) As ArrayList
-        Dim intCabin As Integer
-        Dim aryCabin As New ArrayList
-        Dim intCounter As Integer
-        'get all Cabin who are active employees
+    Public Function FindAvailableCabins(strDate As String, intDepartureTime As Integer, intArriveTime As Integer) As ArrayList
+        Dim intCabins As Integer
+        Dim aryCabins As New ArrayList
+        Dim bolAvailable As Boolean
+        'get all Cabins who are active employees
         GetCabin()
-        'this is the number of Cabin there are
-        intCabin = mdatasetCabin.Tables("tblCabin").Rows.Count - 1
+        'this is the number of Cabins there are
+        intCabins = mdatasetCabin.Tables("tblCabin").Rows.Count - 1
 
-        intCounter = 0
+        bolAvailable = True
 
-        'leep through all Cabin
-        For i = 0 To intCabin
-            'check to see if CoCabin is on any journeys on that date
+        'leep through all Cabins
+        For i = 0 To intCabins
+            'check to see if Cabin is on any journeys on that date
             GetCabinBusy(mdatasetCabin.Tables("tblCabin").Rows(i).Item("EmpID").ToString, strDate)
             'if there are no records returned for that date
             If mdatasetCabinBusy.Tables("tblCabin").Rows.Count <> 0 Then
@@ -523,46 +515,42 @@ Public Class ClassCrewScheduling
                 'run a loop to see if they are busy at the times we are looking for
                 For j = 0 To (mdatasetCabinBusy.Tables("tblCabin").Rows.Count - 1)
                     'checks to see if inputted departure is between start and end of journey they are on
-                    If CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("DepartureTime")) <= intDepartureTime Or _
-                        intDepartureTime <= CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("ArriveTime")) Then
-                        'the Cabin is busy at this time don't add them to the array of available Cabin
-                    Else
-                        'check to see if inputted arrive time is between start and end of journey we are looping through
-                        If CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("DepartureTime")) <= intArriveTime Or _
-                        intArriveTime <= CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("ArriveTime")) Then
-                            'the Cabin is busy, don't add them to the arraylist
-                        Else
-                            'Cabin is not busy during arrival or departure, check to see if would take off before journey 
-                            'and would land after journey we are looking at
-                            If intDepartureTime <= CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("DepartureTime")) Or _
-                                intArriveTime >= CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("ArriveTime")) Then
-                                'Cabin is airborne during another flight he/she is on
-                            Else
-                                'Cabin is free to be on this flight, add them to arraylist
-                                intCounter += 1
-                            End If
+                    'if inputtedd departure is less than departure AND inputted arrival is less than departure
+                    If intDepartureTime < CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("DepartureTime")) And _
+                        intArriveTime <= CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("DepartureTime")) Then
+                        'the Cabin is free at this time
+                        'dont do anything
 
-                        End If
+                        'check if inputted departure is after departure on other flight AND inputted departure
+                        'check to see if inputted arrive time is between start and end of journey we are looping through
+                    ElseIf intDepartureTime > CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("DepartureTime")) And _
+                        intDepartureTime > CInt(mdatasetCabinBusy.Tables("tblCabin").Rows(j).Item("ArriveTime")) Then
+
+                        'the Cabin is free
+                    Else
+                        'Cabin is busy, don't add them. 
+                        bolAvailable = False
 
                     End If
 
                 Next
-                ' check if intcounter is equal to the number of times we looped
-                If intCounter = mdatasetCabinBusy.Tables("tblCabin").Rows.Count Then
+                ' check if bolAvailable is still true after going through all journeys
+                If bolAvailable = True Then
                     'Cabin is free despite all other journeys they are one
-                    aryCabin.Add(mdatasetCabin.Tables("tblCabin").Rows(i).Item("EmpID").ToString)
+                    aryCabins.Add(mdatasetCabin.Tables("tblCabin").Rows(i).Item("EmpID").ToString)
                 Else
                     'one of the Cabin's journeys conflicted with the times we needed
+                    'dont add them
                 End If
             Else
                 'Cabin is free all day
-                aryCabin.Add(mdatasetCabin.Tables("tblCabin").Rows(i).Item("EmpID").ToString)
+                aryCabins.Add(mdatasetCabin.Tables("tblCabin").Rows(i).Item("EmpID").ToString)
             End If
             'reset the counter
-            intCounter = 0
+            bolAvailable = True
         Next
 
-        Return aryCabin
+        Return aryCabins
     End Function
 
     Public Sub GetCrewByJourney(strJourneyID As String)

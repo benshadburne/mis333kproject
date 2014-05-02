@@ -591,6 +591,25 @@ Partial Class Res_Pay
 
     Protected Sub btnOverride_Click(sender As Object, e As EventArgs) Handles btnOverride.Click
         MakeAllInvisible()
+
+        Dim decSubtotal As Decimal
+        Try
+            decSubtotal = CDec(txtOverride.Text)
+        Catch ex As Exception
+            lblMessage.Text = "Please enter a positive decimal price."
+            Exit Sub
+        End Try
+
+        If decSubtotal < 0 Then
+            lblMessage.Text = "Please enter a positive decimal price."
+            Exit Sub
+        End If
+
+        MakeAllInvisible()
+
+        lblPrice.Text = decSubtotal.ToString("n2")
+
+        ResetAll()
         pnlID.Visible = True
         txtOverride.Visible = True
         txtOverride.Enabled = False
