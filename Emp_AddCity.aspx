@@ -15,15 +15,17 @@
         <asp:Label CssClass="h6" ID="Label1" runat="server" Text="City name:"></asp:Label>
         <br />
         <asp:Label CssClass="h6" ID="Label2" runat="server" Text="Airport Code:"></asp:Label>
+            <br />
+            <asp:Label CssClass="h6" ID="Label7" runat="server" Text="State:"></asp:Label>
         </div>
         <div class="pull-left" style="width:220px; text-align:left">
             <asp:TextBox ID="txtCity" runat="server"></asp:TextBox>
         <asp:RequiredFieldValidator ID="rfvCity" runat="server" ErrorMessage="The city name is a required field." Text="*" ControlToValidate="txtCity" ForeColor="Red"></asp:RequiredFieldValidator>
         <br /> 
-        <asp:TextBox ID="txtAirport" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtAirport" runat="server" MaxLength="3"></asp:TextBox>
         <asp:RequiredFieldValidator ID="rfvAirport" runat="server" ErrorMessage="The airport code must be 3 letters." Text="*" ControlToValidate="txtAirport" ForeColor="Red"></asp:RequiredFieldValidator>
         <br /> 
-        <asp:TextBox ID="txtState" runat="server"></asp:TextBox>
+        <asp:TextBox ID="txtState" runat="server" MaxLength="2"></asp:TextBox>
         <asp:RequiredFieldValidator ID="rfvState" runat="server" ErrorMessage="Enter a 2 letter US State Abbreviation" Text="*" ControlToValidate="txtState" ForeColor="Red"></asp:RequiredFieldValidator>
         <br /> 
         </div>
@@ -44,7 +46,7 @@
             <asp:Label CssClass="h6" ID="lblAirport" runat="server" Text=""></asp:Label>
         </div>
         <div class="pull-left" style="width:220px; text-align:left">
-            <asp:TextBox ID="txtMileage" runat="server"></asp:TextBox>
+            <asp:TextBox ID="txtMileage" runat="server" MaxLength="5"></asp:TextBox>
             <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtMileage" ErrorMessage="The city name is a required field." ForeColor="Red" Text="*"></asp:RequiredFieldValidator>
         <br /> 
             <asp:Label CssClass="h6" ID="Label5" runat="server" Text="Hours"></asp:Label>

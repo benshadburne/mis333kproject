@@ -59,6 +59,12 @@ Partial Class Emp_AddCity
         'check state
         If Len(txtState.Text) <> 2 Then
             lblMessage.Text = "Please enter a two letter US State abbreviation."
+            Exit Sub
+        Else
+            If Validations.CheckLetterWithSubstring(txtState.Text) = False Then
+                lblMessage.Text = "Please enter letters for the state abbreviation."
+                Exit Sub
+            End If
         End If
 
         'add record
@@ -112,16 +118,24 @@ Partial Class Emp_AddCity
 
         Next
 
-
     End Sub
 
     Protected Sub btnAddInfo_Click(sender As Object, e As EventArgs) Handles btnAddInfo.Click
+        'clear form
+        lblAirportMessage.Text = ""
+        lblMessage.Text = ""
+
         'define a variable into which to add the flight time
         Dim strFlightTime As String
 
         'run a validation to make sure that milage is an integer
         If Validations.CheckIntegerWithSubstring(txtMileage.Text) = False Then
             lblAirportMessage.Text = "The mileage must be an integer"
+            Exit Sub
+        End If
+
+        If ddlHours.SelectedIndex = 0 And ddlMinutes.SelectedIndex = 0 Then
+            lblAirportMessage.Text = "Planes do not teleport people instantaneously. Add the flight time."
             Exit Sub
         End If
 
@@ -135,16 +149,16 @@ Partial Class Emp_AddCity
         'Get the records for the all airports (this is necessary to run the loop for the UpdateSessionVariable sub) 
         DBAirport.GetALLairportcloneUsingSP()
 
+        lblMessage.Text = "You successfully added flight time Mileages to " & Session("Airport").ToString
+
         'add the next airport the session variable
         UpdateSessionVariable(Session("Airport"))
-
-        'clear form
-        lblAirportMessage.Text = ""
-        txtMileage.Text = ""
 
         'return DDL to normal
         ddlHours.SelectedIndex = 0
         ddlMinutes.SelectedIndex = 0
+
+        txtMileage.Text = ""
 
     End Sub
 
