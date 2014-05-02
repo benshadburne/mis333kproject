@@ -218,6 +218,14 @@ Partial Class Emp_AddFlight
         'show success message to user
         lblMessage.Text = "You have successfully added flight #" & txtFlightNumber.Text
 
+        ClearTextboxes()
+
+    End Sub
+
+    Private Sub ClearTextboxes()
+        txtBaseFare.Text = ""
+        txtFlightNumber.Text = ""
+        cblDaysToFly.ClearSelection()
     End Sub
 
 
