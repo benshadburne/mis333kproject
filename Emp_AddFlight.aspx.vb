@@ -137,7 +137,7 @@ Partial Class Emp_AddFlight
             Exit Sub
         End Try
 
-        'validate flight number is integer *** NOT CATCHING DECIMALS
+        'validate flight number is integer 
         If VObject.CheckIntegerWithSubstring(txtFlightNumber.Text) = False Then
             lblMessage.Text = "Please enter a positive integer for flight number!"
             Exit Sub
@@ -228,7 +228,7 @@ Partial Class Emp_AddFlight
 
         ClearTextboxes()
 
-        LoadDDL()
+        LoadDDLs()
 
     End Sub
 
