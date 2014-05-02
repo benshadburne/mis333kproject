@@ -26,6 +26,10 @@ Partial Class _Default
         End Try
 
         SortandBind()
+
+        If DBReservations.lblCount = 0 Then
+            lblMessage.Text = "No Results Found"
+        End If
         'lblMessage.Text = Session("UserID").ToString
     End Sub
 
@@ -52,5 +56,10 @@ Partial Class _Default
         Session.Add("FromReservation", "Yes")
         Response.Redirect("Cust_ReservationDetails.aspx")
 
+    End Sub
+
+    
+    Protected Sub btnCustomerDash_Click(sender As Object, e As EventArgs) Handles btnCustomerDash.Click
+        Response.Redirect("Cust_CustomerDashboard.aspx")
     End Sub
 End Class

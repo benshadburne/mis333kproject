@@ -3,7 +3,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" Runat="Server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-
+    
     <div class="header" style="text-align: center;">
 
         <h1>
@@ -26,9 +26,10 @@
 
         </div>
    
-        <div class ="center-block" style="width: 70%;">
-            <div id ="pull-right" style="width: 15%; float:left; text-align: right; line-height: 28px">
-                <asp:Label CssClass="h6" ID="lblFName" runat="server" Text="First Name:"></asp:Label>
+        <div class ="center-block" style="line-height:28px">
+            
+               <div class="pull-left" style="width:350px;text-align:right">
+                 <asp:Label CssClass="h6" ID="lblFName" runat="server" Text="First Name:"></asp:Label>
                 <br />
                 <asp:Label CssClass="h6" ID="lblMI" runat="server" Text="Middle Initial:"></asp:Label>
                 <br />
@@ -48,7 +49,7 @@
                 <br />
                 <asp:Label class="h6" ID="lblPhone" runat="server" Text="Phone:"></asp:Label>
             </div>
-            <div id ="center-block" style="text-align:center">
+                <div class="pull-left" style="width:300px; text-align:left;padding-left:10px">
                 <asp:TextBox ID="txtFName" class="text-left" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtFName" ErrorMessage="First name required." ForeColor="Red">*</asp:RequiredFieldValidator>
                 <br />
@@ -74,9 +75,9 @@
                 <br />
                 <asp:TextBox ID="txtPhone" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="txtPhone" ErrorMessage="Phone number required." ForeColor="Red">*</asp:RequiredFieldValidator>
-                <br />
+                </div>
             </div>
-    <div class ="center-block">
+    <div class ="center-block" style="text-align:center">
            
             
             <asp:Label CssClass="h6" ID="lblErrorMessage" runat="server" Text=""></asp:Label>

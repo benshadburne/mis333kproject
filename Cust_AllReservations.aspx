@@ -19,12 +19,13 @@
         <div class="pull-right">
             <asp:Label CssClass="label" ID="lblCountReservations" runat="server" Text="Count:"></asp:Label></div>
          <br />
-         <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
-         <asp:GridView class="table" ID="gvAllReservations" runat="server" AutoGenerateSelectButton="True" EmptyDataText="No Results Found">
+         <asp:Label CssClass="h6" ID="lblMessage" runat="server" Text=""></asp:Label>
+         <asp:GridView class="table" ID="gvAllReservations" runat="server" AutoGenerateSelectButton="True">
         </asp:GridView>
            
-
-
+        <div style="text-align:center">
+        <asp:Button CssClass="btn btn-primary" ID="btnCustomerDash" runat="server" Text="Customer Dashboard" />
+            </div>
     </div>
     
 </asp:Content>

@@ -15,9 +15,9 @@
         <br />
         <br />
         <div class="pull-left" style="word-spacing:10px; min-width: 300px; width: 100%">
-        <asp:Button CssClass="btn" ID="btnHideTickets" runat="server" Text="Show Tickets" />
-        <asp:Button CssClass="btn" ID="btnHideSeats" runat="server" Text="Show Seats" />
-            <asp:Button CssClass="btn" ID="btnHideDates" runat="server" Text="Show Dates" />
+        <asp:Button CssClass="btn btn-primary" ID="btnHideTickets" runat="server" Text="Show Tickets" />
+        <asp:Button CssClass="btn btn-primary" ID="btnHideSeats" runat="server" Text="Show Seats" />
+            <asp:Button CssClass="btn btn-primary" ID="btnHideDates" runat="server" Text="Show Dates" />
         <br />
              <div class="pull-left"  style="word-spacing: 0px; width:150px">
         <asp:Label CssClass="h6" ID="Label5" runat="server" Text="Choose the Flight/Date:"></asp:Label>
@@ -56,10 +56,11 @@
             
         <div style="width: 100%; text-align: center" class="pull-left">
             
-            <asp:Label CssClass="label" ID="Label6" runat="server" Text="Front of Plane" ></asp:Label>
+            <asp:Label CssClass="h6" ID="Label6" runat="server" Text="Front of Plane" ></asp:Label>
        </div>
                      
           <div class="pull-left" style="text-align:center; width: 449px">
+              <div class="pull-right" style="width:200px">
               <asp:Button class="btn-seat" ID="btn1A" runat="server" Text="1A" />
               <br />
               <asp:Button class="btn-seat" ID="btn2A" runat="server" Text="2A" />
@@ -73,11 +74,12 @@
               <asp:Button class="btn-seat" ID="btn5A" runat="server" Text="5A" />
               <asp:Button class="btn-seat" ID="btn5B" runat="server" Text="5B" />
                 <br />
-                 
+                 </div>
               </div>
 
 
       <div class="pull-right" style="text-align: center; width: 449px">
+          <div class="pull-left" style="width:200px">
           <asp:Button class="btn-seat" ID="btn1B" runat="server" Text="1B" />
               <br />
               <asp:Button class="btn-seat" ID="btn2B" runat="server" Text="2B" />
@@ -91,31 +93,32 @@
               <asp:Button class="btn-seat" ID="btn5C" runat="server" Text="5C" />
               <asp:Button class="btn-seat" ID="btn5D" runat="server" Text="5D" />
                 <br />
+              </div>
           </div>
       
             <div style="width: 100%; text-align: center" class="pull-left">
-            <asp:Label CssClass="label" ID="Label7" runat="server" Text="Rear of Plane" ></asp:Label>
+            <asp:Label CssClass="h6" ID="Label7" runat="server" Text="Rear of Plane" ></asp:Label>
        </div>
 
             <div class="center-block">
                 <h6>Legend:</h6> 
                <div class="pull-left" style="padding-right:20px">
-                   <asp:Label CssClass="h6" ID="Label9" runat="server" Text="Active Seat"></asp:Label><asp:Button CssClass="btn-sm" ID="Button1" runat="server" Text="XX" BackColor="Green" />
+                   <asp:Label CssClass="h6" ID="Label9" runat="server" Text="Active Seat: "></asp:Label><asp:Button CssClass="btn-seat btn-sm" ID="Button1" runat="server" Text="XX" BackColor="Green" />
                </div>
                 <div class="pull-left" style="padding-right:20px">
-                   <asp:Label CssClass="h6" ID="Label10" runat="server" Text="On Reservation"></asp:Label><asp:Button CssClass="btn-sm" ID="Button2" runat="server" Text="XX" BackColor="Blue" />
+                   <asp:Label CssClass="h6" ID="Label10" runat="server" Text="On Reservation: "></asp:Label><asp:Button CssClass="btn-seat btn-sm" ID="Button2" runat="server" Text="XX" BackColor="Blue" />
                </div>
                 <div class="pull-left" style="padding-right:20px">
-                   <asp:Label CssClass="h6" ID="Label11" runat="server" Text="Not on Reservation"></asp:Label><asp:Button CssClass="btn-sm" ID="Button3" runat="server" Text="XX" BackColor="Coral" />
+                   <asp:Label CssClass="h6" ID="Label11" runat="server" Text="Not on Reservation: "></asp:Label><asp:Button CssClass="btn-seat btn-sm" ID="Button3" runat="server" Text="XX" BackColor="Coral" />
                </div>
                 <div class="pull-left" style="padding-right:20px">
-                   <asp:Label CssClass="h6" ID="Label12" runat="server" Text="Empty Seat"></asp:Label><asp:Button CssClass="btn-sm" ID="Button4" runat="server" Text="XX" BackColor="LightGrey" />
+                   <asp:Label CssClass="h6" ID="Label12" runat="server" Text="Empty Seat: "></asp:Label><asp:Button CssClass="btn-seat btn-sm" ID="Button4" runat="server" Text="XX" BackColor="LightGrey" />
                </div>
                 <div class="pull-left" style="padding-right:20px">
-                   <asp:Label CssClass="h6" ID="Label13" runat="server" Text="Infant in Seat"></asp:Label><asp:Button CssClass="btn-sm" ID="Button5" runat="server" Text="XXi" BackColor="Green" />
+                   <asp:Label CssClass="h6" ID="Label13" runat="server" Text="Infant in Seat: "></asp:Label><asp:Button CssClass="btn-seat btn-sm" ID="Button5" runat="server" Text="XXi" BackColor="Green" />
                </div>
                 <div class="pull-left">
-                   <asp:Label CssClass="h6" ID="Label14" runat="server" Text="Infant is user"></asp:Label><asp:Button CssClass="btn-sm" ID="Button6" runat="server" Text="XXi*" BackColor="Green" />
+                   <asp:Label CssClass="h6" ID="Label14" runat="server" Text="Infant is user: "></asp:Label><asp:Button CssClass="btn-seat btn-sm" ID="Button6" runat="server" Text="XXi*" BackColor="Green" />
                </div> 
             </div>
 
@@ -147,7 +150,7 @@
                 <asp:Label CssClass="label" ID="Label4" runat="server" Text="(Making a change will require you to pick new seats and pay a $50 fee)" ForeColor="Gray" Font-Size="XX-Small"></asp:Label>
                 <br />
                 <br />
-                <asp:Button CssClass="btn" ID="btnReservationChange" runat="server" Text="Make Reservation Change" />
+                <asp:Button CssClass="btn-seat" ID="btnReservationChange" runat="server" Text="Make Reservation Change" />
             </div>
 
         </asp:Panel>

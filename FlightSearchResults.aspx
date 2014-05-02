@@ -107,17 +107,15 @@
              <asp:Label class="label" ID="Label4" runat="server" Text="Departing City" ForeColor="Black" Font-Size="Small"></asp:Label>
             <br/> 
               <br/> 
-              <asp:DropDownList class="dropdown" ID="ddlDepart" runat="server" DataSourceID="SqlDataSource2" DataTextField="AirportCode" DataValueField="AirportCode"></asp:DropDownList>
-             <asp:SqlDataSource ID="SqlDataSource2" runat="server" ConnectionString="Data Source=missql.mccombs.utexas.edu;Initial Catalog=MIS333K_20142_Team06;User ID=msbcf819;Password=Databasepassword5" ProviderName="System.Data.SqlClient" SelectCommand="SELECT * FROM [tblAirportClone]"></asp:SqlDataSource>
-             <asp:SqlDataSource ID="AirportCode" runat="server" ConnectionString="<%$ ConnectionStrings:MIS333K_20142_Team06ConnectionString2 %>" SelectCommand="SELECT [AirportCode] FROM [tblAirport]"></asp:SqlDataSource>
-        </div>
+              <asp:DropDownList class="dropdown" ID="ddlDepart" runat="server" DataSourceID="SqlDataSource1" DataTextField="AirportCode" DataValueField="AirportCode"></asp:DropDownList>
+             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:MIS333K_20142_Team06ConnectionString3 %>" SelectCommand="SELECT [AirportCode] FROM [tblAirportClone]"></asp:SqlDataSource>
+             </div>
 
         <div class="pull-left" style="width: 30%; min-width:40px; height: 67px;">
              <asp:Label class="label" ID="Label5" runat="server" Text="Arrival City" ForeColor="Black" Font-Size="Small"></asp:Label>
             <br/> 
               <br/> 
-            <asp:DropDownList class="dropdown" ID="ddlArrival" runat="server" DataSourceID="SqlDataSource2" DataTextField="AirportCode" DataValueField="AirportCode"></asp:DropDownList>
-             <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:MIS333K_20142_Team06ConnectionString2 %>" SelectCommand="SELECT [AirportCode] FROM [tblAirport]"></asp:SqlDataSource>
+            <asp:DropDownList class="dropdown" ID="ddlArrival" runat="server" DataSourceID="SqlDataSource1" DataTextField="AirportCode" DataValueField="AirportCode"></asp:DropDownList>
         </div>
 
             </div>

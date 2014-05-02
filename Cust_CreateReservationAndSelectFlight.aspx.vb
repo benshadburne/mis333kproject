@@ -113,6 +113,8 @@ Partial Class Cust_CreateReservationAndSelectFlight
             ddlAdult.Visible = False
             ddlChildren.Visible = False
             ddlBabies.Visible = False
+            pnlTripType.Visible = False
+            pnlPeopleType.Visible = False
 
             'make the add as final leg button visisble
             If CInt(Session("JourneyNumber")) <> 0 Then
