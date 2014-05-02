@@ -191,11 +191,7 @@ Partial Class Emp_ModifyEmployee
         aryParamValues.Add(txtAddress.Text)
         aryParamValues.Add(txtZip.Text)
         aryParamValues.Add(txtPhoneNumber.Text)
-        If Session("UserType").ToString = "Manager" Then
-            aryParamValues.Add(Session("RecordID").ToString)
-        Else
-            aryParamValues.Add(Session("UserID").ToString)
-        End If
+        aryParamValues.Add(Session("UserID").ToString)
         aryParamValues.Add(ddlActive.SelectedItem.ToString)
 
         'call stored procedure to modify current employee
