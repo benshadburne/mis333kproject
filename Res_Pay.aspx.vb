@@ -135,7 +135,6 @@ Partial Class Res_Pay
             button.Text = button.Text.Substring(0, 2)
         Next
 
-
         'basically it does a test in each step
         For i = 0 To DBSeats.lblCountAdvantage - 1
             'so basically, there can be more than 16 entries in the myviewadvantage dataset, so we have to loop to find which seat is being chosen
@@ -343,9 +342,6 @@ Partial Class Res_Pay
                 decBaseFare += decFirstClassPremium
             End If
             decAgeDiscount = Calculate.CalculateAgeDiscount(intAge, decBaseFare)
-            If FirstClassSelected() = True Then
-                decFirstClassPremium = Calculate.CalculateFirstClass(decBaseFare)
-            End If
 
             'use if statement to see if we should apply an internet discount
             If Session("UserType").ToString = "Customer" Then
@@ -375,7 +371,7 @@ Partial Class Res_Pay
             lblMiles.Text = ""
 
             lblCost.Visible = True
-            lblCost.Text = "This ticket will cost you " & FormatCurrency(decSubtotal.ToString, 2) & "."
+            lblCost.Text = "This ticket will cost you " & FormatCurrency(decSubtotal.ToString, 2) & " plus 7.75 % tax (calculated on your total)."
 
         End If
 
