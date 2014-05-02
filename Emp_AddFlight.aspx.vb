@@ -81,17 +81,23 @@ Partial Class Emp_AddFlight
 
         Next
 
-        'validate that flight number is unique ***THIS NEEDS TO BE MADE OO COMPLIANT
-        FObject.RunSPwithOneParam("usp_FlightClone_Get_One", "@FlightNumber", txtFlightNumber.Text)
-        If FObject.MyDataSet.Tables("tblFlightsClone").Rows.Count <> 0 Then
-            lblMessage.Text = "Please enter a unique flight number!"
-            Exit Sub
-        End If
+        Try
+            intFlightNumber = CInt(txtFlightNumber.Text)
+        Catch ex As Exception
+            lblMessage.Text = "Please enter a positive integer for flight number!"
+        End Try
 
         'validate flight number is integer *** NOT CATCHING DECIMALS
         intFlightNumber = VObject.CheckInteger(txtFlightNumber.Text)
         If intFlightNumber < 0 Then
-            lblMessage.Text = "Please enter an integer for flight number!"
+            lblMessage.Text = "Please enter a positive integer for flight number!"
+            Exit Sub
+        End If
+
+        'validate that flight number is unique ***THIS NEEDS TO BE MADE OO COMPLIANT
+        FObject.RunSPwithOneParam("usp_FlightClone_Get_One", "@FlightNumber", txtFlightNumber.Text)
+        If FObject.MyDataSet.Tables("tblFlightsClone").Rows.Count <> 0 Then
+            lblMessage.Text = "Please enter a unique flight number!"
             Exit Sub
         End If
 
