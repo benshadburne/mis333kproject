@@ -158,12 +158,12 @@ Public Class DBEmployee
 
     Public Sub FindEmpID(strEmpID As String)
         'run stored procedure to find selected emp id
-        RunSPwithOneParam("usp_EmployeeClone_Find_By_EmpID", "EmpID", strEmpID)
+        RunSPwithOneParam("usp_EmployeeClone_Find_By_EmpID", "@EmpID", strEmpID)
     End Sub
 
     Public Sub FindActiveEmpID(strEmpID As String)
         'run stored procedure to find selected emp id
-        RunSPwithOneParam("usp_EmployeeClone_Find_Active_By_EmpID", "EmpID", strEmpID)
+        RunSPwithOneParam("usp_EmployeeClone_Find_Active_By_EmpID", "@EmpID", strEmpID)
     End Sub
 
     Public Function CheckEmpExists(strEmpID As String) As Boolean

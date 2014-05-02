@@ -19,19 +19,22 @@ Partial Class _Default
             Response.Redirect("Emp_EmployeeDashboard.aspx")
 
         Else
-            calFlightSearch.SelectedDate = CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate))
+            If IsPostBack = False Then
+                calFlightSearch.SelectedDate = CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate))
 
-            If Session("UserType").ToString = "Manager" Then
-                'let them see the schedule for a crew member
-                LoadDDL()
-                ddlCrew.Visible = True
-                LoadScheduleGridView()
-            Else
-                'load the page normally
-                LoadScheduleGridView()
+                If Session("UserType").ToString = "Manager" Then
+                    'let them see the schedule for a crew member
+                    LoadDDL()
+                    ddlCrew.Visible = True
+                    LoadScheduleGridView()
+                Else
+                    'load the page normally
+                    LoadScheduleGridView()
 
+                End If
             End If
         End If
+
     End Sub
 
     Public Sub LoadScheduleGridView()
@@ -44,7 +47,7 @@ Partial Class _Default
             DBEmployee.FindActiveEmpID(ddlCrew.SelectedValue.ToString)
         End If
 
-        intEmpType = CInt(DBEmployee.dsEmployees.Tables("tblEmployeesClone").Rows(1).Item("EmpType"))
+        intEmpType = CInt(DBEmployee.dsEmployees.Tables("tblEmployeesClone").Rows(0).Item("EmpType"))
 
         strSQLDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
 
@@ -75,6 +78,10 @@ Partial Class _Default
     End Sub
 
     Protected Sub calFlightSearch_SelectionChanged(sender As Object, e As EventArgs) Handles calFlightSearch.SelectionChanged
+        LoadScheduleGridView()
+    End Sub
+
+    Protected Sub ddlCrew_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlCrew.SelectedIndexChanged
         LoadScheduleGridView()
     End Sub
 End Class
