@@ -9,6 +9,18 @@ Partial Class Res_SelectCustomer
     Dim CustomerDB As New DBCustomersClone
     Dim Validation As New ClassValidate
     Dim DBCancel As New CancelReservation
+    Dim valid As New ClassValidate
+    Dim CObject As New DBCustomersClone
+
+    Public Sub LoadGridView()
+        CObject.SearchCustomerClone(rblSearchType.SelectedIndex, rblSearchBy.SelectedIndex, txtSearch.Text)
+        gvCustomers.DataSource = CObject.MyView
+        gvCustomers.DataBind()
+
+        If gvCustomers.Rows.Count = 0 Then
+            lblMessage.Text = "Your search returned no records. Please try again."
+        End If
+    End Sub
 
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -278,11 +290,20 @@ Partial Class Res_SelectCustomer
             Exit Sub
         End If
 
+        'Check to make sure the search for advantage number is a number
+        If rblSearchBy.SelectedIndex = 1 And valid.CheckIntegerWithSubstring(txtSearch.Text) = False Then
+            lblMessage.Text = "Please enter an integer for the advantage number search."
+            Exit Sub
+        End If
+
         If rblSearchType.SelectedIndex = -1 Then
             lblMessage.Text = "Please select a search type."
             Exit Sub
         End If
-        CustomerDB.SearchCustomerClone(rblSearchType.SelectedIndex, rblSearchBy.SelectedIndex, txtSearch.Text)
+
+        'Load the gridview
+        LoadGridView()
+
     End Sub
 
     Protected Sub rblSearchBy_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rblSearchBy.SelectedIndexChanged

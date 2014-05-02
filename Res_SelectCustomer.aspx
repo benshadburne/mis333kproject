@@ -23,8 +23,8 @@
         <br />
 
         <br />
-        
-
+        <asp:Label ID="lblMessage" runat="server"></asp:Label>
+        <br />
         <asp:TextBox ID="txtSearch" runat="server" Width ="100px"></asp:TextBox>
 
         <br />
@@ -62,7 +62,7 @@
 
         </asp:Panel>
 
-    <asp:Label ID="lblMessage" runat="server"></asp:Label>
+    
     <br />
     <asp:GridView ID="gvCustomers" runat="server">
         <Columns>
