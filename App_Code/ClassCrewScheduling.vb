@@ -595,7 +595,7 @@ Public Class ClassCrewScheduling
         Dim aryNames As New ArrayList
         Dim aryValues As New ArrayList
 
-        aryNames.Add("EmpID")
+        aryNames.Add("@EmpID")
         aryNames.Add("@Date")
 
         aryValues.Add(strEmpID)
@@ -608,7 +608,7 @@ Public Class ClassCrewScheduling
         Dim aryNames As New ArrayList
         Dim aryValues As New ArrayList
 
-        aryNames.Add("EmpID")
+        aryNames.Add("@EmpID")
         aryNames.Add("@Date")
 
         aryValues.Add(strEmpID)
@@ -621,7 +621,7 @@ Public Class ClassCrewScheduling
         Dim aryNames As New ArrayList
         Dim aryValues As New ArrayList
 
-        aryNames.Add("EmpID")
+        aryNames.Add("@EmpID")
         aryNames.Add("@Date")
 
         aryValues.Add(strEmpID)

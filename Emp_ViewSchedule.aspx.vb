@@ -7,8 +7,6 @@ Partial Class _Default
     Dim DBDate As New DBdate
     Dim DBFlightSearch As New DBFlightSearch
 
-
-
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
         If Session("UserType") Is Nothing Then
@@ -50,8 +48,13 @@ Partial Class _Default
         intEmpType = CInt(DBEmployee.dsEmployees.Tables("tblEmployeesClone").Rows(0).Item("EmpType"))
 
         strSQLDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
+        If Session("UserType").ToString = "Crew" Then
 
-        DBCrew.GetSchedule(intEmpType, Session("UserID").ToString, strSQLDate)
+            DBCrew.GetSchedule(intEmpType, Session("UserID").ToString, strSQLDate)
+        Else
+            DBCrew.GetSchedule(intEmpType, DBEmployee.dsEmployees.Tables("tblEmployeesClone").Rows(0).Item("EmpID").ToString, strSQLDate)
+        End If
+
 
         gvSchedule.DataSource = DBCrew.MyDataSetCaptain.Tables("tblSchedule")
         gvSchedule.DataBind()
