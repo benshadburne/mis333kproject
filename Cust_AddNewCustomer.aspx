@@ -53,7 +53,7 @@
                 <asp:TextBox ID="txtFName" class="text-left" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtFName" ErrorMessage="First name required." ForeColor="Red">*</asp:RequiredFieldValidator>
                 <br />
-                <asp:TextBox ID="txtMI" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtMI" runat="server" MaxLength="1"></asp:TextBox>
                 <br />
                 <asp:TextBox ID="txtLName" class="text-left" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtLName" ErrorMessage="Last name required." ForeColor="Red">*</asp:RequiredFieldValidator>
@@ -65,7 +65,7 @@
                 <br />
                 <asp:TextBox ID="txtCity" runat="server"></asp:TextBox>
                 <br />
-                <asp:TextBox ID="txtState" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtState" runat="server" MaxLength="2"></asp:TextBox>
                 <br />
                 <asp:TextBox ID="txtZip" runat="server"></asp:TextBox>
                 <br />
@@ -73,7 +73,7 @@
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator5" runat="server" ControlToValidate="txtEmail" ErrorMessage="Email address required." ForeColor="Red">*</asp:RequiredFieldValidator>
                 <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtEmail" ErrorMessage="Email address needs to be formatted correctly." ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*">*</asp:RegularExpressionValidator>
                 <br />
-                <asp:TextBox ID="txtPhone" runat="server"></asp:TextBox>
+                <asp:TextBox ID="txtPhone" runat="server" MaxLength="10"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator6" runat="server" ControlToValidate="txtPhone" ErrorMessage="Phone number required." ForeColor="Red">*</asp:RequiredFieldValidator>
                 </div>
             </div>
