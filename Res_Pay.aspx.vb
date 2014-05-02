@@ -37,7 +37,6 @@ Partial Class Res_Pay
         'check to see if there is a running price subtotal on the page
 
         If IsPostBack = False Then
-            'Session("ActiveUser") = Session("Login").ToString
             DBTickets.GetTicketsInReservationForPricing(Session("ReservationID").ToString)
             Session("TicketCount") = DBTickets.MyDataSetOne.Tables("tblTickets").Rows.Count - 1
             If Session("TicketRecord") Is Nothing Then
@@ -517,6 +516,15 @@ Partial Class Res_Pay
 
         gvTickets.SelectedRow.Style.Add("background-color", "#ffcccc")
 
+        DBCustomer.FindCustomersByAdvantageNumber(CInt(gvTickets.SelectedRow.Cells(3).Text))
+
+        DBJourney.GetOneJourney(CInt(gvTickets.SelectedRow.Cells(4).Text))
+
+        lblActive.Text = "Pay for ticket " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName").ToString & " " & _
+        DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("LastName").ToString & " with phone Number " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Phone").ToString
+
+        lblJourneys.Text = "You are choosing payment for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
+          " that flies on " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString
     End Sub
 
     Protected Sub btnYes_Click(sender As Object, e As EventArgs) Handles btnYes.Click
@@ -546,6 +554,8 @@ Partial Class Res_Pay
         DBTickets.AddTicketPrices(decSubtotal.ToString("n2"), gvTickets.SelectedRow.Cells(1).Text)
         lblPrice.Text = ""
         lblSubtotal.Text = "Your tickets currently cost " & FormatCurrency(Session("RunningSubtotal").ToString, 2) & "."
+        lblActive.Text = ""
+        lblJourneys.Text = ""
     End Sub
 
     Protected Sub btnConfirm_Click(sender As Object, e As EventArgs) Handles btnConfirm.Click
@@ -594,12 +604,18 @@ Partial Class Res_Pay
         Try
             decSubtotal = CDec(txtOverride.Text)
         Catch ex As Exception
-            lblMessage.Text = "Please enter a positive decimal price."
+            lblMessage.Text = "You did not enter a decimal price."
+            rblPayment.Visible = True
+            rblPayment.SelectedIndex = -1
+            txtOverride.Text = ""
             Exit Sub
         End Try
 
         If decSubtotal < 0 Then
-            lblMessage.Text = "Please enter a positive decimal price."
+            lblMessage.Text = "You did not enter a positive decimal price."
+            rblPayment.Visible = True
+            rblPayment.SelectedIndex = -1
+            txtOverride.Text = ""
             Exit Sub
         End If
 
@@ -608,7 +624,7 @@ Partial Class Res_Pay
         lblPrice.Text = decSubtotal.ToString("n2")
 
         ResetAll()
-        pnlID.Visible = True
+        pnlLogin.Visible = True
         txtOverride.Visible = True
         txtOverride.Enabled = False
 
@@ -627,8 +643,10 @@ Partial Class Res_Pay
         lblCost.Text = ""
         lblUpgrade.Visible = False
         lblSubtotal.Text = ""
+        lblMessage.Text = ""
 
         txtOverride.Visible = False
+        txtOverride.Enabled = True
 
         rblPayment.Visible = False
 
@@ -640,6 +658,21 @@ Partial Class Res_Pay
 
     Protected Sub btnOverridePrice_Click(sender As Object, e As EventArgs) Handles btnOverridePrice.Click
         MakeAllInvisible()
+        Dim intLogin As Integer
+        Try
+            intLogin = CInt(txtUsername.Text)
+        Catch ex As Exception
+            lblMessage.Text = "You must login with an integer value"
+            pnlLogin.Visible = True
+            Exit Sub
+        End Try
+
+        If Len(txtUsername.Text) <> 3 Then
+            lblMessage.Text = "An employee login is 3 digits long."
+            pnlLogin.Visible = True
+            Exit Sub
+
+        End If
 
         If DBEmployee.CheckEmpExists(txtUsername.Text) = False Then
             lblMessage.Text = "That employee ID does not exist. Override Failed."
@@ -672,13 +705,26 @@ Partial Class Res_Pay
                 PriceAdd()
 
                 ResetAll()
+
+            Else
+                'login failed
+                lblMessage.Text = "Username and password combination was incorrect. Override failed."
+                rblPayment.Visible = True
+                rblPayment.SelectedIndex = -1
             End If
         End If
+
+        'code ran all the way
+        txtOverride.Text = ""
+        txtUsername.Text = ""
+        txtPassword.Text = ""
 
     End Sub
 
     Protected Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
         MakeAllInvisible()
+        txtUsername.Text = ""
         rblPayment.Visible = True
+        rblPayment.SelectedIndex = -1
     End Sub
 End Class
