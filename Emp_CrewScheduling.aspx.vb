@@ -137,7 +137,7 @@ Partial Class _Default
         strDate = DBFlightSearch.AlterDate(calFlightSearch.SelectedDate.ToShortDateString)
         aryCaptains = DBCrew.FindAvailableCaptains(strDate, CInt(gvJourneys.SelectedRow.Cells(4).Text), CInt(gvJourneys.SelectedRow.Cells(10).Text))
         aryCoCaptains = DBCrew.FindAvailableCoCaptains(strDate, CInt(gvJourneys.SelectedRow.Cells(4).Text), CInt(gvJourneys.SelectedRow.Cells(10).Text))
-        aryCabin = DBCrew.FindAvailableCabin(strDate, CInt(gvJourneys.SelectedRow.Cells(4).Text), CInt(gvJourneys.SelectedRow.Cells(10).Text))
+        aryCabin = DBCrew.FindAvailableCabins(strDate, CInt(gvJourneys.SelectedRow.Cells(4).Text), CInt(gvJourneys.SelectedRow.Cells(10).Text))
 
         ddlCaptains.DataSource = aryCaptains
         ddlCaptains.DataBind()

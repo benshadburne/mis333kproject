@@ -442,34 +442,34 @@ Public Class ClassCrewScheduling
         'get all CoCaptains who are active employees
         GetCoCaptains()
         'this is the number of CoCaptains there are
-        intCoCaptains = mdatasetCaptain.Tables("tblCaptain").Rows.Count - 1
+        intCoCaptains = mdatasetCoCaptain.Tables("tblCoCaptain").Rows.Count - 1
 
         bolAvailable = True
 
         'leep through all CoCaptains
         For i = 0 To intCoCaptains
-            'check to see if captain is on any journeys on that date
-            GetCaptainBusy(mdatasetCaptain.Tables("tblCaptain").Rows(i).Item("EmpID").ToString, strDate)
+            'check to see if CoCaptain is on any journeys on that date
+            GetCoCaptainBusy(mdatasetCoCaptain.Tables("tblCoCaptain").Rows(i).Item("EmpID").ToString, strDate)
             'if there are no records returned for that date
-            If mdatasetCaptainBusy.Tables("tblCaptain").Rows.Count <> 0 Then
-                'captain has other flights that day 
+            If mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows.Count <> 0 Then
+                'CoCaptain has other flights that day 
                 'run a loop to see if they are busy at the times we are looking for
-                For j = 0 To (mdatasetCaptainBusy.Tables("tblCaptain").Rows.Count - 1)
+                For j = 0 To (mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows.Count - 1)
                     'checks to see if inputted departure is between start and end of journey they are on
                     'if inputtedd departure is less than departure AND inputted arrival is less than departure
-                    If intDepartureTime < CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) And _
-                        intArriveTime <= CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) Then
-                        'the captain is free at this time
+                    If intDepartureTime < CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("DepartureTime")) And _
+                        intArriveTime <= CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("DepartureTime")) Then
+                        'the CoCaptain is free at this time
                         'dont do anything
 
                         'check if inputted departure is after departure on other flight AND inputted departure
                         'check to see if inputted arrive time is between start and end of journey we are looping through
-                    ElseIf intDepartureTime > CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("DepartureTime")) And _
-                        intDepartureTime > CInt(mdatasetCaptainBusy.Tables("tblCaptain").Rows(j).Item("ArriveTime")) Then
+                    ElseIf intDepartureTime > CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("DepartureTime")) And _
+                        intDepartureTime > CInt(mdatasetCoCaptainBusy.Tables("tblCoCaptain").Rows(j).Item("ArriveTime")) Then
 
-                        'the captain is free
+                        'the CoCaptain is free
                     Else
-                        'captain is busy, don't add them. 
+                        'CoCaptain is busy, don't add them. 
                         bolAvailable = False
 
                     End If
@@ -477,15 +477,15 @@ Public Class ClassCrewScheduling
                 Next
                 ' check if bolAvailable is still true after going through all journeys
                 If bolAvailable = True Then
-                    'captain is free despite all other journeys they are one
-                    aryCoCaptains.Add(mdatasetCaptain.Tables("tblCaptain").Rows(i).Item("EmpID").ToString)
+                    'CoCaptain is free despite all other journeys they are one
+                    aryCoCaptains.Add(mdatasetCoCaptain.Tables("tblCoCaptain").Rows(i).Item("EmpID").ToString)
                 Else
-                    'one of the captain's journeys conflicted with the times we needed
+                    'one of the CoCaptain's journeys conflicted with the times we needed
                     'dont add them
                 End If
             Else
-                'Captain is free all day
-                aryCoCaptains.Add(mdatasetCaptain.Tables("tblCaptain").Rows(i).Item("EmpID").ToString)
+                'CoCaptain is free all day
+                aryCoCaptains.Add(mdatasetCoCaptain.Tables("tblCoCaptain").Rows(i).Item("EmpID").ToString)
             End If
             'reset the counter
             bolAvailable = True
