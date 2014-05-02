@@ -360,6 +360,7 @@ Partial Class _Default
         End If
 
         If button.BackColor = Drawing.Color.Blue Then
+            lblMessage.Text = "Seat occupied by someone on reservation"
             Exit Sub
         End If
 

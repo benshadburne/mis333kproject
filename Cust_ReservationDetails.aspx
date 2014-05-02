@@ -30,7 +30,9 @@
         <asp:DropDownList CssClass="dropdown" ID="ddlAdvantageNum" runat="server" AutoPostBack="True"></asp:DropDownList>
 
         </div>
+            <div style="word-spacing:0px">
         <asp:Label CssClass="h6" ID="lblMessage" runat="server" Text=""></asp:Label>
+                </div>
         </div>
         <br />
         <br />

@@ -19,10 +19,6 @@
         <div class="pull-left" style="width: 90px"> <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search" />
 
        </div>
-          
-           <div class="pull-left" style="width: 40px; margin-left: 5px">
-                  
-        </div>
             </asp:Panel>
     </div>
 
@@ -32,7 +28,7 @@
 
      
          <div class="pull-left" style="width: 37%; min-width:40px">
-        <asp:Label class="label" ID="Label3" runat="server" Text="Date" ForeColor="Black" Font-Size="Small"></asp:Label>
+        <asp:Label class="h6" ID="Label3" runat="server" Text="Date" ForeColor="Black" Font-Size="Small"></asp:Label>
             <br/> 
               <br/> 
              <asp:Calendar ID="calFlightSearch" runat="server" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399" Height="200px" Width="220px">
@@ -48,7 +44,7 @@
         </div>
            
         <div class="pull-left" style="width: 20%; min-width:40px; height: 67px;">
-       <%-- <asp:Label class="label" ID="Label2" runat="server" Text="Time" ForeColor="Black" Font-Bold="true" Font-Size="small"></asp:Label>
+       <%-- <asp:Label class="h6" ID="Label2" runat="server" Text="Time" ForeColor="Black" Font-Bold="true" Font-Size="small"></asp:Label>
           
         <br />--%>
     <br />
@@ -83,7 +79,7 @@
         </asp:DropDownList>--%>
 
 <%--       
-        <asp:Label class="label" ID="Label1" runat="server" Text="  :  " ForeColor="Black" ></asp:Label>
+        <asp:Label class="h6" ID="Label1" runat="server" Text="  :  " ForeColor="Black" ></asp:Label>
        
 
  
@@ -104,7 +100,7 @@
  
 
         <div class="pull-left" style="width: 30%; min-width:40px; height: 67px;">
-             <asp:Label class="label" ID="Label4" runat="server" Text="Departing City" ForeColor="Black" Font-Size="Small"></asp:Label>
+             <asp:Label class="h6" ID="Label4" runat="server" Text="Departing City" ForeColor="Black" Font-Size="Small"></asp:Label>
             <br/> 
               <br/> 
               <asp:DropDownList class="dropdown" ID="ddlDepart" runat="server" DataSourceID="SqlDataSource1" DataTextField="AirportCode" DataValueField="AirportCode"></asp:DropDownList>
@@ -112,7 +108,7 @@
              </div>
 
         <div class="pull-left" style="width: 30%; min-width:40px; height: 67px;">
-             <asp:Label class="label" ID="Label5" runat="server" Text="Arrival City" ForeColor="Black" Font-Size="Small"></asp:Label>
+             <asp:Label class="h6" ID="Label5" runat="server" Text="Arrival City" ForeColor="Black" Font-Size="Small"></asp:Label>
             <br/> 
               <br/> 
             <asp:DropDownList class="dropdown" ID="ddlArrival" runat="server" DataSourceID="SqlDataSource1" DataTextField="AirportCode" DataValueField="AirportCode"></asp:DropDownList>
@@ -126,10 +122,10 @@
     <div class="center-block" style="width:90%; min-height:100px;">
         <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
         <br />
-        <asp:Label CssClass="label" ID="Label6" runat="server" Text="Direct Flights"></asp:Label>
+        <asp:Label Cssclass="h6" ID="Label6" runat="server" Text="Direct Flights"></asp:Label>
         <div class="pull-right">
-             <asp:Label CssClass="label" ID="Label1" runat="server" Text="Count: "></asp:Label>
-            <asp:Label CssClass="label" ID="lblCountDirect" runat="server" Text=""></asp:Label></div>
+             <asp:Label Cssclass="h6" ID="Label1" runat="server" Text="Count: "></asp:Label>
+            <asp:Label Cssclass="h6" ID="lblCountDirect" runat="server" Text=""></asp:Label></div>
          <br />
          <asp:GridView class="table" ID="gvDirectFlights" runat="server">
         </asp:GridView>
@@ -139,18 +135,18 @@
     <br />
     <br />
     
-     <asp:Label CssClass="label" ID="lblIndirectStart" runat="server" Text="Indirect Flights: First Leg" Visible="false"></asp:Label>
+     <asp:Label Cssclass="h6" ID="lblIndirectStart" runat="server" Text="Indirect Flights: First Leg" Visible="false"></asp:Label>
         &nbsp;<div class="pull-right" id="StartCount">
-            <asp:Label CssClass="label" ID="lblIndirectStartC" runat="server" Text="Count: " Visible="false"></asp:Label>
-            <asp:Label CssClass="label" ID="lblCountIndirect" runat="server" Text="" Visible="false"></asp:Label></div>
+            <asp:Label Cssclass="h6" ID="lblIndirectStartC" runat="server" Text="Count: " Visible="false"></asp:Label>
+            <asp:Label Cssclass="h6" ID="lblCountIndirect" runat="server" Text="" Visible="false"></asp:Label></div>
          <br />
          <asp:GridView class="table" ID="gvIndirectStart" runat="server" Visible="false" AutoGenerateSelectButton="True"></asp:GridView>
-       <br /><asp:Label CssClass="label" ID="lblIndirectFinish" runat="server" Text="Indirect Flights: Second Leg" Visible="false"></asp:Label>
+       <br /><asp:Label Cssclass="h6" ID="lblIndirectFinish" runat="server" Text="Indirect Flights: Second Leg" Visible="false"></asp:Label>
         <div class="pull-right">
 
-            <asp:Label CssClass="label" ID="lblIndirectFinishC" runat="server" Text="Count: " Visible="false"></asp:Label>
+            <asp:Label Cssclass="h6" ID="lblIndirectFinishC" runat="server" Text="Count: " Visible="false"></asp:Label>
 
-            <asp:Label CssClass="label" ID="lblCountFinish" runat="server" Text="" Visible="false"> </asp:Label>
+            <asp:Label Cssclass="h6" ID="lblCountFinish" runat="server" Text="" Visible="false"> </asp:Label>
 
         </div>
         

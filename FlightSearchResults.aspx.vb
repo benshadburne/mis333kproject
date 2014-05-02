@@ -12,6 +12,9 @@ Partial Class _Default
 
    
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        lblCountDirect.Text = ""
+        lblCountFinish.Text = ""
+        lblCountIndirect.Text = ""
 
         Dim strDate As String
 
