@@ -43,6 +43,7 @@ Partial Class Res_Pay
                 Session("TicketRecord") = 0
 
             End If
+            pnlLogin.Visible = False
         End If
         Session("Infant") = ""
         Session("InfantID") = ""
