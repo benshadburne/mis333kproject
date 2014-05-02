@@ -132,7 +132,7 @@ Public Class DBZip
 
     'author: Jace Barton
     'description: runs SP to see if a matching zip code was found
-    'returns: False if no matching zip code found, true otherwise
+    'returns: False if no matching state code found, true otherwise
     'inputs: the zip code you want to search for as a string
     Public Function FindState(strState As String) As Boolean
         RunSPwithOneParam("usp_ZipsClone_Find_State", "State", strState)

@@ -12,6 +12,17 @@ Partial Class Emp_AddNewEmployee
     Dim ZObject As New DBZip
 
     Protected Sub btnSubmit_Click(sender As Object, e As EventArgs) Handles btnSubmit.Click
+        'check middle initial
+        If txtMI.Text = "" Then
+            'don't validate anything
+        Else
+            'check to make sure they entered a letter
+            If VObject.CheckLetterWithSubstring(txtMI.Text) = False Then
+                lblMessage.Text = "Middle Initial must a letter."
+                Exit Sub
+            End If
+        End If
+
         'check phone number
         If VObject.CheckIntegerWithSubstring(txtPhoneNumber.Text) = False Then
             lblMessage.Text = "Please enter a valid 10 digit phone number with no formatting!"
@@ -37,12 +48,13 @@ Partial Class Emp_AddNewEmployee
         End If
 
         'check if zip is in the zip table. this calls Validation class. Validation class calls Zip database class. Might be able to consolidate.
-        If VObject.CheckZip(txtZip.Text) = False Then
+        If ZObject.FindZip(txtZip.Text) = False Then
             'Zip not found
             lblMessage.Text = "Please enter a valid US Zip code!"
             Exit Sub
         End If
 
+        'check if state is valid US state
 
 
         'create array list for parameter names
