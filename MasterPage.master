@@ -83,7 +83,7 @@
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Employee <b class="caret"></b></a>
           <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
             <li><a href="Emp_EmployeeDashboard.aspx">Employee Dashboard </a></li>
-            <li><a href="Emp_Search_Cust_To_Modify.aspx">Search Customer</a></li>
+            <li><a href="Emp_Select_Cust_To_Modify.aspx">Search Customer</a></li>
             <li><a href="Emp_ModifyEmployee.aspx">Modify Employee</a></li>
             <li><a href="Emp_AddNewEmployee.aspx">Add New Employee</a></li>
             </ul>
