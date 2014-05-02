@@ -85,11 +85,11 @@ Partial Class Emp_AddFlight
             intFlightNumber = CInt(txtFlightNumber.Text)
         Catch ex As Exception
             lblMessage.Text = "Please enter a positive integer for flight number!"
+            Exit Sub
         End Try
 
         'validate flight number is integer *** NOT CATCHING DECIMALS
-        intFlightNumber = VObject.CheckInteger(txtFlightNumber.Text)
-        If intFlightNumber < 0 Then
+        If VObject.CheckIntegerWithSubstring(txtFlightNumber.Text) = False Then
             lblMessage.Text = "Please enter a positive integer for flight number!"
             Exit Sub
         End If
@@ -101,17 +101,11 @@ Partial Class Emp_AddFlight
             Exit Sub
         End If
 
-        'If VObject.CheckIntegerWithSubstring(txtFlightNumber.Text) = False Then
-        '    lblMessage.Text = "Please enter an integer for base fare!"
-        '    Exit Sub
-        'End If
-
         'validate that a day of the week is checked 
         If intCount = 0 Then
             lblMessage.Text = "Plase select at least one day of the week!"
             Exit Sub
         End If
-
 
         'validate that base fare is integer
         If VObject.CheckIntegerWithSubstring(txtBaseFare.Text) = False Then
