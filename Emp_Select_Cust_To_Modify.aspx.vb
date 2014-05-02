@@ -37,12 +37,19 @@ Partial Class Emp_Select_Cust_To_Modify
     End Sub
 
     Protected Sub btnSearch_Click(sender As Object, e As EventArgs) Handles btnSearch.Click
+        Dim intAdvantageNumber As Integer
         lblMessage.Text = ""
         'check to make sure a search type is selected
         If txtSearch.Text = "" Then
             lblMessage.Text = "Please enter a search term."
             Exit Sub
         End If
+
+        Try
+            intAdvantageNumber = CInt(txtSearch.Text)
+        Catch ex As Exception
+            lblMessage.Text = "Please enter an integer advantage number."
+        End Try
         If rblSearchType.SelectedIndex = -1 Then
             lblMessage.Text = "Please select a search type."
             Exit Sub
