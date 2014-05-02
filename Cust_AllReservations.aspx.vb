@@ -16,6 +16,10 @@ Partial Class _Default
             Response.Redirect("HomePage.aspx")
         End If
 
+        If Not (Session("NoJourneys") Is Nothing) Then
+            Session.Remove("NoJourneys")
+            lblMessage.Text = "No Journeys found on this reservation"
+        End If
         'SHOULD MANAGERS BE ABLE TO SELECT ALL RESERVATIONS TO VIEW THEM???
         'trys to lead database and do a search on the datafield, if there's an error  (they don't have reservations) it sends them back to customer dash
         Try

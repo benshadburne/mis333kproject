@@ -47,8 +47,14 @@ Partial Class _Default
             Session("ActiveUser") = Session("UserID").ToString
         End If
 
-        'next, need to load all tickets dataset
-        LoadTickets()
+        Try
+            'next, need to load all tickets dataset
+            LoadTickets()
+        Catch ex As Exception
+            Session("NoJourneys") = "Yes"
+            Response.Redirect("AllReservations.aspx")
+        End Try
+
 
         SortandBind()
 
@@ -77,7 +83,7 @@ Partial Class _Default
         Dim strDate As String
         Dim datCurrentDate As Date
         strDate = (ddlJourneyID.SelectedItem.ToString).Substring(5, Len(ddlJourneyID.SelectedItem.ToString) - 5)
-        datCurrentDate = CDate(CDate(DBDate.GetCurrentDate()).ToShortDateString)
+        datCurrentDate = CDate(DBDate.GetCurrentDate())
 
         If Date.Parse(strDate) < datCurrentDate Then
             'the journey took off before the currect datetime in database, set buttons to disable and unavailable
