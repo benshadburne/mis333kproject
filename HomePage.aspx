@@ -27,7 +27,7 @@
           </div>
         </div>
         <div class="item">
-            <img src="Z_penguin%20airplane.png" />
+            <img src="Z_Penguin%20image.jpg" />
           <div class="container">
             <div class="carousel-caption">
              <p>
@@ -46,7 +46,7 @@
           </div>
         </div>
         <div class="item">
-            <img src="Z_Penguin%20image.jpg" />
+            
           <div class="container">
             <div class="carousel-caption">
              <p>
