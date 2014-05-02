@@ -573,6 +573,67 @@ Public Class ClassCrewScheduling
         RunSPwithOneParamCaptain("usp_Journey_Get_Manifest", "@JourneyID", strJourneyID)
     End Sub
 
+    Public Sub GetSchedule(intEmpType As Integer, strEmpID As String, strSQLDate As String)
+
+        If intEmpType = 103 Then
+            'this is a captain
+
+            GetCaptainSchedule(strEmpID, strSQLDate)
+        Else
+            If intEmpType = 104 Then
+                'this is a cocaptain
+                GetCoCaptainSchedule(strEmpID, strSQLDate)
+            Else
+                GetCabinSchedule(strEmpID, strSQLDate)
+            End If
+        End If
+
+
+    End Sub
+
+    Public Sub GetCaptainSchedule(strEmpID As String, strSQLDate As String)
+        Dim aryNames As New ArrayList
+        Dim aryValues As New ArrayList
+
+        aryNames.Add("EmpID")
+        aryNames.Add("@Date")
+
+        aryValues.Add(strEmpID)
+        aryValues.Add(strSQLDate)
+
+        UseSP("usp_Journey_Get_Captain_Schedule", mdatasetCaptain, mMyViewCaptain, "tblSchedule", aryNames, aryValues)
+    End Sub
+
+    Public Sub GetCoCaptainSchedule(strEmpID As String, strSQLDate As String)
+        Dim aryNames As New ArrayList
+        Dim aryValues As New ArrayList
+
+        aryNames.Add("EmpID")
+        aryNames.Add("@Date")
+
+        aryValues.Add(strEmpID)
+        aryValues.Add(strSQLDate)
+
+        UseSP("usp_Journey_Get_CoCaptain_Schedule", mdatasetCaptain, mMyViewCaptain, "tblSchedule", aryNames, aryValues)
+    End Sub
+
+    Public Sub GetCabinSchedule(strEmpID As String, strSQLDate As String)
+        Dim aryNames As New ArrayList
+        Dim aryValues As New ArrayList
+
+        aryNames.Add("EmpID")
+        aryNames.Add("@Date")
+
+        aryValues.Add(strEmpID)
+        aryValues.Add(strSQLDate)
+
+        UseSP("usp_Journey_Get_Cabin_Schedule", mdatasetCaptain, mMyViewCaptain, "tblSchedule", aryNames, aryValues)
+    End Sub
+
+    Public Sub GetCrewNames()
+        RunProcedureCoCaptain("usp_Employees_Get_Active_Crew_With_Name")
+    End Sub
+
     Private Function EmpID() As Object
         Throw New NotImplementedException
     End Function

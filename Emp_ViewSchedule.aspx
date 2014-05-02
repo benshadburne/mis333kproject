@@ -4,11 +4,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
 
-<asp:GridView ID="gvJourneys" runat="server">
-        <Columns>
-            <asp:CommandField ShowSelectButton="True" />
-        </Columns>
+<asp:GridView ID="gvSchedule" runat="server">
     </asp:GridView>
+     <asp:DropDownList ID="ddlCrew" runat="server" Visible ="false">
+    </asp:DropDownList>
      <asp:Calendar ID="calFlightSearch" runat="server" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399" Height="200px" Width="220px" AutoPostBack ="true">
                  <DayHeaderStyle BackColor="#99CCCC" ForeColor="#336666" Height="1px" />
                  <NextPrevStyle Font-Size="8pt" ForeColor="#CCCCFF" />
