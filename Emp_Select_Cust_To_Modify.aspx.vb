@@ -51,11 +51,7 @@ Partial Class Emp_Select_Cust_To_Modify
             Exit Sub
         End If
 
-        Try
-            intAdvantageNumber = CInt(txtSearch.Text)
-        Catch ex As Exception
-            lblMessage.Text = "Please enter an integer advantage number."
-        End Try
+        
         If rblSearchType.SelectedIndex = -1 Then
             lblMessage.Text = "Please select a search type."
             Exit Sub
