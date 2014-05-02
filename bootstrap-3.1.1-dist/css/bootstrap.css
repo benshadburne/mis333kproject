@@ -5809,7 +5809,9 @@ button.close {
     width: 13%;
     height: 1000px;
     text-align: right;
-    line-height: 26px
+    line-height: 26px;
+    top: 0px;
+    left: 0px;
 }
 
 #right {

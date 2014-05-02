@@ -8,9 +8,7 @@
     <div class="center-block" style="width: 90%; padding-top: 20px;">
         
         <asp:Panel ID="Panel1" runat="server" width="100%">
-        <div class="pull-left" style="width: 90px; height: 36px;"> <asp:Button class="btn" ID="btnSearch" runat="server" Text="Search" />
-
-       </div>
+        
           
             </asp:Panel>
     </div>
@@ -21,7 +19,7 @@
 
      
          <div class="pull-left" style="width: 37%; min-width:40px">
-        <asp:Label class="h6" ID="Label3" runat="server" Text="Date" ForeColor="Black" Font-Size="Small"></asp:Label>
+        <asp:Label class="h2" ID="Label3" runat="server" Text="Choose Date" ForeColor="Black"></asp:Label>
             <br/> 
               <br/> 
              <asp:Calendar ID="calFlightSearch" runat="server" BackColor="White" BorderColor="#3366CC" BorderWidth="1px" CellPadding="1" DayNameFormat="Shortest" Font-Names="Verdana" Font-Size="8pt" ForeColor="#003399" Height="200px" Width="220px" AutoPostBack ="true">
@@ -40,7 +38,7 @@
         <div class="pull-left" style="width: 20%; min-width:40px; height: 67px;">
           
         <br />
-             <asp:Label class="h6" ID="lblReturn" runat="server" Text="Select Return Ticket" ForeColor="Black" Font-Size="Small" Visible ="false"></asp:Label>
+             <asp:Label class="h5" ID="lblReturn" runat="server" Text="Select Return Ticket" ForeColor="Black" Visible ="false"></asp:Label>
     <br />
    
 
@@ -60,21 +58,21 @@
  
 
         <div class="pull-left" style="width: 30%; min-width:40px; height: 67px;">
-             <asp:Label class="h6" ID="Label4" runat="server" Text="Departing City" ForeColor="Black" Font-Size="Small"></asp:Label>
+             <asp:Label class="h6" ID="Label4" runat="server" Text="Departing City" ForeColor="Black"></asp:Label>
             <br/> 
               <br/> 
               <asp:Label ID="lblDeparture" runat="server"></asp:Label>
         </div>
 
         <div class="pull-left" style="width: 30%; min-width:40px; height: 67px;">
-             <asp:Label class="h6" ID="Label5" runat="server" Text="Arrival City" ForeColor="Black" Font-Size="Small"></asp:Label>
+             <asp:Label class="h6" ID="Label5" runat="server" Text="Arrival City" ForeColor="Black"></asp:Label>
             <br/> 
               <br />
              <asp:Label ID="lblArrival" runat="server"></asp:Label>
               <br/> 
         </div>
         <div class="pull-left" style="width: 30%; min-width:40px; height: 67px;">
-             <asp:Label class="h6" ID="Label7" runat="server" Text="Select Date" ForeColor="Black" Font-Size="Small"></asp:Label>
+             <asp:Label class="h6" ID="Label7" runat="server" Text="Select Date" ForeColor="Black"></asp:Label>
             <br/> 
               <br/> 
               <asp:Label CssClass="h6" ID="lblDate" runat="server"></asp:Label>
@@ -83,7 +81,9 @@
             
     <br/> 
         
-   
+   <div  style="text-align:center">
+       <asp:Button class="btn btn-primary" ID="btnSearch" runat="server" Text="Search" />
+   </div>
     <div class="center-block" style="width:90%; min-height:100px;">
         <asp:Label Class="h6" ID="lblMessage" runat="server" Text=""></asp:Label>
         <br />
@@ -125,17 +125,19 @@
     
         
             
-         </div>       
-    <asp:Label ID="lblBack" runat="server" Text="Can't find a flight?"></asp:Label>
+         </div> 
+    <div style="text-align:center">      
+    <asp:Label CssClass="h6" ID="lblBack" runat="server" Text="Can't find a flight?"></asp:Label>
     <br />
 
-    <asp:Button ID="btnBack" runat="server" Text="Choose Different Route" />
+    <asp:Button CssClass="btn btn-primary" ID="btnBack" runat="server" Text="Choose Different Route" />
     <br />
     <br />
 
-    <asp:Label ID="Label2" runat="server" Text="Made a mistake? Cancel your reservation by clicking below"></asp:Label>
+    <asp:Label CssClass="h6" ID="Label2" runat="server" Text="Made a mistake? Cancel your reservation by clicking below"></asp:Label>
     <br />
 
-    <asp:Button ID="btnCancel" runat="server" Text="Cancel Reservation" />
+    <asp:Button CssClass="btn btn-danger" ID="btnCancel" runat="server" Text="Cancel Reservation" />
+        </div>
 </asp:Content>
 

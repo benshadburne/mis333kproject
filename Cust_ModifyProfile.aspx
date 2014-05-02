@@ -11,34 +11,9 @@
         </h1>
 
     </div>
-
-    <br />
-    <br />
-
-    <div class ="center-block">
-    <div class ="pull-left" style="width:20%;">
-            <br />
-            <asp:Button class="btn" ID="btnModify" runat="server" Text="Modify Customer" />
-        <br />
-            <br />
-        <asp:Button class="btn" ID="btnAbort" runat="server" Text="Abort Modification" CausesValidation="False" />
-            <br />
-        <br />
-        <asp:Button class="btn" ID="btnSave" runat="server" Text="Save Modification" />
-            <br />
-            <br />
-            <asp:Label ID="lblErrorMessage" runat="server" Text=""></asp:Label>
-        <br />
-            <asp:Label ID="lblSuccessMessage" runat="server" Text=""></asp:Label>
-            <br />
-            <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
-            <br />
-            <br />
-            <br />
-        </div>
-   
-        <div class ="center-block" style="width: 70%;">
-            <div id ="pull-right" style="width: 15%; float:left; text-align: right; line-height: 200%">
+   <br />
+        <div class ="center-block" style="line-height:28px">
+            <div id ="pull-right" style="width: 300px; float:left; text-align: right; padding-right:5px">
                 <asp:Label ID="lblFName" runat="server" Text="First Name:"></asp:Label>
                 <br />
                 <asp:Label ID="lblMI" runat="server" Text="Middle Initial:"></asp:Label>
@@ -55,11 +30,11 @@
                 <br />
                 <asp:Label ID="lblPhone" runat="server" Text="Phone:"></asp:Label>
                 <br />
-                <asp:Label ID="lblMiles" runat="server" Text="Miles"></asp:Label>
+                <asp:Label ID="lblMiles" runat="server" Text="Miles:"></asp:Label>
                 <br />
-                <asp:Label ID="lblActive" runat="server" Text="Active"></asp:Label>
+                <asp:Label ID="lblActive" runat="server" Text="Active:"></asp:Label>
             </div>
-            <div id ="pull-left" style="width: 70%; float: left; line-height: 160%">
+            <div id ="pull-left" style="width:auto">
                 <asp:TextBox ID="txtFName" class="text-left" runat="server"></asp:TextBox>
                 <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtFName" ErrorMessage="First name required." ForeColor="Red">*</asp:RequiredFieldValidator>
                 <br />
@@ -89,5 +64,15 @@
                 </asp:DropDownList>
             </div>
             </div>
+        <div class="center-align" style="padding-top:10px">
+        <asp:Button class="btn btn-primary" ID="btnModify" runat="server" Text="Modify Customer" />
+        <asp:Button class="btn btn-primary" ID="btnAbort" runat="server" Text="Abort Modification" CausesValidation="False" />
+        <asp:Button class="btn btn-primary" ID="btnSave" runat="server" Text="Save Modification" />
+           <br />
+             <asp:Label ID="lblErrorMessage" runat="server" Text=""></asp:Label>
+           <br />
+        <asp:Label ID="lblSuccessMessage" runat="server" Text=""></asp:Label>
+           <br />
+           <asp:ValidationSummary ID="ValidationSummary1" runat="server" ForeColor="Red" />
         </div>
 </asp:Content>

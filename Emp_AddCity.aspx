@@ -4,56 +4,52 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" Runat="Server">
-    <div id="header">
-       Add Airport
-   </div>
+   <div class="center-align">
+    <h1>Add Airport</h1>
+       </div>
     <asp:Panel runat="server" ID="pnlAddAirport"> 
-   <div class ="label-default" id="middle">
-
-        <asp:Label ID="Label1" runat="server" Text="City name:"></asp:Label>
+   <div style="line-height:28px">
+        <asp:Panel CssClass="panel"  ID="Panel1" runat="server">
+        <div class="pull-left" style="width:200px; text-align:right">
+        <asp:label cssclass="h6" ID="Label1" runat="server" Text="City name:"></asp:Label>
         <br />
-        <asp:Label ID="Label2" runat="server" Text="Airport Code:"></asp:Label>
-        <br />
-
-<br />
-        <br />
-
-        <asp:Label ID="lblMessage" runat="server" Text="" ForeColor="Red"></asp:Label>
-        <br />
-
-
+        <asp:label cssclass="h6" ID="Label2" runat="server" Text="Airport Code:"></asp:Label>
         </div>
-
-    <div class ="input-group-lg"id="right">
-        <asp:TextBox ID="txtCity" runat="server"></asp:TextBox>
+        <div class="pull-left" style="width:220px; text-align:left">
+            <asp:TextBox ID="txtCity" runat="server"></asp:TextBox>
         <asp:RequiredFieldValidator ID="rfvCity" runat="server" ErrorMessage="The city name is a required field." Text="*" ControlToValidate="txtCity"></asp:RequiredFieldValidator>
         <br /> 
         <asp:TextBox ID="txtAirport" runat="server"></asp:TextBox>
         <asp:RequiredFieldValidator ID="rfvAirport" runat="server" ErrorMessage="The airport code must be 3 letters." Text="*" ControlToValidate="txtAirport"></asp:RequiredFieldValidator>
         <br /> 
-        <br /> 
-        <br />
-        <br />
-        <asp:Button ID="btnAdd" runat="server" Text="Add" />
-        <br /> 
         </div>
+            <asp:label cssclass="h6" ID="lblMessage" runat="server" Text="" ForeColor="Red"></asp:Label>
+   <br />
+        <asp:Button CssClass="btn btn-primary" ID="btnAdd" runat="server" Text="Add" />
+</asp:Panel>
+        </div>
+       
+
+        
+    
+       
     </asp:Panel>
 
     <asp:Panel runat="server" ID="pnlAddInfo" Visible ="false"> 
    <div class ="label-default" id="Div1">
        <br />
 
-        <asp:Label ID="Label3" runat="server" Text="Mileage"></asp:Label>
+        <asp:label cssclass="h6" ID="Label3" runat="server" Text="Mileage"></asp:Label>
         <br />
-        <asp:Label ID="Label4" runat="server" Text="Flight Time:"></asp:Label>
+        <asp:label cssclass="h6" ID="Label4" runat="server" Text="Flight Time:"></asp:Label>
         <br />
 
 <br />
         <br />
 
-        <asp:Label ID="lblAirport" runat="server" Text=""></asp:Label>
+        <asp:label cssclass="h6" ID="lblAirport" runat="server" Text=""></asp:Label>
        <br />
-       <asp:Label ID="lblAirportMessage" runat="server" Text="" Forecolor="red"></asp:Label>
+       <asp:label cssclass="h6" ID="lblAirportMessage" runat="server" Text="" Forecolor="red"></asp:Label>
         <br />
 
 
@@ -64,8 +60,8 @@
         <asp:TextBox ID="txtMileage" runat="server"></asp:TextBox>
         <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ErrorMessage="The city name is a required field." Text="*" ControlToValidate="txtMileage"></asp:RequiredFieldValidator>
         <br /> 
-        <asp:Label ID="Label5" runat="server" Text="Hours"></asp:Label>
-        <asp:Label ID="Label6" runat="server" Text="Minutes"></asp:Label>
+        <asp:label cssclass="h6" ID="Label5" runat="server" Text="Hours"></asp:Label>
+        <asp:label cssclass="h6" ID="Label6" runat="server" Text="Minutes"></asp:Label>
         <br />
         <asp:DropDownList ID="ddlHours" runat="server">
             <asp:ListItem>0</asp:ListItem>
