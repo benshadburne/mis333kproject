@@ -84,7 +84,7 @@
              <asp:Label ID="Label5" runat="server" Text="Password:"></asp:Label><asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="23px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray" TextMode="Password">Password</asp:TextBox>
           </asp:Panel><br />
                 <asp:Button CssClass="btn btn-primary" ID="btnOverridePrice" runat="server" Text="Confirm" />
-                <asp:Button CssClass="btn btn-primary" ID="btnBack" runat="server" Text="Confirm" />
+                <asp:Button CssClass="btn btn-primary" ID="btnBack" runat="server" Text="Back" />
           </asp:Panel>
             
              <br />

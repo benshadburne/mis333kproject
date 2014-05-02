@@ -318,8 +318,6 @@ Partial Class Res_Pay
         Dim decTwoWeekDiscount As Decimal
         Dim decDiscount As Decimal
         Dim decSubtotal As Decimal
-        Dim datReservation As Date
-        Dim datToday As Date
 
         MakeAllInvisible()
         rblPayment.Visible = True
@@ -656,7 +654,7 @@ Partial Class Res_Pay
                 'the code passes
                 Dim decSubtotal As Decimal
                 Try
-                    decSubtotal = CDec(txtOverride.Text)
+                    decSubtotal = CDec(lblPrice.Text)
                 Catch ex As Exception
                     lblMessage.Text = "Please enter a positive decimal price."
                     Exit Sub
@@ -669,12 +667,18 @@ Partial Class Res_Pay
 
                 MakeAllInvisible()
 
-                lblPrice.Text = decSubtotal.ToString("n2")
+                txtOverride.Text = ""
+
                 PriceAdd()
 
                 ResetAll()
             End If
         End If
 
+    End Sub
+
+    Protected Sub btnBack_Click(sender As Object, e As EventArgs) Handles btnBack.Click
+        MakeAllInvisible()
+        rblPayment.Visible = True
     End Sub
 End Class

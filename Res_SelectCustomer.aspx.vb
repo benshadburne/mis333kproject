@@ -158,7 +158,7 @@ Partial Class Res_SelectCustomer
         'run the validation before doing anything else
 
         If txtAge.Text = "" Then
-            lblMessage.Text = "Please enter an appropriate age."
+            lblAgeMessage.Text = "Please enter an appropriate age."
             Exit Sub
         End If
 
@@ -169,8 +169,11 @@ Partial Class Res_SelectCustomer
         End If
 
         Dim intAge As Integer
-
-        intAge = CInt(txtAge.Text)
+        Try
+            intAge = CInt(txtAge.Text)
+        Catch ex As Exception
+            lblAgeMessage.Text = "Please enter a positive integer age."
+        End Try
 
         'this code makes sure the age entered is moderately realistic
         If intAge > 125 Then

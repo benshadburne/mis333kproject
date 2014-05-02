@@ -248,10 +248,12 @@ Partial Class _Default
     End Sub
 
     Protected Sub ddlJourneyID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlJourneyID.SelectedIndexChanged
+        Dim datDate As Date
         lblFinish.Text = ""
         DBJourney.GetOneJourney(CInt(ddlJourneyID.SelectedValue))
+        datDate = CDate(DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString)
         lblJourney.Text = "You are selecting a seat for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
-            " that flies on " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString
+            " that flies on " & datDate.ToShortDateString
         CheckSeats()
     End Sub
 
