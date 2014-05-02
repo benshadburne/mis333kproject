@@ -17,7 +17,7 @@ Partial Class _Default
         'MAKE THEM CHOOSE A RESERVATION WHICH HAS ACTIVE TICKETS AND TICKETS WHICH AREN'T FLOWN YET
         If IsPostBack = False Then
             If Session("FromReservation") Is Nothing Then
-                Response.Redirect("HomePage.aspx")
+                Response.Redirect("Cust_AllReservations.aspx")
             ElseIf Session("FromReservation").ToString = "Yes1" Then
                 lblMessage.Text = "Modification made!"
                 Session.Remove("FromReservation")
