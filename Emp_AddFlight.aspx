@@ -78,7 +78,11 @@
         </div>
     <div class="center-align">
          <asp:Button CssClass="btn btn-primary" ID="btnAdd" runat="server" Text="Add Flight" />
-           <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
+           <br />
+        <asp:Label ID="lblMessage" runat="server" Text=""></asp:Label>
+        <asp:ValidationSummary ID="ValidationSummary1" runat="server" />
+           
+         <br />
            
     </div>
 </asp:Content>
