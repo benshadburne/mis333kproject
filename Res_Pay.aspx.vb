@@ -71,8 +71,8 @@ Partial Class Res_Pay
         ddlJourneyID.DataValueField = "JourneyID"
         ddlJourneyID.DataBind()
 
-        lblJourneys.Text = "You are choosing payment for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
-            "that flies on " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString
+        'lblJourneys.Text = "You are choosing payment for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
+        '    "that flies on " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString
 
 
         DBTickets.GetAdvantageNumbersUsingSP(ddlJourneyID.SelectedValue, Session("ReservationID").ToString)
@@ -81,9 +81,9 @@ Partial Class Res_Pay
         ddlAdvantageNum.DataValueField = "AdvantageNumber"
         ddlAdvantageNum.DataBind()
 
-        DBCustomer.GetCustomerByAdvantageNumber(ddlAdvantageNum.SelectedValue)
-        lblActive.Text = "Select seat for " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName").ToString & " " & _
-        DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("LastName").ToString & " with phone Number " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Phone").ToString
+        'DBCustomer.GetCustomerByAdvantageNumber(ddlAdvantageNum.SelectedValue)
+        'lblActive.Text = "Select seat for " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName").ToString & " " & _
+        'DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("LastName").ToString & " with phone Number " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Phone").ToString
 
     End Sub
 
@@ -225,8 +225,8 @@ Partial Class Res_Pay
 
     Protected Sub ddlJourneyID_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlJourneyID.SelectedIndexChanged
         DBJourney.GetOneJourney(CInt(ddlJourneyID.SelectedValue))
-        lblJourneys.Text = "You are choosing payment for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
-            "that flies on " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString
+        'lblJourneys.Text = "You are choosing payment for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
+        '    "that flies on " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString
         CheckSeats()
     End Sub
 
@@ -308,7 +308,7 @@ Partial Class Res_Pay
     Protected Sub RadioButtonList1_SelectedIndexChanged(sender As Object, e As EventArgs) Handles rblPayment.SelectedIndexChanged
         Dim strMiles As String
         Dim intAge As Integer
-        Dim intBaseFare As Integer
+        Dim decBaseFare As Decimal
         Dim strAge As String
         Dim strBaseFare As String
         Dim decAgeDiscount As Decimal
@@ -338,20 +338,20 @@ Partial Class Res_Pay
             strAge = gvTickets.SelectedRow.Cells(6).Text
             intAge = CInt(strAge)
             strBaseFare = (gvTickets.SelectedRow.Cells(11).Text)
-            intBaseFare = CInt(strBaseFare)
-            decAgeDiscount = Calculate.CalculateAgeDiscount(intAge, intBaseFare)
+            decBaseFare = CDec(strBaseFare)
             If FirstClassSelected() = True Then
-                decFirstClassPremium = Calculate.CalculateFirstClass(intBaseFare)
+                decFirstClassPremium = Calculate.CalculateFirstClass(decBaseFare)
+                decBaseFare += decFirstClassPremium
             End If
-
-            datReservation = CDate(DBJourney.GetDateByJourney(gvTickets.SelectedRow.Cells(4).Text, gvTickets.SelectedRow.Cells(1).Text))
-
-            datToday = CDate(DBDate.ConvertToVBDate(DBDate.GetCurrentDate))
+            decAgeDiscount = Calculate.CalculateAgeDiscount(intAge, decBaseFare)
+            If FirstClassSelected() = True Then
+                decFirstClassPremium = Calculate.CalculateFirstClass(decBaseFare)
+            End If
 
             'use if statement to see if we should apply an internet discount
             If Session("UserType").ToString = "Customer" Then
                 'internet reservation
-                decInternetDiscount = Calculate.CalculateInternetPurchaseDiscount(intBaseFare)
+                decInternetDiscount = Calculate.CalculateInternetPurchaseDiscount(decBaseFare)
             Else
                 'this is over the phone, an employee is logged in
                 btnOverride.Visible = True
@@ -361,14 +361,14 @@ Partial Class Res_Pay
 
             If CBool(Session("TwoWeek")) = True Then
                 'apply internet discount
-                decTwoWeekDiscount = Calculate.CalculateDateDiscount(intBaseFare)
+                decTwoWeekDiscount = Calculate.CalculateDateDiscount(decBaseFare)
             Else
                 decTwoWeekDiscount = 0
             End If
 
-            decDiscount = Calculate.CalculateSubTotalDiscount(intBaseFare, decFirstClassPremium, decAgeDiscount, decTwoWeekDiscount, decInternetDiscount)
+            decDiscount = Calculate.CalculateSubTotalDiscount(decBaseFare, decFirstClassPremium, decAgeDiscount, decTwoWeekDiscount, decInternetDiscount)
 
-            decSubtotal = CDec(intBaseFare) + decDiscount
+            decSubtotal = decBaseFare + decDiscount
 
             lblPrice.Text = decSubtotal.ToString("n2")
 
@@ -492,9 +492,9 @@ Partial Class Res_Pay
     Protected Sub ddlAdvantageNum_SelectedIndexChanged(sender As Object, e As EventArgs) Handles ddlAdvantageNum.SelectedIndexChanged
         'NEED TO PUT BABY INTO SESSION VARIABLE HERE IF THEY SELECTED A BABY??
         Session("ActiveUser") = ddlAdvantageNum.SelectedValue
-        DBCustomer.GetCustomerByAdvantageNumber(ddlAdvantageNum.SelectedValue)
-        lblActive.Text = "Select seat for " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName").ToString & " " & _
-        DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("LastName").ToString & "Phone Number" & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Phone").ToString
+        'DBCustomer.GetCustomerByAdvantageNumber(ddlAdvantageNum.SelectedValue)
+        'lblActive.Text = "Select seat for " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName").ToString & " " & _
+        'DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("LastName").ToString & "Phone Number" & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Phone").ToString
         LoadTickets()
         SortandBind()
     End Sub

@@ -122,7 +122,7 @@ Public Class ClassCalculate
         Return datDate
     End Function
 
-    Public Function CalculateAgeDiscount(intAge As Integer, intBaseFare As Integer) As Decimal
+    Public Function CalculateAgeDiscount(intAge As Integer, decBaseFare As Decimal) As Decimal
         'Purpose: Apply the age discount if there is one to the base fare _
         '           NOTE: the age will be verified at the Gate check-in so this is the only tentative amount
         'Author: Dennis Phelan and Aaryaman Singhal
@@ -133,11 +133,11 @@ Public Class ClassCalculate
 
         'Check to see if the age is a senior
         If intAge >= 65 Then
-            decAgeDiscount = intBaseFare * AGE_SeniorDiscount_Constant
+            decAgeDiscount = decBaseFare * AGE_SeniorDiscount_Constant
 
         Else
             If intAge <= 12 Then
-                decAgeDiscount = intBaseFare * AGE_ChildDiscount_Constant
+                decAgeDiscount = decBaseFare * AGE_ChildDiscount_Constant
             Else
                 decAgeDiscount = 0
             End If
@@ -184,7 +184,7 @@ Public Class ClassCalculate
     End Function
 
     'Calculate the discount related to the date
-    Public Function CalculateDateDiscount(intBaseFare As Integer) As Decimal
+    Public Function CalculateDateDiscount(decBaseFare As Decimal) As Decimal
         'Purpose: Take the value from the CalculateTimeOfFlight to decide if it is 14 days, and then apply the discount if it is 14 days or more
         'Author: Dennis Phelan
         'Inputs: None
@@ -195,14 +195,14 @@ Public Class ClassCalculate
 
         'WE checked to see if they should get a discount on the form. 
 
-        decTwoWeeksDiscount = intBaseFare * TIME_TwoWeeksDiscount_Constant
+        decTwoWeeksDiscount = decBaseFare * TIME_TwoWeeksDiscount_Constant
         'If not 14 days or more out, the discount is 0
 
         Return decTwoWeeksDiscount
     End Function
 
     'Calculate the discount from whether someone used the Customer site to purchase their ticket
-    Public Function CalculateInternetPurchaseDiscount(intBaseFare As Integer) As Decimal
+    Public Function CalculateInternetPurchaseDiscount(decBaseFare As Decimal) As Decimal
         'Purpose: Calculate a discount if the customer purchases their ticket online
         'Author: Dennis Phelan
         'Inputs: None
@@ -211,7 +211,7 @@ Public Class ClassCalculate
         'Date Last Modified: April 21, 2014
 
         'Calculate the Internet discount
-        decInternetDiscount = intBaseFare * INTERNET_PurchaseDiscount_Constant
+        decInternetDiscount = decBaseFare * INTERNET_PurchaseDiscount_Constant
 
         'Check to see if the Save button is clicked on the Customer site and see if it is true
         'If true, apply the discount to the BaseFare
@@ -220,7 +220,7 @@ Public Class ClassCalculate
 
     End Function
 
-    Public Function CalculateFirstClass(intBaseFare As Integer) As Decimal
+    Public Function CalculateFirstClass(decBaseFare As Decimal) As Decimal
         'Purpose: Calculate the premium for flying first class
         'Author: Dennis Phelan
         'Inputs: None
@@ -231,7 +231,7 @@ Public Class ClassCalculate
 
         'Checking to see if the first class option is selected
 
-        decFirstClassPremium = intBaseFare * FIRST_CLASS_Constant
+        decFirstClassPremium = decBaseFare * FIRST_CLASS_Constant
 
 
         Return decFirstClassPremium
@@ -239,7 +239,7 @@ Public Class ClassCalculate
 
 
     'Public Sub for adding up all of the different values
-    Public Function CalculateSubTotalDiscount(intBaseFare As Integer, decFirstClassPremium As Decimal, decAgeDiscount As Decimal, decTwoWeekDiscount As Decimal, decInternetDiscount As Decimal) As Decimal
+    Public Function CalculateSubTotalDiscount(decBaseFare As Decimal, decFirstClassPremium As Decimal, decAgeDiscount As Decimal, decTwoWeekDiscount As Decimal, decInternetDiscount As Decimal) As Decimal
         'Purpose: Use all of the above subs to get the numbers and get the ticket price with the discounts before Tax
         'Author: Dennis Phelan, Aaryaman
         'Inputs: base fair, first class premium, age discount, two week discount, intenet discount
