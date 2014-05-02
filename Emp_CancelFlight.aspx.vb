@@ -160,7 +160,7 @@ Partial Class Emp_CancelFlight
 
         'run sub to make all other things inactive
 
-        ProtectedMode()
+        Response.Redirect("Emp_CancelFlight.aspx")
 
 
     End Sub
