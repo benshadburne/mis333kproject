@@ -7,7 +7,7 @@
     <div class="header" style="text-align: center;">
 
         <h1>
-            Re-Activate a Journey
+            Re-Activate a Flight
         </h1>
 
     </div>
