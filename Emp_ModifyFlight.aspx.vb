@@ -215,15 +215,11 @@ Partial Class Emp_ModifyFlight
 
     Public Sub EnableThings()
         ddlFlights.Enabled = True
-        ddlDepartureTimeHour.Enabled = True
-        ddlDepartureTimeMinutes.Enabled = True
         txtBaseFare.Enabled = True
         cblDaysToFly.Enabled = True
     End Sub
 
     Public Sub DisableThings()
-        ddlFlights.Enabled = False
-        ddlDepartureTimeHour.Enabled = False
         ddlDepartureTimeMinutes.Enabled = False
         txtBaseFare.Enabled = False
         cblDaysToFly.Enabled = False
@@ -236,11 +232,14 @@ Partial Class Emp_ModifyFlight
         strDepartureTime = ddlDepartureTimeHour.SelectedValue.ToString + ddlDepartureTimeMinutes.SelectedValue.ToString
 
         'validate base fare
-        intBaseFare = VObject.CheckInteger(txtBaseFare.Text)
-        If intBaseFare = -1 Then
+        If VObject.CheckIntegerWithSubstring(txtBaseFare.Text) = False Then
             lblMessage.Text = "Please enter a positive integer for base fare!"
             Exit Sub
+        Else
+            intBaseFare = CInt(txtBaseFare.Text)
         End If
+
+
 
 
         'create array list for parameter names

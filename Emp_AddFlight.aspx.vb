@@ -85,10 +85,15 @@ Partial Class Emp_AddFlight
             intFlightNumber = CInt(txtFlightNumber.Text)
         Catch ex As Exception
             lblMessage.Text = "Please enter a positive integer for flight number!"
+            Exit Sub
         End Try
 
         'validate flight number is integer *** NOT CATCHING DECIMALS
-        intFlightNumber = VObject.CheckInteger(txtFlightNumber.Text)
+        If VObject.CheckIntegerWithSubstring(txtFlightNumber.Text) = False Then
+            lblMessage.Text = "Please enter a positive integer for flight number!"
+            Exit Sub
+        End If
+
         If intFlightNumber < 0 Then
             lblMessage.Text = "Please enter a positive integer for flight number!"
             Exit Sub
@@ -98,6 +103,11 @@ Partial Class Emp_AddFlight
         FObject.RunSPwithOneParam("usp_FlightClone_Get_One", "@FlightNumber", txtFlightNumber.Text)
         If FObject.MyDataSet.Tables("tblFlightsClone").Rows.Count <> 0 Then
             lblMessage.Text = "Please enter a unique flight number!"
+            Exit Sub
+        End If
+
+        If ddlArrivalCity.SelectedIndex = ddlDepartureCity.SelectedIndex Then
+            lblMessage.Text = "Please choose different cities for departure and arrival!"
             Exit Sub
         End If
 
