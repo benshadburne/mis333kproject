@@ -124,7 +124,7 @@
 
       </asp:Panel>
         <div class="pull-left" style="width:100%">
-        <asp:Panel CssClass="panel" ID="pnlDates" runat="server" Width="100%">
+        <asp:Panel CssClass="panel" ID="pnlDates" runat="server" Width="100%" Height="300px">
             
             <h2>Modify Journey Date</h2>
             <br />

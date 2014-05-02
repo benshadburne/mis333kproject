@@ -11,20 +11,20 @@ Partial Class _Default
     Dim DBDate As New DBdate
     Dim mAdvantageNumber As Integer
 
-
-
-
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load, calFlightDate.SelectionChanged
 
         'THIS PAGE IS CRASHING BECAUSE THERE IS NO INITIALIZED VALUE FOR Session("ReservationID"). 
         'MAKE THEM CHOOSE A RESERVATION WHICH HAS ACTIVE TICKETS AND TICKETS WHICH AREN'T FLOWN YET
-
-        If Session("FromReservation") Is Nothing Then
-            Response.Redirect("HomePage.aspx")
-        Else
-            Session.Remove("FromReservation")
+        If IsPostBack = False Then
+            If Session("FromReservation") Is Nothing Then
+                Response.Redirect("Cust_AllReservations.aspx")
+            ElseIf Session("FromReservation").ToString = "Yes1" Then
+                lblMessage.Text = "Modification made!"
+                Session.Remove("FromReservation")
+            Else
+                Session.Remove("FromReservation")
+            End If
         End If
-
         'check if login session is empty
         If Session("UserID") Is Nothing Or Session("UserType") Is Nothing Then
             Response.Redirect("HomePage.aspx")
@@ -448,11 +448,12 @@ Partial Class _Default
         'charge them $50, idk?!?!?!??
         DBReservations.AddFee(Session("ReservationID").ToString)
 
-        lblMessage.Text = "Payment made!"
 
-        'also load ddls so that they represent new journeyID, and fill available so that it responds to new ddls
-        LoadDDLs()
-        FillAvailable()
+        Session("FromReservation") = "Yes1"
+        Response.Redirect("Cust_ReservationDetails.aspx")
+        ''also load ddls so that they represent new journeyID, and fill available so that it responds to new ddls
+        'LoadDDLs()
+        'FillAvailable()
     End Sub
 
     Public Sub AddJourneys()

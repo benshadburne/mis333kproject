@@ -37,10 +37,10 @@
         <asp:DropDownList CssClass="dropdown" ID="ddlAdvantageNum" runat="server" AutoPostBack="True" Visible="False"></asp:DropDownList>
         </div>
         </div>
-        <div class="center-align">
+        <div class="center-align" style="word-spacing:0px;width:900px">
         <h5>To pay, please select a ticket and then indicate if you would prefer to pay with miles or money</h5>
             </div>
-        <div class="center-block" style="text-align:center ">
+        <div class="center-block" style="text-align:center;word-spacing:0px ">
          
           <asp:Label ID="lblActive" runat="server" Text=""></asp:Label>
             <br />
@@ -50,7 +50,7 @@
      </div>
       
         <div style="text-align:center;width:900px">
-            <div class="center-align" style="width:200px">
+            <div class="center-align" style="width:200px;word-spacing:0px">
                 <div class="pull-left" style="padding-right:10px">
 <asp:Label CssClass="h6" ID="lblPay" runat="server" Text="Pay with:" Visible ="false"></asp:Label>
                 </div>
@@ -74,6 +74,19 @@
              <br />
            <asp:Button CssClass="btn btn-primary" ID="btnOverride" runat="server" Text="Override Price" visible="false"/>
              <br />
+            
+            <asp:Panel CssClass="panel center-align" ID="pnlLogin" runat="server" Width="310px">
+            <asp:Panel CssClass="pull-left panel" ID="pnlID" runat="server" style="width:150px;min-width: 100px; text-align:center; padding-top: 5px; line-height:22px;background-color:inherit; margin-bottom:5px">
+                    <asp:Label ID="Label6" runat="server" Text="ID:"></asp:Label>
+          <asp:TextBox CssClass="pull-left text-center" ID="txtUsername" runat="server" width="90%" Height="23px" Wrap="False" BorderStyle="Inset" ForeColor="Gray"></asp:TextBox> 
+         </asp:Panel>
+             <asp:Panel CssClass="panel" ID="pnlPassword" runat="server" style="width:150px;min-width: 100px; text-align:center; padding-top: 5px; line-height:22px;background-color:inherit; margin-bottom:5px">
+             <asp:Label ID="Label5" runat="server" Text="Password:"></asp:Label><asp:TextBox CssClass="text-center" ID="txtPassword" runat="server" width="90%" Height="23px" Wrap="False"  BorderStyle="Inset" ForeColor="Gray" TextMode="Password">Password</asp:TextBox>
+          </asp:Panel><br />
+                <asp:Button CssClass="btn btn-primary" ID="btnLogin" runat="server" Text="Login" />
+          </asp:Panel>
+            
+             <br />
             <asp:Label ID="lblUpgrade" runat="server" Text="Would you like to upgrade for 500 miles?" Visible="false"></asp:Label>
                             <br /> 
               <asp:Button class="btn-primary btn-sm" ID="btnYes" runat="server" Text="Yes" visible="false"/>
@@ -82,10 +95,9 @@
             <br />
             <asp:Button CssClass="btn btn-primary" ID="btnConfirm" runat="server" Text="Confirm" visible="false"/>
                  </div> 
-              
+               <asp:Panel class="panel" ID="pnlSeats" runat="server">
             <div style="width: 100%; text-align: center;padding-top:30px" class="pull-left">
-            
-            <asp:Label CssClass="h6" ID="Label4" runat="server" Text="Front of Plane" ></asp:Label>
+               <asp:Label CssClass="h6" ID="Label4" runat="server" Text="Front of Plane" ></asp:Label>
        </div>
                      
           <div class="pull-left" style="text-align:center; width: 449px">
@@ -153,14 +165,8 @@
             </div>
         <br />
         <br />
-            <div class="center-block" style="width:100%">
-      
-       </div>
-        <ul>
-         
-            </ul> 
-
-                 <div class="center-align" style="width:100%">
+           </asp:Panel>
+                 <div class="center-align" style="width:100%; word-spacing:0px">
         <asp:Label CssClass="h5" ID="Label8" runat="server" Text="Need to cancel this reservation?"></asp:Label>
           <br />  <asp:Button CssClass="btn btn-danger" ID="btnCancel" runat="server" Text="Cancel Reservation" />
             </div>
