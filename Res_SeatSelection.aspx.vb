@@ -83,8 +83,14 @@ Partial Class _Default
         ddlJourneyID.DataBind()
         'get message on form about journey ID
         DBJourney.GetOneJourney(CInt(ddlJourneyID.SelectedValue))
-        lblJourney.Text = "You are selecting a seat for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
-            " that flies on " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString
+        Try
+
+     
+            lblJourney.Text = "You are selecting a seat for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
+                " that flies on " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString
+        Catch ex As Exception
+
+        End Try
 
         DBTickets.GetAdvantageNumbersUsingSP(ddlJourneyID.SelectedValue, Session("ReservationID").ToString)
         'bind ddl for advantage numbers
@@ -93,8 +99,13 @@ Partial Class _Default
         ddlAdvantageNum.DataBind()
 
         DBCustomer.GetCustomerByAdvantageNumber(ddlAdvantageNum.SelectedValue)
-        lblActive.Text = "Select seat for " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName").ToString & " " & _
-        DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("LastName").ToString & " with phone Number " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Phone").ToString
+
+        Try
+            lblActive.Text = "Select seat for " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName").ToString & " " & _
+            DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("LastName").ToString & " with phone Number " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Phone").ToString
+        Catch ex As Exception
+
+        End Try
 
 
     End Sub
@@ -252,8 +263,14 @@ Partial Class _Default
         lblFinish.Text = ""
         DBJourney.GetOneJourney(CInt(ddlJourneyID.SelectedValue))
         datDate = CDate(DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightDate").ToString)
-        lblJourney.Text = "You are selecting a seat for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
-            " that flies on " & datDate.ToShortDateString
+        Try
+
+        
+            lblJourney.Text = "You are selecting a seat for Flight Number " & DBJourney.MyDataSet.Tables("tblJourneys").Rows(0).Item("FlightNumber").ToString & _
+                " that flies on " & datDate.ToShortDateString
+        Catch ex As Exception
+
+        End Try
         CheckSeats()
     End Sub
 
@@ -361,8 +378,13 @@ Partial Class _Default
         lblFinish.Text = ""
         Session("ActiveUser") = ddlAdvantageNum.SelectedValue
         DBCustomer.GetCustomerByAdvantageNumber(ddlAdvantageNum.SelectedValue)
-        lblActive.Text = "Select seat for " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName").ToString & " " & _
+        Try
+            lblActive.Text = "Select seat for " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("FirstName").ToString & " " & _
         DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("LastName").ToString & " with phone Number " & DBCustomer.MyDataset.Tables("tblCustomersClone").Rows(0).Item("Phone").ToString
+
+        Catch ex As Exception
+
+        End Try
         LoadTickets()
         SortandBind()
     End Sub
