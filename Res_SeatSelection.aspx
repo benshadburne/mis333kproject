@@ -39,10 +39,12 @@
         
         <h2>Modify Seats</h2>
    <br />
-            <div style="text-align:center;word-spacing:30px">
-                <asp:Label  CssClass="h6"  ID="lblActive" runat="server" text=""></asp:Label>
+            <div style="text-align:center">
+                <asp:Label  CssClass="h6"  ID="lblActive" runat="server" text=""></asp:Label><br />
                   <asp:Label  CssClass="h6"  ID="lblJourney" runat="server" text=""></asp:Label>
+                <br />
             </div>
+            <br />
         <div style="width: 100%; text-align: center" class="pull-left">
             
             <asp:Label CssClass="h6" ID="Label4" runat="server" Text="Front of Plane" ></asp:Label>
@@ -114,7 +116,7 @@
 
       </asp:Panel>
        
-      <div style="text-align:center; word-spacing:20px">
+      <div style="text-align:center; word-spacing:20px;padding-top:20px">
           
                   <asp:Button CssClass="btn btn-primary" ID="btnFinish" runat="server" Text="Finish and Pay" />
               <br />    
