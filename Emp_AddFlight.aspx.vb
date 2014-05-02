@@ -33,7 +33,6 @@ Partial Class Emp_AddFlight
             Response.Redirect("HomePage.aspx")
         End If
 
-
         'if first time loading page, load drop down lists
         If IsPostBack = False Then
             'get all airports
@@ -41,12 +40,6 @@ Partial Class Emp_AddFlight
             'set datasource to all airports
             LoadDDLs()
             'set selected index
-            ddlDepartureCity.SelectedIndex = 0
-
-            'do same as above, but for arrival city
-            'set datasource to all airports
-            'set selected index
-            ddlArrivalCity.SelectedIndex = 1
 
             'make it equal to hour and minute on ddls for departure time
             strDepartureTime = ddlDepartureTimeHour.SelectedItem.Text & ddlDepartureTimeMinutes.SelectedItem.Text
@@ -77,7 +70,7 @@ Partial Class Emp_AddFlight
 
             'find duration of flight
             MObject.FindDuration(aryParamNamesMileage, aryParamValuesMileage)
-            intDuration = CInt(MObject.MyDataSet.Tables("tblMileageClone").Rows(0).Item(0))
+            intDuration = CInt(MObject.MyDataSet.Tables("tblMileageClone").Rows(0).Item("FlightTime"))
 
             'calculate the arrival time that needs to appear
             strArrivalTime = CObject.CalculateArrivalTime(intDepartureTime, intDuration)
@@ -89,6 +82,9 @@ Partial Class Emp_AddFlight
     End Sub
 
     Private Sub LoadDDLs()
+
+        AObject.GetALLairportcloneUsingSP()
+
         ddlDepartureCity.DataSource = AObject.MyDataSet.Tables("tblAirportClone")
         'set datafield showing to city names
         ddlDepartureCity.DataTextField = "CityName"
@@ -98,13 +94,20 @@ Partial Class Emp_AddFlight
         ddlDepartureCity.DataBind()
 
 
-        ddlDepartureCity.DataSource = AObject.MyDataSet.Tables("tblAirportClone")
+        ddlArrivalCity.DataSource = AObject.MyDataSet.Tables("tblAirportClone")
         'set datafield showing to city names
-        ddlDepartureCity.DataTextField = "CityName"
+        ddlArrivalCity.DataTextField = "CityName"
         'set datafield value associated with what's showing to 3 letter airport code
-        ddlDepartureCity.DataValueField = "AirportCode"
+        ddlArrivalCity.DataValueField = "AirportCode"
         'bind ddl
-        ddlDepartureCity.DataBind()
+        ddlArrivalCity.DataBind()
+
+        ddlDepartureCity.SelectedIndex = 0
+
+        'do same as above, but for arrival city
+        'set datasource to all airports
+        'set selected index
+        ddlArrivalCity.SelectedIndex = 1
 
 
     End Sub
