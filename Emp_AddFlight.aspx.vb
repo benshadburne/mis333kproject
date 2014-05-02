@@ -39,25 +39,12 @@ Partial Class Emp_AddFlight
             'get all airports
             AObject.GetALLairportcloneUsingSP()
             'set datasource to all airports
-            ddlDepartureCity.DataSource = AObject.MyDataSet.Tables("tblAirportClone")
-            'set datafield showing to city names
-            ddlDepartureCity.DataTextField = "CityName"
-            'set datafield value associated with what's showing to 3 letter airport code
-            ddlDepartureCity.DataValueField = "AirportCode"
-            'bind ddl
-            ddlDepartureCity.DataBind()
+            LoadDDLs()
             'set selected index
             ddlDepartureCity.SelectedIndex = 0
 
             'do same as above, but for arrival city
             'set datasource to all airports
-            ddlArrivalCity.DataSource = AObject.MyDataSet.Tables("tblAirportClone")
-            'set datafield showing to city names
-            ddlArrivalCity.DataTextField = "CityName"
-            'set datafield value associated with what's showing to 3 letter airport code
-            ddlArrivalCity.DataValueField = "AirportCode"
-            'bind ddl
-            ddlArrivalCity.DataBind()
             'set selected index
             ddlArrivalCity.SelectedIndex = 1
 
@@ -99,6 +86,27 @@ Partial Class Emp_AddFlight
             lblArrivalTime.Text = strArrivalTime
 
         End If
+    End Sub
+
+    Private Sub LoadDDLs()
+        ddlDepartureCity.DataSource = AObject.MyDataSet.Tables("tblAirportClone")
+        'set datafield showing to city names
+        ddlDepartureCity.DataTextField = "CityName"
+        'set datafield value associated with what's showing to 3 letter airport code
+        ddlDepartureCity.DataValueField = "AirportCode"
+        'bind ddl
+        ddlDepartureCity.DataBind()
+
+
+        ddlDepartureCity.DataSource = AObject.MyDataSet.Tables("tblAirportClone")
+        'set datafield showing to city names
+        ddlDepartureCity.DataTextField = "CityName"
+        'set datafield value associated with what's showing to 3 letter airport code
+        ddlDepartureCity.DataValueField = "AirportCode"
+        'bind ddl
+        ddlDepartureCity.DataBind()
+
+
     End Sub
 
     Protected Sub btnAdd_Click(sender As Object, e As EventArgs) Handles btnAdd.Click
@@ -219,6 +227,8 @@ Partial Class Emp_AddFlight
         lblMessage.Text = "You have successfully added flight #" & txtFlightNumber.Text
 
         ClearTextboxes()
+
+        LoadDDL()
 
     End Sub
 

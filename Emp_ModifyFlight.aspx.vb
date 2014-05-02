@@ -152,6 +152,7 @@ Partial Class Emp_ModifyFlight
     End Sub
 
     Protected Sub btnCancel_Click(sender As Object, e As EventArgs) Handles btnCancel.Click
+        cblDaysToFly.Enabled = True
         LoadInformationFromFlight(ddlFlights.SelectedIndex)
         'show user success message
         lblMessage.Text = "Changes canceled."
