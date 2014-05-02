@@ -72,10 +72,8 @@
               <br/> 
         </div>
         <div class="pull-left" style="width: 30%; min-width:40px; height: 67px;">
-             <asp:Label class="h6" ID="Label7" runat="server" Text="Select Date" ForeColor="Black"></asp:Label>
             <br/> 
               <br/> 
-              <asp:Label CssClass="h6" ID="lblDate" runat="server"></asp:Label>
         </div>
             </div>
             

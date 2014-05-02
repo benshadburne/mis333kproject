@@ -81,8 +81,6 @@ Partial Class _Default
         ShowAll()
         SortandBind()
 
-        'set label to correct date
-        lblDate.Text = calFlightSearch.SelectedDate.ToShortDateString
     End Sub
 
     Public Sub ShowAll()
