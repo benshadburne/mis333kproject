@@ -419,16 +419,27 @@ Partial Class Emp_ModifyFlight
     End Sub
 
     Public Sub InactivateJourneysBasedOnDayChange(strDay As String, strFlightNumber As String)
-
-        'call class to do work
-        CaObject.InactivateFlightWithDay(strFlightNumber, strDay)
+        Try
+            'call class to do work
+            CaObject.InactivateFlightWithDay(strFlightNumber, strDay)
+        Catch ex As Exception
+            lblMessage.Text = "Something went wrong when trying to inactivate journeys based on days changing." & ex.Message
+            Exit Sub
+        End Try
+       
 
     End Sub
     Public Sub InactivateJourneysRegardlessOfDay(strFlightNumber As String)
         'get all flights into dataset
         FObject.GetALLFlightsCloneUsingSP()
-        'call class to do work
-        CaObject.InactivateFlightAllDays(strFlightNumber)
+        Try
+            'call class to do work
+            CaObject.InactivateFlightAllDays(strFlightNumber)
+        Catch ex As Exception
+            lblMessage.Text = "Something went wrong when trying to inactivate journeys for all days." & ex.Message
+            Exit Sub
+        End Try
+        
     End Sub
 
 End Class

@@ -194,7 +194,13 @@ Partial Class Emp_CancelFlight
     Public Sub InactivateJourneysRegardlessOfDay(strFlightNumber As String)
         'get all flights into dataset
         FObject.GetAllActiveFlightsUsingSP()
-        'call class to do work
-        CaObject.InactivateFlightAllDays(strFlightNumber)
+        Try
+            'call class to do work
+            CaObject.InactivateFlightAllDays(strFlightNumber)
+        Catch ex As Exception
+            lblMessage.Text = "Something went wrong in trying to cancel flights." & ex.Message
+            Exit Sub
+        End Try
+        
     End Sub
 End Class

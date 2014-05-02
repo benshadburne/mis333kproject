@@ -107,7 +107,13 @@ Partial Class Emp_Cancel_Journey
             lblMessage.Text = "Please select a journey to cancel!"
             Exit Sub
         End If
-        CaObject.InactivateSpecificJourney(Session("RecordID").ToString)
+        Try
+            CaObject.InactivateSpecificJourney(Session("RecordID").ToString)
+        Catch ex As Exception
+            lblMessage.Text = "Something went wrong when trying to cancel the journey." & ex.Message
+            Exit Sub
+        End Try
+
         lblMessage.Text = "You have inactivated Journey #" & Session("RecordID").ToString
         NormalMode()
         LoadFlightGridView()
