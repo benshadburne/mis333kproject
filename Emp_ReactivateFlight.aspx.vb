@@ -4,7 +4,17 @@ Partial Class Emp_ReactivateFlight
 
     Dim FObject As New DBFlightsClone
 
+
+
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+
+        'NEED TO CHECK IF GATE AGENTS CAN ADD CITIES
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        ElseIf Session("UserType").ToString = "Crew" Or Session("UserType").ToString = "Agent" Or Session("UserType").ToString = "Customer" Then
+            Response.Redirect("Emp_EmployeeDashboard.aspx")
+        End If
+
         FObject.GetAllInactive()
         gvFlights.DataSource = FObject.MyDataSet.Tables("tblFlightClone")
         gvFlights.DataBind()

@@ -5,9 +5,19 @@ Partial Class Emp_ReactivateJourney
     Dim JObject As New DBjourneyclone
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        'NEED TO CHECK IF GATE AGENTS CAN ADD CITIES
+        If Session("UserType") Is Nothing Then
+            Response.Redirect("HomePage.aspx")
+        ElseIf Session("UserType").ToString = "Crew" Or Session("UserType").ToString = "Agent" Or Session("UserType").ToString = "Customer" Then
+            Response.Redirect("Emp_EmployeeDashboard.aspx")
+        End If
+
         JObject.GetAllInactiveJourneys()
         gvJourneys.DataSource = JObject.MyDataSet.Tables("tblJourneyClone")
         gvJourneys.DataBind()
+
+        
+
     End Sub
 
     Protected Sub gvJourneys_SelectedIndexChanged(sender As Object, e As EventArgs) Handles gvJourneys.SelectedIndexChanged

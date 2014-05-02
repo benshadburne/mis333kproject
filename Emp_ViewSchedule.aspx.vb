@@ -9,7 +9,7 @@ Partial Class _Default
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
-        If Session("UserType") Is Nothing Then
+        If Session("UserType") Is Nothing Or Session("UserType").ToString = "Customer" Then
             Response.Redirect("HomePage.aspx")
         End If
 

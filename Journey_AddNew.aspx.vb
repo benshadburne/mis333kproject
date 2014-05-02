@@ -32,6 +32,11 @@ Partial Class Journey_AddNew
     End Sub
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
+        'NEED TO CHECK IF GATE AGENTS CAN ADD CITIES
+
+        Response.Redirect("HomePage.aspx")
+
+
         If IsPostBack = False Then
             LoadDDL()
         End If
