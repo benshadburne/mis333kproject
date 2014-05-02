@@ -10,6 +10,7 @@ Partial Class Res_Pay
     Dim DBDate As New DBdate
     Dim DBCustomer As New DBCustomersClone
     Dim DBCancel As New CancelReservation
+    Dim DBEmployee As New DBEmployee
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
 
@@ -590,28 +591,11 @@ Partial Class Res_Pay
 
     Protected Sub btnOverride_Click(sender As Object, e As EventArgs) Handles btnOverride.Click
         MakeAllInvisible()
-        pnlID.Visible = False
+        pnlID.Visible = True
+        txtOverride.Visible = True
+        txtOverride.Enabled = False
+
         Exit Sub
-
-        Dim decSubtotal As Decimal
-        Try
-            decSubtotal = CDec(txtOverride.Text)
-        Catch ex As Exception
-            lblMessage.Text = "Please enter a positive decimal price."
-            Exit Sub
-        End Try
-
-        If decSubtotal < 0 Then
-            lblMessage.Text = "Please enter a positive decimal price."
-            Exit Sub
-        End If
-
-        MakeAllInvisible()
-
-        lblPrice.Text = decSubtotal.ToString("n2")
-        PriceAdd()
-
-        ResetAll()
 
     End Sub
 
@@ -626,7 +610,6 @@ Partial Class Res_Pay
         lblCost.Text = ""
         lblUpgrade.Visible = False
         lblSubtotal.Text = ""
-        txtOverride.Text = ""
 
         txtOverride.Visible = False
 
@@ -641,7 +624,38 @@ Partial Class Res_Pay
     Protected Sub btnOverridePrice_Click(sender As Object, e As EventArgs) Handles btnOverridePrice.Click
         MakeAllInvisible()
 
-        'check to see if this case passes
+        If DBEmployee.CheckEmpExists(txtUsername.Text) = False Then
+            lblMessage.Text = "That employee ID does not exist. Override Failed."
+            'test fails
+            rblPayment.SelectedIndex = -1
+            rblPayment.Visible = True
+            Exit Sub
+
+        Else
+            'check password
+            If DBEmployee.CheckPassword(txtUsername.Text, txtPassword.Text) = True Then
+                'the code passes
+                Dim decSubtotal As Decimal
+                Try
+                    decSubtotal = CDec(txtOverride.Text)
+                Catch ex As Exception
+                    lblMessage.Text = "Please enter a positive decimal price."
+                    Exit Sub
+                End Try
+
+                If decSubtotal < 0 Then
+                    lblMessage.Text = "Please enter a positive decimal price."
+                    Exit Sub
+                End If
+
+                MakeAllInvisible()
+
+                lblPrice.Text = decSubtotal.ToString("n2")
+                PriceAdd()
+
+                ResetAll()
+            End If
+        End If
 
     End Sub
 End Class

@@ -58,9 +58,6 @@ Partial Class Emp_GateCheckIn
             btnDeparted.Visible = True
         End If
 
-
-
-
     End Sub
 
     Protected Sub Page_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -134,10 +131,7 @@ Partial Class Emp_GateCheckIn
                 Exit Sub
             End If
 
-
         End If
-
-
 
     End Sub
 
